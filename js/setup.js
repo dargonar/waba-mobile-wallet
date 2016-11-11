@@ -31,7 +31,41 @@ var configureStore = require('./store/configureStore');
 
 import {Navigation} from 'react-native-navigation';
 
+require('../shim');
+var {Apis} = require("graphenejs-ws");
+var {ChainStore} = require("graphenejs-lib");
+
+let dynamicGlobal = null;
+function updateState(updated_objects) {
+  //updated_objects = updated_objects || [];
+  if(updated_objects) {
+    updated_objects[0].forEach(function(r) {
+      console.log('--------------------------------');
+      console.log(r.id);
+      console.log('--------------------------------');
+    });
+  }  
+  //console.log(' updateState...', JSON.stringify(updated_objects) );
+  //   console.log('param =>', JSON.stringify(object));
+// //console.log();
+  //dynamicGlobal = ChainStore.getObject("2.1.0");
+  //console.log("ChainStore object update\n", dynamicGlobal ? dynamicGlobal.toJS() : dynamicGlobal);
+}
+
+
 function setup() {
+
+  Apis.instance("ws://35.161.140.21:8090/", true).init_promise.then((res) => {
+      console.log("connected to:", res[0].network);
+      ChainStore.init(Apis).then(() => {
+          ChainStore.subscribe(updateState);
+          //ChainStore.getAccount("elmato");
+//           ChainStore.FetchChain("getAccount","elmato").then(function(r) {
+//             console.log('Aca esta el FetchChain =>', JSON.stringify(r));
+//           });
+      });
+  });
+
 
   var store = configureStore( () => {} );
     
@@ -46,9 +80,11 @@ function setup() {
      title: 'Principal',
      navigatorStyle: {
        navBarBackgroundColor: '#4dbce9',
+       //collapsingToolBarImage: require('./img/bg-dashboard.png'),
        navBarTextColor: '#ffffff',
        navBarSubtitleTextColor: '#ff0000',
        navBarButtonColor: '#ffffff',
+       navBarTranslucent: true,
        statusBarTextColorScheme: 'light'
      }
    },

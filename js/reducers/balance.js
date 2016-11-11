@@ -4,14 +4,17 @@
 
 'use strict';
 
-const createApolloReducer = require('./createApolloReducer');
+import type {Action} from '../actions/types';
 
-export type Balance = {
-  name  : string;
-};
+type State = Array<Object>;
 
-function reducer(action: Object): Balance[] {
-  return action.data.account.balance;
+function balance(state: State = [], action: Action): State {
+  
+  if (action.type === 'LOADED_BALANCE') {
+    return action.balance;
+  }
+
+  return state;
 }
 
-module.exports = createApolloReducer('LOADED_BALANCE', reducer);
+module.exports = balance;

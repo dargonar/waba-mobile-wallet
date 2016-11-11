@@ -27,11 +27,12 @@ var createUWStore = applyMiddleware(thunk, promise, array, analytics, logger)(cr
 
 function configureStore(onComplete: ?() => void) {
   // TODO(frantic): reconsider usage of redux-persist, maybe add cache breaker
-  const store = autoRehydrate()(createUWStore)(reducers);
-  persistStore(store, {storage: AsyncStorage}, onComplete);
-  if (isDebuggingInChrome) {
-    window.store = store;
-  }
+  const store = createUWStore(reducers);
+  //const store = autoRehydrate()(createUWStore)(reducers);
+  //persistStore(store, {storage: AsyncStorage}, onComplete);
+  //if (isDebuggingInChrome) {
+  //  window.store = store;
+  //}
   return store;
 }
 

@@ -5,9 +5,9 @@
 'use strict';
 
 export type Action =
-	{ type : 'LOADED_BALANCE', list: Array<Object> }
-  |	{ type : 'LOADED_HISTORY', list: Array<Object> }
-  
+	{ type : 'LOADED_BALANCE', balance : Array<Object> } |
+	{ type : 'LOADED_HISTORY', history : Array<Object> } |
+	{ type : 'LOADED_ACCOUNT', account : Object } 
   // | { type: 'LOADED_MAPS', list: Array<Object> }
   // | { type: 'SEEN_ALL_NOTIFICATIONS' }
   // | { type: 'RESET_NUXES' }

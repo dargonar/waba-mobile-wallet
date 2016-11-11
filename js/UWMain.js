@@ -11,11 +11,19 @@ var View = require('View');
 var StyleSheet = require('StyleSheet');
 var { connect } = require('react-redux');
 //var StatusBar = require('StatusBar');
-// var {
-//   loadHistory,
-// } = require('./actions');
+
+var {
+  loadBalance,
+} = require('./actions');
+
+
+var {PrivateKey, key} = require("graphenejs-lib");
+
 //var { updateInstallation } = require('./actions/installation');
 //var { connect } = require('react-redux');
+
+//require('../shim');
+//var {ChainStore} = require("graphenejs-lib");
 
 var UWOperations = require('UWOperations');
 var UWBalance = require('UWBalance');
@@ -48,17 +56,17 @@ var UWMain = React.createClass({
         collapsedIcon: require('./img/ic_share.png'),
         expendedId: 'clear',
         expendedIcon: require('./img/ic_clear.png'),
-        backgroundColor: '#3F51B5',
+        backgroundColor: '#4dbce9',
         actions: [
           {
             id: 'mail',
             icon: require('./img/ic_add.png'),
-            backgroundColor: '#03A9F4'
+            backgroundColor: '#4dbce9'
           },
           {
             id: 'twitter',
             icon: require('./img/ic_archive.png'),
-            backgroundColor: '#4CAF50'
+            backgroundColor: '#4dbce9'
           }
         ]
       }
@@ -80,7 +88,26 @@ var UWMain = React.createClass({
     
     //console.log(JSON.stringify(event));
     console.log(event.id);
+//     ChainStore.FetchChain("getAccount","elmato").then(function(r) {
+//       console.log('Aca esta el FetchChain =>', JSON.stringify(r));
+//     });
+    
+    if (event.id == 'twitter' ) {
+      this.props.dispatch(loadBalance("elmato"));
+    }
 
+    if(event.id == 'mail') {
+
+      
+      let seed = "THIS IS A TERRIBLE BRAINKEY SEED WORD SEQUENCE";
+      console.log(seed);
+      
+      let pkey = PrivateKey.fromSeed( key.normalize_brainKey(seed) );
+      console.log("Private key:", pkey.toWif());
+      console.log("Public key :", pkey.toPublicKey().toString());
+      console.log('terminamos...');
+    }
+    
     if (event.id == "add") {
       
       this.props.navigator.push({
@@ -151,3 +178,4 @@ var select = function(store) {
 }
 
 module.exports = connect(select)(UWMain);
+

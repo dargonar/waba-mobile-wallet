@@ -22,7 +22,7 @@ var UWCrypto = require('UWCrypto');
 //var InfiniteScrollView = require('react-native-infinite-scroll-view');
 
 var {
-  loadHistory,
+  loadBalance,
 } = require('./actions');
 
 var { connect } = require('react-redux');
@@ -69,7 +69,7 @@ var UWOperations = React.createClass({
     AppState.addEventListener('change', this.handleAppStateChange);
 
     // TODO: Make this list smaller, we basically download the whole internet
-    this.props.dispatch(loadHistory());
+    //this.props.dispatch(loadHistory());
 
     //updateInstallation({version});
     //Co dePush.sync({installMode: CodePush.InstallMode.ON_NEXT_RESUME});
@@ -101,7 +101,7 @@ var UWOperations = React.createClass({
 
   _onRefresh : function() {
     this.setState({refreshing: true});
-    this.props.dispatch(loadHistory());
+    this.props.dispatch(loadBalance("elmato"));
     // setTimeout(() => {
     //   this.setState({
     //     refreshing: false,
@@ -151,7 +151,7 @@ var UWOperations = React.createClass({
 
     return (
       <View>
-        <Text style={styles.text}>Nononono</Text>
+        <Text style={{height:20}}>Operation X</Text>
       </View>
     );
 
@@ -191,7 +191,7 @@ var UWOperations = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 4,
+    flex: 6,
     backgroundColor: '#fff'
   },
   operation: {

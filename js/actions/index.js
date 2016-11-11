@@ -4,9 +4,11 @@
 
 'use strict';
 
-const historyActions = require('./history');
+//const historyActions = require('./history');
+const balanceActions = require('./balance');
 
 module.exports = {
-  ...historyActions
+  ...balanceActions
+  //...historyActions
   //...installationActions,
 };
