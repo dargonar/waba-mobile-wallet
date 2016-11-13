@@ -97,15 +97,21 @@ var UWMain = React.createClass({
     }
 
     if(event.id == 'mail') {
+      this.props.navigator.push({
+        screen: 'uw.pushed'
+        //title: 'Pushed Screen'
+      });
 
       
-      let seed = "THIS IS A TERRIBLE BRAINKEY SEED WORD SEQUENCE";
-      console.log(seed);
       
-      let pkey = PrivateKey.fromSeed( key.normalize_brainKey(seed) );
-      console.log("Private key:", pkey.toWif());
-      console.log("Public key :", pkey.toPublicKey().toString());
-      console.log('terminamos...');
+      
+//       let seed = "THIS IS A TERRIBLE BRAINKEY SEED WORD SEQUENCE";
+//       console.log(seed);
+      
+//       let pkey = PrivateKey.fromSeed( key.normalize_brainKey(seed) );
+//       console.log("Private key:", pkey.toWif());
+//       console.log("Public key :", pkey.toPublicKey().toString());
+//       console.log('terminamos...');
     }
     
     if (event.id == "add") {

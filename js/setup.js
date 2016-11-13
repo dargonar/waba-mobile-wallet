@@ -8,6 +8,8 @@ var UWMain = require('./UWMain');
 var UWDetail = require('./UWDetail');
 var UWSideMenu = require('./UWSideMenu');
 var UWBarcode = require('./UWBarcode');
+var PushedScreen = require('./PushedScreen');
+
 
 //var FacebookSDK = require('FacebookSDK');
 //var Parse = require('parse/react-native');
@@ -18,16 +20,6 @@ var { connect } = require('react-redux');
 
 var apollo = require('./store/apollo');
 var configureStore = require('./store/configureStore');
-
-// import {
-//     Router,
-//     Scene,
-//     Actions,
-//     Header,
-//     ActionConst,
-// } from 'react-native-router-flux';
-
-//var {serverURL} = require('./env');
 
 import {Navigation} from 'react-native-navigation';
 
@@ -45,15 +37,67 @@ function updateState(updated_objects) {
       console.log('--------------------------------');
     });
   }  
-  //console.log(' updateState...', JSON.stringify(updated_objects) );
-  //   console.log('param =>', JSON.stringify(object));
-// //console.log();
-  //dynamicGlobal = ChainStore.getObject("2.1.0");
-  //console.log("ChainStore object update\n", dynamicGlobal ? dynamicGlobal.toJS() : dynamicGlobal);
 }
 
+var { iconsMap, iconsLoaded } = require('./app-icons');
 
 function setup() {
+  iconsLoaded.then(() => {
+    
+    console.log(iconsMap);
+    startApp();
+    
+  });
+}
+
+function startApp() {
+  
+  var store = configureStore( () => {} );
+
+  var StyledScreen = require('./StyledScreen');
+  
+  Navigation.registerComponent('uw.main', () => StyledScreen, store, Provider)
+  Navigation.registerComponent('uw.sidemenu', () => UWSideMenu, store, Provider );
+  Navigation.registerComponent('uw.pushed', () => PushedScreen, store, Provider )
+
+  Navigation.startSingleScreenApp({
+   screen: {
+     screen: 'uw.main',
+//     title: 'Principal',
+     navigatorStyle: {
+       //navBarBackgroundColor: '#4dbce9',
+       //collapsingToolBarImage: require('./img/bg-dashboard.png'),
+       navBarTextColor: '#ffffff',
+       //navBarSubtitleTextColor: '#ff0000',
+       navBarButtonColor: '#ffffff',
+       //navBarTranslucent: true,
+       //statusBarTextColorScheme: 'light'
+       //navBarNoBorder: true,
+       drawUnderNavBar : true,
+       navBarTransparent: true
+     }
+   },
+   drawer: {
+     left: {
+       screen: 'uw.sidemenu',
+       //color: '#ffffff',
+       icon: iconsMap['ios-person--active'],
+       color: '#ffffff',
+       navBarButtonColor: '#ffffff',
+     },
+     color: '#ffffff',
+     icon: iconsMap['ios-person--active'],
+     navBarButtonColor: '#ffffff',
+    
+   }
+    
+  });
+
+  
+  
+}
+
+function setup2() {
 
   Apis.instance("ws://35.161.140.21:8090/", true).init_promise.then((res) => {
       console.log("connected to:", res[0].network);
@@ -73,6 +117,7 @@ function setup() {
   Navigation.registerComponent('uw.detail', () => UWDetail, store, Provider);
   Navigation.registerComponent('uw.sidemenu', () => UWSideMenu, store, Provider);
   Navigation.registerComponent('uw.barcode', () => UWBarcode, store, Provider);
+  Navigation.registerComponent('uw.pushed', () => PushedScreen, store, Provider);
 
   Navigation.startSingleScreenApp({
    screen: {
@@ -97,57 +142,5 @@ function setup() {
 
 
 }
-
-
-// function setup(): React.Component {
-//   console.disableYellowBox = true;
-//   //Parse.initialize('oss-f8-app-2016');
-//   //Parse.serverURL = `${serverURL}/parse`;
-
-//   //FacebookSDK.init();
-//   //Parse.FacebookUtils.init();
-  
-//   // const CUWMain = connect()(UWMain);
-//   // const CUWDetail = connect()(UWDetail);
-
-//   // const Scenes = Actions.create(
-//   //   <Scene key="root">
-//   //     <Scene key="main" component={CUWMain} navigationBarStyle={{backgroundColor: 'green', borderBottomColor: 'green'}} />
-//   //     <Scene key="detail" type={ActionConst.PUSH} component={CUWDetail} />
-//   //   </Scene>
-//   // );
-
-//   //const CRouter = connect()(Router);
-
-//   class Root extends React.Component {
-//     constructor() {
-//       super();
-//       this.state = {
-//         isLoading : true,
-//         store     : configureStore(() => this.setState({isLoading : false})),
-//         client    : apollo,
-//       };
-//     }
-//     render() {
-//       if (this.state.isLoading) {
-//         return null;
-//       }
-//       return (
-//         <Provider store={this.state.store} client={this.state.client}>
-          
-//         </Provider>
-//       );
-//     }
-//   }
-
-//   return Root;
-// }
-
-//global.LOG = (...args) => {
-//  console.log('/------------------------------\\');
-//  console.log(...args);
-//  console.log('\\------------------------------/');
-//  return args[args.length - 1];
-//};
 
 module.exports = setup;

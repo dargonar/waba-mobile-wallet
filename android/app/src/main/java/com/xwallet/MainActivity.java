@@ -3,6 +3,8 @@ package com.xwallet;
 import com.facebook.react.ReactActivity;
 import com.reactnativenavigation.controllers.SplashActivity;
 
+//import android.R;
+
 public class MainActivity extends SplashActivity {
 
     /**
@@ -13,4 +15,10 @@ public class MainActivity extends SplashActivity {
     // protected String getMainComponentName() {
     //     return "xwallet";
     // }
+  
+  
+    @Override
+    public int getSplashLayout() {
+      return R.layout.splash;
+    }
 }

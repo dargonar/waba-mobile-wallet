@@ -68,6 +68,10 @@ var UWOperations = React.createClass({
   componentDidMount: function() {
     AppState.addEventListener('change', this.handleAppStateChange);
 
+        this.props.dispatch(
+          { type : 'LOADED_HISTORY', history:[1,2,3,4,5,6,7,8,9,10,11,12] }
+        );
+
     // TODO: Make this list smaller, we basically download the whole internet
     //this.props.dispatch(loadHistory());
 
@@ -101,7 +105,12 @@ var UWOperations = React.createClass({
 
   _onRefresh : function() {
     this.setState({refreshing: true});
-    this.props.dispatch(loadBalance("elmato"));
+    
+    this.props.dispatch(
+          { type : 'LOADED_HISTORY', history:[1,2,3,4,5,6,7,8,9,10,11,12] }
+        );
+
+    //this.props.dispatch(loadBalance("elmato"));
     // setTimeout(() => {
     //   this.setState({
     //     refreshing: false,
@@ -121,10 +130,16 @@ var UWOperations = React.createClass({
     );
   },
 
+  //if( rowData.__typename == 'Transfer' ) {
+//     return (
+//       <View>
+//         <Text style={{height:20}}>Operation X</Text>
+//       </View>
+//     );
+
   _renderRow: function(rowData, sectionID, rowID) {
     
-    if( rowData.__typename == 'Transfer' ) {
-      return (
+       return (
         <TouchableHighlight underlayColor={'#ccc'} onPress={() => this._onPressButton(rowID, rowData)}>
           <View style={styles.operation}>
 
@@ -134,12 +149,11 @@ var UWOperations = React.createClass({
 
             <View>            
               <View style={styles.line1}>
-                <Text style={[styles.amount, rowData.type == 'received'?styles.green:styles.black]}>{rowData.amount.quantity} </Text>
-                <Text style={[styles.symbol, , rowData.type == 'received'?styles.green:styles.black]}>{rowData.amount.asset.symbol}</Text>
+                <Text style={[styles.amount, styles.green]}>20 Patacops</Text>
               </View>
 
               <View style={styles.line2}>
-                <Text style={styles.description}>{rowData.type} {rowData.type == 'received' ? 'from' : 'to'} {rowData.type == 'received' ? rowData.from.name : rowData.to.name}</Text>
+                <Text style={styles.description}>Sent to Pepo</Text>
               </View>
             
             </View>
@@ -147,14 +161,6 @@ var UWOperations = React.createClass({
           </View>
         </TouchableHighlight>
       );
-    }
-
-    return (
-      <View>
-        <Text style={{height:20}}>Operation X</Text>
-      </View>
-    );
-
 
   },
 
