@@ -8,8 +8,6 @@ var UWMain = require('./UWMain');
 var UWDetail = require('./UWDetail');
 var UWSideMenu = require('./UWSideMenu');
 var UWBarcode = require('./UWBarcode');
-var PushedScreen = require('./PushedScreen');
-
 
 //var FacebookSDK = require('FacebookSDK');
 //var Parse = require('parse/react-native');
@@ -55,6 +53,7 @@ function startApp() {
   var store = configureStore( () => {} );
 
   var StyledScreen = require('./StyledScreen');
+  var PushedScreen = require('./PushedScreen');
   
   Navigation.registerComponent('uw.main', () => StyledScreen, store, Provider)
   Navigation.registerComponent('uw.sidemenu', () => UWSideMenu, store, Provider );
@@ -75,7 +74,13 @@ function startApp() {
        //navBarNoBorder: true,
        drawUnderNavBar : true,
        navBarTransparent: true
-     }
+     },
+    fab: {
+        collapsedId: 'new-transfer',
+        collapsedIcon: iconsMap['ios-add'],
+        backgroundColor: '#415261'
+      }
+
    },
    drawer: {
      left: {

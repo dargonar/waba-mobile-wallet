@@ -11,7 +11,8 @@ export type Operation = {
 };
 
 function reducer(action: Object): Operation[] {
-  return [1,2,3,4,5,6,7,8,9,10]
+  console.log('llaman al reducer con => ', JSON.stringify(action));
+  return action.history;
 }
 
 module.exports = createApolloReducer('LOADED_HISTORY', reducer);

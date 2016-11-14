@@ -34,31 +34,17 @@ class StyledScreen extends Component {
     //statics : {
 
     static navigatorButtons = {
-      rightButtons: [
-        {
-          icon: iconsMap['ios-person--active'],
-          id: 'add'
-        }
-      ],
+//       rightButtons: [
+//         {
+//           icon: iconsMap['ios-person--active'],
+//           id: 'add'
+//         }
+//       ],
       
       fab: {
-        collapsedId: 'share',
-        collapsedIcon: require('./img/ic_share.png'),
-        expendedId: 'clear',
-        expendedIcon: require('./img/ic_clear.png'),
-        backgroundColor: '#4dbce9',
-        actions: [
-          {
-            id: 'mail',
-            icon: require('./img/ic_add.png'),
-            backgroundColor: '#4dbce9'
-          },
-          {
-            id: 'twitter',
-            icon: require('./img/ic_archive.png'),
-            backgroundColor: '#4dbce9'
-          }
-        ]
+        collapsedId: 'new-transfer',
+        collapsedIcon: iconsMap['ios-add'],
+        backgroundColor: '#415261'
       }
       
   
@@ -71,6 +57,14 @@ class StyledScreen extends Component {
   }
 
   onNavigatorEvent(event) {
+    if(event.id == 'new-transfer') {
+      this.props.navigator.push({
+        screen: 'uw.pushed',
+        title: 'Pushed Screen'
+      });
+
+      return;
+    }
     console.log('onNavigatorEvent::', event.id);
 //     if(event.id == 'add') {
 //       this.props.navigator.showContextualMenu(

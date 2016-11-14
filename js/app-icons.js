@@ -8,10 +8,14 @@ const icons = {
   "ios-person": [30, "#bbb"],
   "ios-person--big": [50, "#bbb"],
 
+  "ios-arrow-round-up" : [30, "#fff"],
+     
   "ios-person--active": [30, "#fff"],
   "ios-person--active--big": [50, "#fff"],
   "ios-person--active--very-big": [100, "#fff"],
 
+  "ios-add" : [30, "#fff"],
+  
   "ios-people": [30, "#bbb"],
   "ios-people--active": [30, "#fff"],
 
