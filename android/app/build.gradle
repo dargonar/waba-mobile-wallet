@@ -98,6 +98,10 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
         multiDexEnabled true
+        
+        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
+                               onesignal_app_id: "1c6e4f37-2ed4-4e9a-9283-cd839cfc4e74",
+                               onesignal_google_project_number: "1063200064387"]
     }
     splits {
         abi {
@@ -148,6 +152,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-config')
+    compile project(':react-native-onesignal')
 }
 
 // Run this once to be able to run the application with BUCK

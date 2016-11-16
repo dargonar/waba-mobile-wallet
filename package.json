@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "postinstall": "./node_modules/.bin/rn-nodeify --install string_decoder,buffer,events,process,stream,util,inherits,fs,path --hack",
     "test": "jest"
   },
   "dependencies": {
@@ -13,8 +12,6 @@
     "asyncstorage-down": "^3.1.1",
     "buffer": "^3.6.0",
     "events": "^1.1.1",
-    "graphenejs-lib": "^0.4.10",
-    "graphenejs-ws": "^0.1.7",
     "graphql-tag": "^0.1.14",
     "inherits": "^2.0.3",
     "path-browserify": "0.0.0",
@@ -29,6 +26,7 @@
     "react-native-level-fs": "^3.0.0",
     "react-native-linear-gradient": "^1.5.15",
     "react-native-navigation": "^2.0.0-experimental.141",
+    "react-native-onesignal": "^1.2.3",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.5",
     "readable-stream": "^1.0.33",

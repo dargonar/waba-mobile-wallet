@@ -15,6 +15,7 @@ import com.eguma.barcodescanner.BarcodeScannerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -31,7 +32,8 @@ public class MainApplication extends NavigationApplication {
         new BarcodeScannerPackage(),
         new VectorIconsPackage(),
         new LinearGradientPackage(),
-        new ReactNativeConfigPackage()
+        new ReactNativeConfigPackage(),
+        new ReactNativeOneSignalPackage()
     );
 
     //return null;

@@ -16,17 +16,20 @@ class Drawer extends Component {
 
 		this._goToMain = this._goToMain.bind(this);
 		this._openSearch = this._openSearch.bind(this);
+		this._onMovies = this._onMovies.bind(this);
+		
 	}
 
 	_openSearch() {
 		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.SelectRecipient'
+		});		
 	}
 
 	_goToMain() {
 		this._toggleDrawer();
-		this.props.navigator.popToRoot({
-			screen: 'uw.Main'
-		});
+		this.props.navigator.popToRoot();
 	}
 
 	_toggleDrawer() {
@@ -37,6 +40,10 @@ class Drawer extends Component {
 		});
 	}
 
+	_onMovies() {
+		ToastAndroid.show('Pluto!', ToastAndroid.SHORT);		
+	}
+	
 	render() {
 		const iconSearch = (<Icon name="md-search" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconMovies = (<Icon name="md-film" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
@@ -67,7 +74,7 @@ class Drawer extends Component {
 						</TouchableOpacity>
 						<View style={styles.drawerListItem}>
 							{iconTV}
-							<Text style={styles.drawerListItemText} onPress={() => ToastAndroid.show('Coming Soon!', ToastAndroid.SHORT)}>
+							<Text style={styles.drawerListItemText} onPress={this._onMovies}>
 								TV Shows
 							</Text>
 						</View>

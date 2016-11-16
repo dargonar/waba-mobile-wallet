@@ -13,13 +13,13 @@ import { iconsMap } from '../../utils/AppIcons';
 
 class Main extends Component {
 
-  static navigatorButtons = {
-    fab: {
-      collapsedId     : 'new-transfer',
-      collapsedIcon   : iconsMap['ios-add'],
-      backgroundColor : '#415261'
-    }
-  };
+//   static navigatorButtons = {
+//     fab: {
+//       collapsedId     : 'new-transfer',
+//       collapsedIcon   : iconsMap['ios-add'],
+//       backgroundColor : '#415261'
+//     }
+//   };
 
   constructor(props) {
 		super(props);

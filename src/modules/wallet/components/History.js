@@ -37,7 +37,7 @@ class History extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.history !== this.props.history) {
       let data = nextProps.history;
-      console.log('componentWillReceiveProps:', data);
+      //console.log('componentWillReceiveProps:', data);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections(data),
         refreshing: false,
@@ -46,24 +46,24 @@ class History extends Component {
   }
 
   _rowHasChanged(oldRow, newRow) {
-    console.log('rowHasChanged::', oldRow, '--->', newRow);
+    //console.log('rowHasChanged::', oldRow, '--->', newRow);
     //return true;
     return oldRow.id !== newRow.id;
   }
 
   _getSectionHeaderData(dataBlob, sectionID) {
-    console.log('getSectionHeaderData::', dataBlob, '--->', sectionID);
+    //console.log('getSectionHeaderData::', dataBlob, '--->', sectionID);
     return sectionID;
   }
   
   _sectionHeaderHasChanged(prevSectionData, nextSectionData) {
-    console.log('sectionHeaderHasChanged::', prevSectionData, '--->', nextSectionData);
+    //console.log('sectionHeaderHasChanged::', prevSectionData, '--->', nextSectionData);
     return prevSectionData !== nextSectionData;
   }
 
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
-    //this.props.actions.retrieveHistory();
+    this.props.actions.retrieveHistory();
   }
 
   componentWillUnmount() {
