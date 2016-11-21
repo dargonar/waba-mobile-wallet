@@ -15,15 +15,16 @@ class Drawer extends Component {
 		super(props);
 
 		this._goToMain = this._goToMain.bind(this);
-		this._openSearch = this._openSearch.bind(this);
-		this._onMovies = this._onMovies.bind(this);
+		this._openRecipient = this._openRecipient.bind(this);
+		this._onAmount = this._onAmount.bind(this);
 		
 	}
 
-	_openSearch() {
+	_openRecipient() {
 		this._toggleDrawer();
 		this.props.navigator.push({
-			screen: 'wallet.SelectRecipient'
+			screen: 'wallet.SelectRecipient',
+			title: 'Elija destinatario'
 		});		
 	}
 
@@ -40,14 +41,18 @@ class Drawer extends Component {
 		});
 	}
 
-	_onMovies() {
-		ToastAndroid.show('Pluto!', ToastAndroid.SHORT);		
+	_onAmount() {
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.SelectAmount',
+			title: 'Elija monto'
+		});		
 	}
 	
 	render() {
-		const iconSearch = (<Icon name="md-search" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconMovies = (<Icon name="md-film" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
-		const iconTV = (<Icon name="ios-desktop" size={26} color="#9F9F9F" style={styles.drawerListIcon} />);
+		const iconRecipient = (<Icon name="md-search" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconTV = (<Icon name="md-film" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
+		const iconAmount = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={styles.drawerListIcon} />);
 		// lime:       #d8ef27,
     // received:   #8ec919,
     // sent:       #fcc4cb,
@@ -56,25 +61,25 @@ class Drawer extends Component {
 			<LinearGradient colors={['rgba(216, 239, 39, 0.7)', 'rgba(142,201,25, 0.9)', 'rgba(252,196,203, 1)']} style={styles.linearGradient}>
 				<View style={styles.container}>
 					<View style={styles.drawerList}>
-						<TouchableOpacity onPress={this._openSearch}>
+						<TouchableOpacity onPress={this._openRecipient}>
 							<View style={styles.drawerListItem}>
-								{iconSearch}
+								{iconRecipient}
 								<Text style={styles.drawerListItemText}>
-									Search
+									Recipient
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this._goToMovies}>
+						<TouchableOpacity onPress={this._onAmount}>
 							<View style={styles.drawerListItem}>
-								{iconMovies}
+								{iconAmount}
 								<Text style={styles.drawerListItemText}>
-									Movies
+									Amount
 								</Text>
 							</View>
 						</TouchableOpacity>
 						<View style={styles.drawerListItem}>
 							{iconTV}
-							<Text style={styles.drawerListItemText} onPress={this._onMovies}>
+							<Text style={styles.drawerListItemText} onPress={this._onAmount}>
 								TV Shows
 							</Text>
 						</View>

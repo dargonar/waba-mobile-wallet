@@ -38,6 +38,79 @@ export function createKeys() {
 }
 
 
+// USERS
+
+const hack_users = [
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+	{
+		name: 'Chris Jackson',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+		subtitle: 'Vice Chairman'
+	},
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+	{
+		name: 'Chris Jackson',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+		subtitle: 'Vice Chairman'
+	},
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+	{
+		name: 'Chris Jackson',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+		subtitle: 'Vice Chairman'
+	},
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+	{
+		name: 'Chris Jackson',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+		subtitle: 'Vice Chairman'
+	},
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+	{
+		name: 'Chris Jackson',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+		subtitle: 'Vice Chairman'
+	},
+	{
+		name: 'Amy Farha',
+		avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+		subtitle: 'Vice President'
+	},
+];
+
+
+export function retrieveUsers(query) {
+
+		return new Promise((resolve, reject) => {
+
+			setTimeout( () => {
+				resolve(hack_users);	
+			}, 3000);
+			
+		});
+}
+
+
 // GENRES
 export function retrieveHistorySuccess(res) {
 	return {
