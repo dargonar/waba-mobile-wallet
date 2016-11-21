@@ -33,6 +33,11 @@ const icons = {
 const defaultIconProvider = Ionicons;
 
 let iconsMap = {};
+
+function getIcon(name) {
+  return iconsMap[name];
+}
+
 let iconsLoaded = new Promise((resolve, reject) => {
   new Promise.all(
     Object.keys(icons).map(iconName => {

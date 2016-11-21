@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 
 import * as walletActions from '../wallet.actions';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import styles from './styles/History';
 import { iconsMap } from '../../../utils/AppIcons';
 

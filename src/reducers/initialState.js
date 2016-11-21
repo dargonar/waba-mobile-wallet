@@ -1,6 +1,7 @@
 export default {
 	wallet: {
-		balance: [],
-		history: [],
+		balance  : [],
+		history  : [],
+		new_keys : {},
 	}
 };

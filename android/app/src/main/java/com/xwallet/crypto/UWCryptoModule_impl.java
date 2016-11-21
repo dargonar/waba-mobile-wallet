@@ -172,7 +172,7 @@ public class UWCryptoModule_impl {
     String file_name   = BIP39_ENGLISH_FILE;
     String file_sha256 = BIP39_ENGLISH_SHA256;
 
-    if(lang == "es") {
+    if(lang.equals("es")) {
       file_name   = BIP39_SPANISH_FILE;
       file_sha256 = BIP39_SPANISH_SHA256;
     }

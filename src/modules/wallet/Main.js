@@ -13,15 +13,7 @@ import { iconsMap } from '../../utils/AppIcons';
 
 class Main extends Component {
 
-//   static navigatorButtons = {
-//     fab: {
-//       collapsedId     : 'new-transfer',
-//       collapsedIcon   : iconsMap['ios-add'],
-//       backgroundColor : '#415261'
-//     }
-//   };
-
-  constructor(props) {
+	constructor(props) {
 		super(props);
 
     //this._onNavigatorEvent = this._onNavigatorEvent.bind(this);

@@ -1,6 +1,41 @@
 // import axios from 'axios';
 import * as types from '../../constants/actionTypes';
 // import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
+import UWCrypto from '../../utils/Crypto';
+
+export function createKeysSuccess(new_keys) {
+	return {
+		type      : types.CREATE_KEYS_SUCCESS,
+		new_keys  : new_keys
+	};
+}
+
+export function createKeys() {
+	return function (dispatch) {
+		let that = this;
+		UWCrypto.generateMnemonic('es', 128).then(function(res1) {
+			UWCrypto.mnemonicToMasterKey(res1.mnemonic).then(function(res2) {
+				let p = []
+				Promise.all([ 
+					UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 1),
+					UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 2),
+					UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
+				]).then(function(res3) {
+					dispatch(createKeysSuccess({
+						mnemonic : res1.mnemonic,
+						keys     : res3
+					}))
+				}, function(err) {
+					reject(err);
+				});
+			}, function(err) {
+				reject(err);
+			});
+		}, function(err) {
+			reject(err);
+		});
+	}
+}
 
 
 // GENRES

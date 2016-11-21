@@ -10,6 +10,12 @@ export default function (state = initialState.wallet, action) {
 				history: action.history
 			};
 
+		case types.CREATE_KEYS_SUCCESS:
+			return {
+				...state,
+				new_keys: action.new_keys
+			};
+
 // 		case types.RETRIEVE_NOWPLAYING_MOVIES_SUCCESS:
 // 			return {
 // 				...state,
