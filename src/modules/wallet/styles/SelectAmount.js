@@ -5,11 +5,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
-	
-	separator : {
-    height             : 1,
-    backgroundColor    : '#85858544',
-  }
+	inputText:{
+		textAlign:'right', 
+		textAlignVertical:'center',
+		/* backgroundColor: '#ff00ff' */
+		flex:1,
+		fontSize: 25
+		
+	}
 });
 
 export default styles;

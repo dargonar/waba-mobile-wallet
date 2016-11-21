@@ -8,6 +8,7 @@ const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   "ios-arrow-round-up" : [30, "#fff"],
   "ios-add" : [30, "#fff"],
+  "ios-backspace" : [30, "#fff"],
 
   "ios-person": [30, "#bbb"],
   "ios-person--big": [50, "#bbb"],
@@ -24,7 +25,16 @@ const icons = {
 
   "ios-chatbubbles": [30, "#bbb"],
   "ios-chatbubbles--active": [30, "#fff"],
-
+  
+  "logo-usd": [30, "#bbb"],
+  "logo-usd--active": [30, "#fff"],
+   
+  "ios-backspace": [30, "#bbb"],
+  "ios-backspace--active": [30, "#fff"],
+  
+//   "search": [30, "#bbb"],
+//   "search--active": [30, "#fff"],
+  
   // Use other Icon provider, see the logic at L39
   "facebook": [30, "#bbb", FontAwesome],
   "facebook--active": [30, "#fff", FontAwesome],
