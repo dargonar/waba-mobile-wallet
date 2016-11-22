@@ -3,16 +3,15 @@ import {
 	View,
   Button,
 	Image,
-	TextInput,
 	TouchableHighlight,
 	Text
 } from 'react-native';
 
-import styles from './styles/Start';
+import styles from './styles/Welcome';
 import { FormLabel, FormInput } from 'react-native-elements'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-class Start extends Component {
+class Welcome extends Component {
 
 	constructor(props) {
 		super(props);
@@ -22,9 +21,15 @@ class Start extends Component {
   
 	_onNewAccount() {
 		this.props.navigator.push({
-			screen : 'wallet.NewAccount',
+			screen : 'wallet.Start',
 			title :  'Creando cuenta'
 		});
+	}
+	
+	_onRestoreAccount() {
+		this.props.navigator.push({
+			screen : 'wallet.RestoreAccount'
+		}); 		
 	}
 	
 	render() {
@@ -40,27 +45,35 @@ class Start extends Component {
 					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:2, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
-					<View style={{flexDirection:'row', justifyContent:'center', marginBottom:25  }}>	
-						<TextInput
-							style={styles.input} 
-							placeholderStyle={styles.input}
-							placeholder="Ingrese nombre"
-							placeholderTextColor="#aaaaaa"
-							underlineColorAndroid ="#ffffff"
-						/>
+					<View style={{flexDirection:'column', justifyContent:'center', marginBottom:25  }}>	
+						<Text style={styles.welcomeTitle}>
+              Bienvenido
+            </Text>
+            <Text style={styles.welcomeTitle}>
+              Demo PESO SOCIAL
+            </Text>
 					</View>  
-					<KeyboardSpacer />
-					<TouchableHighlight
+					
+						
+				</View>
+				<View style={{flex:2, paddingLeft:15,paddingRight:15, flexDirection:'column', alignItems: 'stretch', justifyContent:'center' }}>
+          <TouchableHighlight
 							style={[styles.fullWidthButton, styles.fullWidthButton2]}
 							onPress={this._onNewAccount } >
 						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
 					</TouchableHighlight>
-						
+					
+					<TouchableHighlight
+							style={[styles.fullWidthButton, styles.fullWidthButton1]}
+							onPress={this._onRestoreAccount} >
+						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+					</TouchableHighlight>
 				</View>
+      
       </View>
 		);
 	}
 }
 
 
-export default Start;
+export default Welcome;

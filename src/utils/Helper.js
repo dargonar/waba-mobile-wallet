@@ -32,7 +32,7 @@ function launchWallet() {
 function launchOnboard() {
   Navigation.startSingleScreenApp({
     screen: {
-      screen				 : 'wallet.Start',
+      screen				 : 'wallet.Welcome',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
