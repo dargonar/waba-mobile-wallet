@@ -1,28 +1,12 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#1f475b'
+		//justifyContent:'flex-start'
 	},
-	
-	separator : {
-    height             : 1,
-    backgroundColor    : '#85858544',
-  },
-	
-	input:{
-		flex:1, 
-		color:"#ffffff", 
-		textAlign:'center',
-		fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 25,
-		lineHeight : 30
-	},
-	
-	fullWidthButton: {
-		borderRadius: 5,
+  fullWidthButton: {
     height:60,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -40,7 +24,22 @@ const styles = StyleSheet.create({
 		fontWeight : '100',
     fontSize   : 15,
 		color: 'white'
+  },
+  keywordsText:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 25,
+    lineHeight : 40,
+		color: 'white'
+  },
+  keywordsTitle:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 15,
+    lineHeight : 25,
+		color: 'white'
   }
+
 });
 
 export default styles;

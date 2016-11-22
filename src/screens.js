@@ -11,7 +11,7 @@ import Memo from './modules/wallet/Memo';
 import SendConfirm from './modules/wallet/SendConfirm';
 import Sending from './modules/wallet/Sending';
 import SendResult from './modules/wallet/SendResult';
-
+import RecoveryKeywords from './modules/wallet/RecoveryKeywords';
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('wallet.Start', () => Start);
@@ -24,5 +24,6 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.SendConfirm', () => SendConfirm);
 	Navigation.registerComponent('wallet.Sending', () => Sending);
 	Navigation.registerComponent('wallet.SendResult', () => SendResult);
+	Navigation.registerComponent('wallet.RecoveryKeywords', () => RecoveryKeywords, store, Provider);
 	Navigation.registerComponent('wallet.Drawer', () => Drawer);
 }

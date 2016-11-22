@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	drawerList: {
-
+		flex:5
 	},
 	drawerListIcon: {
 		width: 27
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 	},
 	drawerListItemText: {
 		color: 'white',
-		fontWeight: 'bold',
 		fontSize: 23,
 		paddingLeft: 15,
 		flex: 1
@@ -37,7 +36,22 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 25,
 		marginLeft: 53
-	}
+	},
+	
+	usernameTitle:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 15,
+    lineHeight : 25,
+		color: 'white'
+  },
+	usernameText:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 25,
+    lineHeight : 35,
+		color: 'white'
+  }
 });
 
 export default styles;

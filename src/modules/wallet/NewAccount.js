@@ -1,72 +1,100 @@
 import React, { PropTypes, Component } from 'react';
+
 import {
-	View,
-	Text,
-	Button,
-  TextInput
+  View,
+  Text,
+	Alert
 } from 'react-native';
 
-import * as walletActions from './wallet.actions';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import * as walletActions from './wallet.actions';
 import styles from './styles/NewAccount';
-
+import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Spinner from 'react-native-spinkit';
 
 class NewAccount extends Component {
+  
+  static navigatorStyle = {
+    navBarTextColor: '#ffffff', 
+    navBarBackgroundColor: '#1f475b',
+    navBarButtonColor: '#ffffff'
+  }
+  
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
+                   '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
+      size:       100,
+      color:      "#d8ef27",
+      isVisible:  true
+    };
+    this._onCreateAccountSucces = this._onCreateAccountSucces.bind(this);
+    
+  }
+  
+  _onCreateAccountSucces(){
+    this.props.navigator.push({
+			screen:     'wallet.RecoveryKeywords',
+			title:      'Recupero de clave'
+    });
+  }
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			creating : false,
-			name     : ''
-		}
-	}
-	
-	_onCreate() {
-		this.setState({creating:true});
-		this.props.actions.createKeys();
-	}
+  componentWillMount() {
+  }
 
-	render() {
-		const name = this.state.name;
-		return (
-			<View style={styles.container}>
-				
-				<View style={{flex:1, justifyContent:'flex-start'}}>
-					<Text>Ingrese el nombre de la cuenta</Text>
-					<TextInput
-						autoFocus={true}
-						style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-						onChangeText={(name) => this.setState({name:name})}
-						value={name}
-					/>
-				</View>
-				<View style={{flex:1, justifyContent:'flex-end'}}>
-					<Button
-						ref={(button) => this.button = button}
-						disabled={this.state.creating}
-						onPress={() => { this._onCreate(); }}
-						title="Crear"
-					/>
-				</View>
-				<KeyboardSpacer/>
-			</View>
-		);
-	}
+  componentWillReceiveProps(nextProps) {
+  }
+
+  componentDidMount() {
+  	setTimeout(() => {
+//       Alert.alert(
+// 				'Error en envío',
+// 				'No dispone de fondos suficientes',
+// 				[
+// 					{text: 'OK', onPress: () => this._onCreateAccountSucces() },
+// 				]
+// 			)
+			this._onCreateAccountSucces();
+    }, 3500)	;
+  }
+
+  componentWillUnmount() {
+  }
+  
+  focus() {
+  }
+
+  render() {
+  	let type = this.state.types[3];
+    return (
+      <View style={styles.container}>
+        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#1f475b'}}>
+          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#d8ef27"/>
+        </View>
+        <View style={{flex:4, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
+					<View style={{flexDirection:'row', justifyContent:'center'}}>	
+						<Text style={styles.title_part}>Creando cuenta</Text>
+					</View>
+        </View>
+				<View style={{flex:1, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
+					<View style={{flexDirection:'row', justifyContent:'center'}}>	
+						<Text style={styles.title_part}>Por favor aguarde...</Text>
+					</View>
+        </View>
+      </View>
+    );
+  }
 }
 
+// function mapDispatchToProps(dispatch) {
+// 	return {
+// 		actions: bindActionCreators(walletActions, dispatch)
+// 	};
+// }
 
-function mapStateToProps(state, ownProps) {
-	return {
-		new_keys: state.wallet.new_keys
-	};
-}
-
-function mapDispatchToProps(dispatch) {
-	return {
-		actions: bindActionCreators(walletActions, dispatch)
-	};
-}
-export default connect(mapStateToProps, mapDispatchToProps)(NewAccount);
+export default NewAccount;
