@@ -13,9 +13,11 @@ const styles = StyleSheet.create({
     flexDirection : 'row'
   },
   int_part : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'roboto_light',
     color      : '#d8ef27',
-    fontSize   : 32
+		fontWeight : '100',
+    fontSize   : 32,
+		lineHeight : 35		
   },
   dec_part : {
     fontFamily  : 'roboto_regular',

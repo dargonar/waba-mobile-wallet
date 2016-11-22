@@ -35,19 +35,23 @@ iconsLoaded.then(() => {
 	
 	const store = configureStore();
 	registerScreens(store, Provider);
+	// 	launchWallet();
+	launchOnboard();
+	//launchNormal();
 
-	try {
-		AsyncStorage.getItem('@Store:registered').then((value)=>{
-			if (value !== null) {
-				launchNormal();
-			} else {
-				launchOnboard();
-			}
-		});
-	} catch (error) {
-		console.log('Error!!!!');
-		//TODO: Error?
-	}
+// 	try {
+// 		AsyncStorage.getItem('@Store:registered').then((value)=>{
+			
+// 			if (value !== null) {
+// 				launchNormal();
+//  			} else {
+//  				launchOnboard();
+//  			}
+// 		});
+// 	} catch (error) {
+// 		console.log('Error!!!!');
+// 		//TODO: Error?
+// 	}
 	
 });
 

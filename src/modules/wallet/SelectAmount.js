@@ -5,14 +5,29 @@ import {
   StyleSheet, 
   TouchableHighlight
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { Button } from 'react-native-elements';
 
 import styles from './styles/SelectAmount';
-
+import { connect } from 'react-redux';
 import Keyboard from './components/Keyboard';
 
+import { iconsMap } from '../../utils/AppIcons';
+
+var homeIcon;  
+
 class SelectAmount extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      amount: 	 '', 
+			recipient: props.recipient
+    };
+//     Icon.getImageSource('ios-attach', 30).then((source) => { homeIcon = source});
+    this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+  }
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
@@ -20,12 +35,40 @@ class SelectAmount extends React.Component {
     navBarButtonColor: '#ffffff'
   }
   
-  constructor(props) {
-        super(props);
-        this.state = {
-            text: ''
-        };
+//   static navigatorButtons = { rightButtons : [
+//     {
+//       //disableIconTint: true,
+//       //title: 'Memo',
+//       icon: iconsMap['ios-attach'],
+//       id: 'attachMemo' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+//     }
+//   ]}
+  
+  _showMemo(){
+    //showModal
+    this.props.navigator.push({
+      screen: "wallet.Memo", // unique ID registered with Navigation.registerScreen
+      title: "Mensaje", // title of the screen as appears in the nav bar (optional)
+      navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+      animationType: 'slide-down', // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+      rightButtons: [
+        {
+          icon: iconsMap['ios-trash-outline'],
+          id: 'clearMemo'
+        }
+      ]
+    });
+  }
+  
+  _onNavigatorEvent(event) { 
+    if (event.type == 'NavBarButtonPress') { 
+      if (event.id == 'attachMemo') { 
+//         AlertIOS.alert('NavBar', 'Edit button pressed');
+        this._showMemo();        
+      }
     }
+  }
+  
 
     componentDidMount() {
 //         model.onChange((model) => {
@@ -35,16 +78,16 @@ class SelectAmount extends React.Component {
 
     _handleClear(){
       this.setState({
-        text : ''
+        amount : ''
       });
     }
 
     _handleDelete(){
-      if (this.state.text.length==0)
+      if (this.state.amount.length==0)
         return;
-      let new_string = this.state.text.substring(0, this.state.text.length-1);
+      let new_string = this.state.amount.substring(0, this.state.amount.length-1);
       this.setState({
-        text : new_string
+        amount : new_string
       });
     }
 
@@ -52,45 +95,48 @@ class SelectAmount extends React.Component {
       
       if('0123456789'.indexOf(key)>=0)
       {
-        if (this.state.text=='0' && key=='0')
+        if (this.state.amount=='0' && key=='0')
           return;
-        if (this.state.text=='0' && key!='0')
+        if (this.state.amount=='0' && key!='0')
         {
           this.setState({
-            text : key  
+            amount : key  
           });
           return;
         } 
       }
-      if (this.state.text.length==1 && key=='0')
+      
+//       if (this.state.text.length==1 && key=='0')
+//         return;
+      
+      if((key==',' || key=='.') && this.state.amount.indexOf(key)>=0)
         return;
       
-      if((key==',' || key=='.') && this.state.text.indexOf(key)>=0)
-        return;
-      
-      if((key==',' || key=='.') && this.state.text.length==0)
+      if((key==',' || key=='.') && this.state.amount.length==0)
       {
         this.setState({
-          text : '0'+key
+          amount : '0'+key
         });
         return;
       }
       this.setState({
-        text : this.state.text+key  
+        amount : this.state.amount+key  
       });
     }
     
     _onNext(){
-      
+      this.props.navigator.push({
+        screen: 'wallet.SendConfirm',
+        title: 'Confirmar envío',
+        passProps: {
+          recipient: 	this.state.recipient, 
+					memo: 			this.props.memo, 
+					amount: 		this.state.amount
+				}
+    	});
     }
-/*
-import { FormLabel, FormInput } from 'react-native-elements'
 
-<FormLabel>Name</FormLabel>
-<FormInput onChangeText={someFunction}/>
-*/
-//onPress={this._onPressButton}
-    render() {
+		render() {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
@@ -98,7 +144,7 @@ import { FormLabel, FormInput } from 'react-native-elements'
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 7, flexDirection: 'column'}}>
                   <Text style={styles.inputText}>
-                    {this.state.text}
+                    {this.state.amount}
                   </Text>
                 </View>
                 <View style={{flex: 1, flexDirection: 'column'}}>
@@ -117,4 +163,12 @@ import { FormLabel, FormInput } from 'react-native-elements'
         );
     }
 }
-export default SelectAmount;
+
+function mapStateToProps(state, ownProps) {
+	return {
+		memo: state.wallet.memo
+	};
+}
+
+export default connect(mapStateToProps, null)(SelectAmount);
+

@@ -37,8 +37,55 @@ export function createKeys() {
 	}
 }
 
+export function memoSuccessHACK(memo) {
+	return {
+		type      : types.MEMO_SUCCESS,
+		memo  		: memo
+	};
+}
+
+export function memoSuccess(memo) {
+	return function (dispatch) {
+		dispatch(memoSuccessHACK(memo));	
+	}
+}
 
 // USERS
+
+const hack_users2 = [  
+ [
+   "elmundo",
+   "1.2.115431"
+ ],
+ [
+   "eln",
+   "1.2.137543"
+ ],
+ [
+   "elnino",
+   "1.2.7348"
+ ],
+ [
+   "elnino-ii",
+   "1.2.110017"
+ ],
+ [
+   "elmundo",
+   "1.2.115431"
+ ],
+ [
+   "eln",
+   "1.2.137543"
+ ],
+ [
+   "elnino",
+   "1.2.7348"
+ ],
+ [
+   "elnino-ii",
+   "1.2.110017"
+ ]
+]
 
 const hack_users = [
 	{
@@ -104,8 +151,8 @@ export function retrieveUsers(query) {
 		return new Promise((resolve, reject) => {
 
 			setTimeout( () => {
-				resolve(hack_users);	
-			}, 3000);
+				resolve(hack_users2);	
+			}, 500);
 			
 		});
 }

@@ -15,7 +15,12 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				new_keys: action.new_keys
 			};
-
+			
+		case types.MEMO_SUCCESS:
+			return {
+				...state,
+				memo: action.memo
+			};
 // 		case types.RETRIEVE_NOWPLAYING_MOVIES_SUCCESS:
 // 			return {
 // 				...state,

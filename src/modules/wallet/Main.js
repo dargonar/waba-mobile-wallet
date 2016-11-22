@@ -15,12 +15,9 @@ class Main extends Component {
 
 	constructor(props) {
 		super(props);
-
-    //this._onNavigatorEvent = this._onNavigatorEvent.bind(this);
-    
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 	}
-
+	
 	componentWillMount() {
 		//this._retrieveHistory();
 	}
@@ -31,9 +28,10 @@ class Main extends Component {
 
   _onNavigatorEvent(event) {
 
-    if(event.id == 'new_transfer') {
+    if(event.id == 'newTx') {
       this.props.navigator.push({
-        screen: 'wallet.select_user'
+        screen: 'wallet.SelectRecipient',
+				title: 'Seleccione destinatario'
       });
     }
     

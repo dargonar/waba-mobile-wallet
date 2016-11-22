@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import {
 	View,
-  Button
+  Button,
+	Image
 } from 'react-native';
 
 import styles from './styles/Start';
@@ -28,8 +29,11 @@ class Start extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-
-        <View style={{flex:1, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+				
+			<View style={{flex:1, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+				<Image source={require('./img/logo.rc2.png')} style={{width: 200, height: 200}} />
+      </View>
+			<View style={{flex:1, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
           <Button
             color="#841584"
             onPress={() => { this._onNewAccount(); }}

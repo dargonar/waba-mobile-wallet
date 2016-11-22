@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styles from './styles/SelectRecipient';
 import * as walletActions from './wallet.actions';
+import { iconsMap } from '../../utils/AppIcons';
 
 class SelectRecipient extends Component {
   
@@ -27,9 +28,7 @@ class SelectRecipient extends Component {
 //     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
     
     this._onChangeText        = this._onChangeText.bind(this);
-    this._onClearButtonPress  = this._onClearButtonPress.bind(this);
-    //this._onUserSelected			= this._onUserSelected.bind(this);
-		
+  	
     let dataSource = new ListView.DataSource({
       rowHasChanged : this._rowHasChanged.bind(this)
     });
@@ -39,16 +38,12 @@ class SelectRecipient extends Component {
       refreshing : false
     };
 		
-  }
+	}
   
   _onChangeText() {
   
 	}
   
-	_onClearButtonPress() {
-  
-	}
-
   _rowHasChanged(oldRow, newRow) {
     //console.log('rowHasChanged::', oldRow, '--->', newRow);
     //return true;
@@ -92,19 +87,47 @@ class SelectRecipient extends Component {
   
   focus() {
   }
+	
+// 	onPress = {() => { 
+// 					this.props.navigator.push({
+// 						screen: 'wallet.SelectAmount',
+// 						title: 'Indique monto',
+// 						passProps: {recipient: rowData}
+// 					});
+					
+// 	}}
 
+// onPress={this._onRecipientSelected.bind(this, rowData)} 
+// onPress = {() => { this._onRecipientSelected.bind(rowData) }}
+
+	_onRecipientSelected(data){
+		this.props.actions.memoSuccess('');		
+		this.props.navigator.push({
+			screen: 'wallet.SelectAmount',
+			title: 'Indique monto',
+			passProps: {recipient: data},
+			rightButtons: [
+				{
+					icon: iconsMap['ios-attach'],
+					id: 'attachMemo'
+				}
+			]
+		});
+		
+	}
+				
   renderRow (rowData, sectionID) {
 		return (
       <ListItem
-				onPress = {() => { 
-					console.log(rowData);
-				}}
+				onPress={this._onRecipientSelected.bind(this, rowData)} 
 				underlayColor='#cccccc'
         key={sectionID}
-        title={rowData.name}
+        title={rowData[0]}
       />
     )
   }
+	
+	//renderRow={this.renderRow}
   render() {
     //console.log(this.state.dataSource);
 		
@@ -119,7 +142,12 @@ class SelectRecipient extends Component {
 			content = ( 
 				<List>
 					<ListView
-						renderRow={this.renderRow}
+						renderRow={(rowData, sectionID) => <ListItem
+																			onPress={this._onRecipientSelected.bind(this, rowData)} 
+																			underlayColor='#cccccc'
+																			key={sectionID}
+																			title={rowData[0]}
+																		/>}
 						dataSource={this.state.dataSource}
 					/>
 				</List>
@@ -138,10 +166,15 @@ class SelectRecipient extends Component {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return {
-// 		actions: bindActionCreators(walletActions, dispatch)
-// 	};
-// }
+function mapStateToProps(state, ownProps) {
+	return {
+		memo: state.wallet.memo
+	};
+}
 
-export default SelectRecipient;
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(walletActions, dispatch)
+	};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SelectRecipient);

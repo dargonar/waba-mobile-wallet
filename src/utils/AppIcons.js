@@ -32,8 +32,14 @@ const icons = {
   "ios-backspace": [30, "#bbb"],
   "ios-backspace--active": [30, "#fff"],
   
-//   "search": [30, "#bbb"],
-//   "search--active": [30, "#fff"],
+  "ios-attach": [30, "#ffffff"],
+  "ios-attach--active": [30, "#ffffff"],
+  
+  "ios-trash-outline": [30, "#ffffff"],
+  "ios-trash-outline--active": [30, "#fff"],
+  
+  "ios-add": [30, "#ffffff"],
+  "ios-add--active": [30, "#fff"],
   
   // Use other Icon provider, see the logic at L39
   "facebook": [30, "#bbb", FontAwesome],

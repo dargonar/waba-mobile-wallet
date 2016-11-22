@@ -10,21 +10,25 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles/Drawer';
 
+import { iconsMap } from '../../utils/AppIcons';
+
 class Drawer extends Component {
 	constructor(props) {
 		super(props);
 
-		this._goToMain = this._goToMain.bind(this);
-		this._openRecipient = this._openRecipient.bind(this);
-		this._onAmount = this._onAmount.bind(this);
-		
+		this._goToMain 				= this._goToMain.bind(this);
+		this._openRecipient 	= this._openRecipient.bind(this);
+		this._onAmount 				= this._onAmount.bind(this);
+		this._onConfirm 			= this._onConfirm.bind(this);
+		this._onSending 			= this._onSending.bind(this);
+		this._onSendResult 	  = this._onSendResult.bind(this);
 	}
 
 	_openRecipient() {
 		this._toggleDrawer();
 		this.props.navigator.push({
 			screen: 'wallet.SelectRecipient',
-			title: 'Elija destinatario'
+			title: 'Seleccione destinatario'
 		});		
 	}
 
@@ -45,10 +49,39 @@ class Drawer extends Component {
 		this._toggleDrawer();
 		this.props.navigator.push({
 			screen: 'wallet.SelectAmount',
-			title: 'Elija monto'
+			title: 'Indique monto',
+			rightButtons: [
+					{
+						icon: iconsMap['ios-attach'],
+						id: 'attachMemo'
+					}
+				]
 		});		
 	}
 	
+	_onConfirm(){
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.SendConfirm',
+			title: 'Confirmar envío'
+		});
+	}
+	
+	_onSending(){
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.Sending',
+			title: 'Enviando...'
+		});
+	}
+	
+	_onSendResult(){
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.SendResult',
+			title: 'Envío exitoso'
+		});
+	}
 	render() {
 		const iconRecipient = (<Icon name="md-search" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconTV = (<Icon name="md-film" size={26} color="#9F9F9F" style={[styles.drawerListIcon, { paddingLeft: 3 }]} />);
@@ -77,12 +110,30 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<View style={styles.drawerListItem}>
-							{iconTV}
-							<Text style={styles.drawerListItemText} onPress={this._onAmount}>
-								TV Shows
-							</Text>
-						</View>
+						<TouchableOpacity onPress={this._onConfirm}>
+							<View style={styles.drawerListItem}>
+								{iconTV}
+								<Text style={styles.drawerListItemText}>
+									Confirm
+								</Text>
+							</View>
+						</TouchableOpacity>
+					  <TouchableOpacity onPress={this._onSending}>
+							<View style={styles.drawerListItem}>
+								{iconTV}
+								<Text style={styles.drawerListItemText}>
+									Sending
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this._onSendResult}>
+							<View style={styles.drawerListItem}>
+								{iconTV}
+								<Text style={styles.drawerListItemText}>
+									SendResult
+								</Text>
+							</View>
+						</TouchableOpacity>
 					</View>
 					<Text style={styles._version}>
 						{/* 'v1.0.0' */}

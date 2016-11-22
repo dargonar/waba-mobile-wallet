@@ -16,6 +16,7 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
+import com.react.rnspinkit.RNSpinkitPackage;  
 
 public class MainApplication extends NavigationApplication {
 
@@ -33,7 +34,8 @@ public class MainApplication extends NavigationApplication {
         new VectorIconsPackage(),
         new LinearGradientPackage(),
         new ReactNativeConfigPackage(),
-        new ReactNativeOneSignalPackage()
+        new ReactNativeOneSignalPackage(),
+        new RNSpinkitPackage()  
     );
 
     //return null;

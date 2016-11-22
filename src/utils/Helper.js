@@ -1,5 +1,7 @@
 import { Navigation } from 'react-native-navigation';
 import UWCrypto from './Crypto';
+import { iconsMap } from './AppIcons';
+
 
 function launchWallet() {
   Navigation.startSingleScreenApp({
@@ -9,7 +11,14 @@ function launchWallet() {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
        navBarTransparent : true
-      }
+      },
+//       navigatorButtons:{
+        fab: {
+          collapsedId: 'newTx',
+          collapsedIcon: iconsMap['ios-add'],
+          backgroundColor: '#1f475b'
+        }
+//       }
     },
     animationType : 'none',
     drawer: {

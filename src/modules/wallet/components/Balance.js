@@ -21,10 +21,10 @@ class Balance extends Component {
 		return (
       <Image source={require('./img/bg-dashboard.png')} style={styles.container}>
         <View style={styles.balance}> 
-          <Text style={styles.int_part}>4500.</Text>
+          <Text style={styles.int_part}>$ 4500.</Text>
           <Text style={styles.dec_part}>00</Text>
         </View>
-        <Text style={styles.currency}>CREDITOS</Text>
+        <Text style={styles.currency}>PESOcial</Text>
       </Image>      
     );
 	}
