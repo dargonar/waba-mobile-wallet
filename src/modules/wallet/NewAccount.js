@@ -11,6 +11,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
+
 import styles from './styles/NewAccount';
 import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -56,6 +57,9 @@ class NewAccount extends Component {
   _onCreateAccount(){
 		walletActions.createAccount(this.state.account_name).then( (data) => {
 			AsyncStorage.setItem('@Store:data', JSON.stringify(data));
+			
+			this.props.actions.createAccountSuccessHACK(data);
+			
 			this.props.navigator.dismissModal({
 				animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 			});
@@ -129,4 +133,15 @@ class NewAccount extends Component {
 // 	};
 // }
 
-export default NewAccount;
+function mapStateToProps(state, ownProps) {
+	return {
+		
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(walletActions, dispatch)
+	};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NewAccount);

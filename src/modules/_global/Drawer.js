@@ -152,6 +152,7 @@ Drawer.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+	console.log(' -- DRAWER -> mapStateToProps');
 	return {
 		account: state.wallet.account
 	};

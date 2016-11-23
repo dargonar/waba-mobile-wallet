@@ -26,6 +26,13 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				balance: action.balance
 			};
+		
+		case types.CREATE_ACCOUNT_SUCCESS:
+			console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+			return {
+				...state,
+				account: action.account
+			};
 			
 // 		case types.RETRIEVE_NOWPLAYING_MOVIES_SUCCESS:
 // 			return {
