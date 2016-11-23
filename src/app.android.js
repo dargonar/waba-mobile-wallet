@@ -35,8 +35,8 @@ iconsLoaded.then(() => {
 	
 	const store = configureStore();
 	registerScreens(store, Provider);
-	// 	launchWallet();
-	launchOnboard();
+	launchWallet();
+	// launchOnboard();
 	//launchNormal();
 
 // 	try {

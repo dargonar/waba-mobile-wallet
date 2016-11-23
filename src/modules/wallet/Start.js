@@ -17,7 +17,7 @@ class Start extends Component {
 	constructor(props) {
 		super(props);
 		this._onNewAccount 			= this._onNewAccount.bind(this);
-		this._onRestoreAccount 	= this._onRestoreAccount.bind(this);
+		//this._onRestoreAccount 	= this._onRestoreAccount.bind(this);
 	}
   
 	_onNewAccount() {

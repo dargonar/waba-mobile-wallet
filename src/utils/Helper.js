@@ -15,7 +15,7 @@ function launchWallet() {
 //       navigatorButtons:{
         fab: {
           collapsedId: 'newTx',
-          collapsedIcon: iconsMap['ios-add'],
+          collapsedIcon: iconsMap['ios-add'].uri,
           backgroundColor: '#1f475b'
         }
 //       }
