@@ -18,11 +18,22 @@ class Balance extends Component {
 
 	render() {
 		//const { info, viewMovie } = this.props;
+		
+		//const int_part = 0;
+		//const dec_part = 0;
+		
+		let b = this.props.balance;
+		let parts = Number(b).toFixed(2).split('.');
+		
+		let p = undefined;
+		if(parts[1] != '00')
+			p = (<Text style={styles.dec_part}>.{parts[1]}</Text>)
+		
 		return (
       <Image source={require('./img/bg-dashboard.png')} style={styles.container}>
         <View style={styles.balance}> 
-          <Text style={styles.int_part}>$ 4500.</Text>
-          <Text style={styles.dec_part}>00</Text>
+          <Text style={styles.int_part}>$ {parts[0]}</Text>
+          {p}
         </View>
         <Text style={styles.currency}>PESO SOCIAL</Text>
       </Image>      
@@ -37,7 +48,7 @@ class Balance extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		//moviesGenres: state.movies.genres
+		balance: state.wallet.balance
 	};
 }
 

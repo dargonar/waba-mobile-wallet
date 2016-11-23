@@ -6,6 +6,7 @@ import {
 	Alert
 } from 'react-native';
 
+import UWCrypto from '../../utils/Crypto';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -60,15 +61,19 @@ class Sending extends Component {
   }
 
   componentDidMount() {
-  	setTimeout(() => {
-      Alert.alert(
-				'Error en envío',
-				'No dispone de fondos suficientes',
-				[
-					{text: 'OK', onPress: () => this._onSent() },
-				]
-			)
-    }, 3500)	;
+
+		
+		
+		
+		//   	setTimeout(() => {
+//       Alert.alert(
+// 				'Error en envío',
+// 				'No dispone de fondos suficientes',
+// 				[
+// 					{text: 'OK', onPress: () => this._onSent() },
+// 				]
+// 			)
+//     }, 3500)	;
   }
 
   componentWillUnmount() {

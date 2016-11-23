@@ -21,6 +21,12 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				memo: action.memo
 			};
+		case types.RETRIEVE_BALANCE_SUCCESS:
+			return {
+				...state,
+				balance: action.balance
+			};
+			
 // 		case types.RETRIEVE_NOWPLAYING_MOVIES_SUCCESS:
 // 			return {
 // 				...state,

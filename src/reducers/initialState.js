@@ -1,6 +1,6 @@
 export default {
 	wallet: {
-		balance  : [],
+		balance  : 0,
 		history  : [],
 		new_keys : {},
 		memo: 		 ''

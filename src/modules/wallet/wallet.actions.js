@@ -88,12 +88,25 @@ export function retrieveHistorySuccess(data) {
 	};
 }
 
+export function retrieveBalanceSuccess(balance) {
+	return {
+		type         : types.RETRIEVE_BALANCE_SUCCESS,
+		balance      : balance
+	};
+}
+
 export function retrieveHistory() {
 	return function (dispatch) {
 		const query = apollo.query({
 			query: gql`
 				{
 					account(name:"latincoin") {
+						balance {
+							quantity
+							asset {
+								id
+							}
+						}
 						history(start:0, limit:20) {
 							id
 							__typename
@@ -136,7 +149,7 @@ export function retrieveHistory() {
 					}
 				}
 			`,
-			forceFetch: false
+			forceFetch: true
 		});
 
 		query.then((graphQLResult) => {
@@ -153,6 +166,8 @@ export function retrieveHistory() {
 				let data2 = {}
 				let history = data.account.history;
 				let proms = [];
+				let inxs  = [];
+				
 				for(var i=0; i<history.length; i++) {
 					var month = history[i].block.timestamp.substr(5,2) >> 0;
 					var mes   = meses[month];
@@ -168,31 +183,48 @@ export function retrieveHistory() {
 						if(memo.from == 'BTS6HihtEB8LfvLe4cSSrqtyxkdfKDkeMocKwu7PJkb6W8gqddi3R')
 							pub = memo.to;
 
-						//let p = UWCrypto.decryptMemo(pub, memo.message, '9b2f6605ce31b57201c632af7d630f7d5ba0f7789e9f24371769b0bd255b4ef2', memo.nonce);
-						//proms.push(p);// = i;
+						let p = UWCrypto.decryptMemo(pub, memo.message, '9b2f6605ce31b57201c632af7d630f7d5ba0f7789e9f24371769b0bd255b4ef2', memo.nonce);
+						proms.push(p);
+						inxs.push(i);
 					}
-					
-// 					Promise.all(proms).then(res => {
-// 							console.log('Memo para vos =>', res);
-// 							//history[i].message = res.message;
-// 						}, err => {
-// 							console.log('Error decrypting memo', err);
-// 						});
-					
-					
-					
-					//UWCrypto.decryptMemo(String pubKey, String encryptedMemo, String privKey, String nonce
-					
 					data2[mes].push(history[i]);
 				}
 				
 				dispatch(retrieveHistorySuccess(data2));
 				
+				let balance = data.account.balance;
+				let b = 0;
+				for(var i=0; i<balance.length; i++) {
+					if(balance[i].asset.id == '1.3.1004') {
+						b = balance[i].quantity;
+						console.log('ENCONTRE ESTO => ', b);
+						break;
+					}
+				}
+				dispatch(retrieveBalanceSuccess(b));
+				
 				//Decrypt memos
+					Promise.all(proms).then(res => {
+						console.log('Memo para vos =>', res);
+						for(var i=0; i<res.length;i++) {
+							history[inxs[i]].message = res[i].message;
+							console.log('********************************')
+							console.log(i, history[inxs[i]]);
+							console.log('********************************')
+							dispatch(retrieveHistorySuccess(data2));
+						}
+						
+					}, err => {
+						console.log('Error decrypting memo', err);
+					});
+
+
+
+				//UWCrypto.decryptMemo(String pubKey, String encryptedMemo, String privKey, String nonce
 
 				
 				
-			}
+			} //if(data)
 
       if (errors) {
         console.log('got some GraphQL execution errors', errors);

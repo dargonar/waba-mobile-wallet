@@ -8,11 +8,11 @@ let middleware = [thunk];
 
 if (__DEV__) {
 	//const reduxImmutableStateInvariant = require('redux-immutable-state-invariant')();
-	const createLogger = require('redux-logger');
-
-	const logger = createLogger({ collapsed: true });
+	//const createLogger = require('redux-logger');
+	//const logger = createLogger({ collapsed: true });
 	//middleware = [...middleware, reduxImmutableStateInvariant, logger];
-  middleware = [...middleware, logger];
+  //middleware = [...middleware, logger];
+	middleware = [...middleware];
 } else {
 	middleware = [...middleware];
 }

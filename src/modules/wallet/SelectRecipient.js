@@ -173,7 +173,8 @@ class SelectRecipient extends Component {
         <SearchBar
           lightTheme
           onChangeText={this._onChangeText}
-          ref={(searchBar) => this.searchBar = searchBar} 
+          autoFocus={true}
+					ref={(searchBar) => this.searchBar = searchBar} 
 					placeholder='Buscar destinatario...' 
 					placeholderStyle={{}}
 					inputStyle={{color:'#000000', textDecorationLine :'none'}}
