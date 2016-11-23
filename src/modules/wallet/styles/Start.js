@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
   },
 	
 	input:{
-		flex:1, 
+		
 		color:"#ffffff", 
 		textAlign:'center',
 		fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 25,
-		lineHeight : 30
+		lineHeight : 25
 	},
 	
 	fullWidthButton: {
@@ -34,13 +34,25 @@ const styles = StyleSheet.create({
 	fullWidthButton2: {
     backgroundColor: '#2c3f50'
   },
-  
+  fullWidthButtonDisabled: {
+    backgroundColor: '#999999'
+  },
 	fullWidthButtonText: {
     fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 15,
 		color: 'white'
-  }
+  },
+	textError:{
+		marginTop  : 20,
+		flex			 : 1,
+		color			 : '#f53d3d',
+		fontFamily : 'roboto_light',
+		fontWeight : '300',
+    fontSize   : 18,
+		lineHeight : 20,
+		textAlign  : 'center'
+	}
 });
 
 export default styles;

@@ -3,6 +3,7 @@ export default {
 		balance  : 0,
 		history  : [],
 		new_keys : {},
-		memo: 		 ''
+		memo: 		 '',
+		account:   null
 	}
 };

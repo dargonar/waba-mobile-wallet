@@ -9,7 +9,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { connect } from 'react-redux';
 import styles from './styles/Drawer';
 
 import { iconsMap } from '../../utils/AppIcons';
@@ -108,7 +108,7 @@ class Drawer extends Component {
 						</View> 
 						<View style={{flex:1, justifyContent: 'flex-start', alignItems:'center' }}>
 							<Text style={styles.usernameText} >
-								pedro.goyena
+								{this.props.account.name}
 							</Text>
 						</View>					
 					</View>													 
@@ -151,4 +151,10 @@ Drawer.propTypes = {
 	navigator: PropTypes.object
 };
 
-export default Drawer;
+function mapStateToProps(state, ownProps) {
+	return {
+		account: state.wallet.account
+	};
+}
+
+export default connect(mapStateToProps, null)(Drawer);

@@ -18,7 +18,7 @@ class SelectRecipient extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#1f475b',
+    navBarBackgroundColor: '#1pf475b',
     navBarButtonColor: '#ffffff'
   }
   
@@ -100,18 +100,6 @@ class SelectRecipient extends Component {
   focus() {
   }
 	
-// 	onPress = {() => { 
-// 					this.props.navigator.push({
-// 						screen: 'wallet.SelectAmount',
-// 						title: 'Indique monto',
-// 						passProps: {recipient: rowData}
-// 					});
-					
-// 	}}
-
-// onPress={this._onRecipientSelected.bind(this, rowData)} 
-// onPress = {() => { this._onRecipientSelected.bind(rowData) }}
-
 	_onRecipientSelected(data){
 		this.props.actions.memoSuccess('');		
 		this.props.navigator.push({
@@ -136,7 +124,9 @@ class SelectRecipient extends Component {
         key={sectionID}
         title={rowData[0]}
 				titleStyle={styles.rowText}
-				fontFamily={'roboto_light'}
+				fontFamily={'roboto_thin'}
+				hideChevron={true}
+				chevronColor={'transparent'}
       />
     )
   }

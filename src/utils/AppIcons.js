@@ -44,6 +44,11 @@ const icons = {
   // Use other Icon provider, see the logic at L39
   "facebook": [30, "#bbb", FontAwesome],
   "facebook--active": [30, "#fff", FontAwesome],
+  
+  "qrcode": [25, "#fff", FontAwesome],
+  "qrcode--active": [25, "#fff", FontAwesome],
+  
+  
 }
 
 const defaultIconProvider = Ionicons;
