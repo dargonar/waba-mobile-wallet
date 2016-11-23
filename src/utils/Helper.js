@@ -5,7 +5,8 @@ import { iconsMap } from './AppIcons';
 
 function launchWallet() {
   Navigation.startSingleScreenApp({
-    screen: {
+    portraitOnlyMode : true,
+		screen: {
       screen				 : 'wallet.Main',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
@@ -35,7 +36,8 @@ function launchWallet() {
 
 function launchOnboard() {
   Navigation.startSingleScreenApp({
-    screen: {
+    portraitOnlyMode : true,
+		screen: {
       screen				 : 'wallet.Welcome',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',

@@ -35,19 +35,19 @@ class History extends Component {
 	}
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.history !== this.props.history) {
+    //if (nextProps.history !== this.props.history) {
       let data = nextProps.history;
       //console.log('componentWillReceiveProps:', data);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections(data),
         refreshing: false,
       })
-    }
+    //}
   }
 
   _rowHasChanged(oldRow, newRow) {
     //console.log('rowHasChanged::', oldRow, '--->', newRow);
-    //return true;
+    return true;
     return (oldRow.id !== newRow.id || oldRow.message !== oldRow.message);
   }
 
