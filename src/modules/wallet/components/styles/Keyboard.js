@@ -39,6 +39,8 @@ export let keyStyle = StyleSheet.create({
         borderColor: '#a5a5a5'
     },
     mainText: {
+        fontFamily : 'roboto_light',
+        fontWeight: '100',
         fontSize: 20,
         color: '#f4f4f4'
     },
@@ -47,7 +49,7 @@ export let keyStyle = StyleSheet.create({
         color: '#333',
     },
     bg_d2d5dc: {
-        backgroundColor: BG_COLOR,
+        backgroundColor: '#1f475b',//BG_COLOR,
         borderBottomWidth: hairlineWidth,
         borderColor: '#a5a5a5'
     },

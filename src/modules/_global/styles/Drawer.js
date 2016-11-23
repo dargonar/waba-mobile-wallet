@@ -3,11 +3,13 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingLeft: 25,
 		justifyContent: 'center'
 	},
 	drawerList: {
-		flex:5
+		flex:5,
+		justifyContent: 'center',
+		paddingLeft: 25,
+		paddingRight: 25
 	},
 	drawerListIcon: {
 		width: 27
@@ -15,13 +17,20 @@ const styles = StyleSheet.create({
 	drawerListItem: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginBottom: 23
+		paddingBottom: 23,
+		paddingTop: 23
+	},
+	drawerListItemBB: {	
+		borderBottomColor: '#aaaaaa', 
+		borderBottomWidth: 0.25
 	},
 	drawerListItemText: {
 		color: 'white',
-		fontSize: 23,
+		fontSize: 20,
 		paddingLeft: 15,
-		flex: 1
+		flex: 1,
+		fontFamily : 'roboto_light',
+		fontWeight: '100'
 	},
 	linearGradient: {
 		// top: 0,
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
     fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 25,
-    lineHeight : 35,
+    lineHeight : 30,
 		color: 'white'
   }
 });

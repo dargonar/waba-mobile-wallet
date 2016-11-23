@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import {
-	View,
-  Button,
+	Alert, 
+	Button,
 	Image,
+	Text,
+	ToastAndroid,
 	TouchableHighlight,
-	Text
+	View
 } from 'react-native';
 
 import styles from './styles/Welcome';
@@ -15,21 +17,31 @@ class Welcome extends Component {
 
 	constructor(props) {
 		super(props);
-		this._onNewAccount 			= this._onNewAccount.bind(this);
+		this._onCreateAccount 			= this._onCreateAccount.bind(this);
 		this._onRestoreAccount 	= this._onRestoreAccount.bind(this);
 	}
   
-	_onNewAccount() {
+	_onCreateAccount() {
 		this.props.navigator.push({
 			screen : 'wallet.Start',
-			title :  'Creando cuenta'
+			title :  'Crear cuenta'
 		});
 	}
 	
 	_onRestoreAccount() {
-		this.props.navigator.push({
-			screen : 'wallet.RestoreAccount'
-		}); 		
+// 		this.props.navigator.push({
+// 			screen : 'wallet.RestoreAccount'
+// 		}); 
+// 		ToastAndroid.showWithGravity('Función no disponible en versión DEMO'
+// 																 , ToastAndroid.LONG
+// 																 , ToastAndroid.CENTER );
+		Alert.alert(
+			'No disponible',
+			'Función no disponible en versión DEMO.',
+			[
+				{text: 'OK'},
+			]
+		)
 	}
 	
 	render() {
@@ -41,16 +53,16 @@ class Welcome extends Component {
 		return (
 			<View style={styles.container}>
 				
-				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
 					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:2, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 					<View style={{flexDirection:'column', justifyContent:'center', marginBottom:25  }}>	
 						<Text style={styles.welcomeTitle}>
-              Bienvenido
+              PESO SOCIAL
             </Text>
-            <Text style={styles.welcomeTitle}>
-              Demo PESO SOCIAL
+            <Text style={styles.welcomeTitle2}>
+              Billetera versión DEMO
             </Text>
 					</View>  
 					
@@ -59,7 +71,7 @@ class Welcome extends Component {
 				<View style={{flex:2, paddingLeft:15,paddingRight:15, flexDirection:'column', alignItems: 'stretch', justifyContent:'center' }}>
           <TouchableHighlight
 							style={[styles.fullWidthButton, styles.fullWidthButton2]}
-							onPress={this._onNewAccount } >
+							onPress={this._onCreateAccount} >
 						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
 					</TouchableHighlight>
 					

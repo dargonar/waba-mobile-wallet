@@ -123,6 +123,8 @@ class SelectRecipient extends Component {
 				underlayColor='#cccccc'
         key={sectionID}
         title={rowData[0]}
+				titleStyle={styles.rowText}
+				fontFamily={'roboto_light'}
       />
     )
   }
@@ -159,7 +161,13 @@ class SelectRecipient extends Component {
         <SearchBar
           lightTheme
           onChangeText={this._onChangeText}
-          placeholder='Buscar destinatario...' />
+          placeholder='Buscar destinatario...' 
+					placeholderStyle={{}}
+					inputStyle={{color:'#000000', textDecorationLine :'none'}}
+					placeholder="Ingrese nombre"
+					placeholderTextColor="#999999"
+					underlineColorAndroid ="transparent"
+				/>
         {content}
       </View>
     );

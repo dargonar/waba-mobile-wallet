@@ -24,7 +24,7 @@ class Balance extends Component {
           <Text style={styles.int_part}>$ 4500.</Text>
           <Text style={styles.dec_part}>00</Text>
         </View>
-        <Text style={styles.currency}>PESOcial</Text>
+        <Text style={styles.currency}>PESO SOCIAL</Text>
       </Image>      
     );
 	}
