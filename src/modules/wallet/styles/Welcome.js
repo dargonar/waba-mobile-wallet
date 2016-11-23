@@ -49,7 +49,15 @@ const styles = StyleSheet.create({
     lineHeight : 40,
 		color      : 'white',
     textAlign  : 'center'
-  }
+  },
+	welcomeTitle2:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 20,
+    lineHeight : 30,
+		color      : 'white',
+    textAlign  : 'center'
+  },
 });
 
 export default styles;

@@ -17,11 +17,16 @@ class Start extends Component {
 	constructor(props) {
 		super(props);
 		this._onNewAccount 			= this._onNewAccount.bind(this);
-		//this._onRestoreAccount 	= this._onRestoreAccount.bind(this);
 	}
-  
+	
+	static navigatorStyle = {
+    navBarTextColor: '#ffffff', 
+    navBarBackgroundColor: '#1f475b',
+    navBarButtonColor: '#ffffff'
+  }
+	
 	_onNewAccount() {
-		this.props.navigator.push({
+		this.props.navigator.resetTo({
 			screen : 'wallet.NewAccount',
 			title :  'Creando cuenta'
 		});
@@ -36,10 +41,10 @@ class Start extends Component {
 		return (
 			<View style={styles.container}>
 				
-				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+				<View style={{flex:1, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
 					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
 				</View>
-				<View style={{flex:2, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
+				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 					<View style={{flexDirection:'row', justifyContent:'center', marginBottom:25  }}>	
 						<TextInput
 							style={styles.input} 
@@ -50,12 +55,13 @@ class Start extends Component {
 						/>
 					</View>  
 					<KeyboardSpacer />
+				</View>	
+				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							style={[styles.fullWidthButton, styles.fullWidthButton2]}
 							onPress={this._onNewAccount } >
 						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
 					</TouchableHighlight>
-						
 				</View>
       </View>
 		);

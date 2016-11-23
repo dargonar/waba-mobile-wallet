@@ -38,7 +38,7 @@ class NewAccount extends Component {
   }
   
   _onCreateAccountSucces(){
-    this.props.navigator.push({
+    this.props.navigator.resetTo({
 			screen:     'wallet.RecoveryKeywords',
 			title:      'Recupero de clave'
     });

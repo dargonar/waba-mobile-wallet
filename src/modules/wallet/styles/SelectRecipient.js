@@ -5,6 +5,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor:'#FFF'
 	},
+	rowText:{
+		fontFamily : 'roboto_light',
+		fontWeight: '500'
+	}
 });
 
 export default styles;
