@@ -37,23 +37,10 @@ class Sending extends Component {
       color:      "#d8ef27",
       isVisible:  true
     };
-    console.log(' -- this.state.recipient => ', this.state.recipient);
-    this._onSent = this._onSent.bind(this);
+//     console.log(' -- this.state.recipient => ', this.state.recipient);
     
   }
   
-  _onSent(){
-    this.props.navigator.push({
-			screen:     'wallet.SendResult',
-			title:      'Envío exitoso',
-		  passProps:  {
-        recipient : this.state.recipient,
-        amount :    this.state.amount,
-        memo :      this.state.memo
-      }
-    });
-  }
-
   componentWillMount() {
   }
 
@@ -61,19 +48,6 @@ class Sending extends Component {
   }
 
   componentDidMount() {
-
-		
-		
-		
-		//   	setTimeout(() => {
-//       Alert.alert(
-// 				'Error en envío',
-// 				'No dispone de fondos suficientes',
-// 				[
-// 					{text: 'OK', onPress: () => this._onSent() },
-// 				]
-// 			)
-//     }, 3500)	;
   }
 
   componentWillUnmount() {

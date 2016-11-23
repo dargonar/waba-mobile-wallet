@@ -10,12 +10,19 @@ const apollo = new ApolloClient({
   networkInterface,
 });
 
-// export function createAccountSuccess(data) {
-// 	return {
-// 		type      : types.CREATE_ACCOUNT_SUCCESS,
-// 		data  : data
-// 	};
-// }
+export function createAccountSuccess(account) {
+	return {
+		type      : types.CREATE_ACCOUNT_SUCCESS,
+		account   : account
+	};
+}
+
+export function createAccountSuccessHACK(account) {
+	return function (dispatch) {
+		console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+		dispatch(createAccountSuccess(account));	
+	}
+}
 
 export function createAccount(name) {
 
@@ -50,11 +57,13 @@ export function createAccount(name) {
 							}
 							else
 							{
-								return resolve({
+								let account = {
 									mnemonic : res1.mnemonic,
 									keys     : res3,
 									name     : name
-								});
+								};
+								createAccountSuccessHACK(account);
+								return resolve(account);
 							}
 						})
 						.catch((error) => {
@@ -74,12 +83,6 @@ export function createAccount(name) {
 			
 		});
 }
-
-// export function createAccount(name) {
-// 	return function (dispatch) {
-		
-// 	}
-// }
 
 export function memoSuccessHACK(memo) {
 	return {

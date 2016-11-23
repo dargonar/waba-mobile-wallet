@@ -23,7 +23,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.SelectRecipient', () => SelectRecipient, store, Provider);
 	Navigation.registerComponent('wallet.SelectAmount', () => SelectAmount, store, Provider);
 	Navigation.registerComponent('wallet.Memo', () => Memo, store, Provider);
-	Navigation.registerComponent('wallet.SendConfirm', () => SendConfirm);
+	Navigation.registerComponent('wallet.SendConfirm', () => SendConfirm, store, Provider);
 	Navigation.registerComponent('wallet.Sending', () => Sending);
 	Navigation.registerComponent('wallet.SendResult', () => SendResult);
 	Navigation.registerComponent('wallet.RecoveryKeywords', () => RecoveryKeywords, store, Provider);

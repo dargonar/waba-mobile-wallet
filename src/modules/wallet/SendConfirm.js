@@ -1,8 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 
 import {
-  View,
-  Text
+  Alert,
+	Text, 
+	View
+  
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -33,15 +35,41 @@ class SendConfirm extends Component {
       amount : props.amount,
       memo :   props.memo
     }
+		
+		this._onSendingError = this._onSendingError.bind(this);
   }
   
   _onConfirm(){
-
+		console.log(' ==> this.props.balance', this.props.balance);
+		if(Number(this.props.balance)<Number(this.state.amount))
+		{
+			Alert.alert(
+				'Fondos insuficientes',
+				'No dispone de fondos suficientes para realizar la operación.',
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}
+		this.props.navigator.showModal({
+			screen : 'wallet.Sending',
+			title :  'Enviando...',
+			passProps: {recipient : this.state.recipient,
+									amount :    this.state.amount,
+									memo :      this.state.memo},
+			animationType: 'slide-up',
+			navigatorStyle: {navBarHidden:true}
+		});
+		
 		fetch('http://35.161.140.21:8080/api/v1/account/'+this.state.recipient.name, {
 			method: 'GET',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 		})
-		.then((response) => response.json()) 
+		.then((response) => response.json()
+			, err => {
+				this._onSendingError(err);	
+			}) 
 		.then((responseJson) => {
 			
 			let amount = this.state.amount >> 0;
@@ -51,15 +79,18 @@ class SendConfirm extends Component {
 				method: 'POST',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 				body: JSON.stringify({
-    			from   : '1.2.31489',
+    			from   : this.props.account.name,
     			to     : this.state.recipient.account_id,
 					amount : amount	
   			})
 			})
-			.then((response) => response.json()) 
+			.then((response) => response.json()
+				, err => {
+					this._onSendingError(err);	
+				}) 
 			.then((responseJson) => {
 				//console.log(responseJson);
-				UWCrypto.signHash('9b2f6605ce31b57201c632af7d630f7d5ba0f7789e9f24371769b0bd255b4ef2', responseJson.to_sign).then(res => {
+				UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
 
 							let tx = responseJson.tx;
 							tx.signatures = [res.signature];
@@ -71,32 +102,64 @@ class SendConfirm extends Component {
 									tx : tx,
 								})
 							})
-							.then((response) => response.json()) 
+							.then((response) => response.json()
+								, err => {
+									this._onSendingError(err);	
+								}, 
+									err => {
+										this._onSendingError(err);	
+									}) 
 							.then((responseJson) => {
 								console.log('Parece que cerramos bien', responseJson);
+								
+								this.props.navigator.dismissModal({
+									animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+								});
+								this.props.navigator.push({
+									screen:     'wallet.SendResult',
+									title:      'Envío exitoso',
+									passProps:  {
+										recipient : this.state.recipient,
+										amount :    this.state.amount,
+										memo :      this.state.memo
+									},
+									navigatorStyle: {navBarHidden:true}
+								});
+							}, err => {
+								this._onSendingError(err);	
 							});
 							
-							//console.log(res);
-				
 				}, err => {
-					
+					this._onSendingError(err);	
 				});
-				
+			}
+			, err => {
+				this._onSendingError(err);	
 			})			
-			
-// 			console.log(responseJson.options.memo_key);
-// 			console.log(
-// 				this.state.recipient,
-// 				this.state.amount,
-// 				this.state.memo
-// 			)
-
+		}, err => {
+			this._onSendingError(err);	
 		})
 		.catch((error) => {
 			console.error(error);
+			this._onSendingError(error);	
 		});
 
-	
+	}
+
+	_onSendingError(error){
+		this.props.navigator.dismissModal({
+			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+		});
+		
+		Alert.alert(
+			'Error en envío',
+			JSON.stringify(error),
+			[
+				{text: 'OK', onPress: () => this.props.navigator.pop({ animated: true }) },
+			]
+		)
+
+		
 	}
 
   componentWillMount() {
@@ -143,4 +206,12 @@ class SendConfirm extends Component {
 // 	};
 // }
 
-export default SendConfirm;
+function mapStateToProps(state, ownProps) {
+	console.log(' -- DRAWER -> mapStateToProps');
+	return {
+		account: state.wallet.account,
+		balance: state.wallet.balance
+	};
+}
+
+export default connect(mapStateToProps, null)(SendConfirm);
