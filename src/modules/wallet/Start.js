@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import {
-	View,
-  Button,
+	Alert,
+	Button,
 	Image,
+	Text,
 	TextInput,
 	TouchableHighlight,
-	Text
+	View
 } from 'react-native';
 
 import styles from './styles/Start';
@@ -17,6 +18,13 @@ class Start extends Component {
 	constructor(props) {
 		super(props);
 		this._onNewAccount 			= this._onNewAccount.bind(this);
+		this._onChangeText        = this._onChangeText.bind(this);
+		this.state = {
+			account_name: 		'',
+			refreshing: false,
+			disabled:   true,
+			error:			''
+		}
 	}
 	
 	static navigatorStyle = {
@@ -25,10 +33,86 @@ class Start extends Component {
     navBarButtonColor: '#ffffff'
   }
 	
+	_onChangeText(text) {
+		
+		clearTimeout(this.tid);
+		
+		this.setState({
+			error: 						'',
+			refreshing: 			true,
+			disabled: 				true,
+			account_name: 	  text
+		});
+		
+		
+		if(!text || text==''){
+			this.setState({
+			error: 			'',
+			refreshing: true,
+			disabled: 	true
+		});
+			return;
+		}
+		let that = this;
+		this.tid = setTimeout( () => {
+			fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
+				method: 'GET',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+			})
+			.then((response) => response.json()) 
+			.then((responseJson) => {
+				if(responseJson){
+					this.setState({
+						error: 			'Ya existe un usuario con ese nombre',
+						refreshing: false,
+					  disabled: 	true
+					});
+				}
+				else
+				{
+					this.setState({
+						error: 			'',
+						refreshing: false,
+					  disabled: 	false
+					});
+				}
+//         console.log(responseJson);
+// 				this.setState({
+// 					error: responseJson
+// 				});
+// 				return resolve(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+				this.setState({
+						error: 			error,
+						refreshing: false,
+					  disabled: 	true
+				});
+      });
+		}
+		, 300);
+		//console.log(text);
+	}
+	
 	_onNewAccount() {
-		this.props.navigator.resetTo({
+		if(!this.state.account_name)
+		{
+			Alert.alert(
+				'Atención',
+				'Debe indicar un nombre para continuar.',
+				[
+					{text: 'OK'},
+				]
+			);
+			return;
+		}
+		this.props.navigator.showModal({
 			screen : 'wallet.NewAccount',
-			title :  'Creando cuenta'
+			title :  'Creando cuenta',
+			passProps: {account_name: this.state.account_name},
+			animationType: 'slide-up',
+			navigatorStyle: {navBarHidden:true}
 		});
 	}
 	
@@ -38,31 +122,39 @@ class Start extends Component {
 // 						containerStyle={{borderBottomColor:"#ffffff"}} 
 // 						placeholder="Nombre"
 // 					/>
+		let _error = this.state.error;
+		let btn_style = styles.fullWidthButton2;
+		if(this.state.disabled)
+		{
+			btn_style = styles.fullWidthButtonDisabled;
+		}
 		return (
+			
 			<View style={styles.container}>
 				
-				<View style={{flex:1, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
+				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
 					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
-					<View style={{flexDirection:'row', justifyContent:'center', marginBottom:25  }}>	
 						<TextInput
-							style={styles.input} 
-							placeholderStyle={styles.input}
+							style={[styles.input, {fontFamily:'roboto_light', fontWeight:'100'}]}
+							placeholderStyle={{fontFamily:'roboto_light', fontWeight:'100'}}
 							placeholder="Ingrese nombre"
 							placeholderTextColor="#aaaaaa"
 							underlineColorAndroid ="#ffffff"
+							onChangeText={this._onChangeText}
 						/>
-					</View>  
-					<KeyboardSpacer />
-				</View>	
+						<Text style={styles.textError} >{_error}</Text>
+				</View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
-							style={[styles.fullWidthButton, styles.fullWidthButton2]}
+							disabled={this.state.disabled}
+							style={[styles.fullWidthButton, btn_style]}
 							onPress={this._onNewAccount } >
 						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
 					</TouchableHighlight>
 				</View>
+				<KeyboardSpacer />
       </View>
 		);
 	}

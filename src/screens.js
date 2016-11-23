@@ -19,7 +19,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Start', () => Start);
 	Navigation.registerComponent('wallet.NewAccount', () => NewAccount, store, Provider);
 	Navigation.registerComponent('wallet.Main', () => Main, store, Provider);
-	Navigation.registerComponent('global.Drawer', () => Drawer);
+	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
 	Navigation.registerComponent('wallet.SelectRecipient', () => SelectRecipient, store, Provider);
 	Navigation.registerComponent('wallet.SelectAmount', () => SelectAmount, store, Provider);
 	Navigation.registerComponent('wallet.Memo', () => Memo, store, Provider);

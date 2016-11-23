@@ -82,9 +82,9 @@ class History extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    setTimeout(() => {
-      this.props.actions.retrieveHistory();
-    }, 3000);
+    //setTimeout(() => {
+    this.props.actions.retrieveHistory();
+    //}, 3000);
   }
 
   _renderSectionHeader(sectionData, sectionID)  {
@@ -103,15 +103,23 @@ class History extends Component {
   }
 
   _renderRow(rowData, sectionID, rowID) {
+			
+			if(rowData.__typename == 'NoDetailOp') {
+				return(
+					<TouchableHighlight underlayColor={'#ccc'} onPress={this._onPressButton.bind(this)}>
+						<Text style={styles.row_amount}>Operacion no conocida</Text>				
+					</TouchableHighlight>
+				)
+			}
 
-       let mapa   = {in:'recibido', 'out': 'enviado'};
-       let rotato = {in:'135 deg', 'out' : '-45 deg'};
-       let bg     = {in:'#8ec919', 'out':'#fcc4cb'};
-       let dea    = {in:'De:', 'out':'A:'};
+       let mapa   = {received:'recibido', sent: 'enviado'};
+       let rotato = {received:'135 deg', sent : '-45 deg'};
+       let bg     = {received:'#8ec919', sent:'#fcc4cb'};
+       let dea    = {received:'De:', sent:'A:'};
 
        let message = undefined;
-       if(rowData.msg)
-         message = (<Text style={styles.row_message}>{rowData.msg}</Text>);
+       if(rowData.message)
+         message = (<Text style={styles.row_message}>{rowData.message}</Text>);
        
         return (
         <TouchableHighlight underlayColor={'#ccc'} onPress={this._onPressButton.bind(this)}>
@@ -121,16 +129,16 @@ class History extends Component {
             </View>
             <View style={styles.row_content}>            
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>${rowData.amount} {mapa[rowData.type]}s</Text>
+                <Text style={styles.row_amount}>${rowData.amount.quantity} {mapa[rowData.type]}s</Text>
               </View>
               <View style={styles.row_line2}>
                 <Text style={styles.row_dea}>{dea[rowData.type]} </Text>
-                <Text>{rowData.type == 'in' ? rowData.from : rowData.to}</Text>
+                <Text>{rowData.type == 'received' ? rowData.from.name : rowData.to.name}</Text>
               </View>
               {message}
             </View>
             <View style={styles.row_hour}>
-              <Text>11:20</Text>
+              <Text>{rowData.block.timestamp.substr(11,5)}</Text>
             </View>
           </View>
         </TouchableHighlight>

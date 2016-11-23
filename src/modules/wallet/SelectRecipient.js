@@ -37,11 +37,18 @@ class SelectRecipient extends Component {
       dataSource : dataSource,
       refreshing : false
     };
-		
+
+		this.tid = undefined;
 	}
   
-  _onChangeText() {
-  
+  _onChangeText(text) {
+		clearTimeout(this.tid);
+		let that = this;
+		this.tid = setTimeout( () => {
+			that.pedir(text);				
+		}
+		, 300);
+		//console.log(text);
 	}
   
   _rowHasChanged(oldRow, newRow) {
@@ -65,11 +72,10 @@ class SelectRecipient extends Component {
 //     }
   }
 
-  componentDidMount() {
-//     AppState.addEventListener('change', this.handleAppStateChange);
+  pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		walletActions.retrieveUsers('').then( (users) => {
+		walletActions.retrieveUsers(search).then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),
@@ -77,9 +83,15 @@ class SelectRecipient extends Component {
 			})
 			
 		}, (err) => {
+			this.setState({refreshing:true});
 			console.log('Error');
 		})
-  }
+	}
+
+  componentDidMount() {
+//     AppState.addEventListener('change', this.handleAppStateChange);
+		this.pedir('');
+	}
 
   componentWillUnmount() {
 //     AppState.removeEventListener('change', this.handleAppStateChange);
@@ -88,18 +100,6 @@ class SelectRecipient extends Component {
   focus() {
   }
 	
-// 	onPress = {() => { 
-// 					this.props.navigator.push({
-// 						screen: 'wallet.SelectAmount',
-// 						title: 'Indique monto',
-// 						passProps: {recipient: rowData}
-// 					});
-					
-// 	}}
-
-// onPress={this._onRecipientSelected.bind(this, rowData)} 
-// onPress = {() => { this._onRecipientSelected.bind(rowData) }}
-
 	_onRecipientSelected(data){
 		this.props.actions.memoSuccess('');		
 		this.props.navigator.push({
@@ -163,7 +163,9 @@ class SelectRecipient extends Component {
         <SearchBar
           lightTheme
           onChangeText={this._onChangeText}
-          placeholder='Buscar destinatario...' 
+          ref={(searchBar) => this.searchBar = searchBar} 
+					placeholder='Buscar destinatario...' 
+					placeholderStyle={{}}
 					inputStyle={{color:'#000000', textDecorationLine :'none'}}
 					placeholder="Ingrese nombre"
 					placeholderTextColor="#999999"

@@ -22,8 +22,7 @@ class RecoveryKeywords extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			creating : false,
-			name     : ''
+			mnemonic: props.mnemonic
 		}
     this._onInitWallet = this._onInitWallet.bind(this);
 	}
@@ -50,7 +49,7 @@ class RecoveryKeywords extends Component {
           </Text>
           <View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#2c3f50'}}>
             <Text style={styles.keywordsText}>
-              alumno meter novela tarta geranio lima asno oriente oeste parcela cromo gripe
+              {this.state.mnemonic}
             </Text>
           </View>
 				</View>
