@@ -48,7 +48,7 @@ class History extends Component {
   _rowHasChanged(oldRow, newRow) {
     //console.log('rowHasChanged::', oldRow, '--->', newRow);
     //return true;
-    return oldRow.id !== newRow.id;
+    return (oldRow.id !== newRow.id || oldRow.message !== oldRow.message);
   }
 
   _getSectionHeaderData(dataBlob, sectionID) {
@@ -63,7 +63,7 @@ class History extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
-    this.props.actions.retrieveHistory();
+    this.props.actions.retrieveHistory(this.props.account.name);
   }
 
   componentWillUnmount() {
@@ -83,7 +83,8 @@ class History extends Component {
   _onRefresh() {
     this.setState({refreshing: true});
     //setTimeout(() => {
-    this.props.actions.retrieveHistory();
+    //this.props.actions.retrieveHistory();
+		this.props.actions.retrieveHistory(this.props.account.name);
     //}, 3000);
   }
 
@@ -116,6 +117,7 @@ class History extends Component {
        let rotato = {received:'135 deg', sent : '-45 deg'};
        let bg     = {received:'#8ec919', sent:'#fcc4cb'};
        let dea    = {received:'De:', sent:'A:'};
+       let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
 
        let message = undefined;
        if(rowData.message)
@@ -124,16 +126,16 @@ class History extends Component {
         return (
         <TouchableHighlight underlayColor={'#ccc'} onPress={this._onPressButton.bind(this)}>
           <View style={styles.row_container}>
-            <View style={[styles.row_avatar, {backgroundColor:bg[rowData.type]}]}>
-              <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[rowData.type]}]}]}/>
+            <View style={[styles.row_avatar, {backgroundColor:bg[_type]}]}>
+              <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_type]}]}]}/>
             </View>
             <View style={styles.row_content}>            
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>${rowData.amount.quantity} {mapa[rowData.type]}s</Text>
+                <Text style={styles.row_amount}>${rowData.amount.quantity} {mapa[_type]}s</Text>
               </View>
               <View style={styles.row_line2}>
-                <Text style={styles.row_dea}>{dea[rowData.type]} </Text>
-                <Text>{rowData.type == 'received' ? rowData.from.name : rowData.to.name}</Text>
+                <Text style={styles.row_dea}>{dea[_type]} </Text>
+                <Text>{_type == 'received' ? rowData.from.name : rowData.to.name}</Text>
               </View>
               {message}
             </View>
@@ -167,7 +169,8 @@ class History extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		history: state.wallet.history
+		history: state.wallet.history,
+		account: state.wallet.account 
 	};
 }
 

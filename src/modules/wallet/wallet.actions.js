@@ -130,12 +130,12 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
-export function retrieveHistory() {
+export function retrieveHistory(account_name) {
 	return function (dispatch) {
 		const query = apollo.query({
 			query: gql`
-				{
-					account(name:"latincoin") {
+				query getTodo($v1 : String!) {
+					account(name:$v1) {
 						balance {
 							quantity
 							asset {
@@ -152,7 +152,6 @@ export function retrieveHistory() {
 								id
 							}
 							... on Transfer {
-								type
 								from {
 									name
 								}
@@ -184,6 +183,9 @@ export function retrieveHistory() {
 					}
 				}
 			`,
+			variables : { 
+				v1 : account_name
+			},
 			forceFetch: true
 		});
 
