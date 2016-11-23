@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {
+	Alert, 
 	View
 } from 'react-native';
 
@@ -33,6 +34,15 @@ class Main extends Component {
         screen: 'wallet.SelectRecipient',
 				title: 'Seleccione destinatario'
       });
+    }
+		if(event.id == 'qrCode') {
+			Alert.alert(
+				'No disponible',
+				'Función no disponible en versión DEMO.',
+				[
+					{text: 'OK'},
+				]
+			)      
     }
     
   }

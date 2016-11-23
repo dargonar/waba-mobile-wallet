@@ -18,7 +18,7 @@ class SelectRecipient extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#1f475b',
+    navBarBackgroundColor: '#1pf475b',
     navBarButtonColor: '#ffffff'
   }
   
@@ -124,7 +124,9 @@ class SelectRecipient extends Component {
         key={sectionID}
         title={rowData[0]}
 				titleStyle={styles.rowText}
-				fontFamily={'roboto_light'}
+				fontFamily={'roboto_thin'}
+				hideChevron={true}
+				chevronColor={'transparent'}
       />
     )
   }
@@ -162,7 +164,6 @@ class SelectRecipient extends Component {
           lightTheme
           onChangeText={this._onChangeText}
           placeholder='Buscar destinatario...' 
-					placeholderStyle={{}}
 					inputStyle={{color:'#000000', textDecorationLine :'none'}}
 					placeholder="Ingrese nombre"
 					placeholderTextColor="#999999"

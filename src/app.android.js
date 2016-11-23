@@ -35,9 +35,8 @@ iconsLoaded.then(() => {
 	
 	const store = configureStore();
 	registerScreens(store, Provider);
-	launchWallet();
-	//launchOnboard();
-	//launchNormal();
+	//launchWallet();
+	launchOnboard();
 
 // 	try {
 // 		AsyncStorage.getItem('@Store:registered').then((value)=>{

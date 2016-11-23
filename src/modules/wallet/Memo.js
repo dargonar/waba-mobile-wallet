@@ -83,6 +83,7 @@ class Memo extends Component {
           maxLength={60}
           multiline={true}
           textAlignVertical='top'
+					underlineColorAndroid ="transparent"
         />
         <Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
 					onPress={this._onApplyMemo.bind(this)} title='APLICAR' />

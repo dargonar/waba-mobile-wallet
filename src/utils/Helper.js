@@ -12,13 +12,17 @@ function launchWallet() {
        drawUnderNavBar   : true,
        navBarTransparent : true
       },
-//       navigatorButtons:{
-        fab: {
-          collapsedId: 'newTx',
-          collapsedIcon: iconsMap['ios-add'],
-          backgroundColor: '#1f475b'
-        }
-//       }
+      fab: {
+        collapsedId: 'newTx',
+        collapsedIcon: iconsMap['ios-add'],
+        backgroundColor: '#1f475b'
+      },
+      rightButtons: [
+				{
+					icon: iconsMap['qrcode'], 
+					id: 'qrCode'
+				}
+			]
     },
     animationType : 'none',
     drawer: {
