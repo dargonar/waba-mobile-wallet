@@ -33,6 +33,45 @@ class Start extends Component {
     navBarButtonColor: '#ffffff'
   }
 	
+	isValidAccountName(account_name) {
+		var dot, subname, supername;
+		if (!account_name) {
+			return false;
+		}
+		if (account_name.length < 1) {
+			return false;
+		}
+		if (account_name.length > 63) {
+			return false;
+		}
+		if (!/^[a-z]/i.test(account_name)) {
+			return false;
+		}
+		if (!/[a-z0-9]$/i.test(account_name)) {
+			return false;
+		}
+		if (/[A-Z]$/.test(account_name)) {
+			return false;
+		}
+		subname = account_name;
+		supername = "";
+		dot = account_name.indexOf('.');
+		if (dot !== -1) {
+			subname = account_name.substring(0, dot);
+			supername = account_name.substring(dot + 1);
+		}
+		if (!(/[a-z0-9]$/i.test(subname) || /[A-Z]$/.test(subname))) {
+			return false;
+		}
+		if (!/[a-z0-9-\.]$/i.test(subname)) {
+			return false;
+		}
+		if (supername === "") {
+			return true;
+		}
+		return this.isValidAccountName(supername);
+	}
+
 	_onChangeText(text) {
 		
 		clearTimeout(this.tid);
@@ -53,8 +92,19 @@ class Start extends Component {
 		});
 			return;
 		}
+		
 		let that = this;
 		this.tid = setTimeout( () => {
+			
+			let is_valid = this.isValidAccountName(text);
+			if(!is_valid){
+				this.setState({
+					error: 			'El nombre debe contener caracteres alfanuméricos en minúsculas y guiones, debe comenzar con una letra y no puede finalizar con un guión.',
+					refreshing: false,
+					disabled: 	true
+				});
+				return;
+			}
 			fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
@@ -144,7 +194,8 @@ class Start extends Component {
 							underlineColorAndroid ="#ffffff"
 							onChangeText={this._onChangeText}
 						/>
-						<Text style={styles.textError} >{_error}</Text>
+						<Text style={styles.textError} numberOfLines={3} >{_error}</Text>
+						
 				</View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight

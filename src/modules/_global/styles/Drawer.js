@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	drawerList: {
-		flex:5,
+		flex:6,
 		justifyContent: 'center',
 		paddingLeft: 25,
 		paddingRight: 25

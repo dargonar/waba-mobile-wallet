@@ -26,9 +26,9 @@ class SendResult extends Component {
     super(props);
   
     this.state = {
-      recipient : {name:'nombre', address:'xxxxx'},
-      amount : '253.12',
-      memo : 'Te mande la que te debo...',
+      recipient : props.recipient,
+      amount : props.amount,
+      memo : props.memo,
       refreshing : false,
       types: ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
               '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],

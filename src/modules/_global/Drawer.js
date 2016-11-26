@@ -66,6 +66,7 @@ class Drawer extends Component {
 		const iconRecipient = (<Icon name="ios-send" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconMap 			= (<Icon name="md-pin" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconJob 			= (<Icon name="md-construct" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -126,6 +127,14 @@ class Drawer extends Component {
 								{iconPriceTag}
 								<Text style={styles.drawerListItemText}>
 									Requerir pago
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this._onFnDisabled}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+								{iconJob}
+								<Text style={styles.drawerListItemText}>
+									Bolsa de trabajo
 								</Text>
 							</View>
 						</TouchableOpacity>
