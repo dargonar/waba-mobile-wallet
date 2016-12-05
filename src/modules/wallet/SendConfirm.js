@@ -15,6 +15,7 @@ import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import UWCrypto from '../../utils/Crypto';
+import Bts2helper from '../../utils/Bts2helper';
 
 class SendConfirm extends Component {
   
@@ -90,10 +91,18 @@ class SendConfirm extends Component {
 				}) 
 			.then((responseJson) => {
 				//console.log(responseJson);
-				UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
-
+				
+// 				console.log('------------ a firmar (bundle) --------- ');
+// 				console.log(responseJson.to_sign);
+// 				console.log(this.props.account.keys[1].privkey);
+// 				console.log('------------------------------- ');
+				
+				Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
+				//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
+							console.log('funciono OK =>', res);
 							let tx = responseJson.tx;
-							tx.signatures = [res.signature];
+							//tx.signatures = [res.signature];
+							tx.signatures = [res];
 							
 							fetch('http://35.161.140.21:8080/api/v1/push_tx', {
 								method: 'POST',
@@ -130,6 +139,7 @@ class SendConfirm extends Component {
 							});
 							
 				}, err => {
+					console.log('signCompact => ERRORRR');
 					this._onSendingError(err);	
 				});
 			}
@@ -150,6 +160,10 @@ class SendConfirm extends Component {
 		this.props.navigator.dismissModal({
 			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 		});
+		
+		console.log('----------_onSendingError------------');
+		console.log(JSON.stringify(error));
+		console.log('-------------------------------------');
 		
 		Alert.alert(
 			'Error en envío',

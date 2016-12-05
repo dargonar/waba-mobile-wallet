@@ -1,0 +1,5 @@
+# This interface will be implemented in C++ and can be called from any language.
+bts2helper = interface +c {
+    static tx_digest(tx_json: string, chain_id: string) : string;
+    static sign_compact(digest: string, wif: string) : string;
+}

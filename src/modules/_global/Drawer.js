@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import styles from './styles/Drawer';
 
 import { iconsMap } from '../../utils/AppIcons';
+import Bts2helper from '../../utils/Bts2helper';
 
 class Drawer extends Component {
 	constructor(props) {

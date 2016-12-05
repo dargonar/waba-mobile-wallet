@@ -77,7 +77,7 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -96,6 +96,7 @@ android {
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
+            moduleName "bts2helper"
         }
         multiDexEnabled true
         
@@ -130,6 +131,30 @@ android {
             }
         }
     }
+    
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', '../../handwritten-src/java', '../../generated-src/java']
+            jniLibs.srcDirs = ['src/main/libs']
+            jni.srcDirs = []
+        }
+    }
+    
+    task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build",
+                '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
+                '-j', Runtime.runtime.availableProcessors(),
+                'all',
+                'NDK_DEBUG=1'
+    }
+
+    task cleanNative(type: Exec, description: 'Clean JNI object files') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build",
+                '-C', file('src/main/jni').absolutePath, // Change src/main/jni the relative path to your jni source
+                'clean'
+    }    
     
     dexOptions {
         javaMaxHeapSize "4g"

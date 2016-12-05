@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.reactnativenavigation.NavigationApplication;
 import com.xwallet.crypto.UWCryptoPackage;
+import com.diventi.bts2helper.Bts2helperPackage;
 import com.eguma.barcodescanner.BarcodeScannerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends NavigationApplication {
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
+        new Bts2helperPackage(),
         new UWCryptoPackage(),
         new BarcodeScannerPackage(),
         new VectorIconsPackage(),
