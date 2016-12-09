@@ -260,39 +260,45 @@ public class UWCryptoModule_impl {
 
   public HashMap<String, String> decryptMemo( String pubKey, String encryptedMemo, String privKey, String nonce) throws IOException, Exception, InvalidCipherTextException {
 
-    ECKey dd = ECKey.fromPrivate(Hex.decode(privKey));//.decompress();
-    ECKey Qp = ECKey.fromPublicOnly(decodePubKey(pubKey));
+    try {
+      ECKey dd = ECKey.fromPrivate(Hex.decode(privKey));//.decompress();
+      ECKey Qp = ECKey.fromPublicOnly(decodePubKey(pubKey));
 
-    byte[] ss = getSharedSecret(Qp, dd);
+      byte[] ss = getSharedSecret(Qp, dd);
 
-    String tmp = nonce + (new String(Hex.encode(ss), "UTF-8"));
-    byte[] nonce_plus_secret = sha512(tmp.getBytes());
+      String tmp = nonce + (new String(Hex.encode(ss), "UTF-8"));
+      byte[] nonce_plus_secret = sha512(tmp.getBytes());
 
-    final BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new AESFastEngine()));
-    KeyParameter kp = new KeyParameter(Arrays.copyOfRange(nonce_plus_secret, 0, 32));
-    CipherParameters ivAndKey= new ParametersWithIV(kp, Arrays.copyOfRange(nonce_plus_secret, 32, 32+16));
-    cipher.init(false, ivAndKey);
+      final BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new AESFastEngine()));
+      KeyParameter kp = new KeyParameter(Arrays.copyOfRange(nonce_plus_secret, 0, 32));
+      CipherParameters ivAndKey= new ParametersWithIV(kp, Arrays.copyOfRange(nonce_plus_secret, 32, 32+16));
+      cipher.init(false, ivAndKey);
 
-    byte[] cipherBytes = Hex.decode(encryptedMemo); 
+      byte[] cipherBytes = Hex.decode(encryptedMemo); 
 
-    final byte[] decryptedBytes = new byte[cipher.getOutputSize(cipherBytes.length)];
-    final int processLen = cipher.processBytes(cipherBytes, 0, cipherBytes.length, decryptedBytes, 0);
-    final int doFinalLen = cipher.doFinal(decryptedBytes, processLen);
+      final byte[] decryptedBytes = new byte[cipher.getOutputSize(cipherBytes.length)];
+      final int processLen = cipher.processBytes(cipherBytes, 0, cipherBytes.length, decryptedBytes, 0);
+      final int doFinalLen = cipher.doFinal(decryptedBytes, processLen);
 
-    HashMap<String, String> res = new HashMap<String, String>();
+      HashMap<String, String> res = new HashMap<String, String>();
 
-    byte[] memo_data = Arrays.copyOf(decryptedBytes, processLen + doFinalLen);
-    
-    String message = new String(Arrays.copyOfRange(memo_data, 4, memo_data.length), "UTF-8");
-    byte[] msg_hash = sha256(message.getBytes());
+      byte[] memo_data = Arrays.copyOf(decryptedBytes, processLen + doFinalLen);
 
-    if( !arraysEquals(memo_data, 0, msg_hash, 0, 4) ) {
+      String message = new String(Arrays.copyOfRange(memo_data, 4, memo_data.length), "UTF-8");
+      byte[] msg_hash = sha256(message.getBytes());
+
+      if( !arraysEquals(memo_data, 0, msg_hash, 0, 4) ) {
+        res.put("message", "");
+        return res;
+      }
+
+      res.put("message", message);
+      return res;
+    } catch (Exception ex) {
+      HashMap<String, String> res = new HashMap<String, String>();
       res.put("message", "");
       return res;
     }
-    
-    res.put("message", message);
-    return res;
   }
 
   public HashMap<String, String> createMemo(String privKey, String destPubkey, String message, String custom_nonce) throws IOException, Exception, InvalidCipherTextException {

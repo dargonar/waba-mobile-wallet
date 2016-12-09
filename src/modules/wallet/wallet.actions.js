@@ -133,8 +133,10 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
-export function retrieveHistory(account_name) {
+export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 	return function (dispatch) {
+		console.log( 'retrieveHistory(account_name, memo_pubkey, memo_privkey)', account_name, memo_pubkey, memo_privkey);
+		
 		const query = apollo.query({
 			query: gql`
 				query getTodo($v1 : String!) {
@@ -220,10 +222,16 @@ export function retrieveHistory(account_name) {
 						let memo = history[i].memo;
 						let pub = memo.from;
 						
-						if(memo.from == 'BTS6HihtEB8LfvLe4cSSrqtyxkdfKDkeMocKwu7PJkb6W8gqddi3R')
+						if(memo.from == memo_pubkey)
 							pub = memo.to;
 
-						let p = UWCrypto.decryptMemo(pub, memo.message, '9b2f6605ce31b57201c632af7d630f7d5ba0f7789e9f24371769b0bd255b4ef2', memo.nonce);
+// 						console.log('---TO DECRYPT');
+// 						console.log('pub =>', pub);
+// 						console.log('memo =>', memo.message);
+// 						console.log('privkey =>', memo_privkey);
+// 						console.log('memo =>', memo.nonce);
+						
+						let p = UWCrypto.decryptMemo(pub, memo.message, memo_privkey, memo.nonce);
 						proms.push(p);
 						inxs.push(i);
 					}
@@ -241,29 +249,28 @@ export function retrieveHistory(account_name) {
 						break;
 					}
 				}
+			
 				dispatch(retrieveBalanceSuccess(b));
 				
 				//Decrypt memos
-					Promise.all(proms).then(res => {
-						console.log('Memo para vos =>', res);
-						for(var i=0; i<res.length;i++) {
-							history[inxs[i]].message = res[i].message;
-							console.log('********************************')
-							console.log(i, history[inxs[i]]);
-							console.log('********************************')
-							dispatch(retrieveHistorySuccess(data2));
-						}
-						
-					}, err => {
-						console.log('Error decrypting memo', err);
-					});
+				Promise.all(proms).then(res => {
+					//console.log('Memo para vos =>', res);
+					for(var i=0; i<res.length;i++) {
+						history[inxs[i]].message = res[i].message;
+// 						console.log('********************************')
+// 						console.log(i, history[inxs[i]]);
+// 						console.log('********************************')
+					}
 
+					//HACK MEGA HACK
+					dispatch(retrieveHistorySuccess( JSON.parse(JSON.stringify(data2)) ));
+					
+					//dispatch(retrieveHistorySuccess(data2));
 
+				}, err => {
+					console.log('Error decrypting memo', err);
+				});
 
-				//UWCrypto.decryptMemo(String pubKey, String encryptedMemo, String privKey, String nonce
-
-				
-				
 			} //if(data)
 
       if (errors) {

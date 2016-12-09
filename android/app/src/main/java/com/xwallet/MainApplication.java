@@ -18,6 +18,7 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
 import com.react.rnspinkit.RNSpinkitPackage;  
+import com.zmxv.RNSound.RNSoundPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -37,7 +38,8 @@ public class MainApplication extends NavigationApplication {
         new LinearGradientPackage(),
         new ReactNativeConfigPackage(),
         new ReactNativeOneSignalPackage(),
-        new RNSpinkitPackage()  
+        new RNSpinkitPackage(),
+        new RNSoundPackage()
     );
 
     //return null;

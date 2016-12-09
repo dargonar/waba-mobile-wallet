@@ -8,30 +8,6 @@ import { launchOnboard, launchWallet } from './utils/Helper';
 
 import { AsyncStorage } from 'react-native'
 
-import OneSignal from 'react-native-onesignal';
-// var _navigator; // If applicable, declare a variable for accessing your navigator object to handle payload.
-
-OneSignal.configure({
-	onIdsAvailable: function(device) {
-		console.log('UserId = ', device.userId);
-		console.log('PushToken = ', device.pushToken);
-	},
-  onNotificationOpened: function(message, data, isActive) {
-		console.log('MESSAGE: ', message);
-		console.log('DATA: ', data);
-		console.log('ISACTIVE: ', isActive);
-		// Do whatever you want with the objects here
-		// _navigator.to('main.post', data.title, { // If applicable
-		//  article: {
-		//    title: data.title,
-		//    link: data.url,
-		//    action: data.actionSelected
-		//  }
-		// });
-	}
-});
-
-
 // AsyncStorage.removeItem('@Store:data');
 // AsyncStorage.setItem('@Store:data', '{"mnemonic":"candil pasión talón fraude favor baño pinza farol adorno manco verbo acudir","keys":[{"privkey":"eb5f269efcda68c96765a4310c94351b980760821e3dfc4e6e357f45b2828d45","address":"BTS28e54SydADNzHZhRgkegvgFgkVEwXkynB","pubkey":"BTS8ajqhMaA4NWvLh9LVGZcUATdato9CDcYYPf1s4zEsvB6CxLvDt","extendedPrivateKey":"xprv9uarLEcs7VZkRenp86MJQqUg93kepnXmB3xwvMazh8PtLhTXy1KAHZW1w2TxWqAacVLvmU2HtAzhMwkXrBPjBKWstiCdmSuTvy3s2bLxMBk"},{"privkey":"be340e5f772916ee0ab3beab841c084d23ec07ee0f39b5a455239d68695fb928","address":"BTS6LHts3hDRKo6rxTFaQxMMdsCwg72UQqss","pubkey":"BTS57XV6ck5cxgekCaBSt45DfNMU4orxWeFdbFmKJdtSs5S7s6fFy","extendedPrivateKey":"xprv9uarLEcs7VZkUUFcnPSJQSbLbQZYhk6wLg2wz5TH9VdGBGL6b5p9AMD57mwtu5TAgeSG51vn4YHYsrCBydkR2Rg8hADPHx8Tkkd268fFZvx"},{"privkey":"9745bc4b2c03a5e05053eb519af31cd6846862603872698f691eaca81df2e41e","address":"BTSKDd419gBexyUGaj7DgerDSnstXpAWkeRY","pubkey":"BTS6BrLNNQvtJE6QR3irGXJyRx14JPWxkRs53r86YgskXk2kRHdwZ","extendedPrivateKey":"xprv9uarLEcs7VZkVxs3qpud7B7a2ZwrSzhnTBnMMP45aahPqm2xRdGeeNzGW8XJeV1MoP3EaZYURWFQ1uNVAGLsJrLaVPAFXjQCnw2WbeN76XU"}],"name":"tuti"}');
 

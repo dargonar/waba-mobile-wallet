@@ -179,6 +179,7 @@ dependencies {
     compile project(':react-native-config')
     compile project(':react-native-onesignal')
     compile project(':react-native-spinkit')
+    compile project(':RNSound')
 }
 
 // Run this once to be able to run the application with BUCK

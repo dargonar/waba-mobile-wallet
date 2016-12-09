@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import styles from './styles/History';
 import { iconsMap } from '../../../utils/AppIcons';
 
+import OneSignal from 'react-native-onesignal';
+
 class History extends Component {
 
 	constructor(props) {
@@ -35,7 +37,7 @@ class History extends Component {
 	}
 
   componentWillReceiveProps(nextProps) {
-    //if (nextProps.history !== this.props.history) {
+		//if (nextProps.history !== this.props.history) {
       let data = nextProps.history;
       //console.log('componentWillReceiveProps:', data);
       this.setState({
@@ -46,9 +48,8 @@ class History extends Component {
   }
 
   _rowHasChanged(oldRow, newRow) {
-    //console.log('rowHasChanged::', oldRow, '--->', newRow);
-    return true;
-    return (oldRow.id !== newRow.id || oldRow.message !== oldRow.message);
+		return true;
+    //return (oldRow.id !== newRow.id || oldRow.message !== oldRow.message);
   }
 
   _getSectionHeaderData(dataBlob, sectionID) {
@@ -63,8 +64,34 @@ class History extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
-    this.props.actions.retrieveHistory(this.props.account.name);
-  }
+  
+		let that = this;
+		OneSignal.configure({
+			onIdsAvailable: function(device) {
+				console.log('UserId = ', device.userId);
+				console.log('PushToken = ', device.pushToken);
+				
+				OneSignal.sendTags({"account" :that.props.account.name});
+				OneSignal.getTags((receivedTags) => {
+					console.log('TAAAAGS=>', receivedTags);
+				});
+			
+			},
+			onNotificationOpened: function(message, data, isActive) {
+				console.log('MESSAGE: ', message);
+				console.log('DATA: ', data);
+				console.log('ISACTIVE: ', isActive);
+				
+				that.props.actions.retrieveHistory(
+					that.props.account.name, 
+					that.props.account.keys[1].pubkey, 
+					that.props.account.keys[1].privkey
+				);
+			}
+		});
+		
+		this.props.actions.retrieveHistory(this.props.account.name, this.props.account.keys[1].pubkey, this.props.account.keys[1].privkey);
+	}
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.handleAppStateChange);
@@ -84,7 +111,7 @@ class History extends Component {
     this.setState({refreshing: true});
     //setTimeout(() => {
     //this.props.actions.retrieveHistory();
-		this.props.actions.retrieveHistory(this.props.account.name);
+		this.props.actions.retrieveHistory(this.props.account.name, this.props.account.keys[1].pubkey, this.props.account.keys[1].privkey);
     //}, 3000);
   }
 
@@ -168,6 +195,7 @@ class History extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+	console.log('HISTORY::mapStateToProps');
 	return {
 		history: state.wallet.history,
 		account: state.wallet.account 

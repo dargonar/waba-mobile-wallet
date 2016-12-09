@@ -38,8 +38,31 @@ class SendConfirm extends Component {
     }
 		
 		this._onSendingError = this._onSendingError.bind(this);
+		this._buidMemo = this._buidMemo.bind(this);
   }
   
+	_buidMemo(message, destPubkey) {
+		return new Promise( (resolve, reject) => {
+			if(!message)	{
+				resolve();
+				return;
+			}
+			
+			UWCrypto.createMemo(this.props.account.keys[1].privkey, destPubkey, message, '').then(res => {
+
+				resolve({
+					from     : this.props.account.keys[1].pubkey,
+					to       : destPubkey,
+					nonce    : res.nonce,
+					message  : res.encrypted_memo
+				});
+
+			}, err => {
+				reject(err);
+			})
+		});
+	}
+
   _onConfirm(){
 		console.log(' ==> this.props.balance', this.props.balance);
 		if(Number(this.props.balance)<Number(this.state.amount))
@@ -73,79 +96,89 @@ class SendConfirm extends Component {
 			}) 
 		.then((responseJson) => {
 			
-			let amount = this.state.amount >> 0;
-			console.log("AMOUNT => ", amount);
-			
-			fetch('http://35.161.140.21:8080/api/v1/transfer', {
-				method: 'POST',
-				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-				body: JSON.stringify({
-    			from   : this.props.account.name,
-    			to     : this.state.recipient.account_id,
-					amount : amount	
-  			})
-			})
-			.then((response) => response.json()
+			this._buidMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
+				
+				console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
+							
+				let amount = this.state.amount >> 0;
+				console.log("AMOUNT => ", amount);
+
+				fetch('http://35.161.140.21:8080/api/v1/transfer', {
+					method: 'POST',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+					body: JSON.stringify({
+						from   : this.props.account.name,
+						to     : this.state.recipient.account_id,
+						amount : amount,
+						memo   : enc_memo
+					})
+				})
+				.then((response) => response.json()
+					, err => {
+						this._onSendingError(err);	
+					}) 
+				.then((responseJson) => {
+					//console.log(responseJson);
+
+	// 				console.log('------------ a firmar (bundle) --------- ');
+	// 				console.log(responseJson.to_sign);
+	// 				console.log(this.props.account.keys[1].privkey);
+	// 				console.log('------------------------------- ');
+
+					Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
+					//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
+								console.log('funciono OK =>', res);
+								let tx = responseJson.tx;
+								//tx.signatures = [res.signature];
+								tx.signatures = [res];
+
+								fetch('http://35.161.140.21:8080/api/v1/push_tx', {
+									method: 'POST',
+									headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+									body: JSON.stringify({
+										tx : tx,
+									})
+								})
+								.then((response) => response.json()
+									, err => {
+										this._onSendingError(err);	
+									}, 
+										err => {
+											this._onSendingError(err);	
+										}) 
+								.then((responseJson) => {
+									console.log('Parece que cerramos bien', responseJson);
+
+									this.props.navigator.dismissModal({
+										animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+									});
+									this.props.navigator.push({
+										screen:     'wallet.SendResult',
+										title:      'Envío exitoso',
+										passProps:  {
+											recipient : this.state.recipient,
+											amount :    this.state.amount,
+											memo :      this.state.memo
+										},
+										navigatorStyle: {navBarHidden:true}
+									});
+								}, err => {
+									this._onSendingError(err);	
+								});
+
+					}, err => {
+						console.log('signCompact => ERRORRR');
+						this._onSendingError(err);	
+					});
+				}
 				, err => {
 					this._onSendingError(err);	
-				}) 
-			.then((responseJson) => {
-				//console.log(responseJson);
-				
-// 				console.log('------------ a firmar (bundle) --------- ');
-// 				console.log(responseJson.to_sign);
-// 				console.log(this.props.account.keys[1].privkey);
-// 				console.log('------------------------------- ');
-				
-				Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
-				//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
-							console.log('funciono OK =>', res);
-							let tx = responseJson.tx;
-							//tx.signatures = [res.signature];
-							tx.signatures = [res];
-							
-							fetch('http://35.161.140.21:8080/api/v1/push_tx', {
-								method: 'POST',
-								headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-								body: JSON.stringify({
-									tx : tx,
-								})
-							})
-							.then((response) => response.json()
-								, err => {
-									this._onSendingError(err);	
-								}, 
-									err => {
-										this._onSendingError(err);	
-									}) 
-							.then((responseJson) => {
-								console.log('Parece que cerramos bien', responseJson);
-								
-								this.props.navigator.dismissModal({
-									animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
-								});
-								this.props.navigator.push({
-									screen:     'wallet.SendResult',
-									title:      'Envío exitoso',
-									passProps:  {
-										recipient : this.state.recipient,
-										amount :    this.state.amount,
-										memo :      this.state.memo
-									},
-									navigatorStyle: {navBarHidden:true}
-								});
-							}, err => {
-								this._onSendingError(err);	
-							});
-							
-				}, err => {
-					console.log('signCompact => ERRORRR');
-					this._onSendingError(err);	
-				});
-			}
-			, err => {
-				this._onSendingError(err);	
-			})			
+				})
+			
+			}, err => {
+				this._onSendingError(err);
+			});			
+			
 		}, err => {
 			this._onSendingError(err);	
 		})

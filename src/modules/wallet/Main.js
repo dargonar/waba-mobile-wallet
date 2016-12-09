@@ -4,6 +4,8 @@ import {
 	View
 } from 'react-native';
 
+// import * as walletActions from './wallet.actions';
+// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './styles/Main';
@@ -17,14 +19,14 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+		this.state = {account:''};
 	}
 	
 	componentWillMount() {
-		//this._retrieveHistory();
+	
 	}
 
 	componentWillReceiveProps(nextProps) {
-
   }
 
   _onNavigatorEvent(event) {
@@ -59,8 +61,15 @@ class Main extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-
-  };
+		//account: state.wallet.account
+	}
 }
+
+// function mapDispatchToProps(dispatch) {
+// 	return {
+// 		actions: bindActionCreators(walletActions, dispatch)
+// 	};
+// }
+
 
 export default connect(mapStateToProps, null)(Main);
