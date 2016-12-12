@@ -60,7 +60,7 @@ class Balance extends Component {
 					<Text style={[styles.int_part,{fontWeight:'400'}]}>{parts[0]}</Text>
           {p}
         </View>
-        <Text style={styles.currency}>PAR</Text>
+        <Text style={styles.currency}>BALANCE PAR</Text>
       </Image>      
     );
 	}

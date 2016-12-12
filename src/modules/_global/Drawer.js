@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {
 	Alert, 
+	Linking,
 	Text,
 	ToastAndroid,
 	TouchableOpacity,
@@ -19,9 +20,11 @@ class Drawer extends Component {
 	constructor(props) {
 		super(props);
 
-		this._goToMain 				= this._goToMain.bind(this);
-		this._openRecipient 	= this._openRecipient.bind(this);
-		this._onFnDisabled    = this._onFnDisabled.bind(this);
+		this._goToMain 								= this._goToMain.bind(this);
+		this._openRecipient 					= this._openRecipient.bind(this);
+		this._onFnDisabled    				= this._onFnDisabled.bind(this);
+		this._onGoToMercadoPar  			= this._onGoToMercadoPar.bind(this);
+		this._onGoToMercadoParEmpleos = this._onGoToMercadoParEmpleos.bind(this);
 	}
 	
 	_onPower(){
@@ -55,6 +58,16 @@ class Drawer extends Component {
 		)
 	}
 	
+	_onGoToMercadoPar(){
+		Linking.openURL('http://mercadopar.diventi.com.ar/?category=productos-y-servicios').catch(err => console.error('An error occurred', err));
+		//IntentAndroid.openURL();
+	}
+	
+	_onGoToMercadoParEmpleos(){
+		Linking.openURL('http://mercadopar.diventi.com.ar/?category=empleos-solicitados').catch(err => console.error('An error occurred', err));
+		//IntentAndroid.openURL();
+	}
+	
 	_toggleDrawer() {
 		this.props.navigator.toggleDrawer({
 			to: 'closed',
@@ -68,6 +81,7 @@ class Drawer extends Component {
 		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconMap 			= (<Icon name="md-pin" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconJob 			= (<Icon name="md-construct" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const info 					= (<Icon name="ios-information-circle" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -100,7 +114,7 @@ class Drawer extends Component {
 								<Icon
 									raised
 									containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#d8ef27' }}
-									name='ios-settings'
+									name='ios-information-circle-outline'
 									type='ionicon'
 									color='#cccccc'
 									underlayColor='#415261'
@@ -131,7 +145,7 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this._onFnDisabled}>
+						<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconJob}
 								<Text style={styles.drawerListItemText}>
@@ -139,7 +153,7 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this._onFnDisabled}>
+						<TouchableOpacity onPress={this._onGoToMercadoPar}>
 							<View style={styles.drawerListItem}>
 								{iconMap}
 								<Text style={styles.drawerListItemText}>

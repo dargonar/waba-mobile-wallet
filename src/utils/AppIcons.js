@@ -41,6 +41,8 @@ const icons = {
   "ios-add": [30, "#ffffff"],
   "ios-add--active": [30, "#fff"],
   
+  "ios-information-circle": [30, "#ffffff"],
+  "ios-information-circle--active": [30, "#ffffff"],
   // Use other Icon provider, see the logic at L39
   "facebook": [30, "#bbb", FontAwesome],
   "facebook--active": [30, "#fff", FontAwesome],

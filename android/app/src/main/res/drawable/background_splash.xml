@@ -5,6 +5,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/labestia"/>
+            android:src="@mipmap/splash_logo"/>
     </item>
 </layer-list>

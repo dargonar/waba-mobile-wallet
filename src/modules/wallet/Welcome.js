@@ -59,10 +59,10 @@ class Welcome extends Component {
 				<View style={{flex:2, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 					<View style={{flexDirection:'column', justifyContent:'center', marginBottom:25  }}>	
 						<Text style={styles.welcomeTitle}>
-              PESO SOCIAL
+              PAR
             </Text>
             <Text style={styles.welcomeTitle2}>
-              Billetera versión DEMO
+              La Billetera
             </Text>
 					</View>  
 					
