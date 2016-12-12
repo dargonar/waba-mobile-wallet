@@ -71,10 +71,22 @@ class History extends Component {
 				console.log('UserId = ', device.userId);
 				console.log('PushToken = ', device.pushToken);
 				
-				OneSignal.sendTags({"account" :that.props.account.name});
-				OneSignal.getTags((receivedTags) => {
-					console.log('TAAAAGS=>', receivedTags);
-				});
+				fetch('http://35.161.140.21:8080/api/v1/push_id', {
+					method: 'POST',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+					body: JSON.stringify({
+						name:   	that.props.account.name,
+						push_id: 	device.userId,
+					})
+				})
+				.then((response) => response.json()) 
+				.then((responseJson) => {
+					console.log('PUSH ID =>', responseJson);
+				});										
+				//OneSignal.sendTags({"account" :that.props.account.name});
+				//OneSignal.getTags((receivedTags) => {
+				//	console.log('TAAAAGS=>', receivedTags);
+				//});
 			
 			},
 			onNotificationOpened: function(message, data, isActive) {

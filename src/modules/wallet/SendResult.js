@@ -52,6 +52,12 @@ class SendResult extends Component {
 //   }
   
   _onOkPress(){
+   let that = this;
+    setTimeout( function() {
+      that.props.actions.retrieveHistory(that.props.account.name, that.props.account.keys[1].pubkey, that.props.account.keys[1].privkey);  
+    }, 1000);
+    
+    
     this.props.navigator.popToRoot({
       animated: true 
     });
@@ -104,10 +110,15 @@ class SendResult extends Component {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return {
-// 		actions: bindActionCreators(walletActions, dispatch)
-// 	};
-// }
+function mapStateToProps(state, ownProps) {
+	return {
+		account: state.wallet.account,
+	};
+}
 
-export default SendResult;
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(walletActions, dispatch)
+	};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SendResult);
