@@ -25,6 +25,7 @@ class Drawer extends Component {
 		this._onFnDisabled    				= this._onFnDisabled.bind(this);
 		this._onGoToMercadoPar  			= this._onGoToMercadoPar.bind(this);
 		this._onGoToMercadoParEmpleos = this._onGoToMercadoParEmpleos.bind(this);
+		this._onSettings 							= this._onSettings.bind(this);
 	}
 	
 	_onPower(){
@@ -33,6 +34,11 @@ class Drawer extends Component {
 	
 	_onSettings(){
 		this._onFnDisabled();	
+// 		this._toggleDrawer();
+// 		this.props.navigator.push({
+// 			screen: 'wallet.RestoreAccount',
+// 			title: 'Restaurar cuenta'
+// 		});		
 	}
 	
 	_openRecipient() {
@@ -51,7 +57,7 @@ class Drawer extends Component {
 	_onFnDisabled(){
 		Alert.alert(
 			'No disponible',
-			'Función no disponible en versión DEMO.',
+			'Función no disponible.',
 			[
 				{text: 'OK'},
 			]
@@ -77,6 +83,14 @@ class Drawer extends Component {
 	}
 
 	render() {
+// 						<TouchableOpacity onPress={this._onFnDisabled}>
+// 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+// 								{iconPriceTag}
+// 								<Text style={styles.drawerListItemText}>
+// 									Requerir pago
+// 								</Text>
+// 							</View>
+// 						</TouchableOpacity>
 		const iconRecipient = (<Icon name="ios-send" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconMap 			= (<Icon name="md-pin" size={26} color="#d8ef27" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
@@ -114,7 +128,7 @@ class Drawer extends Component {
 								<Icon
 									raised
 									containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#d8ef27' }}
-									name='ios-information-circle-outline'
+									name='ios-settings'
 									type='ionicon'
 									color='#cccccc'
 									underlayColor='#415261'
@@ -137,15 +151,7 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-					 <TouchableOpacity onPress={this._onFnDisabled}>
-							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
-								{iconPriceTag}
-								<Text style={styles.drawerListItemText}>
-									Requerir pago
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
+					 	<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconJob}
 								<Text style={styles.drawerListItemText}>

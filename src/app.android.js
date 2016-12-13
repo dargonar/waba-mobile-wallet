@@ -24,7 +24,6 @@ try {
 	AsyncStorage.getItem('@Store:data').then((value)=>{
 		console.log('@Store:data => ', value);
 		
-		
 		if (value !== null) {
 			account = JSON.parse(value);
 		} else {
@@ -41,6 +40,7 @@ try {
 			);
 			registerScreens(store, Provider);
 
+// 			launchOnboard();
 			if(!account){
 				launchOnboard();
 			}

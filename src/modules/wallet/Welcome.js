@@ -8,6 +8,8 @@ import {
 	TouchableHighlight,
 	View
 } from 'react-native';
+import {PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator} from 'rn-viewpager';
+import { iconsMap } from '../../utils/AppIcons';
 
 import styles from './styles/Welcome';
 import { FormLabel, FormInput } from 'react-native-elements'
@@ -29,61 +31,141 @@ class Welcome extends Component {
 	}
 	
 	_onRestoreAccount() {
-// 		this.props.navigator.push({
-// 			screen : 'wallet.RestoreAccount'
-// 		}); 
-// 		ToastAndroid.showWithGravity('Función no disponible en versión DEMO'
-// 																 , ToastAndroid.LONG
-// 																 , ToastAndroid.CENTER );
-		Alert.alert(
-			'No disponible',
-			'Función no disponible en versión DEMO.',
-			[
-				{text: 'OK'},
-			]
-		)
+		this.props.navigator.push({
+			screen: 'wallet.RestoreAccount',
+			title: 'Restaurar cuenta'
+		});
 	}
 	
+	_renderTitleIndicator() {
+			return <PagerTitleIndicator titles={['one', 'two', 'three']} />;
+	}
+
+	_renderDotIndicator() {
+			return <PagerDotIndicator pageCount={4} />;
+	}
+
+	_renderTabIndicator() {
+			let tabs = [{
+							text: 'Home',
+							iconSource: iconsMap['ios-arrow-round-up'],
+							selectedIconSource: iconsMap['ios-arrow-round-up']
+					},{
+							text: 'Message',
+							iconSource: iconsMap['ios-arrow-round-up'],
+							selectedIconSource: iconsMap['ios-arrow-round-up']
+					},{
+							text: 'Profile',
+							iconSource: iconsMap['ios-arrow-round-up'],
+							selectedIconSource: iconsMap['ios-arrow-round-up']
+			}];
+			return <PagerTabIndicator tabs={tabs} />;
+	}
 	render() {
-// 		<FormInput 
-// 						inputStyle={{color:"#ffffff"}} 
-// 						containerStyle={{borderBottomColor:"#ffffff"}} 
-// 						placeholder="Nombre"
-// 					/>
-		return (
-			<View style={styles.container}>
-				
-				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
-				</View>
-				<View style={{flex:2, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
-					<View style={{flexDirection:'column', justifyContent:'center', marginBottom:25  }}>	
-						<Text style={styles.welcomeTitle}>
-              PAR
-            </Text>
-            <Text style={styles.welcomeTitle2}>
-              La Billetera
-            </Text>
-					</View>  
-					
-						
-				</View>
-				<View style={{flex:2, paddingLeft:15,paddingRight:15, flexDirection:'column', alignItems: 'stretch', justifyContent:'center' }}>
-          <TouchableHighlight
-							style={[styles.fullWidthButton, styles.fullWidthButton2]}
-							onPress={this._onCreateAccount} >
-						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
-					</TouchableHighlight>
-					
-					<TouchableHighlight
-							style={[styles.fullWidthButton, styles.fullWidthButton1]}
-							onPress={this._onRestoreAccount} >
-						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-					</TouchableHighlight>
-				</View>
-      
-      </View>
-		);
+
+		 return (
+            <View style={styles.container}>
+                <IndicatorViewPager
+                    style={{flex:4}}
+                    indicator={this._renderDotIndicator()}
+                >
+                    <View style={{justifyContent:'center', alignItems:'center', paddingLeft:20, paddingRight:20 }}>
+                      	<Image source={require('./img/logo.rc2.png')} style={{width: 150, height: 150, marginBottom:20}} />
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 30,
+																		lineHeight : 35,
+																	  marginBottom:20}}
+															>Bienvenido a PAR</Text>
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 15,
+																		lineHeight : 20}}
+															>Una nueva forma de dinero</Text>
+                    </View>
+                    <View style={{justifyContent:'center', alignItems:'center', paddingLeft:20, paddingRight:20 }}>
+                      	<Image source={require('./img/bank.png')} style={{width: 150, height: 150, marginBottom:20}} />
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 30,
+																		lineHeight : 35,
+																	  marginBottom:20}}
+															>El banco en tu móvil</Text>
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 15,
+																		lineHeight : 20}}
+															>Disponible, seguro y accesible desde tu teléfono, sin cuenta de banco</Text>
+                    </View>
+                    <View style={{justifyContent:'center', alignItems:'center', paddingLeft:20, paddingRight:20 }}>
+                      	<Image source={require('./img/shop.png')} style={{width: 150, height: 150, marginBottom:20}} />
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 30,
+																		lineHeight : 35,
+																	  marginBottom:20}}
+															>Red MercadoPAR</Text>
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 15,
+																		lineHeight : 20}}
+															>Localizá los miles de productos y servicios ofrecidos en la red</Text>
+                    </View>
+										<View style={{justifyContent:'center', alignItems:'center', paddingLeft:20, paddingRight:20 }}>
+                      	<Image source={require('./img/discover.png')} style={{width: 150, height: 150, marginBottom:20}} />
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 30,
+																		lineHeight : 35,
+																	  marginBottom:20}}
+															>Empleos</Text>
+												<Text
+														style={{color:"#ffffff", 
+																		textAlign:'center',
+																		fontFamily : 'roboto_light',
+																		fontWeight : '100',
+																		fontSize   : 15,
+																		lineHeight : 20}}
+															>Descubre la oferta de empleos de la red y ofrece tus servicios</Text>
+                    </View>
+								</IndicatorViewPager>
+								<View style={{flex:2, paddingLeft:15,paddingRight:15, flexDirection:'column', alignItems: 'stretch', justifyContent:'center' }}>
+									<TouchableHighlight
+											style={[styles.fullWidthButton, styles.fullWidthButton2]}
+											onPress={this._onCreateAccount} >
+										<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
+									</TouchableHighlight>
+
+									<TouchableHighlight
+											style={[styles.fullWidthButton, styles.fullWidthButton1]}
+											onPress={this._onRestoreAccount} >
+										<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+									</TouchableHighlight>
+								</View>												
+            </View>
+        );
+
 	}
 }
 
