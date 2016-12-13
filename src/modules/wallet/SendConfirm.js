@@ -247,12 +247,6 @@ class SendConfirm extends Component {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return {
-// 		actions: bindActionCreators(walletActions, dispatch)
-// 	};
-// }
-
 function mapStateToProps(state, ownProps) {
 	console.log(' -- DRAWER -> mapStateToProps');
 	return {
@@ -261,4 +255,10 @@ function mapStateToProps(state, ownProps) {
 	};
 }
 
-export default connect(mapStateToProps, null)(SendConfirm);
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(walletActions, dispatch)
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendConfirm);
