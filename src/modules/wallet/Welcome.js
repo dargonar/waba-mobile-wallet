@@ -99,7 +99,7 @@ class Welcome extends Component {
 																		fontSize   : 30,
 																		lineHeight : 35,
 																	  marginBottom:20}}
-															>El banco en tu móvil</Text>
+															>Simple, desde tu teléfono</Text>
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',

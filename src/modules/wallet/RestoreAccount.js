@@ -16,6 +16,10 @@ import styles from './styles/RestoreAccount';
 import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
+import { AsyncStorage } from 'react-native'
+import UWCrypto from '../../utils/Crypto';
+import * as helperActions from '../../utils/Helper.js';
+
 class RestoreAccount extends Component {
   
   static navigatorStyle = {
@@ -30,6 +34,10 @@ class RestoreAccount extends Component {
     this._onClearButtonPress  = this._onClearButtonPress.bind(this);
     this._onRestoreAccount    = this._onRestoreAccount.bind(this);
 //     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+		
+		this.state = {
+			words : ''
+		};
   }
   
 //   _onNavigatorEvent(event) { 
@@ -43,11 +51,70 @@ class RestoreAccount extends Component {
 //   }
 
   _onRestoreAccount() {
-  
+  	let words = this.state.words || '';
+		if(!words) {
+			console.log('No hay words');
+			return;
+		}
+	
+		//let parts = words.trim().split();
+		//if(len(parts))
+		
+		console.log('voy con words =>', words);
+		
+		UWCrypto.mnemonicToMasterKey(words).then( res => {
+			
+			let p = []
+			Promise.all([ 
+				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 1),
+				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 2),
+				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 3)
+			]).then(function(res2) {
+				
+				fetch('http://35.161.140.21:8080/api/v1/find_account', {
+					method: 'POST',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+					body: JSON.stringify({
+						key: 	res2[1].pubkey,
+					})
+				})
+				.then((response) => response.json()) 
+				.then((responseJson) => {
+					if(responseJson.error || !responseJson.length){
+						console.log('no hay cuenta');
+						return;
+					} else {
+						
+						let account = {
+							mnemonic : words,
+							keys     : res2,
+							name     : responseJson[0] //.name
+						};
+
+						//Encontre ok
+						let that = this;
+						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {
+							//that.props.actions.createAccountSuccessHACK(account);
+							helperActions.launchWallet();
+						}, err => {
+						
+						});
+					}
+				})
+				.catch((error) => {
+					console.error(error);
+					return;
+				});
+
+				
+			});
+		}, err => {
+			
+		});
 	}
 
-  _onChangeText() {
-  
+  _onChangeText(words) {
+  	this.setState({words:words});
 	}
   
 	_onClearButtonPress() {
@@ -88,10 +155,11 @@ class RestoreAccount extends Component {
         <TextInput
           style={{flex:6, fontSize:25}}
           editable={true}
-          maxLength={60}
+          //maxLength={120}
           multiline={true}
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
+					onChangeText={this._onChangeText}
         />
         <Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
 					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
