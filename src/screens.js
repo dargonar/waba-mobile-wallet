@@ -13,7 +13,8 @@ import Sending from './modules/wallet/Sending';
 import SendResult from './modules/wallet/SendResult';
 import RecoveryKeywords from './modules/wallet/RecoveryKeywords';
 import Welcome from './modules/wallet/Welcome';
-import RestoreAccount from './modules/wallet/RestoreAccount'
+import RestoreAccount from './modules/wallet/RestoreAccount';
+import Settings from './modules/wallet/Settings';
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('wallet.Start', () => Start);
@@ -30,4 +31,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Welcome', () => Welcome, store, Provider);
 	Navigation.registerComponent('wallet.Drawer', () => Drawer);
 	Navigation.registerComponent('wallet.RestoreAccount', () => RestoreAccount, store, Provider);
+	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 }

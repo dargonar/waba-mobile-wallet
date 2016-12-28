@@ -35,12 +35,12 @@ class Drawer extends Component {
 	}
 	
 	_onSettings(){
-		this._onFnDisabled();	
-// 		this._toggleDrawer();
-// 		this.props.navigator.push({
-// 			screen: 'wallet.RestoreAccount',
-// 			title: 'Restaurar cuenta'
-// 		});		
+		
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.Settings',
+			title: 'Configuración'
+		});		
 	}
 	
 	_openRecipient() {

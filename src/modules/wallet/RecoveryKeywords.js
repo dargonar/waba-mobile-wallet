@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import {
-	View,
-	Text,
 	Button,
-	TouchableHighlight
-
+	Clipboard,
+	Text,
+	ToastAndroid,
+	TouchableHighlight,
+	TouchableWithoutFeedback,
+	View
 } from 'react-native';
 
 import * as walletActions from './wallet.actions';
@@ -24,7 +26,8 @@ class RecoveryKeywords extends Component {
 		this.state = {
 			mnemonic: props.mnemonic
 		}
-    this._onInitWallet = this._onInitWallet.bind(this);
+    this._onInitWallet 					= this._onInitWallet.bind(this);
+// 		this._setClipboardContent 	= this._setClipboardContent.bind(this);
 	}
 	
 	static navigatorStyle = {
@@ -37,6 +40,11 @@ class RecoveryKeywords extends Component {
 		helperActions.launchWallet();
 	}
 
+	_setClipboardContent = async () => {
+    Clipboard.setString(this.state.mnemonic);
+		ToastAndroid.show('¡Las palabras fueron copiadas!', ToastAndroid.LONG);
+	};
+
 	render() {
 		const name = this.state.name;
 		return (
@@ -47,11 +55,13 @@ class RecoveryKeywords extends Component {
             Copie y guarde las palabras listadas a continuación.
             La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas. 
           </Text>
-          <View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#2c3f50'}}>
-            <Text style={styles.keywordsText}>
-              {this.state.mnemonic}
-            </Text>
-          </View>
+          <TouchableWithoutFeedback onPress={this._setClipboardContent}>
+						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#2c3f50'}}>
+            		<Text style={styles.keywordsText}>
+								{this.state.mnemonic}
+							</Text>
+          	</View>
+					</TouchableWithoutFeedback>
 				</View>
 				<View style={{flex:1, flexDirection:'column', alignItems: 'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight

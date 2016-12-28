@@ -40,7 +40,7 @@ export function createAccount(name) {
 					]).then(function(res3) {
 						
 						//fetch('http://35.161.140.21:8080/api/v1/register', {
-						fetch(config.getAPIURL('/v1/register'), {
+						fetch(config.getAPIURL('/register'), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 							body: JSON.stringify({

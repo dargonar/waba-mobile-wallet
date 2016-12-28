@@ -17,6 +17,8 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import UWCrypto from '../../utils/Crypto';
 import Bts2helper from '../../utils/Bts2helper';
 
+import * as config from '../../constants/config';
+
 class SendConfirm extends Component {
   
   static navigatorStyle = {
@@ -81,12 +83,15 @@ class SendConfirm extends Component {
 			title :  'Enviando...',
 			passProps: {recipient : this.state.recipient,
 									amount :    this.state.amount,
-									memo :      this.state.memo},
+									memo :      this.state.memo,
+								  modal_type: 'sending'},
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 		
-		fetch('http://35.161.140.21:8080/api/v1/account/'+this.state.recipient.name, {
+		
+		//fetch('http://35.161.140.21:8080/api/v1/account/'+this.state.recipient.name, {
+		fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
 			method: 'GET',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 		})
@@ -102,8 +107,9 @@ class SendConfirm extends Component {
 							
 				let amount = this.state.amount >> 0;
 				console.log("AMOUNT => ", amount);
-
-				fetch('http://35.161.140.21:8080/api/v1/transfer', {
+			
+				//fetch('http://35.161.140.21:8080/api/v1/transfer', {
+				fetch(config.getAPIURL('/transfer'), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 					body: JSON.stringify({
@@ -132,7 +138,8 @@ class SendConfirm extends Component {
 								//tx.signatures = [res.signature];
 								tx.signatures = [res];
 
-								fetch('http://35.161.140.21:8080/api/v1/push_tx', {
+								//fetch('http://35.161.140.21:8080/api/v1/push_tx', {
+								fetch(config.getAPIURL('/push_tx'), {
 									method: 'POST',
 									headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 									body: JSON.stringify({

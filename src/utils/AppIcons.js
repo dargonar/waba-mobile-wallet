@@ -50,6 +50,8 @@ const icons = {
   "qrcode": [25, "#fff", FontAwesome],
   "qrcode--active": [25, "#fff", FontAwesome],
   
+//   "ios-swap": [30, "#ffffff"],
+  "ios-swap": [30, "#1f475b"],
   
 }
 
