@@ -1,11 +1,12 @@
 // import axios from 'axios';
 import * as types from '../../constants/actionTypes';
 // import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
+import * as config from '../../constants/config';
 import UWCrypto from '../../utils/Crypto';
 import gql from 'graphql-tag';
 
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
-const networkInterface = createNetworkInterface('http://35.161.140.21:8080/graphql');
+const networkInterface = createNetworkInterface(config.GRAPHQL_URL);
 const apollo = new ApolloClient({
   networkInterface,
 });
@@ -37,8 +38,9 @@ export function createAccount(name) {
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 2),
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
 					]).then(function(res3) {
-
-						fetch('http://35.161.140.21:8080/api/v1/register', {
+						
+						//fetch('http://35.161.140.21:8080/api/v1/register', {
+						fetch(config.getAPIURL('/v1/register'), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 							body: JSON.stringify({
@@ -101,8 +103,8 @@ export function memoSuccess(memo) {
 export function retrieveUsers(query) {
 
 		return new Promise((resolve, reject) => {
-
-			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
+			// 			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
+			fetch(config.getAPIURL('/searchAccount?search='+query), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})

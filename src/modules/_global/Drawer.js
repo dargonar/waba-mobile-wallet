@@ -16,6 +16,8 @@ import styles from './styles/Drawer';
 import { iconsMap } from '../../utils/AppIcons';
 import Bts2helper from '../../utils/Bts2helper';
 
+import * as config from '../../constants/config';
+
 class Drawer extends Component {
 	constructor(props) {
 		super(props);
@@ -65,12 +67,12 @@ class Drawer extends Component {
 	}
 	
 	_onGoToMercadoPar(){
-		Linking.openURL('http://mercadopar.diventi.com.ar/?category=productos-y-servicios').catch(err => console.error('An error occurred', err));
+		Linking.openURL(config.MERCADOPAR_URL).catch(err => console.error('An error occurred', err));
 		//IntentAndroid.openURL();
 	}
 	
 	_onGoToMercadoParEmpleos(){
-		Linking.openURL('http://mercadopar.diventi.com.ar/?category=empleos-solicitados').catch(err => console.error('An error occurred', err));
+		Linking.openURL(config.EMPLEOSPAR_URL).catch(err => console.error('An error occurred', err));
 		//IntentAndroid.openURL();
 	}
 	
