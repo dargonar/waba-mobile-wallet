@@ -94,7 +94,6 @@ class RestoreAccount extends Component {
 // 			words = 'orgía balanza vereda candil batir panal separar vector rasgo rumor tobillo carbón'; // pablo
 // 		if(words=='t')
 // 			words = 'candil pasión talón fraude favor baño pinza farol adorno manco verbo acudir'; // tuti
-
 // 		words = 'curioso tripa torpedo unidad asno deseo reposo batir orador tira rapaz buitre';
 		
 		//console.log('RESTORE ACCOUNT::WORDS', words);

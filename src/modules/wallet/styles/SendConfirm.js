@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     color      : '#cccccc',
     fontSize   : 24,
 		lineHeight : 32
-		
   },
   title_part : {
     fontFamily  : 'roboto_regular',

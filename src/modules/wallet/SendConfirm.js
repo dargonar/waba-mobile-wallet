@@ -212,15 +212,10 @@ class SendConfirm extends Component {
 		.then((response) => response.json()
 			, err => {
 				this._onSendingError(err);	
-			}) 
+		}) 
 		.then((responseJson) => {
-			
 			this._buildMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
-				
 				console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
-							
-// 				let amount = this.state.amount >> 0;
-// 				let amount = Number(this.state.amount*config.ASSET_DIVIDER).toFixed(0); 
 				let amount = Number(this.state.amount).toFixed(2); 
 				console.log("AMOUNT => ", amount);
 			
@@ -240,52 +235,63 @@ class SendConfirm extends Component {
 						this._onSendingError(err);	
 					}) 
 				.then((responseJson) => {
-					Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
-					//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
-								console.log('funciono OK =>', res);
-								let tx = responseJson.tx;
-								//tx.signatures = [res.signature];
-								tx.signatures = [res];
+					
+					Bts2helper.txDigest(JSON.stringify(responseJson.tx), config.CHAIN_ID).then( digest=> {
 
-								//fetch('http://35.161.140.21:8080/api/v1/push_tx', {
-								fetch(config.getAPIURL('/push_tx'), {
+						console.log('txDigest =>', digest, ' ', responseJson.to_sign);
+
+						if ( responseJson.to_sign != digest ) {
+								console.log('txDigest => ERRORRR');
+								this._onSendingError('wrong digest');
+								return;
+						}
+
+						Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
+						//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
+												//console.log('funciono OK =>', res);
+							let tx = responseJson.tx;
+							//tx.signatures = [res.signature];
+							tx.signatures = [res];
+
+							//fetch('http://35.161.140.21:8080/api/v1/push_tx', {
+							fetch(config.getAPIURL('/push_tx'), {
 									method: 'POST',
 									headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 									body: JSON.stringify({
-										tx : tx,
+											tx : tx,
 									})
-								})
-								.then((response) => response.json()
-									, err => {
-										this._onSendingError(err);	
-									}, 
-										err => {
-											this._onSendingError(err);	
-										}) 
-								.then((responseJson) => {
-									console.log('Parece que cerramos bien', responseJson);
+							})
+							.then((response) => response.json()
+								, err => {
+										this._onSendingError(err);
+							})
+							.then((responseJson) => {
+									//console.log('Parece que cerramos bien', responseJson);
 
 									this.props.navigator.dismissModal({
-										animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+											animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 									});
 									this.props.navigator.push({
-										screen:     'wallet.SendResult',
-										title:      'Envío exitoso',
-										passProps:  {
-											recipient : this.state.recipient,
-											amount :    this.state.amount,
-											memo :      this.state.memo
-										},
-										navigatorStyle: {navBarHidden:true}
+											screen:     'wallet.SendResult',
+											title:      'Envío exitoso',
+											passProps:  {
+													recipient : this.state.recipient,
+													amount :    this.state.amount,
+													memo :      this.state.memo
+											},
+											navigatorStyle: {navBarHidden:true}
 									});
-								}, err => {
-									this._onSendingError(err);	
-								});
+							}, err => {
+									this._onSendingError(err);
+							});
 
-					}, err => {
-						console.log('signCompact => ERRORRR');
-						this._onSendingError(err);	
-					});
+						}, err => {
+								console.log('signCompact => ERRORRR');
+								this._onSendingError(err);
+						});
+
+				});
+					
 				}
 				, err => {
 					this._onSendingError(err);	

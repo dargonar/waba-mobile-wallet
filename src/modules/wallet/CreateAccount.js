@@ -13,6 +13,7 @@ import styles from './styles/CreateAccount';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import * as config from '../../constants/config';
+import Bts2helper from '../../utils/Bts2helper';
 
 class Start extends Component {
 
@@ -33,7 +34,7 @@ class Start extends Component {
     navBarBackgroundColor: '#1f475b',
     navBarButtonColor: '#ffffff'
   }
-	
+	/*
 	isValidAccountName(account_name) {
 		var dot, subname, supername;
 		if (!account_name) {
@@ -86,7 +87,7 @@ class Start extends Component {
 		}
 		return this.isValidAccountName(supername);
 	}
-
+  */
 	_onChangeText(text) {
 		
 		clearTimeout(this.tid);
@@ -110,62 +111,69 @@ class Start extends Component {
 		
 		let that = this;
 		this.tid = setTimeout( () => {
-			
-			let is_valid = this.isValidAccountName(text);
-			if(!is_valid){
-				that.setState({
-					error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
-					refreshing: false,
-					disabled: 	true
+			Bts2helper.isValidName(text).then( is_valid => {
+				if(!is_valid){
+					that.setState({
+						error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
+						refreshing: false,
+						disabled: 	true
+					});
+					return;
+				}
+				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
+				fetch(config.getAPIURL('/account/')+text, {
+					method: 'GET',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+				})
+				.then((response) => response.json()
+					, (err) => {
+						this.setState({
+							error: 			'Error de red!',
+							refreshing: false,
+							disabled: 	true
+						});
+					} 
+				) 
+				.then((responseJson) => {
+					if(responseJson){
+						this.setState({
+							error: 			'Ya existe un usuario con ese nombre',
+							refreshing: false,
+							disabled: 	true
+						});
+					}
+					else
+					{
+						this.setState({
+							error: 			'',
+							refreshing: false,
+							disabled: 	false
+						});
+					}
+				}, (err) => {
+						this.setState({
+							error: 			'Error de red!',
+							refreshing: false,
+							disabled: 	true
+						});
+					}
+				)
+				.catch((error) => {
+					console.error(error);
+					this.setState({
+							error: 			error,
+							refreshing: false,
+							disabled: 	true
+					});
 				});
-				return;
-			}
-			// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
-			fetch(config.getAPIURL('/account/')+text, {
-				method: 'GET',
-				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-			})
-			.then((response) => response.json()
-				, (err) => {
+			}, error => {
+					console.error(error);
 					this.setState({
-						error: 			'Error de red!',
-						refreshing: false,
-					  disabled: 	true
+							error: 			error,
+							refreshing: false,
+							disabled: 	true
 					});
-				} 
-			) 
-			.then((responseJson) => {
-				if(responseJson){
-					this.setState({
-						error: 			'Ya existe un usuario con ese nombre',
-						refreshing: false,
-					  disabled: 	true
-					});
-				}
-				else
-				{
-					this.setState({
-						error: 			'',
-						refreshing: false,
-					  disabled: 	false
-					});
-				}
-      }, (err) => {
-					this.setState({
-						error: 			'Error de red!',
-						refreshing: false,
-					  disabled: 	true
-					});
-				}
-			)
-      .catch((error) => {
-        console.error(error);
-				this.setState({
-						error: 			error,
-						refreshing: false,
-					  disabled: 	true
-				});
-      });
+			}); //Bts2helper.isValidName
 		}
 		, 400);
 		//console.log(text);

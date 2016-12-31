@@ -13,4 +13,8 @@
 + (nonnull NSString *)signCompact:(nonnull NSString *)digest
                               wif:(nonnull NSString *)wif;
 
++ (BOOL)isValidName:(nonnull NSString *)name;
+
++ (BOOL)isCheapName:(nonnull NSString *)name;
+
 @end

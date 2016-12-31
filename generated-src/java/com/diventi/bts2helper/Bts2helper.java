@@ -11,6 +11,10 @@ public abstract class Bts2helper {
 
     public static native String signCompact(String digest, String wif);
 
+    public static native boolean isValidName(String name);
+
+    public static native boolean isCheapName(String name);
+
     private static final class CppProxy extends Bts2helper
     {
         private final long nativeRef;

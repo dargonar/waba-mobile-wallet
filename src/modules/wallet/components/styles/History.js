@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   bgImage: {
       flex: 1,
-      resizeMode:'cover'
+      opacity : 0.2 
+      //resizeMode:'center'
   },
   section_container : {
       backgroundColor    : '#FFFFFF',
@@ -120,6 +121,17 @@ const styles = StyleSheet.create({
     color           : '#1f475b99'
   },
   
+  button: {
+    borderColor: '#8E8E8E',
+    borderWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 20
+  },
+  text: {
+    color: '#8E8E8E',
+  },
 });
 
 export default styles;
