@@ -24,7 +24,7 @@ public class CryptoValidatorTest implements UWFileOpener {
     UWCryptoModule_impl impl = new UWCryptoModule_impl(this);
 
     HashMap<String, String> p_en = impl.generateMnemonic("en", 128);
-    String mnemonic_en = p_en.get("mnemonic");
+    String mnemonic_en = p_en.get( "mnemonic");
     String[] words_en = mnemonic_en.split(" ");
     assertTrue(words_en.length == 12);
 

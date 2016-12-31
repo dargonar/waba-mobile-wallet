@@ -2,6 +2,7 @@ package com.xwallet.crypto;
 
 import java.util.*;
 import java.io.*;
+//import android.util.Log;
 
 import java.security.SecureRandom;
 import java.math.BigInteger;
@@ -190,7 +191,10 @@ public class UWCryptoModule_impl {
     return res;
   }
 
-  public HashMap<String, String> mnemonicToMasterKey( String words ) throws IOException, Exception {
+  public HashMap<String, String> mnemonicToMasterKey( String oldWords ) throws IOException, Exception {
+    
+    String words = new String(oldWords.getBytes("UTF-8"), "UTF-8");
+    
     byte[] seed = MnemonicCode.toSeed(Arrays.asList(words.split(" ")), "");
 
     DeterministicKey dk = HDKeyDerivation.createMasterPrivateKey(seed);
