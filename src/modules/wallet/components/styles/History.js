@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
       color:"#777777", 
       textAlign:'center',
       fontFamily : 'roboto_regular',
-      fontWeight : '500',
+      fontWeight : '100',
       fontSize   : 20,
       lineHeight : 20
   },

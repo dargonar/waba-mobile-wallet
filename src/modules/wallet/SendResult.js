@@ -80,6 +80,16 @@ class SendResult extends Component {
   }
 
   render() {
+		
+		let mensaje = this.state.memo;
+		let mensaje_ui1 = undefined;
+		let mensaje_ui2 = undefined;
+		if(mensaje)
+		{
+			mensaje_ui1 = (<Text style={styles.title_part}>MENSAJE</Text>)
+			mensaje_ui2 = (<Text style={styles.data_part}>{mensaje}</Text>)
+		}
+		
     return (
       
       <View style={styles.container}>
@@ -91,8 +101,9 @@ class SendResult extends Component {
           
           <Text style={styles.title_part}>DESTINATARIO</Text>
           <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.recipient.name}</Text>
-          <Text style={styles.title_part}>MENSAJE</Text>
-          <Text style={styles.data_part}>{this.state.memo}</Text>
+          {mensaje_ui1}
+					{mensaje_ui2}
+          
         </View>
         <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#1f475b'}}>
           <Icon

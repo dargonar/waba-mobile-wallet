@@ -36,7 +36,8 @@ class SelectRecipient extends Component {
 
     this.state = {
       dataSource : dataSource,
-      refreshing : false
+      refreshing : false,
+			recipient_selected : false
     };
 
 		this.tid = undefined;
@@ -59,7 +60,7 @@ class SelectRecipient extends Component {
   }
   
   componentWillMount() {
-    //this._retrieveHistory();
+    this.setState({recipient_selected:false}); 
   }
 
   componentWillReceiveProps(nextProps) {
@@ -102,6 +103,9 @@ class SelectRecipient extends Component {
   }
 	
 	_onRecipientSelected(data){
+// 		if(this.state.recipient_selected)
+// 			return;
+		this.setState({recipient_selected:true}); 
 		this.props.actions.memoSuccess('');		
 		this.props.navigator.push({
 			screen: 'wallet.SelectAmount',

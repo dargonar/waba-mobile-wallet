@@ -4,7 +4,9 @@ import { SearchBar } from 'react-native-elements'
 import {
   View,
   ListView,
-  TextInput, 
+  Text, 
+	TextInput,
+  TouchableHighlight,
   Alert
 } from 'react-native';
 
@@ -12,7 +14,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/Memo';
-import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 class Memo extends Component {
@@ -85,8 +86,13 @@ class Memo extends Component {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
         />
-        <Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
-					onPress={this._onApplyMemo.bind(this)} title='APLICAR' />
+				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+					<TouchableHighlight
+							style={styles.fullWidthButton}
+							onPress={this._onApplyMemo.bind(this)} >
+						<Text style={styles.fullWidthButtonText}>APLICAR MENSAJE</Text>
+					</TouchableHighlight>
+				</View>
         <KeyboardSpacer />
                     
         </View>
