@@ -48,6 +48,20 @@ static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for th
     } DJINNI_TRANSLATE_EXCEPTIONS()
 }
 
++ (BOOL)isValidName:(nonnull NSString *)name {
+    try {
+        auto objcpp_result_ = ::bts2helper::Bts2helper::is_valid_name(::djinni::String::toCpp(name));
+        return ::djinni::Bool::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
++ (BOOL)isCheapName:(nonnull NSString *)name {
+    try {
+        auto objcpp_result_ = ::bts2helper::Bts2helper::is_cheap_name(::djinni::String::toCpp(name));
+        return ::djinni::Bool::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
 namespace djinni_generated {
 
 auto Bts2helper::toCpp(ObjcType objc) -> CppType

@@ -39,6 +39,24 @@ public class Bts2helperModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void isCheapName(String name, Promise promise) {
+    try {
+      promise.resolve(Bts2helper.isCheapName(name));
+    } catch (Exception ex) {
+      promise.reject(ex.toString());
+    }
+  }
+
+  @ReactMethod
+  public void isValidName(String name, Promise promise) {
+    try {
+      promise.resolve(Bts2helper.isValidName(name));
+    } catch (Exception ex) {
+      promise.reject(ex.toString());
+    }
+  }
+
+  @ReactMethod
   public void txDigest(String txJson, String chainId, Promise promise) {
     try {
       promise.resolve(Bts2helper.txDigest(txJson, chainId));

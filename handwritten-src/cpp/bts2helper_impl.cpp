@@ -31,6 +31,10 @@ using namespace boost;
 using namespace graphene::chain;
 using namespace graphene::utilities;
 
+void __hack() {
+  graphene::db::object_database a;
+}
+
 namespace bts2helper {
     
 //     std::shared_ptr<Bts2helper> Bts2helperImpl::create() {
@@ -41,12 +45,19 @@ namespace bts2helper {
  
 //     }
 
+    bool Bts2helper::is_cheap_name(const std::string& name) {
+      return graphene::chain::is_cheap_name(name);
+    }   
+
+    bool Bts2helper::is_valid_name(const std::string& name) {
+      return graphene::chain::is_valid_name(name);
+    }   
+  
     std::string Bts2helper::tx_digest(const std::string &tx_json, const std::string & chain_id) {
-//       auto tx     = fc::json::from_string(tx_json).as<transaction>();
-//       auto digest = tx.sig_digest(fc::sha256(chain_id));
-//       auto data   = fc::raw::pack(digest);
-//       return fc::to_hex(data);
-      return "peto";
+      auto tx     = fc::json::from_string(tx_json).as<transaction>();
+      auto digest = tx.sig_digest(fc::sha256(chain_id));
+      auto data   = fc::raw::pack(digest);
+      return fc::to_hex(data);
     }
 
     std::string Bts2helper::sign_compact(const std::string & digest, const std::string &hexpriv) {

@@ -15,6 +15,10 @@ public:
     static std::string tx_digest(const std::string & tx_json, const std::string & chain_id);
 
     static std::string sign_compact(const std::string & digest, const std::string & wif);
+
+    static bool is_valid_name(const std::string & name);
+
+    static bool is_cheap_name(const std::string & name);
 };
 
 }  // namespace bts2helper

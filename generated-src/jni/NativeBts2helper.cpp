@@ -39,4 +39,22 @@ CJNIEXPORT jstring JNICALL Java_com_diventi_bts2helper_Bts2helper_signCompact(JN
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
+CJNIEXPORT jboolean JNICALL Java_com_diventi_bts2helper_Bts2helper_isValidName(JNIEnv* jniEnv, jobject /*this*/, jstring j_name)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::bts2helper::Bts2helper::is_valid_name(::djinni::String::toCpp(jniEnv, j_name));
+        return ::djinni::release(::djinni::Bool::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
+CJNIEXPORT jboolean JNICALL Java_com_diventi_bts2helper_Bts2helper_isCheapName(JNIEnv* jniEnv, jobject /*this*/, jstring j_name)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::bts2helper::Bts2helper::is_cheap_name(::djinni::String::toCpp(jniEnv, j_name));
+        return ::djinni::release(::djinni::Bool::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
 }  // namespace djinni_generated

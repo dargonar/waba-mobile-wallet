@@ -2,56 +2,62 @@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import {
+  PixelRatio
+} from 'react-native';
+const ICON_SIZE_ANDROID    = __DEV__ ? 30 : PixelRatio.getPixelSizeForLayoutSize(30);
+const ICON_SIZE_ANDROID_25 = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize(25);
+
 // define your suffixes by yourself..
 // here we use active, big, small, very-big..
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
-  "ios-arrow-round-up" : [30, "#fff"],
-  "ios-add" : [30, "#fff"],
-  "ios-backspace" : [30, "#fff"],
+  "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-add" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-backspace" : [ICON_SIZE_ANDROID, "#fff"],
 
-  "ios-person": [30, "#bbb"],
+  "ios-person": [ICON_SIZE_ANDROID, "#bbb"],
   "ios-person--big": [50, "#bbb"],
 
-  "ios-person--active": [30, "#fff"],
+  "ios-person--active": [ICON_SIZE_ANDROID, "#fff"],
   "ios-person--active--big": [50, "#fff"],
   "ios-person--active--very-big": [100, "#fff"],
   
-  "ios-people": [30, "#bbb"],
-  "ios-people--active": [30, "#fff"],
+  "ios-people": [ICON_SIZE_ANDROID, "#bbb"],
+  "ios-people--active": [ICON_SIZE_ANDROID, "#fff"],
 
-  "ios-keypad": [30, "#bbb"],
-  "ios-keypad--active": [30, "#fff"],
+  "ios-keypad": [ICON_SIZE_ANDROID, "#bbb"],
+  "ios-keypad--active": [ICON_SIZE_ANDROID, "#fff"],
 
-  "ios-chatbubbles": [30, "#bbb"],
-  "ios-chatbubbles--active": [30, "#fff"],
+  "ios-chatbubbles": [ICON_SIZE_ANDROID, "#bbb"],
+  "ios-chatbubbles--active": [ICON_SIZE_ANDROID, "#fff"],
   
-  "logo-usd": [30, "#bbb"],
-  "logo-usd--active": [30, "#fff"],
+  "logo-usd": [ICON_SIZE_ANDROID, "#bbb"],
+  "logo-usd--active": [ICON_SIZE_ANDROID, "#fff"],
    
-  "ios-backspace": [30, "#bbb"],
-  "ios-backspace--active": [30, "#fff"],
+  "ios-backspace": [ICON_SIZE_ANDROID, "#bbb"],
+  "ios-backspace--active": [ICON_SIZE_ANDROID, "#fff"],
   
-  "ios-attach": [30, "#ffffff"],
-  "ios-attach--active": [30, "#ffffff"],
+  "ios-attach": [ICON_SIZE_ANDROID, "#ffffff"],
+  "ios-attach--active": [ICON_SIZE_ANDROID, "#ffffff"],
   
-  "ios-trash-outline": [30, "#ffffff"],
-  "ios-trash-outline--active": [30, "#fff"],
+  "ios-trash-outline": [ICON_SIZE_ANDROID, "#ffffff"],
+  "ios-trash-outline--active": [ICON_SIZE_ANDROID, "#fff"],
   
-  "ios-add": [30, "#ffffff"],
-  "ios-add--active": [30, "#fff"],
+  "ios-add": [ICON_SIZE_ANDROID, "#ffffff"],
+  "ios-add--active": [ICON_SIZE_ANDROID, "#fff"],
   
-  "ios-information-circle": [30, "#ffffff"],
-  "ios-information-circle--active": [30, "#ffffff"],
+  "ios-information-circle": [ICON_SIZE_ANDROID, "#ffffff"],
+  "ios-information-circle--active": [ICON_SIZE_ANDROID, "#ffffff"],
   // Use other Icon provider, see the logic at L39
-  "facebook": [30, "#bbb", FontAwesome],
-  "facebook--active": [30, "#fff", FontAwesome],
+  "facebook": [ICON_SIZE_ANDROID, "#bbb", FontAwesome],
+  "facebook--active": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   
-  "qrcode": [25, "#fff", FontAwesome],
-  "qrcode--active": [25, "#fff", FontAwesome],
+  "qrcode": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
+  "qrcode--active": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
   
-//   "ios-swap": [30, "#ffffff"],
-  "ios-swap": [30, "#1f475b"],
+//   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
+  "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   
 }
 
