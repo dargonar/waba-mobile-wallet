@@ -137,7 +137,7 @@ export function retrieveBalanceSuccess(balance) {
 
 export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 	return function (dispatch) {
-		console.log( 'retrieveHistory(account_name, memo_pubkey, memo_privkey)', account_name, memo_pubkey, memo_privkey);
+		//console.log( 'retrieveHistory(account_name, memo_pubkey, memo_privkey)', account_name, memo_pubkey, memo_privkey);
 		
 		const query = apollo.query({
 			query: gql`
