@@ -3,6 +3,7 @@
 
 package com.diventi.bts2helper;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /** This interface will be implemented in C++ and can be called from any language. */
@@ -14,6 +15,8 @@ public abstract class Bts2helper {
     public static native boolean isValidName(String name);
 
     public static native boolean isCheapName(String name);
+
+    public static native ArrayList<Long> calcFee(String feeSchedule, ArrayList<String> ops, String coreExchangeRatio);
 
     private static final class CppProxy extends Bts2helper
     {

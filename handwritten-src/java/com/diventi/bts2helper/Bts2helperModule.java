@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
@@ -36,6 +39,21 @@ public class Bts2helperModule extends ReactContextBaseJavaModule {
   @Override
   public String getName() {
     return "Bts2helper";
+  }
+
+  @ReactMethod
+  public void calcFee(String feeSchedule, ReadableArray ops, String coreExchangeRatio, Promise promise) {
+    try {
+      
+      ArrayList<String> opsList = new ArrayList<String>();
+      for(int i=0; i<ops.size(); i++) {
+        opsList.add(ops.getString(i));
+      }
+      
+      promise.resolve(Bts2helper.calcFee(feeSchedule, opsList, coreExchangeRatio));
+    } catch (Exception ex) {
+      promise.reject(ex.toString());
+    }
   }
 
   @ReactMethod

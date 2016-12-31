@@ -7,6 +7,7 @@
 #include <fc/io/json.hpp>
 #include <fc/crypto/hex.hpp>
 #include <fc/crypto/ripemd160.hpp>
+#include <fc/variant.hpp>
 
 #include <fc/smart_ref_fwd.hpp>
 #include <fc/smart_ref_impl.hpp>
@@ -35,6 +36,28 @@ void __hack() {
   graphene::db::object_database a;
 }
 
+struct get_required_fees_helper
+{
+   get_required_fees_helper(
+      const fee_schedule& _current_fee_schedule,
+      const price& _core_exchange_rate
+      )
+      : current_fee_schedule(_current_fee_schedule),
+        core_exchange_rate(_core_exchange_rate)
+   {}
+
+   asset set_op_fees( operation& op )
+   {
+       asset fee = current_fee_schedule.set_fee( op, core_exchange_rate );
+       return fee;
+   }
+
+   const fee_schedule& current_fee_schedule;
+   const price& core_exchange_rate;
+};
+
+
+
 namespace bts2helper {
     
 //     std::shared_ptr<Bts2helper> Bts2helperImpl::create() {
@@ -44,6 +67,34 @@ namespace bts2helper {
 //     Bts2helperImpl::Bts2helperImpl() {
  
 //     }
+
+    vector<int64_t> Bts2helper::calc_fee(const std::string& current_fee_schedule_json,
+                                         const vector<std::string>& ops, 
+                                         const std::string& core_exchange_rate_json) {
+      
+      auto core_exchange_rate = fc::json::from_string(core_exchange_rate_json).as<price>();
+      auto current_fee_schedule = fc::json::from_string(current_fee_schedule_json).as<fee_schedule>();
+      
+      vector< operation > _ops;
+      for(int i=0; i<ops.size(); i++) {
+        _ops.push_back( fc::json::from_string(ops[i]).as<operation>() );
+      }
+      
+      vector< int64_t > result;
+      result.reserve(ops.size());
+   
+      get_required_fees_helper helper(
+          current_fee_schedule,
+          core_exchange_rate
+      );
+      
+      for( operation& op : _ops )
+      {
+        result.push_back( helper.set_op_fees( op ).amount.value );
+      }
+
+      return result;
+    }   
 
     bool Bts2helper::is_cheap_name(const std::string& name) {
       return graphene::chain::is_cheap_name(name);

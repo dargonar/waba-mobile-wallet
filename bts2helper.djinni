@@ -4,4 +4,5 @@ bts2helper = interface +c {
     static sign_compact(digest: string, wif: string) : string;
     static is_valid_name(name: string) : bool;
     static is_cheap_name(name: string) : bool;
+    static calc_fee(fee_schedule: string, ops: list<string>, core_exchange_ratio: string): list<i64>;
 }

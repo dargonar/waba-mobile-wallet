@@ -17,4 +17,8 @@
 
 + (BOOL)isCheapName:(nonnull NSString *)name;
 
++ (nonnull NSArray<NSNumber *> *)calcFee:(nonnull NSString *)feeSchedule
+                                     ops:(nonnull NSArray<NSString *> *)ops
+                       coreExchangeRatio:(nonnull NSString *)coreExchangeRatio;
+
 @end

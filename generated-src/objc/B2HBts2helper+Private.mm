@@ -62,6 +62,17 @@ static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for th
     } DJINNI_TRANSLATE_EXCEPTIONS()
 }
 
++ (nonnull NSArray<NSNumber *> *)calcFee:(nonnull NSString *)feeSchedule
+                                     ops:(nonnull NSArray<NSString *> *)ops
+                       coreExchangeRatio:(nonnull NSString *)coreExchangeRatio {
+    try {
+        auto objcpp_result_ = ::bts2helper::Bts2helper::calc_fee(::djinni::String::toCpp(feeSchedule),
+                                                                 ::djinni::List<::djinni::String>::toCpp(ops),
+                                                                 ::djinni::String::toCpp(coreExchangeRatio));
+        return ::djinni::List<::djinni::I64>::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
 namespace djinni_generated {
 
 auto Bts2helper::toCpp(ObjcType objc) -> CppType

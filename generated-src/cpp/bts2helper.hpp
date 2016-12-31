@@ -3,7 +3,9 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
+#include <vector>
 
 namespace bts2helper {
 
@@ -19,6 +21,8 @@ public:
     static bool is_valid_name(const std::string & name);
 
     static bool is_cheap_name(const std::string & name);
+
+    static std::vector<int64_t> calc_fee(const std::string & fee_schedule, const std::vector<std::string> & ops, const std::string & core_exchange_ratio);
 };
 
 }  // namespace bts2helper

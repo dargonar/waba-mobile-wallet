@@ -57,4 +57,15 @@ CJNIEXPORT jboolean JNICALL Java_com_diventi_bts2helper_Bts2helper_isCheapName(J
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
+CJNIEXPORT jobject JNICALL Java_com_diventi_bts2helper_Bts2helper_calcFee(JNIEnv* jniEnv, jobject /*this*/, jstring j_feeSchedule, jobject j_ops, jstring j_coreExchangeRatio)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::bts2helper::Bts2helper::calc_fee(::djinni::String::toCpp(jniEnv, j_feeSchedule),
+                                                    ::djinni::List<::djinni::String>::toCpp(jniEnv, j_ops),
+                                                    ::djinni::String::toCpp(jniEnv, j_coreExchangeRatio));
+        return ::djinni::release(::djinni::List<::djinni::I64>::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
 }  // namespace djinni_generated
