@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import {
-  View, 
+  Alert,
+	View, 
   Text, 
   StyleSheet, 
   TouchableHighlight
@@ -125,6 +126,17 @@ class SelectAmount extends React.Component {
     }
     
     _onNext(){
+			if(Number(this.props.balance)<=Number(this.state.amount))
+			{
+				Alert.alert(
+					'Fondos insuficientes',
+					'No dispone de fondos suficientes para realizar la operación.',
+					[
+						{text: 'OK'},
+					]
+				)
+				return;
+			}
       this.props.navigator.push({
         screen: 'wallet.SendConfirm',
         title: 'Confirmar envío',
@@ -166,7 +178,8 @@ class SelectAmount extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		memo: state.wallet.memo
+		memo: state.wallet.memo,
+		balance: state.wallet.balance
 	};
 }
 
