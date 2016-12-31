@@ -23,7 +23,7 @@ import { AsyncStorage } from 'react-native'
 let account = null;
 try {
 	AsyncStorage.getItem('@Store:data').then((value)=>{
-		console.log('@Store:data => ', value);
+		//console.log('@Store:data => ', value);
 		
 		if (value !== null) {
 			account = JSON.parse(value);

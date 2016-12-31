@@ -103,7 +103,7 @@ class SendConfirm extends Component {
 			
 			this._buildMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
 				
-				console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
+				//console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
 							
 				let amount = this.state.amount >> 0;
 				console.log("AMOUNT => ", amount);
@@ -126,7 +126,7 @@ class SendConfirm extends Component {
 				.then((responseJson) => {
 					Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
 					//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
-								console.log('funciono OK =>', res);
+								//console.log('funciono OK =>', res);
 								let tx = responseJson.tx;
 								//tx.signatures = [res.signature];
 								tx.signatures = [res];
@@ -147,7 +147,7 @@ class SendConfirm extends Component {
 											this._onSendingError(err);	
 										}) 
 								.then((responseJson) => {
-									console.log('Parece que cerramos bien', responseJson);
+									//console.log('Parece que cerramos bien', responseJson);
 
 									this.props.navigator.dismissModal({
 										animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')

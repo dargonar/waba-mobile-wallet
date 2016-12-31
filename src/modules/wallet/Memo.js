@@ -33,7 +33,7 @@ class Memo extends Component {
   _onNavigatorEvent(event) { 
     if (event.type == 'NavBarButtonPress') { 
       if (event.id == 'clearMemo') { 
-        console.log(this.props.actions);
+        //console.log(this.props.actions);
 				this.props.actions.memoSuccess('');
 				//this.setState({memo:''});
       }

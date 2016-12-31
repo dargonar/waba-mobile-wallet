@@ -39,7 +39,7 @@ class Onboard extends Component {
 		this.button.disabled = true;
 		this.setState({page:1});
 		createKeys().then(res =>{
-			console.log(res);
+			//console.log(res);
 			this.setState({page:2});
 		}, err => {
 			//TODO: algo

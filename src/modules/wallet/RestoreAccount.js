@@ -67,11 +67,15 @@ class RestoreAccount extends Component {
 
   _onRestoreAccount() {
   	let words = this.state.words || '';
+		words = words.trim();
+		
 		if(!words) {
 			this._onRestoreError('Debe ingresar las palabras.');
 			console.log('No hay words');
 			return;
 		}
+
+		//console.log('words =>', words);
 		
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
@@ -90,9 +94,13 @@ class RestoreAccount extends Component {
 // 			words = 'orgía balanza vereda candil batir panal separar vector rasgo rumor tobillo carbón'; // pablo
 // 		if(words=='t')
 // 			words = 'candil pasión talón fraude favor baño pinza farol adorno manco verbo acudir'; // tuti
+<<<<<<< HEAD
 // 		words = 'curioso tripa torpedo unidad asno deseo reposo batir orador tira rapaz buitre';
+=======
+		//words = 'curioso tripa torpedo unidad asno deseo reposo batir orador tira rapaz buitre';
+>>>>>>> bd2638638f95e02e0030d9cbbcedd411f4a4ffcd
 		
-		console.log('RESTORE ACCOUNT::WORDS', words);
+		//console.log('RESTORE ACCOUNT::WORDS', words);
 		
 		UWCrypto.mnemonicToMasterKey(words).then( res => {
 			
@@ -102,7 +110,9 @@ class RestoreAccount extends Component {
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 2),
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 3)
 			]).then(function(res2) {
+				console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
+				console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
 				fetch( config.getAPIURL('/find_account'), {
 // 				fetch('http://35.161.140.21:8080/api/v1/find_account', {
 					method: 'POST',
