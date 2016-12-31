@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   bgImage: {
       flex: 1,
-      resizeMode:'cover'
+      opacity : 0.2 
+      //resizeMode:'center'
   },
   section_container : {
       backgroundColor    : '#FFFFFF',

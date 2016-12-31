@@ -112,7 +112,6 @@ class Start extends Component {
 		let that = this;
 		this.tid = setTimeout( () => {
 			Bts2helper.isValidName(text).then( is_valid => {
-				console.log(text,'=>',is_valid);
 				if(!is_valid){
 					that.setState({
 						error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
