@@ -9,9 +9,10 @@ import {
 	View
 } from 'react-native';
 
-import styles from './styles/Start';
-import { FormLabel, FormInput } from 'react-native-elements'
+import styles from './styles/CreateAccount';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+
+import * as config from '../../constants/config';
 
 class Start extends Component {
 
@@ -36,21 +37,30 @@ class Start extends Component {
 	isValidAccountName(account_name) {
 		var dot, subname, supername;
 		if (!account_name) {
+// 			console.log('1');
 			return false;
 		}
 		if (account_name.length < 1) {
+// 			console.log('2');
 			return false;
 		}
 		if (account_name.length > 63) {
+// 			console.log('3');
 			return false;
 		}
-		if (!/^[a-z]/i.test(account_name)) {
+
+		//if (!(/^[a-z]/i.test(account_name))) {
+		if (!(/^[a-z]/.test(account_name))) {
+// 			console.log('4');
 			return false;
 		}
-		if (!/[a-z0-9]$/i.test(account_name)) {
+		//if (!(/[a-z0-9]$/i.test(account_name))) {
+		if (!(/[a-z0-9]$/.test(account_name))) {
+// 			console.log('5');
 			return false;
 		}
 		if (/[A-Z]$/.test(account_name)) {
+// 			console.log('6');
 			return false;
 		}
 		subname = account_name;
@@ -60,13 +70,18 @@ class Start extends Component {
 			subname = account_name.substring(0, dot);
 			supername = account_name.substring(dot + 1);
 		}
-		if (!(/[a-z0-9]$/i.test(subname) || /[A-Z]$/.test(subname))) {
+		//if (!(/[a-z0-9]$/i.test(subname) || /[A-Z]$/.test(subname))) {
+		if (!(/[a-z0-9]$/.test(subname) || /[A-Z]$/.test(subname))) {
+// 			console.log('7');
 			return false;
 		}
-		if (!/[a-z0-9-\.]$/i.test(subname)) {
+		//if (!(/[a-z0-9-\.]$/i.test(subname))) {
+		if (!(/[a-z0-9-\.]$/.test(subname))) {
+// 			console.log('8');
 			return false;
 		}
 		if (supername === "") {
+// 			console.log('9');
 			return true;
 		}
 		return this.isValidAccountName(supername);
@@ -86,10 +101,10 @@ class Start extends Component {
 		
 		if(!text || text==''){
 			this.setState({
-			error: 			'',
-			refreshing: true,
-			disabled: 	true
-		});
+				error: 			'',
+				refreshing: false,
+				disabled: 	true
+			});
 			return;
 		}
 		
@@ -98,18 +113,27 @@ class Start extends Component {
 			
 			let is_valid = this.isValidAccountName(text);
 			if(!is_valid){
-				this.setState({
-					error: 			'El nombre debe contener caracteres alfanuméricos en minúsculas y guiones, debe comenzar con una letra y no puede finalizar con un guión.',
+				that.setState({
+					error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
 					refreshing: false,
 					disabled: 	true
 				});
 				return;
 			}
-			fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
+			// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
+			fetch(config.getAPIURL('/account/')+text, {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
-			.then((response) => response.json()) 
+			.then((response) => response.json()
+				, (err) => {
+					this.setState({
+						error: 			'Error de red!',
+						refreshing: false,
+					  disabled: 	true
+					});
+				} 
+			) 
 			.then((responseJson) => {
 				if(responseJson){
 					this.setState({
@@ -126,12 +150,14 @@ class Start extends Component {
 					  disabled: 	false
 					});
 				}
-//         console.log(responseJson);
-// 				this.setState({
-// 					error: responseJson
-// 				});
-// 				return resolve(responseJson);
-      })
+      }, (err) => {
+					this.setState({
+						error: 			'Error de red!',
+						refreshing: false,
+					  disabled: 	true
+					});
+				}
+			)
       .catch((error) => {
         console.error(error);
 				this.setState({
@@ -141,7 +167,7 @@ class Start extends Component {
 				});
       });
 		}
-		, 300);
+		, 400);
 		//console.log(text);
 	}
 	
@@ -166,33 +192,38 @@ class Start extends Component {
 		});
 	}
 	
+	_handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        dismissKeyboard();
+    }
+	}
+
 	render() {
-// 		<FormInput 
-// 						inputStyle={{color:"#ffffff"}} 
-// 						containerStyle={{borderBottomColor:"#ffffff"}} 
-// 						placeholder="Nombre"
-// 					/>
 		let _error = this.state.error;
 		let btn_style = styles.fullWidthButton2;
+		let txt_style = styles.fullWidthButtonText;
 		if(this.state.disabled)
 		{
 			btn_style = styles.fullWidthButtonDisabled;
+			txt_style = styles.fullWidthButtonTextDisabled;
 		}
 		return (
 			
 			<View style={styles.container}>
-				
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
 					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput
+							autoCorrect={false}
+							autoCapitalize='none'
 							style={[styles.input, {fontFamily:'roboto_light', fontWeight:'100'}]}
 							placeholderStyle={{fontFamily:'roboto_light', fontWeight:'100'}}
-							placeholder="Ingrese nombre"
+							placeholder="Ingrese su nombre"
 							placeholderTextColor="#aaaaaa"
 							underlineColorAndroid ="#ffffff"
 							onChangeText={this._onChangeText}
+							
 						/>
 						<Text style={styles.textError} numberOfLines={3} >{_error}</Text>
 						
@@ -202,7 +233,7 @@ class Start extends Component {
 							disabled={this.state.disabled}
 							style={[styles.fullWidthButton, btn_style]}
 							onPress={this._onNewAccount } >
-						<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
+						<Text style={txt_style}>CREAR CUENTA</Text>
 					</TouchableHighlight>
 				</View>
 				<KeyboardSpacer />

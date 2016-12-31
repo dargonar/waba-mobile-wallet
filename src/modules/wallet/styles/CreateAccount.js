@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 	},
 	
 	fullWidthButton: {
-		borderRadius: 5,
+		borderRadius: 0,
     height:60,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -43,6 +43,12 @@ const styles = StyleSheet.create({
     fontSize   : 15,
 		color: 'white'
   },
+	fullWidthButtonTextDisabled:{
+		fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 15,
+		color			 : '#cccccc'
+	},
 	textError:{
 		marginTop  : 20,
 		flex			 : 1,

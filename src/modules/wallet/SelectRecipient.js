@@ -10,9 +10,10 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import styles from './styles/SelectRecipient';
 import * as walletActions from './wallet.actions';
 import { iconsMap } from '../../utils/AppIcons';
+
+import styles from './styles/SelectRecipient';
 
 class SelectRecipient extends Component {
   

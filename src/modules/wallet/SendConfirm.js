@@ -40,10 +40,10 @@ class SendConfirm extends Component {
     }
 		
 		this._onSendingError = this._onSendingError.bind(this);
-		this._buidMemo = this._buidMemo.bind(this);
+		this._buildMemo = this._buildMemo.bind(this);
   }
   
-	_buidMemo(message, destPubkey) {
+	_buildMemo(message, destPubkey) {
 		return new Promise( (resolve, reject) => {
 			if(!message)	{
 				resolve();
@@ -101,7 +101,7 @@ class SendConfirm extends Component {
 			}) 
 		.then((responseJson) => {
 			
-			this._buidMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
+			this._buildMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
 				
 				console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
 							
@@ -124,13 +124,6 @@ class SendConfirm extends Component {
 						this._onSendingError(err);	
 					}) 
 				.then((responseJson) => {
-					//console.log(responseJson);
-
-	// 				console.log('------------ a firmar (bundle) --------- ');
-	// 				console.log(responseJson.to_sign);
-	// 				console.log(this.props.account.keys[1].privkey);
-	// 				console.log('------------------------------- ');
-
 					Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
 					//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
 								console.log('funciono OK =>', res);

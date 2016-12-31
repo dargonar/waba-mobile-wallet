@@ -35,10 +35,11 @@ function launchWallet() {
 }
 
 function launchOnboard() {
+	// 
   Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-      screen				 : 'wallet.Welcome',
+      screen				 : 'wallet.Onboarding',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,

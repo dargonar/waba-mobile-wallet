@@ -2,7 +2,7 @@
 import { Navigation } from 'react-native-navigation';
 
 import Drawer from './modules/_global/Drawer';
-import Start from './modules/wallet/Start';
+import CreateAccount from './modules/wallet/CreateAccount';
 import NewAccount from './modules/wallet/NewAccount';
 import Main from './modules/wallet/Main';
 import SelectRecipient from './modules/wallet/SelectRecipient';
@@ -15,9 +15,12 @@ import RecoveryKeywords from './modules/wallet/RecoveryKeywords';
 import Welcome from './modules/wallet/Welcome';
 import RestoreAccount from './modules/wallet/RestoreAccount';
 import Settings from './modules/wallet/Settings';
+import Onboarding from './modules/wallet/Onboarding';
+
+
 export function registerScreens(store, Provider) {
 
-	Navigation.registerComponent('wallet.Start', () => Start);
+	Navigation.registerComponent('wallet.CreateAccount', () => CreateAccount);
 	Navigation.registerComponent('wallet.NewAccount', () => NewAccount, store, Provider);
 	Navigation.registerComponent('wallet.Main', () => Main, store, Provider);
 	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
@@ -32,4 +35,6 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Drawer', () => Drawer);
 	Navigation.registerComponent('wallet.RestoreAccount', () => RestoreAccount, store, Provider);
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
+	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
+
 }

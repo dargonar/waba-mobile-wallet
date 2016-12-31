@@ -7,6 +7,27 @@ const styles = StyleSheet.create({
     backgroundColor  : '#FFFFFF',
   },
   
+  containerEmpty : {
+    flex             : 7,
+    alignItems       : 'center',
+    justifyContent   : 'center'
+  },
+  emptyListText:{
+      color:"#777777", 
+      textAlign:'center',
+      fontFamily : 'roboto_regular',
+      fontWeight : '500',
+      fontSize   : 20,
+      lineHeight : 20
+  },
+  bgImageWrapper: {
+      position: 'absolute',
+      top: 0, bottom: 0, left: 0, right: 0
+  },
+  bgImage: {
+      flex: 1,
+      resizeMode:'cover'
+  },
   section_container : {
       backgroundColor    : '#FFFFFF',
       height             : 42,

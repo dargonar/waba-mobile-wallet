@@ -12,7 +12,6 @@ import {PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndi
 import { iconsMap } from '../../utils/AppIcons';
 
 import styles from './styles/Welcome';
-import { FormLabel, FormInput } from 'react-native-elements'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 class Welcome extends Component {
@@ -25,7 +24,7 @@ class Welcome extends Component {
   
 	_onCreateAccount() {
 		this.props.navigator.push({
-			screen : 'wallet.Start',
+			screen : 'wallet.CreateAccount',
 			title :  'Crear cuenta'
 		});
 	}
