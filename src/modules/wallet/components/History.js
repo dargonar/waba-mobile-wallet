@@ -510,7 +510,7 @@ class History extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              colors={['#8ec919', '#fcc4cb', '#d8ef27']}
+              colors={['#8ec919', '#fcc4cb', '#82ca07']}
             />}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}

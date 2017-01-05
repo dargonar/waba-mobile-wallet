@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
 	},
 	data_part : {
     fontFamily : 'roboto_normal',
-    color      : '#d8ef27',
+    color      : '#82ca07',
     fontSize   : 32
   },
 	data_part_small : {
     fontFamily : 'roboto_normal',
-    color      : '#d8ef27',
+    color      : '#82ca07',
 		fontSize   : 24,
 		lineHeight : 32
   },

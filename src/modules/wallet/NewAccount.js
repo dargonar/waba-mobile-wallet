@@ -32,7 +32,7 @@ class NewAccount extends Component {
       types:      	['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
                    	'9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
       size:       	100,
-      color:      	"#d8ef27",
+      color:      	"#82ca07",
       isVisible:  	true,
 			account_name: props.account_name
     };
@@ -110,7 +110,7 @@ class NewAccount extends Component {
     return (
       <View style={styles.container}>
         <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#1f475b'}}>
-          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#d8ef27"/>
+          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#82ca07"/>
         </View>
         <View style={{flex:4, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
 					<View style={{flexDirection:'row', justifyContent:'center'}}>	

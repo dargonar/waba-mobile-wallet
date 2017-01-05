@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
   },
   int_part : {
     fontFamily : 'roboto_light',
-    color      : '#d8ef27',
+    color      : '#82ca07',
 		fontWeight : '100',
     fontSize   : 32,
 		lineHeight : 35		
   },
   dec_part : {
     fontFamily  : 'roboto_regular',
-    color       : '#d8ef27',
+    color       : '#82ca07',
     lineHeight  : 35,
     fontSize    : 16
   },
