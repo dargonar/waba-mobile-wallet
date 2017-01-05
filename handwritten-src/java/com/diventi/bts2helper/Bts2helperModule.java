@@ -15,6 +15,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactMethod;
@@ -50,7 +52,15 @@ public class Bts2helperModule extends ReactContextBaseJavaModule {
         opsList.add(ops.getString(i));
       }
       
-      promise.resolve(Bts2helper.calcFee(feeSchedule, opsList, coreExchangeRatio));
+      ArrayList<Long> res = Bts2helper.calcFee(feeSchedule, opsList, coreExchangeRatio);
+      
+      WritableArray fees = new WritableNativeArray();
+      for(int j=0; j<res.size(); j++) {
+        fees.pushString(res.get(j).toString());
+      }
+      
+      promise.resolve(fees);
+      
     } catch (Exception ex) {
       promise.reject(ex.toString());
     }

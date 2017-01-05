@@ -89,7 +89,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.xwallet"
+        applicationId "com.waba.par"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -101,8 +101,8 @@ android {
         multiDexEnabled true
         
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                               onesignal_app_id: "1c6e4f37-2ed4-4e9a-9283-cd839cfc4e74",
-                               onesignal_google_project_number: "1063200064387"]
+                               onesignal_app_id: "bad68d31-19a0-4201-ab14-1607f9a98a8b",
+                               onesignal_google_project_number: "409461913173"]
     }
     
     signingConfigs {

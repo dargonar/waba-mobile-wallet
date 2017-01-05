@@ -28,7 +28,7 @@ class Balance extends Component {
 	componentWillReceiveProps(nextProps) {
     console.log('Balance::componentWillReceiveProps =>', nextProps.balance);
 
-		if( !isNaN(Number(this.props.balance)) && Number(nextProps.balance) > Number(this.props.balance) ) {
+		if( this.props.balance && !isNaN(Number(this.props.balance[0])) && Number(nextProps.balance[0]) > Number(this.props.balance[0]) ) {
 			this.whoosh.play((success) => {
 				if (success) {
 					console.log('successfully finished playing');
@@ -45,7 +45,13 @@ class Balance extends Component {
 		//const int_part = 0;
 		//const dec_part = 0;
 		
-		let b = this.props.balance;
+		let r = 0;
+		if(this.props.balance) r = this.props.balance[0];
+		let d = 0;
+		if(this.props.balance) d = this.props.balance[1];
+		
+		b = r - d;
+				
 		if(!b) b = '0';
 		let parts = Number(b).toFixed(2).split('.');
 		
@@ -53,6 +59,10 @@ class Balance extends Component {
 		if(parts[1] != '00')
 			p = (<Text style={styles.dec_part}>.{parts[1]}</Text>)
 		
+    let j = undefined;
+    if(d>0)
+			j = (<Text style={styles.currency}>(-{d})</Text>)
+					 
 		return (
       <Image source={require('./img/bg-dashboard.png')} style={styles.container}>
         <View style={styles.balance}> 
@@ -61,6 +71,7 @@ class Balance extends Component {
           {p}
         </View>
         <Text style={styles.currency}>BALANCE PAR</Text>
+				{j}
       </Image>      
     );
 	}

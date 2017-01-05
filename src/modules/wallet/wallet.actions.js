@@ -243,16 +243,22 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 				dispatch(retrieveHistorySuccess(data2));
 				
 				let balance = data.account.balance;
+				
 				let b = 0;
+				let d = 0;
+				
 				for(var i=0; i<balance.length; i++) {
-					if(balance[i].asset.id == '1.3.1004') {
+					if(balance[i].asset.id == config.ASSET_ID) {
 						b = balance[i].quantity;
-						console.log('ENCONTRE ESTO => ', b);
-						break;
+						console.log('ENCONTRE MONEDA ESTO => ', b);
 					}
+					if(balance[i].asset.id == config.ASSET2_ID) {
+						d = balance[i].quantity;
+						console.log('ENCONTRE DESCUB ESTO => ', d);
+					}					
 				}
 			
-				dispatch(retrieveBalanceSuccess(b));
+				dispatch(retrieveBalanceSuccess([b,d]));
 				
 				//Decrypt memos
 				Promise.all(proms).then(res => {
