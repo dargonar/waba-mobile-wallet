@@ -68,4 +68,29 @@ CJNIEXPORT jobject JNICALL Java_com_diventi_bts2helper_Bts2helper_calcFee(JNIEnv
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
+CJNIEXPORT jstring JNICALL Java_com_diventi_bts2helper_Bts2helper_encodeMemo(JNIEnv* jniEnv, jobject /*this*/, jstring j_priv, jstring j_pub, jstring j_msg)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::bts2helper::Bts2helper::encode_memo(::djinni::String::toCpp(jniEnv, j_priv),
+                                                       ::djinni::String::toCpp(jniEnv, j_pub),
+                                                       ::djinni::String::toCpp(jniEnv, j_msg));
+        return ::djinni::release(::djinni::String::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
+CJNIEXPORT jstring JNICALL Java_com_diventi_bts2helper_Bts2helper_decodeMemo(JNIEnv* jniEnv, jobject /*this*/, jstring j_priv, jstring j_pub, jstring j_memoFrom, jstring j_memoTo, jstring j_memoNonce, jstring j_memoMessage)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE0(jniEnv);
+        auto r = ::bts2helper::Bts2helper::decode_memo(::djinni::String::toCpp(jniEnv, j_priv),
+                                                       ::djinni::String::toCpp(jniEnv, j_pub),
+                                                       ::djinni::String::toCpp(jniEnv, j_memoFrom),
+                                                       ::djinni::String::toCpp(jniEnv, j_memoTo),
+                                                       ::djinni::String::toCpp(jniEnv, j_memoNonce),
+                                                       ::djinni::String::toCpp(jniEnv, j_memoMessage));
+        return ::djinni::release(::djinni::String::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
 }  // namespace djinni_generated

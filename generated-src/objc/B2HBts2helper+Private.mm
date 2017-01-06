@@ -73,6 +73,34 @@ static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for th
     } DJINNI_TRANSLATE_EXCEPTIONS()
 }
 
++ (nonnull NSString *)encodeMemo:(nonnull NSString *)priv
+                             pub:(nonnull NSString *)pub
+                             msg:(nonnull NSString *)msg {
+    try {
+        auto objcpp_result_ = ::bts2helper::Bts2helper::encode_memo(::djinni::String::toCpp(priv),
+                                                                    ::djinni::String::toCpp(pub),
+                                                                    ::djinni::String::toCpp(msg));
+        return ::djinni::String::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
++ (nonnull NSString *)decodeMemo:(nonnull NSString *)priv
+                             pub:(nonnull NSString *)pub
+                        memoFrom:(nonnull NSString *)memoFrom
+                          memoTo:(nonnull NSString *)memoTo
+                       memoNonce:(nonnull NSString *)memoNonce
+                     memoMessage:(nonnull NSString *)memoMessage {
+    try {
+        auto objcpp_result_ = ::bts2helper::Bts2helper::decode_memo(::djinni::String::toCpp(priv),
+                                                                    ::djinni::String::toCpp(pub),
+                                                                    ::djinni::String::toCpp(memoFrom),
+                                                                    ::djinni::String::toCpp(memoTo),
+                                                                    ::djinni::String::toCpp(memoNonce),
+                                                                    ::djinni::String::toCpp(memoMessage));
+        return ::djinni::String::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
 namespace djinni_generated {
 
 auto Bts2helper::toCpp(ObjcType objc) -> CppType

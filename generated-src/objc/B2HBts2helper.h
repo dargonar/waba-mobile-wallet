@@ -21,4 +21,15 @@
                                      ops:(nonnull NSArray<NSString *> *)ops
                        coreExchangeRatio:(nonnull NSString *)coreExchangeRatio;
 
++ (nonnull NSString *)encodeMemo:(nonnull NSString *)priv
+                             pub:(nonnull NSString *)pub
+                             msg:(nonnull NSString *)msg;
+
++ (nonnull NSString *)decodeMemo:(nonnull NSString *)priv
+                             pub:(nonnull NSString *)pub
+                        memoFrom:(nonnull NSString *)memoFrom
+                          memoTo:(nonnull NSString *)memoTo
+                       memoNonce:(nonnull NSString *)memoNonce
+                     memoMessage:(nonnull NSString *)memoMessage;
+
 @end

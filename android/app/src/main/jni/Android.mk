@@ -1,5 +1,5 @@
 LOCAL_PATH := ../../../../../generated-src/jni
-DJINNI := /home/ubuntu/djinni/support-lib
+DJINNI := /home/ubuntu/xwallet/support-lib
 
 include $(CLEAR_VARS)
 

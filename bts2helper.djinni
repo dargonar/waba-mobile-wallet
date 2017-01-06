@@ -5,4 +5,6 @@ bts2helper = interface +c {
     static is_valid_name(name: string) : bool;
     static is_cheap_name(name: string) : bool;
     static calc_fee(fee_schedule: string, ops: list<string>, core_exchange_ratio: string): list<i64>;
+    static encode_memo(priv : string, pub : string, msg : string) : string;
+    static decode_memo(priv : string, pub : string, memo_from : string, memo_to : string, memo_nonce : string, memo_message : string) : string;
 }

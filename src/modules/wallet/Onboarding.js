@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 var IntroPager = require('./components/IntroPager');
-
+	
 var Onboarding = React.createClass({
 	
 	_onCreateAccount: function() {

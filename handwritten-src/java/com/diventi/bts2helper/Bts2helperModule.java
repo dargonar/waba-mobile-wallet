@@ -42,6 +42,24 @@ public class Bts2helperModule extends ReactContextBaseJavaModule {
   public String getName() {
     return "Bts2helper";
   }
+  
+  @ReactMethod
+  public void encodeMemo(String priv, String pub, String msg, Promise promise) {
+    try {
+      promise.resolve(Bts2helper.encodeMemo(priv, pub, msg));
+    } catch (Exception ex) {
+      promise.reject(ex.toString());
+    }
+  }
+  
+  @ReactMethod
+  public void decodeMemo(String priv, String pub, String memo_from, String memo_to, String memo_nonce, String memo_message, Promise promise) {
+    try {
+      promise.resolve(Bts2helper.decodeMemo(priv, pub, memo_from, memo_to, memo_nonce, memo_message));
+    } catch (Exception ex) {
+      promise.reject(ex.toString());
+    }
+  }
 
   @ReactMethod
   public void calcFee(String feeSchedule, ReadableArray ops, String coreExchangeRatio, Promise promise) {

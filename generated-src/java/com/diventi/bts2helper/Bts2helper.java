@@ -18,6 +18,10 @@ public abstract class Bts2helper {
 
     public static native ArrayList<Long> calcFee(String feeSchedule, ArrayList<String> ops, String coreExchangeRatio);
 
+    public static native String encodeMemo(String priv, String pub, String msg);
+
+    public static native String decodeMemo(String priv, String pub, String memoFrom, String memoTo, String memoNonce, String memoMessage);
+
     private static final class CppProxy extends Bts2helper
     {
         private final long nativeRef;

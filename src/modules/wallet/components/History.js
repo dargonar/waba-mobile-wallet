@@ -408,6 +408,19 @@ class History extends Component {
 			}
 		});
 
+		Bts2helper.encodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH','Hola soy un mensaje').then(res => {
+			res = JSON.parse(res);
+			console.log('ENCODE=>', res);
+			Bts2helper.decodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH', 
+														res.from, res.to, res.nonce, 'aabbcc').then(res2 => {
+				console.log('DECODE=>', res2);
+			}, err2 => {
+				console.log('ERRR@2', err2);
+			});
+		}, err => {
+			console.log('ENCODE ERR =>', err);
+		});	
+
 		Bts2helper.calcFee(current_fees, ops, cer).then(res => {
 			console.log("CALCFEEE =>", res);
 		}, err => {

@@ -23,6 +23,10 @@ public:
     static bool is_cheap_name(const std::string & name);
 
     static std::vector<int64_t> calc_fee(const std::string & fee_schedule, const std::vector<std::string> & ops, const std::string & core_exchange_ratio);
+
+    static std::string encode_memo(const std::string & priv, const std::string & pub, const std::string & msg);
+
+    static std::string decode_memo(const std::string & priv, const std::string & pub, const std::string & memo_from, const std::string & memo_to, const std::string & memo_nonce, const std::string & memo_message);
 };
 
 }  // namespace bts2helper

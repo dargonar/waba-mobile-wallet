@@ -8,6 +8,7 @@
 #include <fc/crypto/hex.hpp>
 #include <fc/crypto/ripemd160.hpp>
 #include <fc/variant.hpp>
+#include <fc/string.hpp>
 
 #include <fc/smart_ref_fwd.hpp>
 #include <fc/smart_ref_impl.hpp>
@@ -23,6 +24,7 @@
 #include <graphene/chain/protocol/protocol.hpp>
 #include <graphene/chain/protocol/transaction.hpp>
 #include <graphene/chain/protocol/account.hpp>
+#include <graphene/chain/protocol/memo.hpp>
 
 #include <graphene/utilities/key_conversion.hpp>
 
@@ -60,13 +62,35 @@ struct get_required_fees_helper
 
 namespace bts2helper {
     
-//     std::shared_ptr<Bts2helper> Bts2helperImpl::create() {
-//         return std::make_shared<Bts2helperImpl>();
-//     }
-    
-//     Bts2helperImpl::Bts2helperImpl() {
- 
-//     }
+    std::string Bts2helper::encode_memo(const std::string & priv, const std::string & pub, const std::string & msg) {
+      auto priv_key = fc::ecc::private_key::regenerate( fc::sha256(priv) );
+      auto pub_key  = public_key_type( pub );
+
+      memo_data data;
+      data.set_message(priv_key, pub_key, msg, 0);
+
+      return fc::json::to_string(data);
+    }
+
+    std::string Bts2helper::decode_memo(const std::string & priv, const std::string & pub, const std::string& memo_from, const std::string& memo_to,
+          const std::string& memo_nonce, const std::string& memo_message) {
+
+      auto priv_key = fc::ecc::private_key::regenerate( fc::sha256(priv) );
+      auto pub_key  = public_key_type( pub );
+
+      memo_data data;
+
+      data.from    = public_key_type(memo_from);
+      data.to      = public_key_type(memo_to);
+      data.nonce   = fc::to_uint64(memo_nonce);
+
+      auto byte_size = memo_message.length()/2;
+
+      data.message.resize(byte_size);
+      fc::from_hex(memo_message, &data.message[0], byte_size);
+
+      return data.get_message(priv_key, pub_key);      
+    }
 
     vector<int64_t> Bts2helper::calc_fee(const std::string& current_fee_schedule_json,
                                          const vector<std::string>& ops, 
