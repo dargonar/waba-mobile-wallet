@@ -3,6 +3,7 @@ import * as types from '../../constants/actionTypes';
 // import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
 import * as config from '../../constants/config';
 import UWCrypto from '../../utils/Crypto';
+import Bts2helper from '../../utils/Bts2helper';
 import gql from 'graphql-tag';
 
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
@@ -24,6 +25,24 @@ export function createAccountSuccessHACK(account) {
 		dispatch(createAccountSuccess(account));	
 	}
 }
+
+// export function getAccount(name) {
+// 	return new Promise((resolve, reject) => {
+		
+// 		fetch(config.getAPIURL('/account/'+name), {
+// 			method: 'GET',
+// 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+// 		})
+// 		.then((response) => response.json(), err=>{ reject(err); }) 
+// 		.then((responseJson) => {
+// 			resolve(responseJson);
+// 		}, err => {
+// 			reject(err);
+// 		});
+		
+// 	}
+// }
+
 
 export function createAccount(name) {
 
@@ -64,6 +83,7 @@ export function createAccount(name) {
 									keys     : res3,
 									name     : name
 								};
+
 								createAccountSuccessHACK(account);
 								return resolve(account);
 							}
@@ -84,6 +104,13 @@ export function createAccount(name) {
 			});
 			
 		});
+}
+
+export function blockChainSuccess(blockchain) {
+	return {
+		type      	: types.BLOCKCHAIN_SUCCESS,
+		blockchain  : blockchain
+	};
 }
 
 export function memoSuccessHACK(memo) {
@@ -119,6 +146,27 @@ export function retrieveUsers(query) {
 		});
 }
 
+export function myAccountIdSuccess(id) {
+	return {
+		type    : types.MY_ACCOUNT_ID_SUCCESS,
+		id      : id
+	};
+}
+
+export function feeScheduleSuccess(fees) {
+	return {
+		type    : types.FEE_SCHEDULE_SUCCESS,
+		fees    : fees
+	};
+}
+
+export function assetSuccess(asset) {
+	return {
+		type    : types.ASSET_SUCCESS,
+		asset   : asset
+	};
+}
+
 
 // HISTORY
 export function retrieveHistorySuccess(data) {
@@ -135,14 +183,26 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
-export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
+export function retrieveHistory(account_name, keys, first_time) {
 	return function (dispatch) {
-		//console.log( 'retrieveHistory(account_name, memo_pubkey, memo_privkey)', account_name, memo_pubkey, memo_privkey);
+		console.log( 'retrieveHistory()', account_name, first_time);
+		
+		let memo_key_map = {};
+		for(var i=0; i<keys.length; i++) {
+			memo_key_map[keys[i].pubkey] = keys[i].privkey;
+		}
 		
 		const query = apollo.query({
 			query: gql`
-				query getTodo($v1 : String!) {
+				query getTodo($v1 : String!, $v2 : String!, $v3 : String!) {
+					fees(hack:$v2)
+  				asset(id:$v3)
+					blockchain {
+						refBlockNum
+						refBlockPrefix
+					}
 					account(name:$v1) {
+						id
 						balance {
 							quantity
 							asset {
@@ -157,6 +217,16 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 							}
 							... on NoDetailOp {
 								id
+							}
+							... on OverdraftChange {
+								amount {
+									quantity
+									asset {
+										symbol
+										id
+									}
+								}
+								type
 							}
 							... on Transfer {
 								from {
@@ -191,7 +261,9 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 				}
 			`,
 			variables : { 
-				v1 : account_name
+				v1 : account_name,
+				v2 : first_time ? "hack" : "",
+				v3 : first_time ? config.ASSET_ID : ""
 			},
 			forceFetch: true
 		});
@@ -200,6 +272,14 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
       const { errors, data } = graphQLResult;
 
       if (data) {
+
+				dispatch(myAccountIdSuccess(data.account.id));
+				dispatch(blockChainSuccess(data.blockchain));
+				
+				if(first_time) {
+					dispatch(feeScheduleSuccess(JSON.parse(data.fees)));
+					dispatch(assetSuccess(JSON.parse(data.asset)));
+				}
 				
 // 				console.log('**************************************8');
 // 				console.log(data);
@@ -219,13 +299,43 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 						data2[mes] = []
 					}
 					
-					if(history[i].__typename == 'Transfer' && history[i].memo){
+					//history[i].__typename == 'Transfer' && 
+					if(history[i].memo){
 						//console.log(history[i].memo);
-						let memo = history[i].memo;
-						let pub = memo.from;
+ 						
+						let memo    = history[i].memo;
 						
-						if(memo.from == memo_pubkey)
-							pub = memo.to;
+						let privkey = memo_key_map[memo.from];
+						let pubkey  = memo.to;
+						
+						if(!privkey) {
+							privkey = memo_key_map[memo.to];
+							pubkey  = memo.from;
+						}
+
+						if(privkey) {
+
+							let p = Bts2helper.decodeMemo(
+								privkey,
+								pubkey,
+								memo.from,
+								memo.to,
+								memo.nonce,
+								memo.message
+							);
+
+							proms.push(p);
+							inxs.push(i);
+							
+						} else {
+							console.log('no lo puedo DECODESSSSS');
+						}
+						
+						
+// 						let pub = memo.from;
+						
+// 						if(memo.from == memo_pubkey)
+// 							pub = memo.to;
 
 // 						console.log('---TO DECRYPT');
 // 						console.log('pub =>', pub);
@@ -233,9 +343,9 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 // 						console.log('privkey =>', memo_privkey);
 // 						console.log('memo =>', memo.nonce);
 						
-						let p = UWCrypto.decryptMemo(pub, memo.message, memo_privkey, memo.nonce);
-						proms.push(p);
-						inxs.push(i);
+						
+
+						//let p = UWCrypto.decryptMemo(pub, memo.message, memo_privkey, memo.nonce);
 					}
 					data2[mes].push(history[i]);
 				}
@@ -264,7 +374,7 @@ export function retrieveHistory(account_name, memo_pubkey, memo_privkey) {
 				Promise.all(proms).then(res => {
 					//console.log('Memo para vos =>', res);
 					for(var i=0; i<res.length;i++) {
-						history[inxs[i]].message = res[i].message;
+						history[inxs[i]].message = res[i];
 // 						console.log('********************************')
 // 						console.log(i, history[inxs[i]]);
 // 						console.log('********************************')

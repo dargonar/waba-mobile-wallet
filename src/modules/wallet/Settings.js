@@ -43,6 +43,14 @@ class Settings extends Component {
 		});
 	}
 
+	_onShowWords() {
+		this.props.navigator.push({
+			screen:     'wallet.RecoveryKeywords',
+			title:      'Palabras clave',
+			passProps:  {mnemonic: this.props.account.mnemonic, hide_button:true}
+		});
+	}
+
   componentWillMount() {
   }
 
@@ -64,6 +72,8 @@ class Settings extends Component {
 		// <SettingsList.Item titleInfo='Some Information' hasNavArrow={false} title='Information Example'/>
           
 		const iconSwap = (<Icon name="ios-swap" size={30} color="#1f475b" />);
+		const iconSec  = (<Icon name="ios-key" size={30} color="#1f475b" />);
+		
   	return (
       <View style={styles.container}>
         <SettingsList>
@@ -75,6 +85,14 @@ class Settings extends Component {
             itemWidth={50}
             title='Restaurar cuenta'
 			      onPress={this._onRestoreAccount.bind(this)}
+          />
+          <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconSec}
+									</View>}
+            itemWidth={50}
+            title='Mostrar palabras clave'
+			      onPress={this._onShowWords.bind(this)}
           />
           
         </SettingsList>

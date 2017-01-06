@@ -128,9 +128,10 @@ class RestoreAccount extends Component {
 					} else {
 						
 						let account = {
-							mnemonic : words,
-							keys     : res2,
-							name     : responseJson[0] //.name
+							mnemonic   : words,
+							keys       : res2,
+							name       : responseJson[0], //.name
+							id         : responseJson[1] //.id
 						};
 
 						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {

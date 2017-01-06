@@ -90,7 +90,7 @@ class Memo extends Component {
 					<TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onApplyMemo.bind(this)} >
-						<Text style={styles.fullWidthButtonText}>APLICAR MENSAJE</Text>
+						<Text style={styles.fullWidthButtonText}>AGREGAR MENSAJE</Text>
 					</TouchableHighlight>
 				</View>
         <KeyboardSpacer />

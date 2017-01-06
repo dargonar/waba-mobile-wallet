@@ -4,6 +4,32 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
+		case types.BLOCKCHAIN_SUCCESS:
+			return {
+				...state,
+				blockchain: action.blockchain
+			};
+			
+		case types.ASSET_SUCCESS:
+			return {
+				...state,
+				asset: action.asset
+			};
+			
+		case types.FEE_SCHEDULE_SUCCESS:
+			return {
+				...state,
+				fees: action.fees
+			};
+		
+		case types.MY_ACCOUNT_ID_SUCCESS:
+			account    = state.account
+			account.id = action.id
+			return {
+				...state,
+				account: account
+			};
+			
 		case types.RETRIEVE_HISTORY_SUCCESS:
 			return {
 				...state,

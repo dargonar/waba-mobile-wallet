@@ -24,7 +24,8 @@ class RecoveryKeywords extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mnemonic: props.mnemonic
+			mnemonic: props.mnemonic,
+			hide_button : props.hide_button
 		}
     this._onInitWallet 					= this._onInitWallet.bind(this);
 // 		this._setClipboardContent 	= this._setClipboardContent.bind(this);
@@ -47,6 +48,18 @@ class RecoveryKeywords extends Component {
 
 	render() {
 		const name = this.state.name;
+		let button = undefined;
+		if(!this.state.hide_button) {
+			button = (
+				<View style={{flex:1, flexDirection:'column', alignItems: 'stretch', justifyContent:'flex-end' }}>
+					<TouchableHighlight
+							style={[styles.fullWidthButton, styles.fullWidthButton1]}
+							onPress={this._onInitWallet} >
+						<Text style={styles.fullWidthButtonText}>INICIAR BILLETERA</Text>
+					</TouchableHighlight>
+				</View>
+			)			
+		}
 		return (
 			<View style={styles.container}>
 				
@@ -63,13 +76,7 @@ class RecoveryKeywords extends Component {
           	</View>
 					</TouchableWithoutFeedback>
 				</View>
-				<View style={{flex:1, flexDirection:'column', alignItems: 'stretch', justifyContent:'flex-end' }}>
-					<TouchableHighlight
-							style={[styles.fullWidthButton, styles.fullWidthButton1]}
-							onPress={this._onInitWallet} >
-						<Text style={styles.fullWidthButtonText}>INICIAR BILLETERA</Text>
-					</TouchableHighlight>
-				</View>
+				{button}
 			</View>
 		);
 	}
@@ -78,7 +85,7 @@ class RecoveryKeywords extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		new_keys: state.wallet.new_keys
+		//new_keys: state.wallet.new_keys
 	};
 }
 

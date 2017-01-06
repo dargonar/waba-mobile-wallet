@@ -23,308 +23,6 @@ import Bts2helper from '../../../utils/Bts2helper';
 
 import OneSignal from 'react-native-onesignal';
 
-var ops = [
-	JSON.stringify([0, {
-	 fee : { 
-		amount   : 26418,
-		asset_id : "1.3.1004"
-	 },
-	 from    : "1.2.150912",
-	 to      : "1.2.142374",
-	 amount  : {
-		amount   : 3300000,
-		asset_id : "1.3.1004"
-	 },
-	 memo : {
-		from    : "BTS83GV9zVqamyQPaqdTbEwfi5gvbGZZzbobFk1NYxnSY3PBJTuHb",
-		to      : "BTS7szhP8GK7rTwaiZH9Lf4gzu2E8JpqEhqKbfjN5YtV5RekNgv2C",
-		nonce   : "3477628209827763",
-		message : "facd6139787c7a41a8dd16bb6f0b3a43ca4116aa210462431a378fdb7036e89b"
-	 } 
-	}])
-];
-
-var cer = JSON.stringify({
-	"base": {
-		"amount": 100000,
-		"asset_id": "1.3.0"
-	},
-	"quote": {
-		"amount": 10000,
-		"asset_id": "1.3.1004"
-	}
-});
-
-var current_fees = JSON.stringify({
-  "parameters": [
-    [
-      0,
-      {
-        "fee": 264174,
-        "price_per_kbyte": 146763
-      }
-    ],
-    [
-      1,
-      {
-        "fee": 14676
-      }
-    ],
-    [
-      2,
-      {
-        "fee": 1467
-      }
-    ],
-    [
-      3,
-      {
-        "fee": 14676
-      }
-    ],
-    [
-      4,
-      {}
-    ],
-    [
-      5,
-      {
-        "basic_fee": 1467634,
-        "premium_fee": 73381739,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      6,
-      {
-        "fee": 14676,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      7,
-      {
-        "fee": 1467634
-      }
-    ],
-    [
-      8,
-      {
-        "membership_annual_fee": "146763479066893",
-        "membership_lifetime_fee": 1761161748
-      }
-    ],
-    [
-      9,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      10,
-      {
-        "long_symbol": 733817395,
-        "price_per_kbyte": 146763,
-        "symbol3": "117410783253",
-        "symbol4": "29352695813"
-      }
-    ],
-    [
-      11,
-      {
-        "fee": 29352695,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      12,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      13,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      14,
-      {
-        "fee": 264174,
-        "price_per_kbyte": 146763
-      }
-    ],
-    [
-      15,
-      {
-        "fee": 14676
-      }
-    ],
-    [
-      16,
-      {
-        "fee": 7338173
-      }
-    ],
-    [
-      17,
-      {
-        "fee": 733817
-      }
-    ],
-    [
-      18,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      19,
-      {
-        "fee": 1467
-      }
-    ],
-    [
-      20,
-      {
-        "fee": 733817395
-      }
-    ],
-    [
-      21,
-      {
-        "fee": 146763
-      }
-    ],
-    [
-      22,
-      {
-        "fee": 2201452,
-        "price_per_kbyte": 733817
-      }
-    ],
-    [
-      23,
-      {
-        "fee": 73381,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      24,
-      {
-        "fee": 0
-      }
-    ],
-    [
-      25,
-      {
-        "fee": 2201452
-      }
-    ],
-    [
-      26,
-      {
-        "fee": 146763
-      }
-    ],
-    [
-      27,
-      {
-        "fee": 211339,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      28,
-      {
-        "fee": 0
-      }
-    ],
-    [
-      29,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      30,
-      {
-        "fee": 146763479
-      }
-    ],
-    [
-      31,
-      {
-        "fee": 0
-      }
-    ],
-    [
-      32,
-      {
-        "fee": 73381739
-      }
-    ],
-    [
-      33,
-      {
-        "fee": 29352695
-      }
-    ],
-    [
-      34,
-      {
-        "fee": 733817395
-      }
-    ],
-    [
-      35,
-      {
-        "fee": 146763,
-        "price_per_kbyte": 733817
-      }
-    ],
-    [
-      36,
-      {
-        "fee": 7338173
-      }
-    ],
-    [
-      37,
-      {}
-    ],
-    [
-      38,
-      {
-        "fee": 14676347,
-        "price_per_kbyte": 102734
-      }
-    ],
-    [
-      39,
-      {
-        "fee": 3082033,
-        "price_per_output": 1027344
-      }
-    ],
-    [
-      41,
-      {
-        "fee": 3082033
-      }
-    ],
-    [
-      43,
-      {
-        "fee": 14676347
-      }
-    ]
-  ],
-  "scale": 10000
-});
-
 class History extends Component {
 
 	constructor(props) {
@@ -342,6 +40,13 @@ class History extends Component {
     };
 	}
 
+	refreshHistory() {
+		this.props.actions.retrieveHistory(
+			this.props.account.name, 
+			this.props.account.keys,
+			!this.props.account.id
+		);		
+	}
   componentWillReceiveProps(nextProps) {
 		//if (nextProps.history !== this.props.history) {
       let data = nextProps.history;
@@ -400,35 +105,32 @@ class History extends Component {
 				console.log('DATA: ', data);
 				console.log('ISACTIVE: ', isActive);
 				
-				that.props.actions.retrieveHistory(
-					that.props.account.name, 
-					that.props.account.keys[1].pubkey, 
-					that.props.account.keys[1].privkey
-				);
+				that.refreshHistory();
 			}
 		});
 
-		Bts2helper.encodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH','Hola soy un mensaje').then(res => {
-			res = JSON.parse(res);
-			console.log('ENCODE=>', res);
-			Bts2helper.decodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH', 
-														res.from, res.to, res.nonce, 'aabbcc').then(res2 => {
-				console.log('DECODE=>', res2);
-			}, err2 => {
-				console.log('ERRR@2', err2);
-			});
-		}, err => {
-			console.log('ENCODE ERR =>', err);
-		});	
+// 		Bts2helper.encodeMemo('65df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfrxnoUHXUcMayqjuLjKH','Hola soy un mensaje').then(res => {
+// 			res = JSON.parse(res);
+// 			console.log('ENCODE=>', res);
+// 			Bts2helper.decodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH', 
+// 														res.from, res.to, res.nonce, 'aabbcc').then(res2 => {
+// 				console.log('DECODE=>', res2);
+// 			}, err2 => {
+// 				console.log('ERRR@2', err2);
+// 			});
+// 		}, err => {
+// 			console.log('ENCODE ERR =>', err);
+// 		});	
 
-		Bts2helper.calcFee(current_fees, ops, cer).then(res => {
-			console.log("CALCFEEE =>", res);
-		}, err => {
-			console.log("ERR CALCFEEE =>", err);
-		});
+// 		Bts2helper.calcFee(current_fees, ops, 'pito/1231').then(res => {
+// 			console.log("CALCFEEE =>", res);
+// 		}, err => {
+// 			console.log("ERR CALCFEEE =>", err);
+// 		});
 		//(String feeSchedule, ReadableArray ops, String coreExchangeRatio, Promise promise)
 		
 		//this.props.actions.retrieveHistory(this.props.account.name, this.props.account.keys[1].pubkey, this.props.account.keys[1].privkey);
+		//this.refreshHistory();
 	}
 
   componentWillUnmount() {
@@ -447,10 +149,7 @@ class History extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-    //setTimeout(() => {
-    //this.props.actions.retrieveHistory();
-		this.props.actions.retrieveHistory(this.props.account.name, this.props.account.keys[1].pubkey, this.props.account.keys[1].privkey);
-    //}, 3000);
+		this.refreshHistory();
   }
 
   _renderSectionHeader(sectionData, sectionID)  {
@@ -468,6 +167,16 @@ class History extends Component {
     );
   }
 
+  _getFecha(timestamp) {
+		const meses = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+		var month = timestamp.substr(5,2) >> 0;
+		var mes   = meses[month];
+		var dia   = timestamp.substr(8,2) >> 0;
+
+		return dia + ' ' + mes;
+  }
+
   _renderRow(rowData, sectionID, rowID) {
 			
 			if(rowData.__typename == 'NoDetailOp') {
@@ -478,11 +187,21 @@ class History extends Component {
 				)
 			}
 
+			if(rowData.__typename == 'OverdraftChange') {
+				let tipo = rowData.type == 'up' ? 'incremento' : 'decremento'; 
+				return(
+					<TouchableHighlight underlayColor={'#0f0'} onPress={this._onPressButton.bind(this)}>
+						<Text style={styles.row_amount}>Se {tipo} su credito en {rowData.amount.quantity}</Text>
+					</TouchableHighlight>
+				)
+			}
+
        let mapa   = {received:'recibido', sent: 'enviado'};
        let rotato = {received:'135 deg', sent : '-45 deg'};
        let bg     = {received:'#8ec919', sent:'#fcc4cb'};
        let dea    = {received:'De:', sent:'A:'};
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
+       let fecha  = this._getFecha(rowData.block.timestamp);
 
        let message = undefined;
        if(rowData.message)
@@ -505,7 +224,7 @@ class History extends Component {
               {message}
             </View>
             <View style={styles.row_hour}>
-              <Text>{rowData.block.timestamp.substr(11,5)}</Text>
+              <Text>{fecha}</Text>
             </View>
           </View>
         </TouchableHighlight>

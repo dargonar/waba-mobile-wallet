@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import { iconsMap } from '../../utils/AppIcons';
+import * as config from '../../constants/config';
 
 import styles from './styles/SelectRecipient';
 
@@ -105,6 +106,10 @@ class SelectRecipient extends Component {
 	_onRecipientSelected(data){
 // 		if(this.state.recipient_selected)
 // 			return;
+		
+		//data.push(undefined);
+		//console.log('_onRecipientSelected =>', data);
+		
 		this.setState({recipient_selected:true}); 
 		this.props.actions.memoSuccess('');		
 		this.props.navigator.push({

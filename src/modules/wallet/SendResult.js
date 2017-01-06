@@ -54,8 +54,11 @@ class SendResult extends Component {
   _onOkPress(){
    let that = this;
     setTimeout( function() {
-      that.props.actions.retrieveHistory(that.props.account.name, that.props.account.keys[1].pubkey, that.props.account.keys[1].privkey);  
-    }, 1000);
+      that.props.actions.retrieveHistory(
+				that.props.account.name, 
+				that.props.account.keys,
+				!that.props.account.id);  
+    }, 1500);
     
     
     this.props.navigator.popToRoot({

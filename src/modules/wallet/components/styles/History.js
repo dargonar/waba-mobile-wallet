@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },  
     
   row_hour : {
-    alignSelf       : 'center', 
+    alignSelf       : 'flex-start', 
     marginRight     : 10
   },
     

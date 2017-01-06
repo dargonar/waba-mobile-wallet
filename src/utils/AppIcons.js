@@ -58,6 +58,7 @@ const icons = {
   
 //   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
+  "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
   
 }
 

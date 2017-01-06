@@ -1,9 +1,13 @@
 export default {
 	wallet: {
-		balance  : [0,0],
-		history  : [],
-		new_keys : {},
+		balance    : [0,0],
+		history    : [],
+		fees       : {},
+		asset      : {},
+		new_keys   : {},
 		memo: 		 '',
-		account:   null
+		account    : null,
+		account_id : null,
+		blockchain : {}
 	}
 };

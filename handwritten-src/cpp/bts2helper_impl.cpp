@@ -3,6 +3,7 @@
 #include <vector>
 
 #include <boost/array.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include <fc/io/json.hpp>
 #include <fc/crypto/hex.hpp>
@@ -69,7 +70,7 @@ namespace bts2helper {
       memo_data data;
       data.set_message(priv_key, pub_key, msg, 0);
 
-      return fc::json::to_string(data);
+      return boost::replace_all_copy( fc::json::to_string(data), "\"GPH", "\"BTS");
     }
 
     std::string Bts2helper::decode_memo(const std::string & priv, const std::string & pub, const std::string& memo_from, const std::string& memo_to,

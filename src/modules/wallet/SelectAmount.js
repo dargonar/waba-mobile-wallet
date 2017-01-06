@@ -14,7 +14,7 @@ import { Button } from 'react-native-elements';
 import styles from './styles/SelectAmount';
 import { connect } from 'react-redux';
 import Keyboard from './components/Keyboard';
-
+import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
 
 var homeIcon;  
@@ -24,8 +24,11 @@ class SelectAmount extends React.Component {
     super(props);
     this.state = {
       amount: 	 '', 
-			recipient: props.recipient
+			recipient: props.recipient,
+			memo_key: undefined
     };
+		
+		
 //     Icon.getImageSource('ios-attach', 30).then((source) => { homeIcon = source});
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
@@ -72,7 +75,22 @@ class SelectAmount extends React.Component {
   
 
     componentDidMount() {
-//         model.onChange((model) => {
+
+			if(!this.state.memo_key) {
+				fetch(config.getAPIURL('/account/')+this.props.recipient[0], {
+					method: 'GET',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+				})
+				.then((response) => response.json(), err => {}) 
+				.then((responseJson) => {
+					this.setState({memo_key:responseJson.options.memo_key});
+				}, err => {
+				}); 
+			}
+
+			
+			
+			//         model.onChange((model) => {
 //             this.setState({text: model.getKeys().join('')});
 //         });
     }
@@ -141,7 +159,8 @@ class SelectAmount extends React.Component {
         screen: 'wallet.SendConfirm',
         title: 'Confirmar envío',
         passProps: {
-          recipient: 	this.state.recipient, 
+          recipient: 	this.state.recipient,
+					memo_key:   this.state.memo_key, 
 					memo: 			this.props.memo, 
 					amount: 		this.state.amount
 				}

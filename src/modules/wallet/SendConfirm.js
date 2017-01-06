@@ -34,8 +34,9 @@ class SendConfirm extends Component {
     this.state = {
       recipient : {
         name:					props.recipient[0],
-        account_id:		props.recipient[1]
+        account_id:		props.recipient[1],
       },
+			memo_key: props.memo_key,
       amount : props.amount,
       memo :   props.memo,
 			tx: 		 null,
@@ -48,81 +49,138 @@ class SendConfirm extends Component {
 		this._onSendingError = this._onSendingError.bind(this);
 		this._buildMemo = this._buildMemo.bind(this);
   }
-	
+
+
+  dateAdd(date, interval, units) {
+		var ret = new Date(date); //don't change original date
+		switch(interval.toLowerCase()) {
+			case 'year'   :  ret.setFullYear(ret.getFullYear() + units);  break;
+			case 'quarter':  ret.setMonth(ret.getMonth() + 3*units);  break;
+			case 'month'  :  ret.setMonth(ret.getMonth() + units);  break;
+			case 'week'   :  ret.setDate(ret.getDate() + 7*units);  break;
+			case 'day'    :  ret.setDate(ret.getDate() + units);  break;
+			case 'hour'   :  ret.setTime(ret.getTime() + units*3600000);  break;
+			case 'minute' :  ret.setTime(ret.getTime() + units*60000);  break;
+			case 'second' :  ret.setTime(ret.getTime() + units*1000);  break;
+			default       :  ret = undefined;  break;
+		}
+		return ret;
+	}
+
+	_addSignature(tx, privkey) {				
+		return new Promise( (resolve, reject) => {
+			Bts2helper.txDigest( JSON.stringify(tx), config.CHAIN_ID).then( digest => {
+				console.log('_addSignature txDigest =>', digest);
+				Bts2helper.signCompact(digest, privkey).then( signature => {
+					console.log('_addSignature signCompact =>', signature);
+					tx.signatures = [signature];
+					resolve(tx);
+				}, err => {
+					reject(err);
+				})
+			}, err => {
+				reject(err);						
+			});
+		});
+	}
+			
+	_generateUnsignedTx(params) {				
+		//console.log('_generateUnsignedTx', params);
+		return new Promise( (resolve, reject) => {
+			tx = {
+				'expiration' : this.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
+				'ref_block_num'     : this.props.blockchain.refBlockNum,
+				'ref_block_prefix'  : this.props.blockchain.refBlockPrefix,
+				'operations' : [
+					 [
+						0,
+						{
+							from   : params.from,
+							to     : params.to,
+							amount : {
+								amount   : (Number(params.amount)*Math.pow(10,params.asset.precision))>>0,
+								asset_id : params.asset.id
+							},
+							memo   : params.memo
+						}
+					]
+				]
+			}
+
+			Bts2helper.calcFee(JSON.stringify(this.props.fees), [JSON.stringify(tx.operations[0])], JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
+				tx.operations[0][1].fee = {
+					asset_id  : params.asset.id,
+					amount    : res[0]
+				}
+				resolve(tx);
+			}, err => {
+				reject(err);
+			});
+		}); //Promise
+	}
+		
 	getTotal(){
 		return (Number(this.state.amount) + Number(this.state.fee_txt)).toFixed(2);
 	}
-	_getTx(){
-		
-		fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
-			method: 'GET',
-			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-		})
-		.then((response) => response.json()
-			, err => {
-				this._onGetTxError(JSON.stringify(error));	
-			}) 
-		.then((responseJson) => {
+
+_getRecipientInfo(recipient) {
+
+		return new Promise( (resolve, reject) => {
+			if(this.state.memo_key) {
+				resolve();
+				return;
+			}
 			
-			this._buildMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
-				
-// 				let amount = this.state.amount >> 0;
-// 				let amount = Number(this.state.amount*config.ASSET_DIVIDER).toFixed(0); 
-				let amount = Number(this.state.amount).toFixed(2); 
-				console.log('----------AMOUNT------------');
-				console.log(amount);
-				console.log('-------------------------------------');
-				fetch(config.getAPIURL('/transfer'), {
-					method: 'POST',
-					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-					body: JSON.stringify({
-						from   : this.props.account.name,
-						to     : this.state.recipient.account_id,
-						amount : amount,
-						memo   : enc_memo
-					})
-				})
-				.then((response) => response.json()
-					, err => {
-						this._onGetTxError(JSON.stringify(err));	
-					}) 
-				.then((responseJson) => {
-					console.log('----------TX------------');
-					console.log(JSON.stringify(responseJson));
-					console.log('-------------------------------------');
-					if (responseJson.error){
-						this._onGetTxError(responseJson.error);	
-// 						this.setState({
-// 							can_confirm	: false,
-// 							error				:	responseJson.error
-// 						});				
-						return;
-					}
-					this.setState({
-						tx					:	responseJson.tx,
-						fee    			: responseJson.tx.operations[0][1].fee.amount,
-						fee_txt			: responseJson.tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
-						can_confirm	: 	true,
-						error				:	''
-					});			
-				}
+			fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
+				method: 'GET',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+			})
+			.then((response) => response.json()
 				, err => {
 					this._onGetTxError(JSON.stringify(err));	
-				})
-			
+				}) 
+			.then((responseJson) => {
+				this.setState({memo_key:responseJson.options.memo_key});
+				resolve();
 			}, err => {
-				this._onGetTxError(JSON.stringify(error));	
-			});			
-			
-		}, err => {
-			this._onGetTxError(JSON.stringify(err));	
-		})
-		.catch((error) => {
-			console.error(error);
-			this._onGetTxError(JSON.stringify(error));	
+				this._onGetTxError(JSON.stringify(err));
+			}); 
 		});
+		
+	}
 
-				
+	_getTx() {
+
+		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
+			let amount = Number(this.state.amount).toFixed(2); 
+			this._generateUnsignedTx({
+					from   : this.props.account.id,
+					to     : this.state.recipient.account_id,
+					amount : amount,
+					memo   : enc_memo,
+					asset  : this.props.asset
+			})
+			.then((tx) => {
+				console.log('----------TX------------');
+				console.log(JSON.stringify(tx));
+				console.log('------------------------');
+				this.setState({
+					tx					:	tx,
+					fee    			: tx.operations[0][1].fee.amount,
+					fee_txt			: tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
+					can_confirm	: true,
+					error				:	''
+				});			
+			}
+			, err => {
+				console.error('ERR1: ', err);
+				this._onGetTxError(JSON.stringify(err));	
+			})
+
+		}, err => {
+			console.error('ERR2: ', err);
+			this._onGetTxError(JSON.stringify(err));	
+		});			
 	}
 	//'No se pudo calcular la comisión'
 		
@@ -144,23 +202,26 @@ class SendConfirm extends Component {
 		)
 	}
 
-	_buildMemo(message, destPubkey) {
+	_buildMemo(message) {
 		return new Promise( (resolve, reject) => {
+			
 			if(!message)	{
 				resolve();
 				return;
 			}
 			
-			UWCrypto.createMemo(this.props.account.keys[1].privkey, destPubkey, message, '').then(res => {
+			this._getRecipientInfo(this.state.recipient).then( () => {
 
-				resolve({
-					from     : this.props.account.keys[1].pubkey,
-					to       : destPubkey,
-					nonce    : res.nonce,
-					message  : res.encrypted_memo
-				});
+				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
+					console.log('Para mi para ovs', res);
+					resolve(JSON.parse(res));
+				}, err => {
+					console.log('DA ERRORRRR');
+					console.log(err);
+					reject(err);
+				})
 
-			}, err => {
+			} , err => {
 				reject(err);
 			})
 		});
@@ -181,7 +242,9 @@ class SendConfirm extends Component {
 		
 		console.log(' ==> this.props.balance', this.props.balance);
 		let final_amount = Number(this.state.amount) + Number(this.state.fee_txt); 
-		if(Number(this.props.balance)<final_amount)
+		let disp = (Number(this.props.balance[0])); // - Number(this.props.balance[0])).toFixed(2);
+		console.log(disp, final_amount);
+		if(Number(disp) < final_amount)
 		{
 			Alert.alert(
 				'Fondos insuficientes',
@@ -203,112 +266,46 @@ class SendConfirm extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 		
+		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 		
-		//fetch('http://35.161.140.21:8080/api/v1/account/'+this.state.recipient.name, {
-		fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
-			method: 'GET',
-			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-		})
-		.then((response) => response.json()
-			, err => {
-				this._onSendingError(err);	
-		}) 
-		.then((responseJson) => {
-			this._buildMemo(this.state.memo, responseJson.options.memo_key).then( enc_memo => {
-				console.log('AFTER BUILD => ', JSON.stringify(enc_memo));
-				let amount = Number(this.state.amount).toFixed(2); 
-				console.log("AMOUNT => ", amount);
-			
-				//fetch('http://35.161.140.21:8080/api/v1/transfer', {
-				fetch(config.getAPIURL('/transfer'), {
+			fetch(config.getAPIURL('/push_tx'), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 					body: JSON.stringify({
-						from   : this.props.account.name,
-						to     : this.state.recipient.account_id,
-						amount : amount,
-						memo   : enc_memo
+							tx : tx,
 					})
-				})
-				.then((response) => response.json()
-					, err => {
-						this._onSendingError(err);	
-					}) 
-				.then((responseJson) => {
-					
-					Bts2helper.txDigest(JSON.stringify(responseJson.tx), config.CHAIN_ID).then( digest=> {
-
-						console.log('txDigest =>', digest, ' ', responseJson.to_sign);
-
-						if ( responseJson.to_sign != digest ) {
-								console.log('txDigest => ERRORRR');
-								this._onSendingError('wrong digest');
-								return;
-						}
-
-						Bts2helper.signCompact(responseJson.to_sign, this.props.account.keys[1].privkey).then(res => {
-						//UWCrypto.signHash(this.props.account.keys[1].privkey, responseJson.to_sign).then(res => {
-												//console.log('funciono OK =>', res);
-							let tx = responseJson.tx;
-							//tx.signatures = [res.signature];
-							tx.signatures = [res];
-
-							//fetch('http://35.161.140.21:8080/api/v1/push_tx', {
-							fetch(config.getAPIURL('/push_tx'), {
-									method: 'POST',
-									headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-									body: JSON.stringify({
-											tx : tx,
-									})
-							})
-							.then((response) => response.json()
-								, err => {
-										this._onSendingError(err);
-							})
-							.then((responseJson) => {
-									//console.log('Parece que cerramos bien', responseJson);
-
-									this.props.navigator.dismissModal({
-											animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
-									});
-									this.props.navigator.push({
-											screen:     'wallet.SendResult',
-											title:      'Envío exitoso',
-											passProps:  {
-													recipient : this.state.recipient,
-													amount :    this.state.amount,
-													memo :      this.state.memo
-											},
-											navigatorStyle: {navBarHidden:true}
-									});
-							}, err => {
-									this._onSendingError(err);
-							});
-
-						}, err => {
-								console.log('signCompact => ERRORRR');
-								this._onSendingError(err);
-						});
-
-				});
-					
-				}
+			})
+			.then((response) => response.json()
 				, err => {
-					this._onSendingError(err);	
-				})
-			
-			}, err => {
-				this._onSendingError(err);
-			});			
-			
-		}, err => {
-			this._onSendingError(err);	
-		})
-		.catch((error) => {
-			console.error(error);
-			this._onSendingError(error);	
-		});
+						this._onSendingError(err);
+			})
+			.then((responseJson) => {
+					//console.log('Parece que cerramos bien', responseJson);
+					if(responseJson && responseJson.error) {
+						this._onSendingError(responseJson.error);
+						return;
+					}	
 
+					this.props.navigator.dismissModal({
+							animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+					});
+					this.props.navigator.push({
+							screen:     'wallet.SendResult',
+							title:      'Envío exitoso',
+							passProps:  {
+									recipient : this.state.recipient,
+									amount :    this.state.amount,
+									memo :      this.state.memo
+							},
+							navigatorStyle: {navBarHidden:true}
+					});
+			}, err => {
+					this._onSendingError(err);
+			});
+
+		}, err => {
+			this._onSendingError(err);
+		});
 	}
 
 	_onSendingError(error){
@@ -335,10 +332,12 @@ class SendConfirm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-  }
+  	console.log('SendConfirm => componentWillReceiveProps');
+	}
 
   componentDidMount() {
 		this._getTx();
+		//this._generateUnsignedTx()
   }
 
   componentWillUnmount() {
@@ -394,10 +393,13 @@ class SendConfirm extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	console.log(' -- DRAWER -> mapStateToProps');
+	console.log(' -- SEND CONFIRM -> mapStateToProps');
 	return {
-		account: state.wallet.account,
-		balance: state.wallet.balance
+		account    : state.wallet.account,
+		balance    : state.wallet.balance,
+		fees       : state.wallet.fees,
+		asset      : state.wallet.asset,
+		blockchain : state.wallet.blockchain
 	};
 }
 

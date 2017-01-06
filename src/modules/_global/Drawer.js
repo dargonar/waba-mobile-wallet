@@ -83,7 +83,11 @@ class Drawer extends Component {
 			animated: true
 		});
 	}
-
+	
+	componentWillReceiveProps(nextProps) {
+		console.log('DRAWER WILL RECEIVE =>', nextProps);
+	}
+	
 	render() {
 // 						<TouchableOpacity onPress={this._onFnDisabled}>
 // 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
@@ -184,7 +188,7 @@ Drawer.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-	console.log(' -- DRAWER -> mapStateToProps');
+	//console.log('DRAWER->mapStateToProps', state.wallet.fees, state.wallet.asset);
 	return {
 		account: state.wallet.account
 	};
