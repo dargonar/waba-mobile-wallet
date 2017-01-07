@@ -4,6 +4,12 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
+		case types.READY_SUCCESS:
+			return {
+				...state,
+				ready: action.ready
+			};
+
 		case types.BLOCKCHAIN_SUCCESS:
 			return {
 				...state,
@@ -31,10 +37,21 @@ export default function (state = initialState.wallet, action) {
 			};
 			
 		case types.RETRIEVE_HISTORY_SUCCESS:
-			return {
-				...state,
-				history: action.history
-			};
+			if( action.start == 0 ) {
+				return {
+					...state,
+					history   : action.history,
+					total_ops : action.total_ops 
+				};
+			} else {
+				//console.log('UPDATE con >0', state);
+				return {
+					...state,
+					history   : state.history.concat(action.history),
+					total_ops : state.total_ops + action.total_ops
+				};
+			}
+			
 
 		case types.CREATE_KEYS_SUCCESS:
 			return {

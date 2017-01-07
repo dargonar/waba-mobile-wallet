@@ -15,7 +15,6 @@ import styles from './styles/SendConfirm';
 import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-import UWCrypto from '../../utils/Crypto';
 import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
@@ -213,8 +212,11 @@ _getRecipientInfo(recipient) {
 			this._getRecipientInfo(this.state.recipient).then( () => {
 
 				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
+					//HACK
+					res = JSON.parse(res);
+					res.message = '010203';
 					console.log('Para mi para ovs', res);
-					resolve(JSON.parse(res));
+					resolve(res);
 				}, err => {
 					console.log('DA ERRORRRR');
 					console.log(err);

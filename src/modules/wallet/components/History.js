@@ -25,6 +25,20 @@ import OneSignal from 'react-native-onesignal';
 
 class History extends Component {
 
+	buildSections(history) {
+		data2 = {};
+		const meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+		for(var i=0; i<history.length; i++) {
+			var month = history[i].block.timestamp.substr(5,2) >> 0;
+			var mes   = meses[month];
+			if(!(mes in data2)) {
+				data2[mes] = []
+			}
+			data2[mes].push(history[i]);
+		}
+		return data2;
+	} 
+
 	constructor(props) {
 		super(props);
 
@@ -35,32 +49,40 @@ class History extends Component {
     });
     
     this.state = {
-      dataSource : dataSource,
+      dataSource : dataSource.cloneWithRowsAndSections(this.buildSections(props.history || [])),
       refreshing : false
     };
 	}
 
-	refreshHistory() {
+	refreshHistory(start_offset) {
+		start_offset = start_offset | 0;
 		this.props.actions.retrieveHistory(
 			this.props.account.name, 
 			this.props.account.keys,
-			!this.props.account.id
-		);		
+			!this.props.account.id,
+			start_offset
+		);
 	}
+	
+// 	shouldComponentUpdate(nextProps, nextState) {
+// 		console.log('History::shouldComponentUpdate=>', nextProps);
+// 		return true;
+// 	}
+	
   componentWillReceiveProps(nextProps) {
-		//if (nextProps.history !== this.props.history) {
+		//console.log('History::componentWillReceiveProps=>', nextProps);
+		
+		if (nextProps.history !== this.props.history) {
       let data = nextProps.history;
-      //console.log('componentWillReceiveProps:', data);
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(data) || [],
+        dataSource: this.state.dataSource.cloneWithRowsAndSections(this.buildSections(data)),
         refreshing: false,
       })
-    //}
+    }
   }
 
   _rowHasChanged(oldRow, newRow) {
-		return true;
-    //return (oldRow.id !== newRow.id || oldRow.message !== oldRow.message);
+    return (oldRow.id !== newRow.id)
   }
 
   _getSectionHeaderData(dataBlob, sectionID) {
@@ -109,28 +131,6 @@ class History extends Component {
 			}
 		});
 
-// 		Bts2helper.encodeMemo('65df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfrxnoUHXUcMayqjuLjKH','Hola soy un mensaje').then(res => {
-// 			res = JSON.parse(res);
-// 			console.log('ENCODE=>', res);
-// 			Bts2helper.decodeMemo('c965df0953908e0b3524ff7a228bf185d3180f73747af166e7f03b40bf05b183','BTS6FqWx4vC3h3vfriL68nHjYMn6ugQmmkhxnoUHXUcMayqjuLjKH', 
-// 														res.from, res.to, res.nonce, 'aabbcc').then(res2 => {
-// 				console.log('DECODE=>', res2);
-// 			}, err2 => {
-// 				console.log('ERRR@2', err2);
-// 			});
-// 		}, err => {
-// 			console.log('ENCODE ERR =>', err);
-// 		});	
-
-// 		Bts2helper.calcFee(current_fees, ops, 'pito/1231').then(res => {
-// 			console.log("CALCFEEE =>", res);
-// 		}, err => {
-// 			console.log("ERR CALCFEEE =>", err);
-// 		});
-		//(String feeSchedule, ReadableArray ops, String coreExchangeRatio, Promise promise)
-		
-		//this.props.actions.retrieveHistory(this.props.account.name, this.props.account.keys[1].pubkey, this.props.account.keys[1].privkey);
-		//this.refreshHistory();
 	}
 
   componentWillUnmount() {
@@ -149,9 +149,14 @@ class History extends Component {
 
   _onRefresh() {
     this.setState({refreshing: true});
-		this.refreshHistory();
+		this.refreshHistory(0);
   }
 
+  _onEndReached()  {
+		console.log('ON END REACHED!!!!!', this.props.total_ops);
+		this.refreshHistory(this.props.total_ops);
+  }
+	
   _renderSectionHeader(sectionData, sectionID)  {
     //console.log()
     return (
@@ -248,6 +253,8 @@ class History extends Component {
             renderRow={this._renderRow.bind(this)}
             renderSeparator={this._renderSeparator.bind(this)}
             renderSectionHeader={this._renderSectionHeader.bind(this)}
+						onEndReached={this._onEndReached.bind(this)}
+						onEndReachedThreshold={10}
          />
        </View>
     	);	
@@ -270,10 +277,11 @@ class History extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	console.log('HISTORY::mapStateToProps');
+	//console.log('HISTORY::mapStateToProps');
 	return {
-		history: state.wallet.history,
-		account: state.wallet.account 
+		history   : state.wallet.history,
+		account   : state.wallet.account,
+		total_ops : state.wallet.total_ops
 	};
 }
 

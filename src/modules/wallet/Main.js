@@ -27,7 +27,8 @@ class Main extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-  }
+  	//console.log('Main::componentWillReceiveProps', nextProps);
+	}
 
   _onNavigatorEvent(event) {
 
@@ -61,7 +62,8 @@ class Main extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		//account: state.wallet.account
+		history: state.wallet.history,
+		balance: state.wallet.balance
 	}
 }
 

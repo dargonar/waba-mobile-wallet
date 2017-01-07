@@ -12,6 +12,19 @@ const apollo = new ApolloClient({
   networkInterface,
 });
 
+let memo_cache = {};
+
+function myDecodeMemo(privkey, pubkey, memo_from, memo_to, memo_nonce, memo_message) {
+	return new Promise( (resolve, reject) => {
+		Bts2helper.decodeMemo(privkey, pubkey, memo_from, memo_to, memo_nonce, memo_message).then( message => {
+			resolve({error:0, message:message});
+		}, err => {
+			console.log('No puedo con este memo ', memo_message);
+			resolve({error:1, message:''});
+		});
+	});	
+}
+
 export function createAccountSuccess(account) {
 	return {
 		type      : types.CREATE_ACCOUNT_SUCCESS,
@@ -160,6 +173,13 @@ export function feeScheduleSuccess(fees) {
 	};
 }
 
+export function readySuccess(ready) {
+	return {
+		type    : types.READY_SUCCESS,
+		ready   : ready
+	};
+}
+
 export function assetSuccess(asset) {
 	return {
 		type    : types.ASSET_SUCCESS,
@@ -169,10 +189,12 @@ export function assetSuccess(asset) {
 
 
 // HISTORY
-export function retrieveHistorySuccess(data) {
+export function retrieveHistorySuccess(data, total_ops, start) {
 	return {
 		type         : types.RETRIEVE_HISTORY_SUCCESS,
-		history      : data
+		history      : data,
+		total_ops    : total_ops,
+		start        : start
 	};
 }
 
@@ -183,9 +205,10 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
-export function retrieveHistory(account_name, keys, first_time) {
+export function retrieveHistory(account_name, keys, first_time, start) {
 	return function (dispatch) {
-		console.log( 'retrieveHistory()', account_name, first_time);
+		start = start | 0;
+		console.log( 'retrieveHistory()', account_name, first_time, start);
 		
 		let memo_key_map = {};
 		for(var i=0; i<keys.length; i++) {
@@ -194,22 +217,22 @@ export function retrieveHistory(account_name, keys, first_time) {
 		
 		const query = apollo.query({
 			query: gql`
-				query getTodo($v1 : String!, $v2 : String!, $v3 : String!) {
-					fees(hack:$v2)
-  				asset(id:$v3)
+				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : Int) {
+  				asset(id:$asset) @include(if:$first_time)
 					blockchain {
 						refBlockNum
 						refBlockPrefix
+						fees @include(if:$first_time)
 					}
-					account(name:$v1) {
+					account(name:$account) {
 						id
 						balance {
 							quantity
 							asset {
 								id
 							}
-						}
-						history(start:0, limit:20) {
+						} 
+						history(start:$start, limit:6) {
 							id
 							__typename
 							block {
@@ -230,9 +253,11 @@ export function retrieveHistory(account_name, keys, first_time) {
 							}
 							... on Transfer {
 								from {
+									id
 									name
 								}
 								to {
+									id
 									name
 								}
 								memo {
@@ -261,9 +286,10 @@ export function retrieveHistory(account_name, keys, first_time) {
 				}
 			`,
 			variables : { 
-				v1 : account_name,
-				v2 : first_time ? "hack" : "",
-				v3 : first_time ? config.ASSET_ID : ""
+				account 				  : account_name,
+				first_time        : first_time,
+				asset   					: config.ASSET_ID,
+				start   					: -start
 			},
 			forceFetch: true
 		});
@@ -276,117 +302,99 @@ export function retrieveHistory(account_name, keys, first_time) {
 				dispatch(myAccountIdSuccess(data.account.id));
 				dispatch(blockChainSuccess(data.blockchain));
 				
-				if(first_time) {
+				if(data.fees) {
 					dispatch(feeScheduleSuccess(JSON.parse(data.fees)));
+				}
+				
+				if(data.asset) {
 					dispatch(assetSuccess(JSON.parse(data.asset)));
 				}
 				
-// 				console.log('**************************************8');
-// 				console.log(data);
-// 				console.log('**************************************8');
 				
-				let meses = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-				
-				let data2 = {}
 				let history = data.account.history;
 				let proms = [];
 				let inxs  = [];
 				
+				let real_ops = 0;
+				
 				for(var i=0; i<history.length; i++) {
-					var month = history[i].block.timestamp.substr(5,2) >> 0;
-					var mes   = meses[month];
-					if(!(mes in data2)) {
-						data2[mes] = []
+
+					//Meta magia
+					if( history[i].__typename == 'OverdraftChange' ) {
+						if(history[i].type == 'up')
+							real_ops += 4;
+						else
+							real_ops += 6;
+					} else {
+						real_ops += 1;
 					}
 					
 					//history[i].__typename == 'Transfer' && 
 					if(history[i].memo){
 						//console.log(history[i].memo);
  						
-						let memo    = history[i].memo;
-						
-						let privkey = memo_key_map[memo.from];
-						let pubkey  = memo.to;
-						
-						if(!privkey) {
-							privkey = memo_key_map[memo.to];
-							pubkey  = memo.from;
-						}
-
-						if(privkey) {
-
-							let p = Bts2helper.decodeMemo(
-								privkey,
-								pubkey,
-								memo.from,
-								memo.to,
-								memo.nonce,
-								memo.message
-							);
-
-							proms.push(p);
-							inxs.push(i);
-							
+						if(history[i].id in memo_cache) {
+							//noconsole.log('CACHE HIT =>', history[i].id, memo_cache[history[i].id]);
+							history[i].message = memo_cache[history[i].id];
 						} else {
-							console.log('no lo puedo DECODESSSSS');
+
+							let memo    = history[i].memo;
+							let privkey = memo_key_map[memo.from];
+							let pubkey  = memo.to;
+
+							if(!privkey) {
+								privkey = memo_key_map[memo.to];
+								pubkey  = memo.from;
+							}
+
+							if(privkey) {
+
+								let p = myDecodeMemo(
+									privkey,
+									pubkey,
+									memo.from,
+									memo.to,
+									memo.nonce,
+									memo.message
+								);
+
+								proms.push(p);
+								inxs.push(i);
+							} else {
+								console.log('no lo puedo DECODESSSSS');
+							}
 						}
-						
-						
-// 						let pub = memo.from;
-						
-// 						if(memo.from == memo_pubkey)
-// 							pub = memo.to;
-
-// 						console.log('---TO DECRYPT');
-// 						console.log('pub =>', pub);
-// 						console.log('memo =>', memo.message);
-// 						console.log('privkey =>', memo_privkey);
-// 						console.log('memo =>', memo.nonce);
-						
-						
-
-						//let p = UWCrypto.decryptMemo(pub, memo.message, memo_privkey, memo.nonce);
 					}
-					data2[mes].push(history[i]);
+
 				}
-				
-				dispatch(retrieveHistorySuccess(data2));
 				
 				let balance = data.account.balance;
-				
-				let b = 0;
-				let d = 0;
-				
-				for(var i=0; i<balance.length; i++) {
-					if(balance[i].asset.id == config.ASSET_ID) {
-						b = balance[i].quantity;
-						console.log('ENCONTRE MONEDA ESTO => ', b);
+
+				if(balance) {
+					let b = 0;
+					let d = 0;
+					for(var i=0; i<balance.length; i++) {
+						if(balance[i].asset.id == config.ASSET_ID) {
+							b = balance[i].quantity;
+							console.log('ENCONTRE MONEDA ESTO => ', b);
+						}
+						if(balance[i].asset.id == config.ASSET2_ID) {
+							d = balance[i].quantity;
+							console.log('ENCONTRE DESCUB ESTO => ', d);
+						}					
 					}
-					if(balance[i].asset.id == config.ASSET2_ID) {
-						d = balance[i].quantity;
-						console.log('ENCONTRE DESCUB ESTO => ', d);
-					}					
+					dispatch(retrieveBalanceSuccess([b,d]));
 				}
-			
-				dispatch(retrieveBalanceSuccess([b,d]));
 				
 				//Decrypt memos
 				Promise.all(proms).then(res => {
-					//console.log('Memo para vos =>', res);
 					for(var i=0; i<res.length;i++) {
-						history[inxs[i]].message = res[i];
-// 						console.log('********************************')
-// 						console.log(i, history[inxs[i]]);
-// 						console.log('********************************')
+							history[inxs[i]].message = res[i].message;
+							memo_cache[history[inxs[i]].id] = res[i].message;
 					}
-
-					//HACK MEGA HACK
-					dispatch(retrieveHistorySuccess( JSON.parse(JSON.stringify(data2)) ));
 					
-					//dispatch(retrieveHistorySuccess(data2));
-
-				}, err => {
-					console.log('Error decrypting memo', err);
+					dispatch(retrieveHistorySuccess(history, real_ops, start));
+					dispatch(readySuccess(1));
 				});
 
 			} //if(data)

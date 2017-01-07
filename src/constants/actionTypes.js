@@ -7,3 +7,4 @@ export const MY_ACCOUNT_ID_SUCCESS    = 'MY_ACCOUNT_ID_SUCCESS';
 export const FEE_SCHEDULE_SUCCESS     = 'FEE_SCHEDULE_SUCCESS';
 export const ASSET_SUCCESS            = 'ASSET_SUCCESS';
 export const BLOCKCHAIN_SUCCESS       = 'BLOCKCHAIN_SUCCESS';
+export const READY_SUCCESS            = 'READY_SUCCESS';
