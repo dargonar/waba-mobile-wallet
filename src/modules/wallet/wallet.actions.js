@@ -302,8 +302,8 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 				dispatch(myAccountIdSuccess(data.account.id));
 				dispatch(blockChainSuccess(data.blockchain));
 				
-				if(data.fees) {
-					dispatch(feeScheduleSuccess(JSON.parse(data.fees)));
+				if(data.blockchain.fees) {
+					dispatch(feeScheduleSuccess(JSON.parse(data.blockchain.fees)));
 				}
 				
 				if(data.asset) {
