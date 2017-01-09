@@ -37,18 +37,24 @@ export default function (state = initialState.wallet, action) {
 			};
 			
 		case types.RETRIEVE_HISTORY_SUCCESS:
+			
+// 			console.log('--------------------------------------- new block history');
+// 			for(var j=0; j<action.history.length; j++)
+// 				console.log('IDSS --> ', action.history[j].id);
+//       console.log('  ');
+			
+			
 			if( action.start == 0 ) {
 				return {
 					...state,
 					history   : action.history,
-					total_ops : action.total_ops 
+					at_end    : false
 				};
 			} else {
-				//console.log('UPDATE con >0', state);
 				return {
 					...state,
 					history   : state.history.concat(action.history),
-					total_ops : state.total_ops + action.total_ops
+					at_end    : action.history.length == 0
 				};
 			}
 			

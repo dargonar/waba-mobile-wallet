@@ -8,7 +8,9 @@ import {
 	ListView,
   Image,
   TouchableHighlight,
-  RefreshControl
+  RefreshControl,
+	ActivityIndicator,
+	Animated
 } from 'react-native';
 
 import * as walletActions from '../wallet.actions';
@@ -22,6 +24,8 @@ import { iconsMap } from '../../../utils/AppIcons';
 import Bts2helper from '../../../utils/Bts2helper';
 
 import OneSignal from 'react-native-onesignal';
+
+import Spinner from 'react-native-spinkit';
 
 class History extends Component {
 
@@ -50,12 +54,18 @@ class History extends Component {
     
     this.state = {
       dataSource : dataSource.cloneWithRowsAndSections(this.buildSections(props.history || [])),
-      refreshing : false
+      refreshing : false,
+			infiniteLoading : false,
+			bounceValue: new Animated.Value(0)
     };
+		
+// 		this.state.bounceValue.addListener((v)=>{
+// 			console.log('bounceValue=>', v);
+// 		});
 	}
 
 	refreshHistory(start_offset) {
-		start_offset = start_offset | 0;
+		if(start_offset == undefined) start_offset = 0;
 		this.props.actions.retrieveHistory(
 			this.props.account.name, 
 			this.props.account.keys,
@@ -73,11 +83,29 @@ class History extends Component {
 		//console.log('History::componentWillReceiveProps=>', nextProps);
 		
 		if (nextProps.history !== this.props.history) {
-      let data = nextProps.history;
+      
+			console.log('componentWillReceiveProps: new history =>', nextProps.history.length);
+			
+			let data = nextProps.history;
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections(this.buildSections(data)),
-        refreshing: false,
+        refreshing: false
       })
+			
+			if(this.state.infiniteLoading) {
+				this.setState({infiniteLoading:false});
+// 				console.log('voy a ponerlo a andar');
+				//this.state.bounceValue.setValue(20);     // Start large
+// 				Animated.timing(                          // Base: spring, decay, timing
+// 					this.state.bounceValue,                 // Animate `bounceValue`
+// 					{
+// 						toValue:  -20,                         // Animate to smaller size
+// 						duration: 1000
+// 					}
+// 				).start();
+// 				let that = this;
+				//setTimeout(()=>{that.setState({infiniteLoading:false})},1500);
+			}
     }
   }
 
@@ -97,7 +125,6 @@ class History extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange);
-  
 		let that = this;
 		OneSignal.configure({
 			onIdsAvailable: function(device) {
@@ -153,8 +180,30 @@ class History extends Component {
   }
 
   _onEndReached()  {
-		console.log('ON END REACHED!!!!!', this.props.total_ops);
-		this.refreshHistory(this.props.total_ops);
+		console.log('ON END REACHED!!!!!', this.props.at_end);
+		
+		if(this.props.at_end)
+			return;
+		
+		this.setState({infiniteLoading:true});
+
+		this.state.bounceValue.setValue(-20);     // Start large
+		Animated.timing(                          // Base: spring, decay, timing
+			this.state.bounceValue,                 // Animate `bounceValue`
+			{
+				toValue  : 20,                         // Animate to smaller size
+				duration: 300
+			}
+		).start();
+		
+		let last_id = this.props.history[this.props.history.length-1].id;
+		console.log('LAST ID=>', last_id);
+		parts = last_id.split('.').map( function(v){ return v>>0; });
+		parts[2]-=1;
+		last_id = parts.join('.');
+		console.log('LAST ID (tocado)=>', last_id);
+		
+		this.refreshHistory(last_id);
   }
 	
   _renderSectionHeader(sectionData, sectionID)  {
@@ -237,9 +286,32 @@ class History extends Component {
   }
 
 	render() {
- 
+
 		if(this.state.dataSource.getRowCount()>0)
 		{
+			let infiniteLoading=undefined;
+			if(this.state.infiniteLoading) {
+				//console.log(this.state.bounceValue.value);
+				infiniteLoading = (
+					<Animated.View style={{
+							left:0, 
+							right:0, 
+							zIndex:1, 
+							position:'absolute', 
+							bottom:this.state.bounceValue,
+							alignItems:'center'
+						}}
+					>
+						<Spinner
+							isVisible={true}
+							size={30}
+							type='Wave' 
+							color='#82ca07'
+						/>
+					</Animated.View>
+				)
+		  }
+
 			return (
         <View style={styles.container}>
          <ListView
@@ -256,6 +328,7 @@ class History extends Component {
 						onEndReached={this._onEndReached.bind(this)}
 						onEndReachedThreshold={10}
          />
+				 {infiniteLoading}	
        </View>
     	);	
 		}
@@ -281,7 +354,7 @@ function mapStateToProps(state, ownProps) {
 	return {
 		history   : state.wallet.history,
 		account   : state.wallet.account,
-		total_ops : state.wallet.total_ops
+		at_end    : state.wallet.at_end
 	};
 }
 

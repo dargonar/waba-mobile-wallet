@@ -212,10 +212,9 @@ _getRecipientInfo(recipient) {
 			this._getRecipientInfo(this.state.recipient).then( () => {
 
 				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
-					//HACK
 					res = JSON.parse(res);
-					res.message = '010203';
-					console.log('Para mi para ovs', res);
+					//res.message = '010203';
+					//console.log('Para mi para ovs', res);
 					resolve(res);
 				}, err => {
 					console.log('DA ERRORRRR');

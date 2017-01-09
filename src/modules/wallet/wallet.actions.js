@@ -189,11 +189,10 @@ export function assetSuccess(asset) {
 
 
 // HISTORY
-export function retrieveHistorySuccess(data, total_ops, start) {
+export function retrieveHistorySuccess(data, start) {
 	return {
 		type         : types.RETRIEVE_HISTORY_SUCCESS,
 		history      : data,
-		total_ops    : total_ops,
 		start        : start
 	};
 }
@@ -207,7 +206,7 @@ export function retrieveBalanceSuccess(balance) {
 
 export function retrieveHistory(account_name, keys, first_time, start) {
 	return function (dispatch) {
-		start = start | 0;
+		if (start === undefined) start=0;
 		console.log( 'retrieveHistory()', account_name, first_time, start);
 		
 		let memo_key_map = {};
@@ -217,7 +216,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 		
 		const query = apollo.query({
 			query: gql`
-				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : Int) {
+				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!) {
   				asset(id:$asset) @include(if:$first_time)
 					blockchain {
 						refBlockNum
@@ -232,7 +231,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 								id
 							}
 						} 
-						history(start:$start, limit:6) {
+						history(type:$type, start:$start, limit:6) {
 							id
 							__typename
 							block {
@@ -289,7 +288,8 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 				account 				  : account_name,
 				first_time        : first_time,
 				asset   					: config.ASSET_ID,
-				start   					: -start
+				type              : start == 0 ? 'relative' : 'normal',
+				start   					: start
 			},
 			forceFetch: true
 		});
@@ -393,7 +393,9 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 							memo_cache[history[inxs[i]].id] = res[i].message;
 					}
 					
-					dispatch(retrieveHistorySuccess(history, real_ops, start));
+					console.log('**** retrieveHistorySuccess', start, history.length);
+					
+					dispatch(retrieveHistorySuccess(history, start));
 					dispatch(readySuccess(1));
 				});
 
