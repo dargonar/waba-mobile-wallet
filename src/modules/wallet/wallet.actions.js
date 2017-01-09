@@ -34,7 +34,7 @@ export function createAccountSuccess(account) {
 
 export function createAccountSuccessHACK(account) {
 	return function (dispatch) {
-		console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+		//console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
 		dispatch(createAccountSuccess(account));	
 	}
 }
