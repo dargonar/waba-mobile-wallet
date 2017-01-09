@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   RefreshControl,
 	ActivityIndicator,
-	Animated
+	Animated,
+	ToastAndroid
 } from 'react-native';
 
 import * as walletActions from '../wallet.actions';
@@ -56,7 +57,8 @@ class History extends Component {
       dataSource : dataSource.cloneWithRowsAndSections(this.buildSections(props.history || [])),
       refreshing : false,
 			infiniteLoading : false,
-			bounceValue: new Animated.Value(0)
+			bounceValue: new Animated.Value(0),
+			errors : 0
     };
 		
 // 		this.state.bounceValue.addListener((v)=>{
@@ -80,33 +82,28 @@ class History extends Component {
 // 	}
 	
   componentWillReceiveProps(nextProps) {
-		//console.log('History::componentWillReceiveProps=>', nextProps);
+		console.log('History::componentWillReceiveProps=>', nextProps.errors);
 		
+		let new_state = {};
 		if (nextProps.history !== this.props.history) {
-      
 			console.log('componentWillReceiveProps: new history =>', nextProps.history.length);
-			
 			let data = nextProps.history;
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(this.buildSections(data)),
-        refreshing: false
-      })
-			
-			if(this.state.infiniteLoading) {
-				this.setState({infiniteLoading:false});
-// 				console.log('voy a ponerlo a andar');
-				//this.state.bounceValue.setValue(20);     // Start large
-// 				Animated.timing(                          // Base: spring, decay, timing
-// 					this.state.bounceValue,                 // Animate `bounceValue`
-// 					{
-// 						toValue:  -20,                         // Animate to smaller size
-// 						duration: 1000
-// 					}
-// 				).start();
-// 				let that = this;
-				//setTimeout(()=>{that.setState({infiniteLoading:false})},1500);
-			}
-    }
+      new_state.dataSource=this.state.dataSource.cloneWithRowsAndSections(this.buildSections(data));
+		}			
+
+		if(this.state.infiniteLoading) {
+			new_state.infiniteLoading=false;
+		}
+
+		new_state.refreshing = false;
+
+		if(nextProps.errors > this.state.errors) {
+			ToastAndroid.show('Verifique su conexión a Internet', ToastAndroid.SHORT);
+		}
+		
+		new_state.errors = nextProps.errors;
+		
+		this.setState(new_state);
   }
 
   _rowHasChanged(oldRow, newRow) {
@@ -354,7 +351,8 @@ function mapStateToProps(state, ownProps) {
 	return {
 		history   : state.wallet.history,
 		account   : state.wallet.account,
-		at_end    : state.wallet.at_end
+		at_end    : state.wallet.at_end,
+		errors    : state.wallet.errors
 	};
 }
 

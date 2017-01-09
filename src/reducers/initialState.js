@@ -4,6 +4,7 @@ export default {
 		history    : [],
 		at_end     : false,
 		ready      : 0,
+		errors     : 0,
 		fees       : {},
 		asset      : {},
 		new_keys   : {},

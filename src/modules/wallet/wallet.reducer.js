@@ -36,25 +36,27 @@ export default function (state = initialState.wallet, action) {
 				account: account
 			};
 			
+		case types.RETRIEVE_HISTORY_ERROR:
+			console.log('RETRIEVE_HISTORY_ERROR ==> ', state.errors+1);
+			return {
+				...state,
+				errors : state.errors + 1
+			}
 		case types.RETRIEVE_HISTORY_SUCCESS:
-			
-// 			console.log('--------------------------------------- new block history');
-// 			for(var j=0; j<action.history.length; j++)
-// 				console.log('IDSS --> ', action.history[j].id);
-//       console.log('  ');
-			
-			
+
 			if( action.start == 0 ) {
 				return {
 					...state,
 					history   : action.history,
-					at_end    : false
+					at_end    : false,
+					errors    : 0
 				};
 			} else {
 				return {
 					...state,
 					history   : state.history.concat(action.history),
-					at_end    : action.history.length == 0
+					at_end    : action.history.length == 0,
+					errors    : 0
 				};
 			}
 			

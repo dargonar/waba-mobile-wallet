@@ -189,6 +189,12 @@ export function assetSuccess(asset) {
 
 
 // HISTORY
+export function retrieveHistoryError() {
+	return {
+		type         : types.RETRIEVE_HISTORY_ERROR,
+	};
+}
+
 export function retrieveHistorySuccess(data, start) {
 	return {
 		type         : types.RETRIEVE_HISTORY_SUCCESS,
@@ -213,6 +219,17 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 		for(var i=0; i<keys.length; i++) {
 			memo_key_map[keys[i].pubkey] = keys[i].privkey;
 		}
+		
+		//http://stackoverflow.com/questions/40837676/apolloclient-timeout-best-option
+		let x = 0;
+		let timer = setTimeout(() => {
+			if (x === 0) {
+				console.log('error TOTAL');
+				dispatch(retrieveHistoryError());
+				return;
+			}
+			x = 1;
+		}, 10000);
 		
 		const query = apollo.query({
 			query: gql`
@@ -295,8 +312,19 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 		});
 
 		query.then((graphQLResult) => {
-      const { errors, data } = graphQLResult;
+      clearTimeout(timer);
+			if (x === 1) {
+				return;
+			}
+			
+			const { errors, data } = graphQLResult;
 
+			if(errors ) {
+				dispatch(retrieveHistoryError());
+				console.log('got some GraphQL execution errors', errors);
+				return;
+			}
+			
       if (data) {
 
 				dispatch(myAccountIdSuccess(data.account.id));
@@ -401,14 +429,12 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 
 			} //if(data)
 
-      if (errors) {
-        console.log('got some GraphQL execution errors', errors);
-      }
-    }); //.catch(logError);
-	}
-  
-}
-		
-		//return axios.get(`${TMDB_URL}/genre/movie/list?api_key=${TMDB_API_KEY}`)
-		//.then(res => {
+    }).catch(()=>{
+			clearTimeout(timer);
+			dispatch(retrieveHistoryError());
+			console.log('catch error');
+		}); //query.then
 	
+	} //dispatch
+  
+} //function

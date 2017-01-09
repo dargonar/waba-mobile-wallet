@@ -11,11 +11,9 @@ import * as walletActions from './modules/wallet/wallet.actions';
 import { AsyncStorage } from 'react-native'
 
 
-// import {
-//   ToastAndroid,
-// } from 'react-native';
-
-// ToastAndroid.show('This is a toast with short duration', ToastAndroid.SHORT);
+import {
+  ToastAndroid,
+} from 'react-native';
 
 let account = null;
 try {
@@ -39,18 +37,24 @@ try {
  				launchOnboard();
  			}
  			else{
-
+        
 				let unsubscribe = store.subscribe(() => {
 					let s = store.getState();
 					console.log('READY =>', s.wallet.ready);
 					if(s.wallet.ready) {
 						unsubscribe();
 						launchWallet();
+					} else if(s.wallet.errors > 0) {
+						
+						if(!(s.wallet.errors % 10)) {
+							ToastAndroid.show('Esta tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
+						}
+
+						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
 					}
 				})
 
 				store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
- 				
  			}
 		});
 
