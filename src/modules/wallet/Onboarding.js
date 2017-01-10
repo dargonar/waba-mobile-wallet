@@ -56,7 +56,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-  	backgroundColor: '#1f475b'
+  	backgroundColor: '#0B5F83'
 	},
   subcontainer: {
     flex: 4
@@ -81,10 +81,10 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
 	fullWidthButton1: {
-    backgroundColor: '#415261'
+    backgroundColor: '#1e759b'
   },
 	fullWidthButton2: {
-    backgroundColor: '#2c3f50',
+    backgroundColor: '#6bbd07',
     marginBottom:20
   },
   

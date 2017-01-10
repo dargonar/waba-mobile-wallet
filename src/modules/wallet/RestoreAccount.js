@@ -6,6 +6,7 @@ import {
   ListView,
   Text, 
   TextInput,
+	TouchableHighlight,
   View
 } from 'react-native';
 
@@ -13,7 +14,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/RestoreAccount';
-import { Button } from 'react-native-elements';
+//import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import * as config from '../../constants/config';
@@ -188,6 +189,8 @@ class RestoreAccount extends Component {
   render() {
   	// autoFocus={true}
     // <KeyboardSpacer />
+// 		<Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
+// 					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
 		return (
       <View style={styles.container}>
         <View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#415261'}}>
@@ -205,8 +208,11 @@ class RestoreAccount extends Component {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
-					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
+        <TouchableHighlight
+							style={styles.fullWidthButton}
+							onPress={this._onRestoreAccount} >
+						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+				</TouchableHighlight>
 				<KeyboardSpacer />
         </View>
     );

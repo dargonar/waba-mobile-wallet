@@ -3,12 +3,12 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#1f475b'
+		backgroundColor: '#0B5F83'
 	},
 	
 	separator : {
     height             : 1,
-    backgroundColor    : '#85858544',
+    backgroundColor    : '#858585',
   },
 	
 	input:{
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 	fullWidthButton1: {
-    backgroundColor: '#415261'
+    backgroundColor: '#1e759b'
   },
 	fullWidthButton2: {
-    backgroundColor: '#2c3f50',
+    backgroundColor: '#6bbd07',
     marginBottom:20
   },
   
