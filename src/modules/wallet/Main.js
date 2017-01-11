@@ -41,7 +41,7 @@ class Main extends Component {
 		if(event.id == 'qrCode') {
 			Alert.alert(
 				'No disponible',
-				'Función no disponible en versión DEMO.',
+				'Función no disponible.',
 				[
 					{text: 'OK'},
 				]
