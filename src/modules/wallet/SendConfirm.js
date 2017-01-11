@@ -364,15 +364,25 @@ _getRecipientInfo(recipient) {
 		let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
+		/*
+		<View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
+			<Text style={styles.title_part}>Ud. va a enviar:</Text>
+			<Text style={styles.data_part}>$ {this.state.amount}</Text>
+			<Text style={styles.title_part}>Comisión:</Text>
+			<Text style={styles.data_part_small}>$ {fee}</Text>
+			<Text style={styles.title_part}>Total:</Text>
+			<Text style={styles.data_part_small}>$ {total}</Text>
+			<Text style={styles.title_part}>A:</Text>
+			<Text style={styles.data_part}>{this.state.recipient.name}</Text>
+			<Text style={styles.title_part}>Con mensaje:</Text>
+			<Text style={memo_style}>{memo}</Text>
+		</View>
+		*/
 		return (
       <View style={styles.container}>
-        <View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
+        <View style={{flex:5, backgroundColor:'#0B5F83', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
           <Text style={styles.title_part}>Ud. va a enviar:</Text>
-          <Text style={styles.data_part}>$ {this.state.amount}</Text>
-					<Text style={styles.title_part}>Comisión:</Text>
-          <Text style={styles.data_part_small}>$ {fee}</Text>
-					<Text style={styles.title_part}>Total:</Text>
-          <Text style={styles.data_part_small}>$ {total}</Text>
+          <Text style={styles.data_part}>$ {total} <Text style={styles.data_part_small}>($ {fee} de comisión)</Text></Text>
           <Text style={styles.title_part}>A:</Text>
           <Text style={styles.data_part}>{this.state.recipient.name}</Text>
           <Text style={styles.title_part}>Con mensaje:</Text>

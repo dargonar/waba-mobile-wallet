@@ -188,8 +188,13 @@ class SelectAmount extends React.Component {
                   onDelete={this._handleDelete.bind(this)}
                   onKeyPress={this._handleKeyPress.bind(this)}
               />
-              <Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
-                  onPress={this._onNext.bind(this)} title='SIGUIENTE' />
+							<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+								<TouchableHighlight
+										style={styles.fullWidthButton}
+										onPress={this._onNext.bind(this)} >
+									<Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
+								</TouchableHighlight>
+							</View>
             </View>
         );
     }

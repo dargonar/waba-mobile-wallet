@@ -250,7 +250,8 @@ class History extends Component {
        let mapa   = {received:'recibido', sent: 'enviado'};
        let rotato = {received:'135 deg', sent : '-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
-			 let bg     = {received:'#A2EA4A', sent:'#FF7251'};
+			 //let bg     = {received:'#A2EA4A', sent:'#FF7251'};
+			 let bg     = {received:'#B7F072', sent:'#ff9379'};
        let dea    = {received:'De:', sent:'A:'};
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
        let fecha  = this._getFecha(rowData.block.timestamp);
