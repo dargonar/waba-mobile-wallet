@@ -26,7 +26,7 @@ var PAGES = [
 ];
 
 var PAGES = [
-  [require('../img/logo.rc2.png'), 'Bienvenido a PAR', 'Una nueva forma de dinero'],
+  [require('../img/logo.shadow.png'), 'Bienvenido a PAR', 'Una nueva forma de dinero'],
   [require('../img/bank.png'), 'Desde tu teléfono', 'Disponible, seguro y accesible desde tu teléfono, sin cuenta de banco'],
   [require('../img/shop.png'), 'Mercado', 'Localizá los miles de productos y servicios ofrecidos en la red'],
   [require('../img/discover.png'), 'Empleos', 'Descubre la oferta de empleos y ofrece tus servicios']  
@@ -129,7 +129,7 @@ var styles = StyleSheet.create({
       textAlign:'center',
       fontFamily : 'roboto_light',
       fontWeight : '100',
-      fontSize   : 15,
+      fontSize   : 20,
       lineHeight : 20
   }
 });

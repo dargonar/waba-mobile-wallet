@@ -89,8 +89,8 @@ var styles = StyleSheet.create({
   },
   
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
+    fontFamily : 'roboto_regular',
+		fontWeight : '400',
     fontSize   : 15,
 		color: 'white'
   },
