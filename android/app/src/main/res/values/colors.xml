@@ -2,5 +2,6 @@
 <resources>
     <color name="gray">#444440</color>
     <color name="white">#FFFFFF</color>
-    <color name="my_bg_color">#0B5F83</color>
+    <color name="my_bg_color">#EEEEEE</color>
+    <color name="my_blue_bg_color">#0B5F83</color>
 </resources>
