@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#415261'
   },
 	fullWidthButton2: {
-    backgroundColor: '#2c3f50'
+    backgroundColor: '#044967'
   },
   fullWidthButtonDisabled: {
     backgroundColor: '#999999'
