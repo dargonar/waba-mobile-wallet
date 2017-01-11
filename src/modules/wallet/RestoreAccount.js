@@ -193,7 +193,7 @@ class RestoreAccount extends Component {
 // 					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
 		return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#415261'}}>
+        <View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
 					<Text style={styles.keywordsTitle} numberOfLines={4}>
             Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
             orden y minúscula/mayúscula. 

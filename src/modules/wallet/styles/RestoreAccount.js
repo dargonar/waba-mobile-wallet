@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#2c3f50' 
+		backgroundColor: '#044967' 
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
