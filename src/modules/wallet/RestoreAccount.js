@@ -191,6 +191,7 @@ class RestoreAccount extends Component {
     // <KeyboardSpacer />
 // 		<Button buttonStyle={{flex: 1, backgroundColor:"#2c3f50", marginLeft:0, marginRight:0 }}  underlayColor="#546979"
 // 					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
+		// defaultValue="cielo encargo hurto timo rodilla triste alerta tacto paquete secta sidra víctima"
 		return (
       <View style={styles.container}>
         <View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
@@ -207,7 +208,7 @@ class RestoreAccount extends Component {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
-					defaultValue="cielo encargo hurto timo rodilla triste alerta tacto paquete secta sidra víctima"
+					
         />
         <TouchableHighlight
 							style={styles.fullWidthButton}

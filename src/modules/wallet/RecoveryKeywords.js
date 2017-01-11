@@ -69,7 +69,7 @@ class RecoveryKeywords extends Component {
             La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas. 
           </Text>
           <TouchableWithoutFeedback onPress={this._setClipboardContent}>
-						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#2c3f50'}}>
+						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#044967'}}>
             		<Text style={styles.keywordsText}>
 								{this.state.mnemonic}
 							</Text>
