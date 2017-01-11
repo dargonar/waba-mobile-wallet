@@ -86,10 +86,10 @@ class Sending extends Component {
 			}
 			return (
 				<View style={styles.container}>
-					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#1f475b'}}>
+					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
 						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#F64D27"/>
 					</View>
-					<View style={{flex:4, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
+					<View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
 						<Text style={styles.title_part}>Enviando:</Text>
 						<Text style={styles.data_part}>$ {this.state.amount}</Text>
 						<Text style={styles.title_part}>A:</Text>
@@ -103,10 +103,10 @@ class Sending extends Component {
 		else
 			return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#1f475b'}}>
+        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
           <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#F64D27"/>
         </View>
-        <View style={{flex:4, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
+        <View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
           <Text style={styles.data_part}>Restaurando cuenta</Text>
         </View>
       </View>

@@ -102,13 +102,13 @@ const styles = StyleSheet.create({
   row_dea : {
     fontWeight      : '500', 
     fontSize        : 15, 
-    color           : '#1f475b'
+    color           : '#0B5F83'
   },
     
   row_amount: {
     fontFamily      : 'roboto_regular',
     fontSize        : 16,
-    color           : '#1f475b',
+    color           : '#0B5F83',
   },  
     
   row_hour : {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     
   row_message : { 
     fontFamily      : 'roboto_light_italic', 
-    color           : '#1f475b99'
+    color           : '#0B5F8399'
   },
   
   button: {

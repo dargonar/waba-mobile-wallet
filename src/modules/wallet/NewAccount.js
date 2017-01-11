@@ -109,15 +109,15 @@ class NewAccount extends Component {
   	let type = this.state.types[3];
     return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#1f475b'}}>
+        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
           <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#82ca07"/>
         </View>
-        <View style={{flex:4, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
+        <View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
 					<View style={{flexDirection:'row', justifyContent:'center'}}>	
 						<Text style={styles.title_part}>Creando cuenta {this.state.account_name}</Text>
 					</View>
         </View>
-				<View style={{flex:1, backgroundColor:'#1f475b', paddingLeft:30, paddingRight:30}}>
+				<View style={{flex:1, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
 					<View style={{flexDirection:'row', justifyContent:'center'}}>	
 						<Text style={styles.title_part}>Por favor aguarde...</Text>
 					</View>

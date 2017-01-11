@@ -28,7 +28,7 @@ export default StyleSheet.create({
 export let keyStyle = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: '#1f475b'
+        backgroundColor: '#0B5F83'
     },
     bd: {
         flex: 1,
@@ -49,7 +49,7 @@ export let keyStyle = StyleSheet.create({
         color: '#333',
     },
     bg_d2d5dc: {
-        backgroundColor: '#1f475b',//BG_COLOR,
+        backgroundColor: '#0B5F83',//BG_COLOR,
         borderBottomWidth: hairlineWidth,
         borderColor: '#a5a5a5'
     },

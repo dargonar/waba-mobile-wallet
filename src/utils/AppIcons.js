@@ -57,8 +57,8 @@ const icons = {
   "qrcode--active": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
   
 //   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
-  "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
-  "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
+  "ios-swap": [ICON_SIZE_ANDROID, "#0B5F83"],
+  "ios-key" : [ICON_SIZE_ANDROID, "#0B5F83"],
   
 }
 

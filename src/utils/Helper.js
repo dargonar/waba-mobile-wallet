@@ -16,7 +16,7 @@ function launchWallet() {
       fab: {
         collapsedId: 'newTx',
         collapsedIcon: iconsMap['ios-add'].uri,
-        backgroundColor: '#1f475b'
+        backgroundColor: '#0B5F83'
       },
       rightButtons: [
 				{

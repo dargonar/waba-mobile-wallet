@@ -111,7 +111,7 @@ class Drawer extends Component {
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
 									name='ios-power'
 									type='ionicon'
 									color='#cccccc'
@@ -122,7 +122,7 @@ class Drawer extends Component {
 							<View style={{flex:2, justifyContent: 'center', alignItems: 'center'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
 									name='md-person'
 									type='ionicon'
 									color='#82ca07'
@@ -133,7 +133,7 @@ class Drawer extends Component {
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
 									name='ios-settings'
 									type='ionicon'
 									color='#cccccc'

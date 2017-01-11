@@ -149,7 +149,7 @@ class SelectRecipient extends Component {
 		if ( this.state.refreshing )
 			content = (	
 				<View style={{ flex: 1, justifyContent: 'center'}}>
-					<ActivityIndicator size="large" color="#1f475b" />
+					<ActivityIndicator size="large" color="#0B5F83" />
 				</View>
 			)
 		else

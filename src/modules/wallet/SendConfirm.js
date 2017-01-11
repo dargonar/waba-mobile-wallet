@@ -366,7 +366,7 @@ _getRecipientInfo(recipient) {
 		let fee = this.state.fee_txt.toFixed(2);
 		return (
       <View style={styles.container}>
-        <View style={{flex:5, backgroundColor:'#1f475b', padding:30}}>
+        <View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
           <Text style={styles.title_part}>Ud. va a enviar:</Text>
           <Text style={styles.data_part}>$ {this.state.amount}</Text>
 					<Text style={styles.title_part}>Comisión:</Text>

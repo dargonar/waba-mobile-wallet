@@ -96,11 +96,11 @@ class SendResult extends Component {
     return (
       
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', backgroundColor:'#1f475b'}}>
+        <View style={{flex:3, justifyContent: 'center', backgroundColor:'#0B5F83'}}>
           <Text style={styles.title}>Envío exitoso</Text>
           <Text style={[styles.amount]}>$ {this.state.amount}</Text>
         </View>
-        <View style={{flex:4, backgroundColor:'#1f475b'}}>
+        <View style={{flex:4, backgroundColor:'#0B5F83'}}>
           
           <Text style={styles.title_part}>DESTINATARIO</Text>
           <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.recipient.name}</Text>
@@ -108,10 +108,10 @@ class SendResult extends Component {
 					{mensaje_ui2}
           
         </View>
-        <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#1f475b'}}>
+        <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#0B5F83'}}>
           <Icon
             raised
-            containerStyle={{backgroundColor:'#1f475b', borderWidth: 0.5, borderColor: '#82ca07' }}
+            containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
             name='md-checkmark'
             type='ionicon'
             color='#82ca07'
