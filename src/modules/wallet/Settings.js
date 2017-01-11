@@ -71,8 +71,8 @@ class Settings extends Component {
 		// <SettingsList.Header headerText='Different Grouping' headerStyle={{marginTop:50}}/>
 		// <SettingsList.Item titleInfo='Some Information' hasNavArrow={false} title='Information Example'/>
           
-		const iconSwap = (<Icon name="ios-swap" size={30} color="#0B5F83" />);
-		const iconSec  = (<Icon name="ios-key" size={30} color="#0B5F83" />);
+		const iconSwap = (<Icon name="ios-swap" size={30} color="#1f475b" />);
+		const iconSec  = (<Icon name="ios-key" size={30} color="#1f475b" />);
 		
   	return (
       <View style={styles.container}>

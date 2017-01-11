@@ -134,7 +134,7 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0B5F83',
+    backgroundColor: '#1f475b',
     paddingLeft:20,
     paddingRight:20
   },
