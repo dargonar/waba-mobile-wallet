@@ -64,7 +64,7 @@ class Balance extends Component {
 			j = (<Text style={styles.currency}>(-{d})</Text>)
 					 
 		return (
-      <Image source={require('./img/bg-dashboard.png')} style={styles.container}>
+      <Image source={require('./img/bg-dashboard2.png')} style={styles.container}>
         <View style={styles.balance}> 
           <Text style={[styles.int_part,{fontWeight:'100'}]}>₱ </Text>
 					<Text style={[styles.int_part,{fontWeight:'400'}]}>{parts[0]}</Text>
