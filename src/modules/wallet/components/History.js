@@ -304,7 +304,7 @@ class History extends Component {
 							isVisible={true}
 							size={30}
 							type='Wave' 
-							color='#82ca07'
+							color='#B7F072'
 						/>
 					</Animated.View>
 				)
@@ -317,7 +317,7 @@ class History extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              colors={['#8ec919', '#fcc4cb', '#82ca07']}
+              colors={['#8ec919', '#fcc4cb', '#B7F072']}
             />}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}

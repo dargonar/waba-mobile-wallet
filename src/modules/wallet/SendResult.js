@@ -33,7 +33,7 @@ class SendResult extends Component {
       types: ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
               '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
       size: 100,
-      color: "#82ca07",
+      color: "#B7F072",
       isVisible: true
     
     };
@@ -111,10 +111,10 @@ class SendResult extends Component {
         <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#0B5F83'}}>
           <Icon
             raised
-            containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
+            containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
             name='md-checkmark'
             type='ionicon'
-            color='#82ca07'
+            color='#B7F072'
             underlayColor='#415261'
             onPress={this._onOkPress.bind(this)} 
             size={30} />

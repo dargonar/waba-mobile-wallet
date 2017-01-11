@@ -97,11 +97,11 @@ class Drawer extends Component {
 // 								</Text>
 // 							</View>
 // 						</TouchableOpacity>
-		const iconRecipient = (<Icon name="ios-send" size={26} color="#82ca07" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#82ca07" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconMap 			= (<Icon name="md-pin" size={26} color="#82ca07" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconJob 			= (<Icon name="md-construct" size={26} color="#82ca07" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const info 					= (<Icon name="ios-information-circle" size={26} color="#82ca07" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconRecipient = (<Icon name="ios-send" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconMap 			= (<Icon name="md-pin" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconJob 			= (<Icon name="md-construct" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -111,7 +111,7 @@ class Drawer extends Component {
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
 									name='ios-power'
 									type='ionicon'
 									color='#cccccc'
@@ -122,10 +122,10 @@ class Drawer extends Component {
 							<View style={{flex:2, justifyContent: 'center', alignItems: 'center'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
 									name='md-person'
 									type='ionicon'
-									color='#82ca07'
+									color='#B7F072'
 									underlayColor='#415261'
 									onPress={this._onPower.bind(this)} 
 									size={60} />	
@@ -133,7 +133,7 @@ class Drawer extends Component {
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#82ca07' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
 									name='ios-settings'
 									type='ionicon'
 									color='#cccccc'

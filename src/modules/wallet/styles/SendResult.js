@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     lineHeight : 45,
     fontFamily : 'roboto_light',
     fontWeight : '100',
-    color      : '#82ca07'
+    color      : '#B7F072'
   },
   margin_bottom:{marginBottom:10},
 	data_part : {
     fontFamily : 'roboto_normal',
-    color      : '#82ca07',
+    color      : '#B7F072',
     fontSize   : 18
   },
   title_part : {
