@@ -207,6 +207,7 @@ class RestoreAccount extends Component {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
+					defaultValue="cielo encargo hurto timo rodilla triste alerta tacto paquete secta sidra víctima"
         />
         <TouchableHighlight
 							style={styles.fullWidthButton}
