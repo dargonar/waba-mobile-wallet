@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 	},
 	data_part : {
     fontFamily : 'roboto_normal',
-    color      : '#F64D27',
+    color      : '#B7F072',
     fontSize   : 25
   },
   title_part : {
