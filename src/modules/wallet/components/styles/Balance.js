@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
 	dec_part : {
     fontFamily  : 'roboto_regular',
     lineHeight  : 45,
-    fontSize    : 22
+    fontSize    : 23,
+		fontWeight : '100',
   },
 	
 	gray_color:{
@@ -83,6 +84,9 @@ const styles = StyleSheet.create({
 		fontWeight : '400',
     fontSize    : 14,
 		alignSelf   : 'center'  ,
+// 		textShadowColor: '#ccc',
+// 		textShadowOffset: {width: 0, height: 0},
+// 		textShadowRadius: 3,
 		marginBottom: 5
   },
   
