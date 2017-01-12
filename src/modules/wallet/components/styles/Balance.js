@@ -20,14 +20,16 @@ const styles = StyleSheet.create({
 	balance_wrapper:{
 		flex:2,
 		flexDirection:'column', 
-		justifyContent  : 'flex-end',
-    alignItems      : 'center'
+		justifyContent  : 'center',
+    alignItems      : 'center',
+		paddingTop: 30
 	},
 	balance_wrapperNoCredit:{
 		flex:2,
 		flexDirection:'column', 
 		justifyContent  : 'center',
-    alignItems      : 'center'
+    alignItems      : 'center',
+		
 	},
 	
 	
@@ -57,13 +59,14 @@ const styles = StyleSheet.create({
     fontWeight : '100',
     fontSize   : 15,
 		lineHeight : 15,
-		marginVertical: 2,
+		marginVertical: 3,
 	},
 	dec_part : {
-    fontFamily  : 'roboto_thin',
-    lineHeight  : 45,
-    fontSize    : 45,
-		fontWeight : '100',
+    fontFamily  : 'roboto_regular',
+    lineHeight  : 23,
+    fontSize    : 23,
+		marginVertical: 4,
+		alignSelf  : 'flex-start'
   },
 	
 	gray_color:{

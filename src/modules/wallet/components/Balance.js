@@ -57,11 +57,11 @@ class Balance extends Component {
 		
 		let p = undefined;
 		if(parts[1] != '00')
-			p = (<Text style={[styles.dec_part, styles.bold_color]}>.{parts[1]}</Text>)
+			p = (<Text style={[styles.dec_part, styles.bold_color]}>{parts[1]}</Text>)
 		
 		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
-	  if(d>0 || 1==1)
+	  if(d>0)
 	  {
 			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>DESCUBIERTO HASTA (<Text style={[styles.credit_amount, styles.bold_color]}>$ 1000</Text>) </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
