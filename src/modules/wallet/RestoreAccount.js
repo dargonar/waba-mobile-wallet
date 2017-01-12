@@ -3,11 +3,13 @@ import { SearchBar } from 'react-native-elements'
 
 import {
   Alert,
+	Keyboard,
   ListView,
   Text, 
   TextInput,
 	TouchableHighlight,
   View
+	
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -30,8 +32,11 @@ class RestoreAccount extends Component {
     navBarBackgroundColor: '#0B5F83',
     navBarButtonColor: '#ffffff'
   }
+	
+// 	let keyboardWillShowSub;
+// 	let keyboardWillHideSub;
   
-  constructor(props) {
+constructor(props) {
     super(props);
     this._onChangeText        = this._onChangeText.bind(this);
     this._onClearButtonPress  = this._onClearButtonPress.bind(this);
@@ -39,7 +44,8 @@ class RestoreAccount extends Component {
 //     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 		
 		this.state = {
-			words : ''
+			words : '',
+			keyboardOpen: false
 		};
   }
   
@@ -123,7 +129,7 @@ class RestoreAccount extends Component {
 				) 
 				.then((responseJson) => {
 					if(responseJson.error || !responseJson.length){
-						console.log('no hay cuenta');
+						console.log(' -- no hay cuenta', responseJson.error, responseJson.length);
 						that._onRestoreError('No existe una cuenta relacionada con las palabras ingresadas.');
 						return;
 					} else {
@@ -171,7 +177,14 @@ class RestoreAccount extends Component {
   // 		this.props.navigator.pop();
   }
 
-  componentWillMount() {
+  _keyboardWillShow() {
+    this.setState({keyboardOpen: true});
+		console.log("-- _keyboardWillShow EVENT", this.state.keyboardOpen);
+  }
+
+  _keyboardWillHide() {
+    this.setState({keyboardOpen: false});
+		console.log("-- _keyboardWillHide EVENT", this.state.keyboardOpen);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -180,7 +193,14 @@ class RestoreAccount extends Component {
   componentDidMount() {
   }
 
+  componentWillMount() {
+    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide);
+  }
+
   componentWillUnmount() {
+    this.keyboardWillShowListener.remove();
+    this.keyboardWillHideListener.remove();
   }
   
   focus() {
@@ -193,14 +213,22 @@ class RestoreAccount extends Component {
 // 					onPress={this._onRestoreAccount} title='RESTAURAR CUENTA' />
 		// defaultValue="cielo encargo hurto timo rodilla triste alerta tacto paquete secta sidra víctima"
 		// defaultValue="ceder tregua desfile jornada yerno sexto gajo poema lámpara mostrar talento algodón"
+		// defaultValue="recaer líder alivio pecado vereda aire moneda oasis reposo haz iris altura"
+		console.log("-- this.state.keyboardOpen", this.state.keyboardOpen);
+		let mensaje = undefined;
+		if(this.state.keyboardOpen==false)
+		{
+			mensaje = (<View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
+						<Text style={styles.keywordsTitle} numberOfLines={4}>
+							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
+							orden y minúscula/mayúscula. 
+						</Text>
+					</View>);	
+		}
 		return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
-					<Text style={styles.keywordsTitle} numberOfLines={4}>
-            Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
-            orden y minúscula/mayúscula. 
-          </Text>
-				</View>
+        	{mensaje}
+				
         <TextInput
           style={{flex:6, fontSize:25}}
           editable={true}
@@ -209,6 +237,7 @@ class RestoreAccount extends Component {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
+					defaultValue="recaer líder alivio pecado vereda aire moneda oasis reposo haz iris altura"
         />
         <TouchableHighlight
 							style={styles.fullWidthButton}

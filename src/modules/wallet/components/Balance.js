@@ -59,20 +59,29 @@ class Balance extends Component {
 		if(parts[1] != '00')
 			p = (<Text style={styles.dec_part}>.{parts[1]}</Text>)
 		
+		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
-    if(d>0)
-			j = (<Text style={styles.currency}>(-{d})</Text>)
-					 
+	  if(d>0)
+	  {
+			j = (<View style={styles.credit_wrapper}><Text style={styles.credit_title}>DESCUBIERTO HASTA</Text><Text style={styles.credit_amount}>($P {d})</Text></View>);
+	    let balanceStyle = styles.balance_wrapper;
+		}
+		//₱
+	  // {j}
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
-        <View style={styles.balance}> 
-          <Text style={[styles.int_part,{fontWeight:'100'}]}>₱ </Text>
-					<Text style={[styles.int_part,{fontWeight:'400'}]}>{parts[0]}</Text>
-          {p}
-        </View>
-        <Text style={styles.currency}>BALANCE PAR</Text>
-				{j}
-      </Image>      
+        <View style={styles.wrapper}> 
+					<View style={balanceStyle}> 
+						<View style={styles.balance}> 
+							<Text style={[styles.int_part,{fontWeight:'100'}]}>$P </Text>
+							<Text style={[styles.int_part,{fontWeight:'400'}]}>{parts[0]}</Text>
+							{p}
+						</View>
+						<Text style={styles.currency}>BALANCE PAR</Text>
+					</View>
+					{j}
+      	</View>
+			</Image>      
     );
 	}
 }

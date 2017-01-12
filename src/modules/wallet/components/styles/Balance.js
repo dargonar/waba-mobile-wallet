@@ -9,6 +9,26 @@ const styles = StyleSheet.create({
     alignItems      : 'center',
 		flex            : 3
 	},
+	
+	wrapper:{
+		flex:1,
+		flexDirection:'column', 
+		justifyContent  : 'center',
+    alignItems      : 'center'
+	},
+	
+	balance_wrapper:{
+		flex:2,
+		flexDirection:'column', 
+		justifyContent  : 'flex-end',
+    alignItems      : 'center'
+	},
+	balance_wrapperNoCredit:{
+		flex:2,
+		flexDirection:'column', 
+		justifyContent  : 'center',
+    alignItems      : 'center'
+	},
   balance : {
     flexDirection : 'row'
   },
@@ -28,8 +48,32 @@ const styles = StyleSheet.create({
   currency : {
     fontFamily  : 'roboto_thin',
     color       : '#ccc',
-    fontSize    : 16
-  }
+    fontSize    : 12
+		
+  },
+	
+	credit_wrapper:{
+		flex:1,
+		flexDirection:'row', 
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	credit_title:{
+		fontFamily  : 'roboto_thin',
+    color       : '#fff',
+    fontSize    : 10,
+		lineHeight  : 16,
+		paddingRight: 5
+		
+		
+	},
+	credit_amount:{
+		fontFamily  : 'roboto_regular',
+    color       : '#60A3C0',
+    fontSize    : 16,
+		fontWeight  : '400',
+		paddingLeft:5
+	},
 });
 
 export default styles;

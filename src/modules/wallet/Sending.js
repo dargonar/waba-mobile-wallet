@@ -87,7 +87,7 @@ class Sending extends Component {
 			return (
 				<View style={styles.container}>
 					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
-						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#F64D27"/>
+						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#B7F072"/>
 					</View>
 					<View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
 						<Text style={styles.title_part}>Enviando:</Text>
@@ -104,7 +104,7 @@ class Sending extends Component {
 			return (
       <View style={styles.container}>
         <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
-          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#F64D27"/>
+          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#B7F072"/>
         </View>
         <View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
           <Text style={styles.data_part}>Restaurando cuenta</Text>
