@@ -75,6 +75,18 @@ const styles = StyleSheet.create({
     height          :10, 
     width           :10,
   },
+  
+  row_arrowXX : {
+    resizeMode      :'contain', 
+    height          :10, 
+    width           :10,
+  },
+  
+  row_hand : {
+    resizeMode      :'contain', 
+    height          :15, 
+    width           :15,
+  },
     
   row_content : {
     marginLeft      : 15,

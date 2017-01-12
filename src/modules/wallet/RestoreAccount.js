@@ -237,7 +237,6 @@ constructor(props) {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
-					defaultValue="recaer líder alivio pecado vereda aire moneda oasis reposo haz iris altura"
         />
         <TouchableHighlight
 							style={styles.fullWidthButton}

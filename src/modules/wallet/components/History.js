@@ -240,7 +240,8 @@ class History extends Component {
 
 			if(rowData.__typename == 'OverdraftChange') {
 				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
-				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
+ 				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
+				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
 				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
 				let title  = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
@@ -248,7 +249,7 @@ class History extends Component {
 					<TouchableHighlight underlayColor={'#0f0'} onPress={this._onPressButton.bind(this)}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
-								<Image source={iconsMap['handshake-o']} style={[styles.row_arrow]}/>
+								<Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
