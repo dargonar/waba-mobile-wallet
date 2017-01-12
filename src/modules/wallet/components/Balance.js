@@ -66,18 +66,17 @@ class Balance extends Component {
 			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>DESCUBIERTO HASTA (<Text style={[styles.credit_amount, styles.bold_color]}>$ 1000</Text>) </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
 		}
-		//₱
-	  // {j}
+		// ₱
+	  // <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
         <View style={styles.wrapper}> 
 					<View style={balanceStyle}> 
-						<Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 						<View style={styles.balance}> 
 								<Text style={[styles.bold_color, styles.symbol_part]}>$ </Text>
 								<Text style={[styles.bold_color, styles.int_part]}>{parts[0]}</Text>
 								{p}
-								<Text style={[styles.gray_color, styles.par_part]}>  PAR</Text>
+								<Text style={[styles.white_color, styles.par_part]}>  PAR</Text>
 						</View>
 						
 					</View>
