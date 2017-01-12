@@ -64,8 +64,10 @@ class Balance extends Component {
 	  if(d>0)
 	  {
 			j = (<View style={styles.credit_wrapper}><Text style={styles.credit_title}>DESCUBIERTO HASTA</Text><Text style={styles.credit_amount}>($P {d})</Text></View>);
-	    let balanceStyle = styles.balance_wrapper;
+	    balanceStyle = styles.balance_wrapper;
 		}
+		j = (<View style={styles.credit_wrapper}><Text style={styles.credit_title}>DESCUBIERTO HASTA (<Text style={styles.credit_amount}>$P 1000</Text>) </Text></View>);
+		balanceStyle = styles.balance_wrapper;
 		//₱
 	  // {j}
 		return (

@@ -49,31 +49,36 @@ const styles = StyleSheet.create({
     fontFamily  : 'roboto_thin',
     color       : '#ccc',
     fontSize    : 12
-		
   },
 	
 	credit_wrapper:{
 		flex:1,
 		flexDirection:'row', 
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		paddingRight: 25
 	},
 	credit_title:{
 		fontFamily  : 'roboto_thin',
-    color       : '#fff',
-    fontSize    : 10,
-		lineHeight  : 16,
+    color       : '#ccc',
+    fontSize    : 12,
+		lineHeight  : 14,
 		paddingRight: 5
-		
-		
 	},
 	credit_amount:{
 		fontFamily  : 'roboto_regular',
-    color       : '#60A3C0',
-    fontSize    : 16,
+    color       : '#B7F072',
+    fontSize    : 14,
 		fontWeight  : '400',
-		paddingLeft:5
+		lineHeight  : 14
 	},
+	credit_amountBlue:{
+		color       : '#60A3C0'
+	},
+	credit_amountRed:{
+	  color       : '#ed1c24'
+	}
+	
 });
 
 export default styles;
