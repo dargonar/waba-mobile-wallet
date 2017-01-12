@@ -29,27 +29,63 @@ const styles = StyleSheet.create({
 		justifyContent  : 'center',
     alignItems      : 'center'
 	},
+	
+	
   balance : {
-    flexDirection : 'row'
+    flexDirection : 'row',
+		justifyContent: 'center',
+    alignItems: 'center',
   },
-  int_part : {
-    fontFamily : 'roboto_light',
-    color      : '#B7F072',
-		fontWeight : '100',
-    fontSize   : 32,
-		lineHeight : 35		
+	
+	symbol_part:{
+		fontFamily : 'roboto_light',
+    fontWeight : '100',
+    fontSize   : 15,
+		lineHeight : 15,
+		marginVertical: 6,
+		alignSelf  : 'flex-start'
+	},
+	int_part : {
+    fontFamily : 'roboto_regular',
+    fontWeight : '400',
+    fontSize   : 45,
+		lineHeight : 45,
+		alignSelf  : 'center'
   },
-  dec_part : {
+	par_part:{
+		fontFamily : 'roboto_thin',
+    fontWeight : '100',
+    fontSize   : 15,
+		lineHeight : 15,
+		marginVertical: 2,
+	},
+	dec_part : {
     fontFamily  : 'roboto_regular',
-    color       : '#B7F072',
-    lineHeight  : 35,
-    fontSize    : 16
+    lineHeight  : 45,
+    fontSize    : 22
   },
-  currency : {
+	
+	gray_color:{
+		color       : '#ccc',
+	},
+	bold_color:{
+		color      : '#FFFFFF',
+	},
+	bold_colorOLD:{
+		color      : '#B7F072',
+	},
+	white_color:{
+		color      : '#FFFFFF',
+	},
+  
+	balanceText : {
     fontFamily  : 'roboto_thin',
-    color       : '#ccc',
-    fontSize    : 12
+		fontWeight : '400',
+    fontSize    : 14,
+		alignSelf   : 'center'  ,
+		marginBottom: 5
   },
+  
 	
 	credit_wrapper:{
 		flex:1,
@@ -60,17 +96,19 @@ const styles = StyleSheet.create({
 	},
 	credit_title:{
 		fontFamily  : 'roboto_thin',
-    color       : '#ccc',
     fontSize    : 12,
 		lineHeight  : 14,
 		paddingRight: 5
 	},
 	credit_amount:{
 		fontFamily  : 'roboto_regular',
-    color       : '#B7F072',
+    color       : '#FFFFFF',
     fontSize    : 14,
 		fontWeight  : '400',
-		lineHeight  : 14
+		lineHeight  : 14,
+	},
+	credit_amountGreen:{
+		color       : '#B7F072'
 	},
 	credit_amountBlue:{
 		color       : '#60A3C0'

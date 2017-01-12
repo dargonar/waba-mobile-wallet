@@ -57,29 +57,29 @@ class Balance extends Component {
 		
 		let p = undefined;
 		if(parts[1] != '00')
-			p = (<Text style={styles.dec_part}>.{parts[1]}</Text>)
+			p = (<Text style={[styles.dec_part, styles.bold_color]}>.{parts[1]}</Text>)
 		
 		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
-	  if(d>0)
+	  if(d>0 || 1==1)
 	  {
-			j = (<View style={styles.credit_wrapper}><Text style={styles.credit_title}>DESCUBIERTO HASTA</Text><Text style={styles.credit_amount}>($P {d})</Text></View>);
+			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>DESCUBIERTO HASTA (<Text style={[styles.credit_amount, styles.bold_color]}>$ 1000</Text>) </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
 		}
-		j = (<View style={styles.credit_wrapper}><Text style={styles.credit_title}>DESCUBIERTO HASTA (<Text style={styles.credit_amount}>$P 1000</Text>) </Text></View>);
-		balanceStyle = styles.balance_wrapper;
 		//₱
 	  // {j}
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
         <View style={styles.wrapper}> 
 					<View style={balanceStyle}> 
+						<Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 						<View style={styles.balance}> 
-							<Text style={[styles.int_part,{fontWeight:'100'}]}>$P </Text>
-							<Text style={[styles.int_part,{fontWeight:'400'}]}>{parts[0]}</Text>
-							{p}
+								<Text style={[styles.bold_color, styles.symbol_part]}>$ </Text>
+								<Text style={[styles.bold_color, styles.int_part]}>{parts[0]}</Text>
+								{p}
+								<Text style={[styles.gray_color, styles.par_part]}>  PAR</Text>
 						</View>
-						<Text style={styles.currency}>BALANCE PAR</Text>
+						
 					</View>
 					{j}
       	</View>
