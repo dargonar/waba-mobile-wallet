@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
 		marginVertical: 2,
 	},
 	dec_part : {
-    fontFamily  : 'roboto_regular',
+    fontFamily  : 'roboto_thin',
     lineHeight  : 45,
-    fontSize    : 23,
+    fontSize    : 45,
 		fontWeight : '100',
   },
 	
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 		color       : '#ccc',
 	},
 	bold_color:{
-		color      : '#FFFFFF',
+		color      : '#B7F072',
 	},
 	bold_colorOLD:{
 		color      : '#B7F072',
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
 	},
   
 	balanceText : {
-    fontFamily  : 'roboto_thin',
-		fontWeight : '400',
+    fontFamily  : 'roboto_light',
+		fontWeight : '100',
     fontSize    : 14,
 		alignSelf   : 'center'  ,
 // 		textShadowColor: '#ccc',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 		paddingRight: 25
 	},
 	credit_title:{
-		fontFamily  : 'roboto_thin',
+		fontFamily  : 'roboto_light',
     fontSize    : 12,
 		lineHeight  : 14,
 		paddingRight: 5
