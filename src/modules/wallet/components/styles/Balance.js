@@ -60,13 +60,14 @@ const styles = StyleSheet.create({
     fontSize   : 15,
 		lineHeight : 15,
 		marginVertical: 3,
+		alignSelf : 'flex-end'
 	},
 	dec_part : {
-    fontFamily  : 'roboto_regular',
+    fontFamily  : 'roboto_thin',
     lineHeight  : 23,
     fontSize    : 23,
-		marginVertical: 4,
-		alignSelf  : 'flex-start'
+		marginVertical: 2,
+		alignSelf  : 'flex-end'
   },
 	
 	gray_color:{
@@ -99,13 +100,13 @@ const styles = StyleSheet.create({
 		flexDirection:'row', 
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingRight: 25
 	},
 	credit_title:{
 		fontFamily  : 'roboto_light',
     fontSize    : 12,
 		lineHeight  : 14,
-		paddingRight: 5
+		textAlign: 'center',
+		flex: 1,
 	},
 	credit_amount:{
 		fontFamily  : 'roboto_regular',

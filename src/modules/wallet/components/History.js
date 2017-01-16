@@ -253,7 +253,7 @@ class History extends Component {
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>${rowData.amount.quantity} {title[_tipo]}</Text>
+									<Text style={styles.row_amount}>₱{rowData.amount.quantity} {title[_tipo]}</Text>
 								</View>
 								<View style={styles.row_line2}>
                 <Text>Se ha {msg[_tipo]} su crédito</Text>

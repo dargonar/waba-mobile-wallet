@@ -248,7 +248,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 								id
 							}
 						} 
-						history(type:$type, start:$start, limit:6) {
+						history(type:$type, start:$start, limit:50) {
 							id
 							__typename
 							block {
@@ -429,10 +429,11 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 
 			} //if(data)
 
-    }).catch(()=>{
+    }).catch((err)=>{
+			
 			clearTimeout(timer);
 			dispatch(retrieveHistoryError());
-			console.log('catch error');
+			console.log('catch error', err);
 		}); //query.then
 	
 	} //dispatch
