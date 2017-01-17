@@ -17,6 +17,7 @@ import {
 
 let account = null;
 try {
+	//AsyncStorage.removeItem('@Store:data');
 	AsyncStorage.getItem('@Store:data').then((value)=>{
 		//console.log('@Store:data => ', value);
 		

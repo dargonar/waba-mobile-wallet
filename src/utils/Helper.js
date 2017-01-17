@@ -18,12 +18,12 @@ function launchWallet() {
         collapsedIcon: iconsMap['ios-add'].uri,
         backgroundColor: '#0B5F83'
       },
-      rightButtons: [
-				{
-					icon: iconsMap['qrcode'], 
-					id: 'qrCode'
-				}
-			]
+//       rightButtons: [
+// 				{
+// 					icon: iconsMap['qrcode'], 
+// 					id: 'qrCode'
+// 				}
+// 			]
     },
     animationType : 'none',
     drawer: {
