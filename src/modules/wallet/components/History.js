@@ -61,6 +61,7 @@ class History extends Component {
 			errors : 0
     };
 		
+		this._onPressButton = this._onPressButton.bind(this);
 // 		this.state.bounceValue.addListener((v)=>{
 // 			console.log('bounceValue=>', v);
 // 		});
@@ -169,6 +170,14 @@ class History extends Component {
   
   _onPressButton(rowID, rowData) {
     console.log('History::_onPressButton');
+		
+// 		let data = this._getRowData(rowData);
+// 		this.props.navigator.push({
+// 			screen: 'wallet.TxDetails',
+// 			title: 'Detalles',
+// 			passProps: data
+// 		});
+
   }
 
   _onRefresh() {
@@ -227,12 +236,93 @@ class History extends Component {
 
 		return dia + ' ' + mes;
   }
+	
+	_getHora(timestamp) {
+		var hora = timestamp.substr(11,2) >> 0;
+		var min   = timestamp.substr(14,2) >> 0;
+		return ("0" + hora).slice(-2) + ':' + ("0" + min).slice(-2);
+  }
+	
+	_getFechaHora(timestamp){
+		let fecha  = this._getFecha(timestamp);
+	  let hora   = this._getHora(timestamp);
+ 		return fecha + ' ' + hora;
+	}
+	_getRowData(rowData){
+		console.log(' --- ON TX PRESSED ', JSON.stringify(rowData));
+		if(rowData.__typename == 'NoDetailOp') {
+			let _date  = this._getFechaHora(rowData.block.timestamp);
+			return {
+				type: config.TX_TYPE_UNKNOWN,
+				from : {
+					name:					'',
+					account_id:		'',
+				},
+				to : {
+					name:					'',
+					account_id:		'',
+				},
+				fee    : '',
+				amount : '',
+				memo   : '',
+				date   : _date,
+				title  : ''
+			};
+		}
+
+		if(rowData.__typename == 'OverdraftChange') {
+			let _tipo 		= rowData.type == 'up' ? config.TX_TYPE_CREDIT_UP : config.TX_TYPE_CREDIT_DOWN; 
+			let _msg_x    = rowData.type == 'up' ? 'incrementado' : 'decrementado';
+			let _msg      = 'Se ha ' + _msg_x + ' su crédito';
+
+			let _date  = this._getFechaHora(rowData.block.timestamp);
+			return {
+				type: _tipo,
+				from : {
+					name:					'comunidad_par',
+					account_id:		'',
+				},
+				to : {
+					name:					that.props.account.name,
+					account_id:		'',
+				},
+				fee    : '0.00',
+				amount : rowData.amount.quantity,
+				memo   : _msg,
+				date   : _date,
+				title  : ''
+			};
+		}
+
+		let mapa   = {received:'recibido', sent: 'enviado'};
+	 	let bg     = {received:'#B7F072', sent:'#ff9379'};
+	 	let dea    = {received:'De:', sent:'A:'};
+	 	let _type  = rowData.from.name.endsWith(this.props.account.name) ? config.TX_TYPE_SENT : config.TX_TYPE_RECEIVED;
+	 	let _date  = this._getFechaHora(rowData.block.timestamp);
+	 	let message = rowData.message;
+		return {
+			type: _type,
+			from : {
+				name:					rowData.from.name,
+				account_id:		'',
+			},
+			to : {
+				name:					rowData.to.name,
+				account_id:		'',
+			},
+			fee    : rowData.fee.quantity,
+			amount : rowData.amount.quantity,
+			memo   : message,
+			date   : _date,
+			title  : ''
+		};
+	}
 
   _renderRow(rowData, sectionID, rowID) {
 			
 			if(rowData.__typename == 'NoDetailOp') {
 				return(
-					<TouchableHighlight underlayColor={'#ccc'} onPress={this._onPressButton.bind(this)}>
+					<TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<Text style={styles.row_amount}>Operacion no conocida</Text>				
 					</TouchableHighlight>
 				)
@@ -244,16 +334,19 @@ class History extends Component {
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
 				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
-				let title  = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
+				let title	 = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
+				let asset_symbol = config.ASSET_SYMBOL;
+				let fecha  = this._getFecha(rowData.block.timestamp);
+			  let hora   = this._getHora(rowData.block.timestamp);
 				return(
-					<TouchableHighlight underlayColor={'#0f0'} onPress={this._onPressButton.bind(this)}>
+					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
 								<Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>₱{rowData.amount.quantity} {title[_tipo]}</Text>
+									<Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {title[_tipo]}</Text>
 								</View>
 								<View style={styles.row_line2}>
                 <Text>Se ha {msg[_tipo]} su crédito</Text>
@@ -275,20 +368,21 @@ class History extends Component {
        let dea    = {received:'De:', sent:'A:'};
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
        let fecha  = this._getFecha(rowData.block.timestamp);
-
+			 let hora   = this._getHora(rowData.block.timestamp);
+			 let asset_symbol = config.ASSET_SYMBOL;
        let message = undefined;
        if(rowData.message)
          message = (<Text style={styles.row_message}>{rowData.message}</Text>);
        
         return (
-        <TouchableHighlight underlayColor={'#ccc'} onPress={this._onPressButton.bind(this)}>
+        <TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
             <View style={[styles.row_avatar, {backgroundColor:bg[_type]}]}>
               <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_type]}]}]}/>
             </View>
             <View style={styles.row_content}>            
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>${rowData.amount.quantity} {mapa[_type]}s</Text>
+                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_type]}s</Text>
               </View>
               <View style={styles.row_line2}>
                 <Text style={styles.row_dea}>{dea[_type]} </Text>
@@ -297,7 +391,8 @@ class History extends Component {
               {message}
             </View>
             <View style={styles.row_hour}>
-              <Text>{fecha}</Text>
+              <Text style={styles.row_hour_item}>{hora}</Text>
+							<Text style={styles.row_hour_item}>{fecha}</Text>
             </View>
           </View>
         </TouchableHighlight>

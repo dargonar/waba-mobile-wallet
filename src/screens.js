@@ -16,7 +16,7 @@ import Welcome from './modules/wallet/Welcome';
 import RestoreAccount from './modules/wallet/RestoreAccount';
 import Settings from './modules/wallet/Settings';
 import Onboarding from './modules/wallet/Onboarding';
-
+import TxDetails from './modules/wallet/TxDetails';
 
 export function registerScreens(store, Provider) {
 
@@ -36,5 +36,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.RestoreAccount', () => RestoreAccount, store, Provider);
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
-
+  Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
 }

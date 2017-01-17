@@ -248,7 +248,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 								id
 							}
 						} 
-						history(type:$type, start:$start, limit:50) {
+						history(type:$type, start:$start, limit:25) {
 							id
 							__typename
 							block {

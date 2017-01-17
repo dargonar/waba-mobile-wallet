@@ -14,7 +14,9 @@ const styles = StyleSheet.create({
 		flex:1,
 		flexDirection:'column', 
 		justifyContent  : 'center',
-    alignItems      : 'center'
+    alignItems      : 'center',
+// 		backgroundColor: '#0B5F83'
+// 		backgroundColor: '#044967'
 	},
 	
 	balance_wrapper:{
@@ -36,39 +38,64 @@ const styles = StyleSheet.create({
   balance : {
     flexDirection : 'row',
 		justifyContent: 'center',
-    alignItems: 'center',
+    
   },
 	
 	symbol_part:{
-		fontFamily : 'roboto_light',
+		flex:1,
+// 		fontFamily : 'roboto_light',
+		fontFamily  : 'roboto_thin',
     fontWeight : '100',
-    fontSize   : 15,
-		lineHeight : 15,
-		marginVertical: 6,
-		alignSelf  : 'flex-start'
+    fontSize   : 40,
+		lineHeight : 40,
+// 		marginVertical: 6,
+		textAlign  : 'right',
+		alignSelf  : 'center'
 	},
+	
 	int_part : {
-    fontFamily : 'roboto_regular',
-    fontWeight : '400',
+		flex:0,
+  //  fontFamily : 'roboto_regular',
+    fontFamily  : 'roboto_light',
+// 		fontWeight : '400',
     fontSize   : 45,
 		lineHeight : 45,
-		alignSelf  : 'center'
+		alignSelf : 'flex-end',
+		
   },
-	par_part:{
-		fontFamily : 'roboto_thin',
-    fontWeight : '100',
-    fontSize   : 15,
-		lineHeight : 15,
-		marginVertical: 3,
-		alignSelf : 'flex-end'
+	
+	balanceAmountWrapper:{
+		flex:1,
+		flexDirection : 'row',
+		justifyContent: 'flex-start',
+    alignItems: 'stretch',
+		//backgroundColor: '#f00'
 	},
 	dec_part : {
-    fontFamily  : 'roboto_thin',
-    lineHeight  : 23,
-    fontSize    : 23,
-		marginVertical: 2,
-		alignSelf  : 'flex-end'
+		flex:0,
+ 	  fontFamily  : 'roboto_thin',
+// 		fontFamily : 'roboto_regular',
+//     fontWeight : '100',
+		lineHeight  : 20,
+    fontSize    : 20,
+		marginVertical: 6,
+// 		alignSelf : 'flex-start',
+		paddingLeft: 0,
+		
   },
+	
+	par_part:{
+		flex:1,
+		fontFamily : 'roboto_thin',
+    fontWeight : '100',
+    fontSize   : 20,
+		lineHeight : 20,
+ 		marginVertical: 1,
+		alignSelf : 'flex-end',
+		textShadowColor: '#ccc',
+		textShadowOffset: {width: 0.5, height: 0.5},
+		textShadowRadius: 4
+	},
 	
 	gray_color:{
 		color       : '#ccc',
@@ -76,11 +103,14 @@ const styles = StyleSheet.create({
 	bold_color:{
 		color      : '#B7F072',
 	},
-	bold_colorOLD:{
-		color      : '#B7F072',
-	},
 	white_color:{
 		color      : '#FFFFFF',
+	},
+	
+	red_color:{
+// 		color: '#CF2E08'
+ 		color: '#FF9379'
+// 		color: '#FFFFFF'
 	},
   
 	balanceText : {
@@ -106,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize    : 12,
 		lineHeight  : 14,
 		textAlign: 'center',
-		flex: 1,
+		flex: 1
 	},
 	credit_amount:{
 		fontFamily  : 'roboto_regular',

@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import styles from './styles/Balance';
 import Sound from 'react-native-sound';
+import * as config from '../../../constants/config';
 
 class Balance extends Component {
 
@@ -51,32 +52,38 @@ class Balance extends Component {
 		if(this.props.balance) d = this.props.balance[1];
 		
 		b = r - d;
-				
+		//b = 32510.75;
+		//b = 31.1;
 		if(!b) b = '0';
 		let parts = Number(b).toFixed(2).split('.');
-		
+		let amountColorStyle = styles.bold_color;
+// 		if(b<0) amountColorStyle = styles.red_color;
 		let p = undefined;
 		if(parts[1] != '00')
-			p = (<Text style={[styles.dec_part, styles.bold_color]}>,{parts[1]}</Text>)
+			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
+		
+		let asset_symbol = config.ASSET_SYMBOL;
 		
 		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
 	  if(d>0)
 	  {
-			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Credito (<Text style={[styles.credit_amount, styles.bold_color]}>₱ {d}</Text>) </Text></View>);	
+			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
 		}
-		// ₱
-	  // <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
+		// <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
         <View style={styles.wrapper}> 
 					<View style={balanceStyle}> 
 						<View style={styles.balance}> 
-								<Text style={[styles.bold_color, styles.symbol_part]}>₱ </Text>
-								<Text style={[styles.bold_color, styles.int_part]}>{parts[0]}</Text>
-								{p}
-								<Text style={[styles.white_color, styles.par_part]}>  PAR</Text>
+								<Text style={[styles.bold_color, styles.symbol_part]}>{asset_symbol} </Text>
+								<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}</Text>
+								
+								<View style={styles.balanceAmountWrapper}> 
+									{p}
+									<Text style={[styles.gray_color, styles.par_part]}> PAR</Text>
+								</View>
 						</View>
 						
 					</View>

@@ -124,8 +124,20 @@ const styles = StyleSheet.create({
   },  
     
   row_hour : {
-    alignSelf       : 'flex-start', 
-    marginRight     : 10
+    alignSelf       : 'center', 
+    marginRight     : 5,
+    
+    width           : 50,
+    height          : 50,
+    borderRadius    : 50,
+//     backgroundColor : '#eee',
+    flexDirection   : 'column',
+    alignItems      : 'center',
+    justifyContent  : 'center',
+  },
+  row_hour_item : {
+    textAlign: 'center',
+    fontSize: 11
   },
     
   row_message : { 
