@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconBadge from 'react-native-icon-badge';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import styles from './styles/Drawer';
@@ -114,7 +115,22 @@ class Drawer extends Component {
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 
 		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+ 		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		// https://www.npmjs.com/package/react-native-icon-badge		
+		const iconEndorsementEx = (<IconBadge
+    MainElement={iconEndorsement}
+    BadgeElement={
+      <Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
+    }
+ 
+    IconBadgeStyle={
+      {width:14,
+      height:14,
+			top:-6,
+  		right:-6,													 
+      backgroundColor: '#CF2E08'}
+    }
+    />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -172,7 +188,7 @@ class Drawer extends Component {
 						</TouchableOpacity>
 						<TouchableOpacity onPress={this._openEndorsement}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
-								{iconEndorsement}
+								{iconEndorsementEx}
 								<Text style={styles.drawerListItemText}>
 									Avales
 								</Text>

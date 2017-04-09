@@ -34,8 +34,16 @@ class Endorsement extends Component {
     super(props);
     this._onSendEndorsement        = this._onSendEndorsement.bind(this);
     this._onSendOverdraft          = this._onSendOverdraft.bind(this);
+    this._onApplyEndorsement       = this._onApplyEndorsement.bind(this);
   }
   
+  _onApplyEndorsement(){
+    this.props.navigator.push({
+      screen: 'wallet.ApplyEndorsement',
+      title: 'Solicitar crédito'
+    });
+  }
+
   _onSendOverdraft() {
     this.props.navigator.push({
       screen: 'wallet.SendOverdraft',
@@ -81,10 +89,19 @@ class Endorsement extends Component {
     const iconShare = (<Icon name="md-share-alt" size={30} color="#1f475b" />);
     const iconCard  = (<Icon name="ios-card" size={30} color="#1f475b" />);
     const iconBuffer  = (<Icon name="logo-buffer" size={30} color="#1f475b" />);
+    const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="#CF2E08" />);
     
     return (
       <View style={styles.container}>
         <SettingsList>
+          <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconThumbsUp}
+                  </View>}
+            itemWidth={50}
+            title='Solicitar mi crédito preacordado'
+            onPress={this._onApplyEndorsement.bind(this)}
+          />
           <SettingsList.Header headerText='Invitar nuevo miembro'/>
           <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>

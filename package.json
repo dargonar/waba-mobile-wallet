@@ -23,6 +23,7 @@
     "react-native-config": "^0.1.2",
     "react-native-hide-with-keyboard": "^0.1.0",
     "react-native-i18n": "^0.1.1",
+    "react-native-icon-badge": "^1.1.1",
     "react-native-infinite-scroll-view": "^0.4.2",
     "react-native-keyboard-spacer": "^0.3.0",
     "react-native-level-fs": "^3.0.0",
