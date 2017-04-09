@@ -40,7 +40,7 @@ class Drawer extends Component {
 		
 		this._toggleDrawer();
 		this.props.navigator.push({
-			screen: 'wallet.Endorsement',
+			screen: 'wallet.Endorsement', //screen: 'wallet.SelectEndorseType'
 			title: 'Avales'
 		});		
 	}

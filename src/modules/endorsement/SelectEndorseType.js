@@ -4,7 +4,7 @@ import { List, ListItem } from 'react-native-elements'
 import { ActivityIndicator } from 'react-native';
 
 import {
-  Alert, Stylesheet, Text, TouchableHighlight, View
+  Alert, ScrollView, Stylesheet, Text, TouchableHighlight, View
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -21,7 +21,6 @@ import { sliderWidth, itemWidth } from './components/styles/SliderEntry';
 import SliderEntry from './components/SliderEntry';
 //import { ENTRIES1, ENTRIES2 } from 'example/src/static/entries';
 
-
 class SelectEndorseType extends Component {
   
   static navigatorStyle = {
@@ -32,7 +31,8 @@ class SelectEndorseType extends Component {
   
   constructor(props) {
     super(props);
-    this.tid = undefined;
+		this.tid = undefined;
+		
 	}
   
   
@@ -72,34 +72,33 @@ class SelectEndorseType extends Component {
       });
     }
 
-	  const avales = [
-      {
-          title: 'Descubierto por $1.000,00',
-          subtitle: 'Aval para individuos',
-          illustration: 'http://i.imgur.com/UYiroysl.jpg'
-      },
-      {
-          title: 'Descubierto por $10.000,00',
-          subtitle: 'Aval para productores y cuentapropiestas',
-          illustration: 'http://i.imgur.com/UYiroysl.jpg'
-      },
-      {
-          title: 'Descubierto por $30.000,00',
-          subtitle: 'Aval para empresas',
-          illustration: 'http://i.imgur.com/UYiroysl.jpg'
-      }
-    ]
-    
-    getSlides (entries) {
-        if (!entries) {
-            return false;
-        }
+	  getSlides () {
+        const avales = [
+				{
+						title: 'Descubierto por $1.000,00',
+						subtitle: 'Aval para individuos',
+						illustration: 'http://i.imgur.com/UYiroysl.jpg',
+						bgcolor: 'I'
+				},
+				{
+						title: 'Descubierto por $10.000,00',
+						subtitle: 'Aval para productores y cuentapropiestas',
+						illustration: 'http://i.imgur.com/UYiroysl.jpg',
+						bgcolor: 'X'
+				},
+				{
+						title: 'Descubierto por $30.000,00',
+						subtitle: 'Aval para empresas',
+						illustration: 'http://i.imgur.com/UYiroysl.jpg',
+						bgcolor: 'XXX'
+				}
+			]
 
-        return entries.map((entry, index) => {
+					//even={(index + 1) % 2 === 0}
+        return avales.map((entry, index) => {
             return (
                 <SliderEntry
                   key={`carousel-entry-${index}`}
-                  even={(index + 1) % 2 === 0}
                   {...entry}
                 />
             );
@@ -121,7 +120,7 @@ class SelectEndorseType extends Component {
               snapOnAndroid={true}
               removeClippedSubviews={false}
             >
-                { this.getSlides(this.avales) }
+                { this.getSlides() }
             </Carousel>
         );
     }
@@ -130,15 +129,18 @@ class SelectEndorseType extends Component {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
-              <ScrollView
+							<View style={{flex: 2, backgroundColor:'#fff', flexDirection: 'column', padding:15}}>
+								<Text style={styles.title}>A tener en cuenta</Text>
+								<Text style={styles.subtitle}>Confianza: Dale invitaciones solo a individuos que conoces y con quienes compartes valores colaborativos.</Text>
+								<Text style={styles.subtitle}>Privacidad: Guardamos la lista de a quien has invitado.</Text>
+								<Text style={styles.subtitle}>Abuso: Eres responsable solidario con aquéllos que avales.</Text>
+							</View>
+              <View
                   style={styles.scrollview}
                   indicatorStyle={'white'}
-                  scrollEventThrottle={200}
                 >
-                    <Text style={styles.title}>Example 1</Text>
-                    <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>
-                    { this.example1 }
-                </ScrollView>
+									  { this.avalesCarousel }
+                </View>
               <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
                 <TouchableHighlight
                     style={styles.fullWidthButton}

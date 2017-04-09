@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
-import { colors } from 'example/src/styles/index.style';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -17,7 +16,17 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const entryBorderRadius = 8;
 
+export const colors = {
+    black: '#1a1917',
+    gray: '#888888',
+    background1: 'hsl(15, 55%, 50%)',
+    background2: 'hsl(230, 30%, 45%)'
+};
+
 export default StyleSheet.create({
+    avalI_bg:{ backgroundColor:'#EF8B8A'},
+    avalX_bg:{ backgroundColor:'#6E75AC'},
+    avalXXX_bg:{ backgroundColor:'#5CD59E'},
     slideInnerContainer: {
         width: itemWidth,
         height: slideHeight,
@@ -26,19 +35,13 @@ export default StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        backgroundColor: 'white',
         borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
+        borderTopRightRadius: entryBorderRadius,
+        borderBottomLeftRadius: entryBorderRadius,
+        borderBottomRightRadius: entryBorderRadius
     },
     imageContainerEven: {
         backgroundColor: colors.black
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
-        borderRadius: Platform.OS === 'ios' ? entryBorderRadius : 0,
-        borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
     },
     // image's border radius is buggy on ios; let's hack it!
     radiusMask: {
@@ -57,17 +60,21 @@ export default StyleSheet.create({
         paddingTop: 20 - entryBorderRadius,
         paddingBottom: 20,
         paddingHorizontal: 16,
-        backgroundColor: 'white',
-        borderBottomLeftRadius: entryBorderRadius,
-        borderBottomRightRadius: entryBorderRadius
+        
+        //backgroundColor: 'white',
+        
     },
     textContainerEven: {
-        backgroundColor: colors.black
+        //backgroundColor: colors.black
     },
     title: {
-        color: colors.black,
-        fontSize: 13,
-        fontWeight: 'bold',
+        color: 'white',
+//         fontFamily : 'roboto_light',
+// 				fontWeight : '100',
+// 				fontSize: 15,
+        fontFamily : 'roboto',
+				fontWeight : '700',
+				fontSize: 15,
         letterSpacing: 0.5
     },
     titleEven: {
@@ -75,9 +82,11 @@ export default StyleSheet.create({
     },
     subtitle: {
         marginTop: 6,
-        color: colors.gray,
+        color: 'white',
         fontSize: 12,
-        fontStyle: 'italic'
+        fontFamily : 'roboto_light',
+				fontWeight : '100'
+				
     },
     subtitleEven: {
         color: 'rgba(255, 255, 255, 0.7)'
