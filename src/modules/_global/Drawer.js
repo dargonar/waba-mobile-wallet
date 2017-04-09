@@ -113,8 +113,8 @@ class Drawer extends Component {
 		const iconJob 			= (<Icon name="md-construct" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 
-		// const iconEndorsement = (<Icon name="ion-ribbon-b" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconEndorsement = (<Icon name="ion-thumbsup" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>

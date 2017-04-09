@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as walletActions from './wallet.actions';
+// import * as walletActions from './wallet.actions';
 import styles from './styles/Endorsement';
 import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -32,24 +32,31 @@ class Endorsement extends Component {
   
   constructor(props) {
     super(props);
-//     this._onRestoreAccount        = this._onRestoreAccount.bind(this);
-    
+    this._onSendEndorsement        = this._onSendEndorsement.bind(this);
+    this._onSendOverdraft          = this._onSendOverdraft.bind(this);
   }
   
-  _onRestoreAccount() {
+  _onSendOverdraft() {
     this.props.navigator.push({
-      screen: 'wallet.RestoreAccount',
-      title: 'Restaurar cuenta'
+      screen: 'wallet.SendOverdraft',
+      title: 'Enviar avales'
     });
   }
 
-  _onShowWords() {
+  _onSendEndorsement() {
     this.props.navigator.push({
-      screen:     'wallet.RecoveryKeywords',
-      title:      'Palabras clave',
-      passProps:  {mnemonic: this.props.account.mnemonic, hide_button:true}
+      screen: 'wallet.SendEndorsement',
+      title: 'Otorgar crédito'
     });
   }
+
+//   _onShowWords() {
+//     this.props.navigator.push({
+//       screen:     'wallet.RecoveryKeywords',
+//       title:      'Palabras clave',
+//       passProps:  {mnemonic: this.props.account.mnemonic, hide_button:true}
+//     });
+//   }
 
   componentWillMount() {
   }
@@ -71,22 +78,56 @@ class Endorsement extends Component {
     // <SettingsList.Header headerText='Different Grouping' headerStyle={{marginTop:50}}/>
     // <SettingsList.Item titleInfo='Some Information' hasNavArrow={false} title='Information Example'/>
           
-    const iconSwap = (<Icon name="ios-swap" size={30} color="#1f475b" />);
-    const iconSec  = (<Icon name="ios-key" size={30} color="#1f475b" />);
+    const iconShare = (<Icon name="md-share-alt" size={30} color="#1f475b" />);
+    const iconCard  = (<Icon name="ios-card" size={30} color="#1f475b" />);
+    const iconBuffer  = (<Icon name="logo-buffer" size={30} color="#1f475b" />);
     
     return (
       <View style={styles.container}>
         <SettingsList>
-          <SettingsList.Header headerText='Cuenta'/>
+          <SettingsList.Header headerText='Invitar nuevo miembro'/>
           <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconSwap}
+                    {iconCard}
                   </View>}
             itemWidth={50}
-            title='Restaurar cuenta'
-            onPress={this._onRestoreAccount.bind(this)}
+            title='Otorgar crédito'
+            onPress={this._onSendOverdraft.bind(this)}
           />
           <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconBuffer}
+                  </View>}
+            itemWidth={50}
+            title='Créditos otorgados'
+            onPress={this._onSendOverdraft.bind(this)}
+          />
+          
+          <SettingsList.Header headerText='Autorizar entrega de créditos'/>
+          <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconShare}
+                  </View>}
+            itemWidth={50}
+            title='Enviar avales'
+            onPress={this._onSendEndorsement.bind(this)}
+          />
+          <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconBuffer}
+                  </View>}
+            itemWidth={50}
+            title='Avales enviados'
+            onPress={this._onSendEndorsement.bind(this)}
+          />
+        </SettingsList>
+      </View>
+    );
+  }
+}
+
+/*
+    <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
                     {iconSec}
                   </View>}
@@ -95,24 +136,20 @@ class Endorsement extends Component {
             onPress={this._onShowWords.bind(this)}
           />
           
-        </SettingsList>
-      </View>
-    );
-  }
-}
+      
+*/
 
 function mapStateToProps(state, ownProps) {
   return {
-    memo: state.wallet.new_keys,
-    account: state.wallet.account
+//     memo: state.wallet.new_keys,
+//     account: state.wallet.account
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(walletActions, dispatch)
+//     actions: bindActionCreators(walletActions, dispatch)
   };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Endorsement);
-
