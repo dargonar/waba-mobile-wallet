@@ -17,6 +17,11 @@ import * as config from '../../constants/config';
 
 import styles from './styles/SelectEndorseType';
 
+import { sliderWidth, itemWidth } from './components/styles/SliderEntry';
+import SliderEntry from './components/SliderEntry';
+//import { ENTRIES1, ENTRIES2 } from 'example/src/static/entries';
+
+
 class SelectEndorseType extends Component {
   
   static navigatorStyle = {
@@ -67,22 +72,73 @@ class SelectEndorseType extends Component {
       });
     }
 
-const sliderWidth = Dimensions.get('window').width * 0.75;
-const slideWidth = 250;
-const horizontalMargin = 20;
-const itemWidth = slideWidth + horizontalMargin * 2;
- 
-const styles = Stylesheet.create({
-    slide: {
-        width: itemWidth
-        // other styles for your item's container 
+	  const avales = [
+      {
+          title: 'Descubierto por $1.000,00',
+          subtitle: 'Aval para individuos',
+          illustration: 'http://i.imgur.com/UYiroysl.jpg'
+      },
+      {
+          title: 'Descubierto por $10.000,00',
+          subtitle: 'Aval para productores y cuentapropiestas',
+          illustration: 'http://i.imgur.com/UYiroysl.jpg'
+      },
+      {
+          title: 'Descubierto por $30.000,00',
+          subtitle: 'Aval para empresas',
+          illustration: 'http://i.imgur.com/UYiroysl.jpg'
+      }
+    ]
+    
+    getSlides (entries) {
+        if (!entries) {
+            return false;
+        }
+
+        return entries.map((entry, index) => {
+            return (
+                <SliderEntry
+                  key={`carousel-entry-${index}`}
+                  even={(index + 1) % 2 === 0}
+                  {...entry}
+                />
+            );
+        });
     }
-};
-																 
-render() {
+
+    get avalesCarousel () {
+        return (
+            <Carousel
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              firstItem={1}
+              inactiveSlideScale={0.94}
+              inactiveSlideOpacity={0.6}
+              enableMomentum={false}
+              containerCustomStyle={styles.slider}
+              contentContainerCustomStyle={styles.sliderContainer}
+              showsHorizontalScrollIndicator={false}
+              snapOnAndroid={true}
+              removeClippedSubviews={false}
+            >
+                { this.getSlides(this.avales) }
+            </Carousel>
+        );
+    }
+
+    render() {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
+              <ScrollView
+                  style={styles.scrollview}
+                  indicatorStyle={'white'}
+                  scrollEventThrottle={200}
+                >
+                    <Text style={styles.title}>Example 1</Text>
+                    <Text style={styles.subtitle}>No momentum | Scale | Opacity</Text>
+                    { this.example1 }
+                </ScrollView>
               <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
                 <TouchableHighlight
                     style={styles.fullWidthButton}
