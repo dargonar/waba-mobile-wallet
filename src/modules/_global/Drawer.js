@@ -28,12 +28,22 @@ class Drawer extends Component {
 		this._onGoToMercadoPar  			= this._onGoToMercadoPar.bind(this);
 		this._onGoToMercadoParEmpleos = this._onGoToMercadoParEmpleos.bind(this);
 		this._onSettings 							= this._onSettings.bind(this);
+		this._openEndorsement 				= this._openEndorsement.bind(this);
 	}
 	
 	_onPower(){
 		this._onFnDisabled();	
 	}
 	
+	_openEndorsement(){
+		
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'wallet.Endorsement',
+			title: 'Avales'
+		});		
+	}
+
 	_onSettings(){
 		
 		this._toggleDrawer();
@@ -102,6 +112,9 @@ class Drawer extends Component {
 		const iconMap 			= (<Icon name="md-pin" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconJob 			= (<Icon name="md-construct" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+
+		// const iconEndorsement = (<Icon name="ion-ribbon-b" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconEndorsement = (<Icon name="ion-thumbsup" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -154,6 +167,14 @@ class Drawer extends Component {
 								{iconRecipient}
 								<Text style={styles.drawerListItemText}>
 									Enviar dinero
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this._openEndorsement}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+								{iconEndorsement}
+								<Text style={styles.drawerListItemText}>
+									Avales
 								</Text>
 							</View>
 						</TouchableOpacity>

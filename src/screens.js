@@ -17,7 +17,7 @@ import RestoreAccount from './modules/wallet/RestoreAccount';
 import Settings from './modules/wallet/Settings';
 import Onboarding from './modules/wallet/Onboarding';
 import TxDetails from './modules/wallet/TxDetails';
-
+import Endorsement from './modules/endorsement/Endorsement'
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('wallet.CreateAccount', () => CreateAccount);
@@ -37,4 +37,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
+  Navigation.registerComponent('wallet.Endorsement', () => Endorsement, store, Provider);
 }
