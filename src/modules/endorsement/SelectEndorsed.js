@@ -109,7 +109,7 @@ class SelectEndorsed extends Component {
 		//console.log('_onEndorsedSelected =>', data);
 		
 		this.setState({recipient_selected:true}); 
-		this.props.actions.memoSuccess('');		
+// 		this.props.actions.memoSuccess('');		
 		this.props.navigator.push({
 			screen: 'wallet.SelectEndorseType',
 			title: 'Indique tipo de aval',

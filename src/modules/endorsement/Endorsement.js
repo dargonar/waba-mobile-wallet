@@ -46,7 +46,7 @@ class Endorsement extends Component {
 
   _onSendOverdraft() {
     this.props.navigator.push({
-      screen: 'wallet.SendOverdraft',
+      screen: 'wallet.SelectEndorsed',
       title: 'Enviar avales'
     });
   }

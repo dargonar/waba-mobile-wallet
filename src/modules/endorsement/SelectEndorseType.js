@@ -4,10 +4,11 @@ import { List, ListItem } from 'react-native-elements'
 import { ActivityIndicator } from 'react-native';
 
 import {
-  View,
-  ListView
+  Alert, Stylesheet, Text, TouchableHighlight, View
 } from 'react-native';
 
+import Carousel from 'react-native-snap-carousel';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from '../wallet/wallet.actions';
@@ -66,9 +67,19 @@ class SelectEndorseType extends Component {
       });
     }
 
-				
-  render() {
-    render() {
+const sliderWidth = Dimensions.get('window').width * 0.75;
+const slideWidth = 250;
+const horizontalMargin = 20;
+const itemWidth = slideWidth + horizontalMargin * 2;
+ 
+const styles = Stylesheet.create({
+    slide: {
+        width: itemWidth
+        // other styles for your item's container 
+    }
+};
+																 
+render() {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
@@ -81,10 +92,6 @@ class SelectEndorseType extends Component {
               </View>
             </View>
         );
-    }
-		
-		
-    
   }
 }
 
