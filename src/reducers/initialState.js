@@ -8,9 +8,12 @@ export default {
 		fees       : {},
 		asset      : {},
 		new_keys   : {},
-		memo: 		 '',
+		memo			 : '',
 		account    : null,
 		account_id : null,
-		blockchain : {}
+		blockchain : {},
+
+		endorsements: {},
+		endorsed: 		null
 	}
 };

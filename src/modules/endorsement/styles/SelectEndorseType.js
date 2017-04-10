@@ -7,26 +7,26 @@ const styles = StyleSheet.create({
 		backgroundColor:'#FFF'
 	},
 	fullWidthButton: {
-		borderRadius: 0,
-    height:100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-		backgroundColor: '#044967' 
-  },
-	fullWidthButtonDisabled: {
-    backgroundColor: '#999999'
-  },
-	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 20,
-		color: 'white'
-  },
+    	borderRadius: 0,
+        height:100,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    		backgroundColor: '#044967' 
+      },
+    	fullWidthButtonDisabled: {
+        backgroundColor: '#999999'
+      },
+    	fullWidthButtonText: {
+        fontFamily : 'roboto_light',
+    		fontWeight : '100',
+        fontSize   : 20,
+    		color: 'white'
+      },
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'roboto_light',
 		fontWeight : '100',
-    fontSize   : 15,
+        fontSize   : 15,
 		color			 : '#cccccc'
 	},
 
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         //color: 'rgba(255, 255, 255, 0.9)',
         fontFamily : 'roboto',
-				fontWeight : '700',
-				fontSize: 15,
+		fontWeight : '700',
+		fontSize: 15,
 //         fontWeight: 'bold',
 //         textAlign: 'center'
     },

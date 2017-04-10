@@ -32,7 +32,7 @@ class Endorsement extends Component {
   
   constructor(props) {
     super(props);
-    this._onSendEndorsement        = this._onSendEndorsement.bind(this);
+    this._onShareEndorsement        = this._onShareEndorsement.bind(this);
     this._onSendOverdraft          = this._onSendOverdraft.bind(this);
     this._onApplyEndorsement       = this._onApplyEndorsement.bind(this);
   }
@@ -51,9 +51,9 @@ class Endorsement extends Component {
     });
   }
 
-  _onSendEndorsement() {
+  _onShareEndorsement() {
     this.props.navigator.push({
-      screen: 'wallet.SendEndorsement',
+      screen: 'wallet.ShareEndorsement',
       title: 'Enviar avales'
     });
   }
@@ -127,7 +127,7 @@ class Endorsement extends Component {
                   </View>}
             itemWidth={50}
             title='Enviar avales'
-            onPress={this._onSendEndorsement.bind(this)}
+            onPress={this._onShareEndorsement.bind(this)}
           />
           <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
@@ -135,7 +135,7 @@ class Endorsement extends Component {
                   </View>}
             itemWidth={50}
             title='Avales enviados'
-            onPress={this._onSendEndorsement.bind(this)}
+            onPress={this._onShareEndorsement.bind(this)}
           />
         </SettingsList>
       </View>

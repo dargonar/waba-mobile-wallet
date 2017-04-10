@@ -13,9 +13,11 @@ const ICON_SIZE_ANDROID_25 = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   
+  
   "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   
+  "ios-add-circle-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-add" : [ICON_SIZE_ANDROID, "#fff"],
   
   "ios-backspace" : [ICON_SIZE_ANDROID, "#fff"],

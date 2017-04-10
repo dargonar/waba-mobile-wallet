@@ -20,7 +20,7 @@ import TxDetails from './modules/wallet/TxDetails';
 import Endorsement from './modules/endorsement/Endorsement';
 import SelectEndorsed from './modules/endorsement/SelectEndorsed';
 import SelectEndorseType from './modules/endorsement/SelectEndorseType';
-
+import ShareEndorsement from './modules/endorsement/ShareEndorsement';
 
 export function registerScreens(store, Provider) {
 
@@ -44,5 +44,5 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('wallet.Endorsement', () => Endorsement, store, Provider);
   Navigation.registerComponent('wallet.SelectEndorsed', () => SelectEndorsed, store, Provider);
   Navigation.registerComponent('wallet.SelectEndorseType', () => SelectEndorseType, store, Provider);
-  
+	Navigation.registerComponent('wallet.ShareEndorsement', () => ShareEndorsement, store, Provider);
 }
