@@ -17,6 +17,7 @@ const icons = {
   
   "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
   
   "ios-add-circle-outline": [ICON_SIZE_ANDROID_BIG, "#fff"],
   "ios-add" : [ICON_SIZE_ANDROID, "#fff"],

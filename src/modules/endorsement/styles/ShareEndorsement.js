@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     alignItems      : 'center',
     padding         : 10,
 //     backgroundColor : '#fff',
-    borderBottomColor: '#575863',
-    borderBottomWidth: 1,
+//     borderBottomColor: '#575863',
+//     borderBottomWidth: 1,
   },
   row_card:{
     borderTopLeftRadius     : 6,
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   },
   row_plus : {
     resizeMode      :'contain', 
-    height          :25, 
-    width           :25,
+    height          :15, 
+    width           :15,
   },
   row_content : {
     marginLeft      : 15,
@@ -125,11 +125,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20
   },
-  
+  button_row_card:{
+    backgroundColor: '#575863',
+		flex:1, 
+		justifyContent:'center', 
+		alignItems:'center',
+		paddingTop: 6,
+	},
   button_row:{
     backgroundColor: '#575863',
-    marginTop: 4,
-    marginBottom: 4,
+    marginTop: 8,
+    marginBottom: 0,
+		borderTopLeftRadius     : 3,
+    borderTopRightRadius    : 3,
+    borderBottomLeftRadius  : 3,
+    borderBottomRightRadius : 3,
   },
   
   title: {
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
     fontFamily : 'roboto',
     fontWeight : '100',
     fontSize: 15,
-    color: '#fff'
+    color: '#D5D5D5'
   },
   margin_top:{
     marginTop: 15,

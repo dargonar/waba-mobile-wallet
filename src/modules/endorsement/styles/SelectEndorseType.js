@@ -47,25 +47,20 @@ const styles = StyleSheet.create({
 //         paddingTop: 50
     },
     title: {
-//         marginTop: 15,
-        backgroundColor: 'transparent',
-        //color: 'rgba(255, 255, 255, 0.9)',
-        fontFamily : 'roboto',
-		fontWeight : '700',
-		fontSize: 15,
-//         fontWeight: 'bold',
-//         textAlign: 'center'
+			backgroundColor: 'transparent',
+      fontFamily : 'roboto',
+			fontWeight : '700',
+			fontSize: 15,
+			color: '#D5D5D5'
     },
     subtitle: {
-        marginTop: 5,
-//         marginBottom: 15,
-        backgroundColor: 'transparent',
-        //color: 'rgba(255, 255, 255, 0.75)',
-        fontFamily : 'roboto_light',
-				fontWeight : '100',
-				fontSize: 11,
-        fontStyle: 'italic',
-//         textAlign: 'center'
+			marginTop: 5,
+			backgroundColor: 'transparent',
+			fontFamily : 'roboto_light',
+			fontWeight : '100',
+			fontSize: 11,
+			fontStyle: 'italic',
+			color: '#D5D5D5'
     },
     slider: {
         marginBottom: 30

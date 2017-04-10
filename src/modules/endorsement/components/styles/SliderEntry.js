@@ -27,6 +27,7 @@ export default StyleSheet.create({
     avalI_bg:{ backgroundColor:'#EF8B8A'},
     avalX_bg:{ backgroundColor:'#6E75AC'},
     avalXXX_bg:{ backgroundColor:'#5CD59E'},
+	//
     slideInnerContainer: {
         width: itemWidth,
         height: slideHeight,
@@ -49,18 +50,15 @@ export default StyleSheet.create({
     },
     title: {
         color: 'white',
-//         fontFamily : 'roboto_light',
-// 				fontWeight : '100',
-// 				fontSize: 15,
-        fontFamily : 'roboto',
-				fontWeight : '700',
-				fontSize: 16,
+        fontFamily : 'roboto_thin',
+				fontWeight : '100',
+				fontSize: 30,
         letterSpacing: 0.5,
         textAlign:'center'
         
     },
     subtitle: {
-			color: '#333333',
+			color: '#1a1917',
 			fontSize: 10,
 			fontFamily : 'roboto_light',
 			fontWeight : '300'
@@ -74,7 +72,8 @@ export default StyleSheet.create({
 		},
     remaining:{
       flex:1,
-			color: '#888888',
+			color: '#DDDDDD',
+			//color: '#888888',
 			fontSize: 10,
 			fontFamily : 'roboto_light',
 			fontWeight : '100',

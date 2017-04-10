@@ -2,7 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import SettingsList from 'react-native-settings-list';
 import {
   Alert,
+  Dimensions,
   Image, 
+  ScrollView,
   Text, 
   TextInput,
   TouchableHighlight,
@@ -23,6 +25,10 @@ import { AsyncStorage } from 'react-native'
 import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
 
+import SliderEntry from './components/SliderEntryMin';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
 class ShareEndorsement extends Component {
   
   static navigatorStyle = {
@@ -38,8 +44,8 @@ class ShareEndorsement extends Component {
     this._onNext                   = this._onNext.bind(this);
     
     this.state = {
-      endorsements:   {}, 
-      recipient:      undefined
+      endorsements          : { I:{shown:false, amount:0}, X:{shown:false, amount:0}, XXX:{shown:false, amount:0}} ,
+      recipient             : undefined
     };
     // this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
@@ -55,15 +61,10 @@ class ShareEndorsement extends Component {
   }
 
   _onSelectEndorsementType(endorsement_type) {
-    
+    let _endorsements = this.state.endorsements;
+    _endorsements[endorsement_type].shown = !_endorsements[endorsement_type].shown;
+    this.setState({endorsements:_endorsements})
   }
-
-  // _onSendEndorsement() {
-  //   this.props.navigator.push({
-  //     screen: 'wallet.SendEndorsement',
-  //     title: 'Enviar avales'
-  //   });
-  // }
 
   _onNext(){
       // if(Number(this.props.balance)<=Number(this.state.amount))
@@ -101,39 +102,44 @@ class ShareEndorsement extends Component {
   
   focus() {
   }
-
+  
+  _render_entry(entry_type){
+    if(!this.state.endorsements[entry_type].shown)
+      return null;
+    const avales = {
+              'I': {
+                        title: '$1.000',
+                        subtitle: 'Individuos',
+                        bgcolor: 'I'
+                    },
+              'X': {
+                        title: '$10.000',
+                        subtitle: 'Productores y cuentapropistas',
+                        bgcolor: 'X',
+                   },
+              'XXX': {
+                        title: '$30.000',
+                        subtitle: 'Empresas',
+                        bgcolor: 'XXX'
+                    }
+    }
+    return (
+            <View style={[styles.button_row_card]}>
+              <SliderEntry
+                  key={`carousel-entry-${entry_type}`}
+                  {...avales[entry_type]}
+                />
+            </View>
+            )
+  }
+  //minHeight:viewportHeight, 
   render() {
-    // https://www.npmjs.com/package/react-native-settings-list#usage
-          
-    let content = undefined;
-
     
-    // '#EF8B8A'
-    // '#6E75AC'
-    // '#5CD59E'
     return (
       <View style={styles.container}>
-        <View style={{flex:6, flexDirection:'column', padding:16 }}>
-          <Text style={styles.title}>Seleccionar destinatario</Text>
-          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('I')}}>
-            <View style={styles.row_container}>
-              <View style={[styles.row_avatar2, {backgroundColor:'#FFFFFF' }]}>
-                <Image source={iconsMap['ios-person']} style={[styles.row_hand]}/>
-              </View>
-              <View style={styles.row_content}>            
-                <View style={styles.row_line1}>
-                  <Text style={styles.row_amount}>Destinatario</Text>
-                </View>
-              </View>
-              <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
-              </View>
-            </View>
-          </TouchableHighlight>
-
-          
+        <ScrollView style={{padding:16 }} contentContainerStyle={{ flexDirection:'column'}}>
           <Text style={[styles.title, styles.margin_top]}>Tipo y cantidad de avales</Text>
-          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('I')}}>
+          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('I')}}>
             <View style={styles.row_container}>
               <View style={[styles.row_card, {backgroundColor:'#EF8B8A'}]}>
                 <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
@@ -145,12 +151,13 @@ class ShareEndorsement extends Component {
                 <Text style={styles.remaining}>Disponibles: 5</Text>
               </View>
               <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
+                <Image source={iconsMap['ios-arrow-down-outline']} style={[styles.row_plus]}/>
               </View>
             </View>
           </TouchableHighlight>
+          { this._render_entry('I') }
           
-          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('X')}}>
+          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('X')}}>
             <View style={styles.row_container}>
               <View style={[styles.row_card, {backgroundColor:'#6E75AC'}]}>
                 <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
@@ -166,8 +173,9 @@ class ShareEndorsement extends Component {
               </View>
             </View>
           </TouchableHighlight>
-                
-          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('XXX')}}>
+          { this._render_entry('X') }
+
+          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('XXX')}}>
             <View style={styles.row_container}>
               <View style={[styles.row_card, {backgroundColor:'#5CD59E'}]}>
                 <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
@@ -180,14 +188,15 @@ class ShareEndorsement extends Component {
                 
               </View>
               <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
+                <Image source={iconsMap['ios-arrow-down-outline']} style={[styles.row_plus]}/>
               </View>
             </View>
           </TouchableHighlight>
-                
+          { this._render_entry('XXX') }
           
-        </View>
+        </ScrollView>
 
+        <KeyboardSpacer />
         <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
           <TouchableHighlight
               style={styles.fullWidthButton}
@@ -195,6 +204,7 @@ class ShareEndorsement extends Component {
             <Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
           </TouchableHighlight>
         </View>
+        
       </View>
     );
   }

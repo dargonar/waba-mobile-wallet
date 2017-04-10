@@ -49,7 +49,7 @@ class Endorsement extends Component {
   _onSendOverdraft() {
     this.props.navigator.push({
       screen: 'wallet.SelectEndorsed',
-      title: 'Otorgar crédito',
+      title: 'Seleccione destinatario',
       passProps: {next_screen: 'wallet.SelectEndorseType'}
     });
   }
@@ -57,8 +57,8 @@ class Endorsement extends Component {
 
   _onShareEndorsement() {
     this.props.navigator.push({
-      screen: 'wallet.ShareEndorsement',
-      title: 'Enviar avales',
+      screen: 'wallet.SelectEndorsed',
+      title: 'Seleccione destinatario',
       passProps: {next_screen: 'wallet.ShareEndorsement'}
     });
   }
