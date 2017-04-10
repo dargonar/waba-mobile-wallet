@@ -26,9 +26,9 @@ import * as helperActions from '../../utils/Helper.js';
 class ShareEndorsement extends Component {
   
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarTextColor:        '#ffffff', 
+    navBarBackgroundColor:  '#0B5F83',
+    navBarButtonColor:      '#ffffff'
   }
   
   constructor(props) {
@@ -36,6 +36,7 @@ class ShareEndorsement extends Component {
     this._onSelectRecipient        = this._onSelectRecipient.bind(this);
     this._onSelectEndorsementType  = this._onSelectEndorsementType.bind(this);
     this._onNext                   = this._onNext.bind(this);
+    
     this.state = {
       endorsements:   {}, 
       recipient:      undefined
@@ -104,10 +105,8 @@ class ShareEndorsement extends Component {
   render() {
     // https://www.npmjs.com/package/react-native-settings-list#usage
           
-    const iconShare = (<Icon name="md-share-alt" size={30} color="#1f475b" />);
-    const iconCard  = (<Icon name="ios-card" size={30} color="#1f475b" />);
-    const iconBuffer  = (<Icon name="logo-buffer" size={30} color="#1f475b" />);
-    const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="#CF2E08" />);
+    let content = undefined;
+
     
     // '#EF8B8A'
     // '#6E75AC'

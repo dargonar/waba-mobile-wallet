@@ -38,23 +38,28 @@ class Endorsement extends Component {
   }
   
   _onApplyEndorsement(){
-    this.props.navigator.push({
-      screen: 'wallet.ApplyEndorsement',
-      title: 'Solicitar crédito'
-    });
+    // this.props.navigator.push({
+    //   screen: 'wallet.SelectEndorsed',
+    //   title: 'Solicitar crédito',
+      
+    // });
+
   }
 
   _onSendOverdraft() {
     this.props.navigator.push({
       screen: 'wallet.SelectEndorsed',
-      title: 'Otorgar crédito'
+      title: 'Otorgar crédito',
+      passProps: {next_screen: 'wallet.SelectEndorseType'}
     });
   }
+
 
   _onShareEndorsement() {
     this.props.navigator.push({
       screen: 'wallet.ShareEndorsement',
-      title: 'Enviar avales'
+      title: 'Enviar avales',
+      passProps: {next_screen: 'wallet.ShareEndorsement'}
     });
   }
 

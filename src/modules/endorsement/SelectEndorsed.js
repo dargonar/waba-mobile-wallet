@@ -34,10 +34,12 @@ class SelectEndorsed extends Component {
     });
 
     this.state = {
-      dataSource : dataSource,
-      refreshing : false,
-			recipient_selected : false
+      dataSource          : dataSource,
+      refreshing          : false,
+			recipient_selected  : false,
+      next_screen         : props.next_screen
     };
+
 
 		this.tid = undefined;
 	}
@@ -113,7 +115,7 @@ class SelectEndorsed extends Component {
 		this.props.navigator.push({
 			screen: 'wallet.SelectEndorseType',
 			title: 'Indique tipo de aval',
-			passProps: {recipient: data}
+			passProps: {recipient: data, next_screen=this.search.next_screen}
 		});
 		
 	}
