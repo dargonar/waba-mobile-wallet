@@ -5,7 +5,7 @@ import {
   Image, 
   Text, 
   TextInput,
-  TouchableOpacity,
+  TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import * as walletActions from './wallet.actions';
-import styles from './styles/Endorsement';
+import styles from './styles/ShareEndorsement';
 import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { iconsMap } from '../../utils/AppIcons';
@@ -114,62 +114,79 @@ class ShareEndorsement extends Component {
     // '#5CD59E'
     return (
       <View style={styles.container}>
-        <View style={{flex:6, flexDirection:'column' }}>
+        <View style={{flex:6, flexDirection:'column', padding:16 }}>
           <Text style={styles.title}>Seleccionar destinatario</Text>
-          <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onSelectEndorsementType('I')}}>
+          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('I')}}>
             <View style={styles.row_container}>
-              <View style={[styles.row_avatar, {backgroundColor:'#EF8B8A'}]}>
-                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+              <View style={[styles.row_avatar2, {backgroundColor:'#FFFFFF' }]}>
+                <Image source={iconsMap['ios-person']} style={[styles.row_hand]}/>
               </View>
               <View style={styles.row_content}>            
                 <View style={styles.row_line1}>
-                  <Text style={styles.row_amount}>Aval por $1.000</Text>
+                  <Text style={styles.row_amount}>Destinatario</Text>
                 </View>
-                <Text>Disponibles: 5</Text>
-              </View>
               </View>
               <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_hand]}/>
+                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
               </View>
             </View>
           </TouchableHighlight>
 
-
-          <Text style={styles.title}>Indicar avales</Text>
-          <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onSelectEndorsementType('I')}}>
+          
+          <Text style={[styles.title, styles.margin_top]}>Tipo y cantidad de avales</Text>
+          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('I')}}>
             <View style={styles.row_container}>
-              <View style={[styles.row_avatar, {backgroundColor:'#EF8B8A'}]}>
+              <View style={[styles.row_card, {backgroundColor:'#EF8B8A'}]}>
                 <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
               </View>
               <View style={styles.row_content}>            
                 <View style={styles.row_line1}>
-                  <Text style={styles.row_amount}>Aval por $1.000</Text>
+                  <Text style={[styles.row_amount]}>$1.000 - Invidividuo</Text>
                 </View>
-                <Text>Disponibles: 5</Text>
-              </View>
+                <Text style={styles.remaining}>Disponibles: 5</Text>
               </View>
               <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_hand]}/>
+                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
               </View>
             </View>
           </TouchableHighlight>
-          <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onSelectEndorsementType('I')}}>
+          
+          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('X')}}>
             <View style={styles.row_container}>
-              <View style={[styles.row_avatar, {backgroundColor:'#EF8B8A'}]}>
+              <View style={[styles.row_card, {backgroundColor:'#6E75AC'}]}>
                 <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
               </View>
               <View style={styles.row_content}>            
                 <View style={styles.row_line1}>
-                  <Text style={styles.row_amount}>Aval por $1.000</Text>
+                  <Text style={[styles.row_amount]}>$10.000 - Cuentapropista</Text>
                 </View>
-                <Text>Disponibles: 5</Text>
+                <Text style={styles.remaining}>Disponibles: 5</Text>
               </View>
-              </View>
-              <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_hand]}/>
+              <View style={[styles.row_hour, styles.row_hour_set]}>
+                <Text style={styles.row_hour_item}>3</Text>
               </View>
             </View>
           </TouchableHighlight>
+                
+          <TouchableHighlight style={styles.button_row} underlayColor={'#044967'} onPress={() => { this._onSelectEndorsementType('XXX')}}>
+            <View style={styles.row_container}>
+              <View style={[styles.row_card, {backgroundColor:'#5CD59E'}]}>
+                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+              </View>
+              <View style={styles.row_content}>            
+                <View style={styles.row_line1}>
+                  <Text style={[styles.row_amount]}>$30.000 - Empresa</Text>
+                </View>
+                <Text style={styles.remaining}>Disponibles: 2</Text>
+                
+              </View>
+              <View style={styles.row_hour}>
+                <Image source={iconsMap['ios-add-circle-outline']} style={[styles.row_plus]}/>
+              </View>
+            </View>
+          </TouchableHighlight>
+                
+          
         </View>
 
         <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
