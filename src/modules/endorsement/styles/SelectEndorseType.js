@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
         //color: 'rgba(255, 255, 255, 0.9)',
         fontFamily : 'roboto',
 				fontWeight : '700',
-				fontSize: 15
-        
+				fontSize: 15,
+//         fontWeight: 'bold',
 //         textAlign: 'center'
     },
     subtitle: {

@@ -75,22 +75,25 @@ class SelectEndorseType extends Component {
 	  getSlides () {
         const avales = [
 				{
-						title: 'Descubierto por $1.000,00',
-						subtitle: 'Aval para individuos',
+						title: '$1.000',
+						subtitle: 'Individuos',
 						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'I'
+						bgcolor: 'I',
+						remaining: 2
 				},
 				{
-						title: 'Descubierto por $10.000,00',
-						subtitle: 'Aval para productores y cuentapropiestas',
+						title: '$10.000',
+						subtitle: 'Productores y cuentapropistas',
 						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'X'
+						bgcolor: 'X',
+						remaining: 5
 				},
 				{
-						title: 'Descubierto por $30.000,00',
-						subtitle: 'Aval para empresas',
+						title: '$30.000',
+						subtitle: 'Empresas',
 						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'XXX'
+						bgcolor: 'XXX',
+						remaining: 1
 				}
 			]
 

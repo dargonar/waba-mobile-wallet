@@ -7,7 +7,7 @@ function wp (percentage) {
     return Math.round(value);
 }
 
-const slideHeight = viewportHeight * 0.4;
+const slideHeight = viewportHeight * 0.35;
 const slideWidth = wp(75);
 
 export const sliderWidth = viewportWidth;
@@ -32,40 +32,20 @@ export default StyleSheet.create({
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
         paddingBottom: 18 // needed for shadow
+        
     },
-    imageContainer: {
-        flex: 1,
+    cardContainer: {
+        flex: 5,
+				justifyContent: 'center',
+        flexDirection: 'column',
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius,
         borderBottomLeftRadius: entryBorderRadius,
-        borderBottomRightRadius: entryBorderRadius
-    },
-    imageContainerEven: {
-        backgroundColor: colors.black
-    },
-    // image's border radius is buggy on ios; let's hack it!
-    radiusMask: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: entryBorderRadius,
-        backgroundColor: 'white'
-    },
-    radiusMaskEven: {
-        backgroundColor: colors.black
-    },
-    textContainer: {
-        justifyContent: 'center',
-        paddingTop: 20 - entryBorderRadius,
-        paddingBottom: 20,
+        borderBottomRightRadius: entryBorderRadius,
+//         paddingTop: 40 - entryBorderRadius,
+				paddingTop: 16,
+        paddingBottom: 16,
         paddingHorizontal: 16,
-        
-        //backgroundColor: 'white',
-        
-    },
-    textContainerEven: {
-        //backgroundColor: colors.black
     },
     title: {
         color: 'white',
@@ -74,21 +54,36 @@ export default StyleSheet.create({
 // 				fontSize: 15,
         fontFamily : 'roboto',
 				fontWeight : '700',
-				fontSize: 15,
-        letterSpacing: 0.5
-    },
-    titleEven: {
-        color: 'white'
+				fontSize: 16,
+        letterSpacing: 0.5,
+        textAlign:'center'
+        
     },
     subtitle: {
-        marginTop: 6,
-        color: 'white',
-        fontSize: 12,
-        fontFamily : 'roboto_light',
-				fontWeight : '100'
-				
+			color: '#333333',
+			fontSize: 10,
+			fontFamily : 'roboto_light',
+			fontWeight : '300'
     },
-    subtitleEven: {
-        color: 'rgba(255, 255, 255, 0.7)'
-    }
+		content:{
+			color: 'white',
+			fontSize: 13,
+			fontFamily : 'roboto_light',
+			fontWeight : '100',
+			flex:1
+		},
+    remaining:{
+      flex:1,
+			color: '#888888',
+			fontSize: 10,
+			fontFamily : 'roboto_light',
+			fontWeight : '100',
+      textAlign: 'right'  
+    },
+		parLogo: {
+			width:40,
+			height:40,
+			alignItems: 'center',
+			justifyContent: 'center'
+  },
 });

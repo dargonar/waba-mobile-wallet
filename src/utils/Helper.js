@@ -7,7 +7,8 @@ function launchWallet() {
   Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-      screen				 : 'wallet.Main',
+//       screen				 : 'wallet.SelectEndorseType',
+			screen				 : 'wallet.Main',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
