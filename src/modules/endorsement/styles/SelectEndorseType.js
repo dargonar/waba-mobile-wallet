@@ -43,8 +43,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background2
     },
     scrollview: {
-        flex: 4
-//         paddingTop: 50
+        flex: 2,
+				paddingTop: 20,
+				alignItems: 'center'
     },
     title: {
 			backgroundColor: 'transparent',

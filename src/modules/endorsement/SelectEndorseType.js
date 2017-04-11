@@ -132,18 +132,18 @@ class SelectEndorseType extends Component {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#2e2f3d', flexDirection: 'column'}}>
-							<View style={{flex: 2, flexDirection: 'column', padding:15}}>
+							<View
+                  style={[styles.scrollview]}
+                  indicatorStyle={'white'}
+                >
+									  { this.avalesCarousel }
+              </View>
+							<View style={{flex: 1, flexDirection: 'column', paddingLeft:15, paddingRight:15}}>
 								<Text style={styles.title}>A tener en cuenta</Text>
 								<Text style={styles.subtitle}>Confianza: Dale invitaciones solo a individuos que conoces y con quienes compartes valores colaborativos.</Text>
 								<Text style={styles.subtitle}>Privacidad: Guardamos la lista de a quien has invitado.</Text>
 								<Text style={styles.subtitle}>Abuso: Eres responsable solidario con aquéllos que avales.</Text>
 							</View>
-              <View
-                  style={styles.scrollview}
-                  indicatorStyle={'white'}
-                >
-									  { this.avalesCarousel }
-                </View>
               <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
                 <TouchableHighlight
                     style={styles.fullWidthButton}

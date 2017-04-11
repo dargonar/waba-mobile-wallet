@@ -7,20 +7,20 @@ function launchWallet() {
   Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-			screen			: 'wallet.ShareEndorsement',
-			title				: 'Indique tipo de aval',
+// 			screen			: 'wallet.Endorsement',
+// 			title				: 'Indique tipo de aval',
       
-// 			screen				 : 'wallet.Main',
-//       navigatorStyle : {
-//        navBarButtonColor : '#ffffff',
-//        drawUnderNavBar   : true,
-//        navBarTransparent : true
-//       },
-//       fab: {
-//         collapsedId: 'newTx',
-//         collapsedIcon: iconsMap['ios-add'].uri,
-//         backgroundColor: '#0B5F83'
-//       },
+			screen				 : 'wallet.Main',
+      navigatorStyle : {
+       navBarButtonColor : '#ffffff',
+       drawUnderNavBar   : true,
+       navBarTransparent : true
+      },
+      fab: {
+        collapsedId: 'newTx',
+        collapsedIcon: iconsMap['ios-add'].uri,
+        backgroundColor: '#0B5F83'
+      },
 			
 //       rightButtons: [
 // 				{

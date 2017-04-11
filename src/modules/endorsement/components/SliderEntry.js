@@ -48,7 +48,7 @@ export default class SliderEntry extends Component {
                 </View>
                 <View style={{flex:1, flexDirection:'column'}}>
                   <Text style={[styles.remaining]} numberOfLines={2}>DISPONIBLE: { remaining } AVAL(ES)</Text>
-                  </View>
+                </View>
             </TouchableOpacity>
         );
     }
