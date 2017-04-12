@@ -2,20 +2,22 @@ import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#0B5F83'
+		flex: 5,
+		backgroundColor: '#2e2f3d'
 		
 	},
 	data_part : {
     fontFamily : 'roboto_normal',
     color      : '#B7F072',
-    fontSize   : 32
+    fontSize   : 32,
+		paddingLeft: 30
   },
 	data_part_small : {
     fontFamily : 'roboto_normal',
     color      : '#B7F072',
 		fontSize   : 24,
-		lineHeight : 32
+		lineHeight : 32,
+		paddingLeft: 30
   },
 	data_part_empty:{
     fontFamily : 'roboto_light',
@@ -28,7 +30,8 @@ const styles = StyleSheet.create({
     fontFamily  : 'roboto_regular',
     color       : '#ffffff',
     lineHeight  : 35,
-    fontSize    : 16
+    fontSize    : 16,
+		paddingLeft : 30
   },
 	
 	

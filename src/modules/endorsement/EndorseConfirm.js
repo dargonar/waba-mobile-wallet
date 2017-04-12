@@ -2,10 +2,11 @@ import React, { PropTypes, Component } from 'react';
 
 import {
   Alert,
-	Text, 
+	ScrollView,
+	Text,
+	ToastAndroid,
 	TouchableHighlight,
 	View
-  
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -15,14 +16,15 @@ import styles from './styles/EndorseConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SliderEntryMicro from './components/SliderEntryMicro';
 import Bts2helper from '../../utils/Bts2helper';
-
+import { avales }  from './components/static/endorsements_const'
 import * as config from '../../constants/config';
 
 class EndorseConfirm extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+//     navBarBackgroundColor: '#0B5F83',
+		navBarBackgroundColor: '#2e2f3d',
     navBarButtonColor: '#ffffff'
   }
   
@@ -30,10 +32,14 @@ class EndorseConfirm extends Component {
     super(props);
   
     this.state = {
-      share_or_endorse 	: props.share_or_endorse
+      share_or_endorse 	: props.share_or_endorse,
       endorsements 			: props.endorsements,
       endorsed 					: props.endorsed,
       endorsed_index    : props.endorsed_index,
+// 			share_or_endorse 	: 'share', 
+//       endorsements 			: avales, 
+//       endorsed 					: ['trippa', 'trippor'],
+//       endorsed_index    : 0,
 			// memo 							: props.memo,
 			tx								: null,
 			fee								: 0,
@@ -43,7 +49,7 @@ class EndorseConfirm extends Component {
     }
 		
 		this._onSendingError = this._onSendingError.bind(this);
-		this._buildMemo = this._buildMemo.bind(this);
+// 		this._buildMemo = this._buildMemo.bind(this);
   }
 
 
@@ -114,9 +120,9 @@ class EndorseConfirm extends Component {
   }
 
   render() {
-  	let share_or_endorse_text = 'otorgar crédito';
+  	let share_or_endorse_text = 'Crédito a otorgar';
   	if (this.state.share_or_endorse=='share')
-  		share_or_endorse_text = 'compartir avales';
+  		share_or_endorse_text = 'Avales a compartir';
   	
   	let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
@@ -126,25 +132,25 @@ class EndorseConfirm extends Component {
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
     
-  //   let memo = this.state.memo;
-		// let memo_style = styles.data_part;
-		// if(!memo || memo==''){
-		// 	memo='-sin mensaje-';
-		// 	memo_style = styles.data_part_empty;
-		// }
 		let send_disabled = !this.state.can_confirm;
 		// let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
 		
+// 		<Text style={styles.title_part}>A:</Text>
+// 		<Text style={styles.data_part}>{this.state.endorsed[0]}</Text>
+					
 		return (
-      <View style={styles.container}>
-        <View style={{flex:5, backgroundColor:'#0B5F83', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
-          <Text style={styles.title_part}>Ud. va a {share_or_endorse}: </Text>
-          {this._draw_endorsements()}
-          <Text style={styles.data_part}>$ ({fee} de comisión)</Text></Text>
-          <Text style={styles.title_part}>A:</Text>
-          <Text style={styles.data_part}>{this.state.recipient.name}</Text>
-        </View>
+      <View style={[styles.container]}>
+				<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
+					<View style={{flex:5, backgroundColor:'#2e2f3d', paddingTop:30, paddingRight:0, paddingBottom:30}}>
+						<Text style={styles.title_part}>{share_or_endorse_text}</Text>
+						<View style={{alignItems:'center',paddingTop:20, justifyContent:'center'}}>
+							{this._draw_endorsements()}
+						</View>
+						<Text style={styles.title_part}>Costo:</Text>
+						<Text style={styles.data_part_small}>$ {fee}</Text>
+					</View>
+				</ScrollView>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							disabled={send_disabled}
@@ -154,27 +160,42 @@ class EndorseConfirm extends Component {
 					</TouchableHighlight>
 				</View>
 				<KeyboardSpacer />
-                    
-        </View>
+			</View>
+			
     );
   }
 
 
   _draw_endorsements(){
   	if(this.state.share_or_endorse=='share')
-      return this.state.endorsements.map((entry, index) => {
-              return (
+    {
+			return this.state.endorsements.map((entry, index) => {
+						if(entry.quantity>0)
+							return (
                   <SliderEntryMicro
                     key={`carousel-entry-${index}`}
                     {...entry}
                   />
               );
           });
-    
+    }
+		if(isNaN(this.state.endorsed_index))
+		{
+			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
+			return null;
+		}
+// 		if(!this.state.endorsed_index)
+// 		{
+// 			ToastAndroid.show('Vino nada!', ToastAndroid.SHORT);
+// 			return null;
+// 		}
+// 		ToastAndroid.show(this.state.endorsed_index.toString(), ToastAndroid.SHORT);	
     let entry = avales[this.state.endorsed_index];
-    return (
+		entry.user_name = this.state.endorsed[0];
+		entry.quantity = 1;
+    return (	
                 <SliderEntryMicro
-                  key={`carousel-entry-${index}`}
+                  key={`carousel-entry-${0}`}
                   {...entry}
                 />
             );

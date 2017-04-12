@@ -7,8 +7,8 @@ function launchWallet() {
   Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-// 			screen			: 'wallet.Endorsement',
-// 			title				: 'Indique tipo de aval',
+// 			screen			: 'endorsement.EndorseConfirm',
+// 			title				: 'Confirmación',
       
 			screen				 : 'wallet.Main',
       navigatorStyle : {

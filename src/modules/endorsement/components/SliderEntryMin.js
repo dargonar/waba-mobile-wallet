@@ -2,18 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import styles from './styles/SliderEntry';
 import colors from './styles/SliderEntry';
-import avales_colors from './static/endorsements'
+import {avales_colors} from './static/endorsements_const'
 
 export default class SliderEntryMin extends Component {
 
     static propTypes = {
         amount_txt   : PropTypes.string,
-        key          : PropTypes.string,
+        _key          : PropTypes.string,
     };
 
     render () {
-        const { amount_txt, key } = this.props;
-        const bgcolor_css = avales_colors[key];
+        const { amount_txt, _key } = this.props;
+        const bgcolor_css = avales_colors[_key];
         const uppercaseTitle = amount_txt ? (
             <Text style={[styles.title]} numberOfLines={1}>{ amount_txt.toUpperCase() }</Text>
         ) : false;

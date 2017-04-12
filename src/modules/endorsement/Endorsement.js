@@ -25,7 +25,7 @@ class Endorsement extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarBackgroundColor: '#2e2f3d', //0B5F83
     navBarButtonColor: '#ffffff'
   }
   

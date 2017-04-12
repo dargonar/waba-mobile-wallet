@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 
 import {
-  Alert, ScrollView, Stylesheet, Text, TouchableHighlight, View
+  Alert, ScrollView, Stylesheet, Text, ToastAndroid, TouchableHighlight, View
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -12,18 +12,16 @@ import { connect } from 'react-redux';
 import * as walletActions from '../wallet/wallet.actions';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
-
 import styles from './styles/SelectEndorseType';
-import avales from './static/endorsements'
+import { avales }  from './components/static/endorsements_const'
 import { sliderWidth, itemWidth } from './components/styles/SliderEntry';
 import SliderEntry from './components/SliderEntry';
-//import { ENTRIES1, ENTRIES2 } from 'example/src/static/entries';
 
 class SelectEndorseType extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarBackgroundColor: '#2e2f3d',
     navBarButtonColor: '#ffffff'
   }
   
@@ -32,8 +30,9 @@ class SelectEndorseType extends Component {
 		this.tid = undefined;
 		
     this.state = {
-      endorsed      : props.endorsed,
-      endorsed_type : undefined
+			avales 					: avales,
+      endorsed      	: props.endorsed,
+      endorsed_index  : 0
     };
 	}
   
@@ -69,29 +68,47 @@ class SelectEndorseType extends Component {
         screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',
         passProps: {
-          endorsed_index    : this.state.selected_aval,
+          endorsed_index    : this.state.endorsed_index,
           endorsed          : this.state.endorsed,
           share_or_endorse  : 'endorse'
         }
       });
     }
 
-    _currentEntry(selected_aval){
-      this.setState({endorsed_type:selected_aval});
-      console.log(' -- _currentEntry:', selected_aval);
+		_currentEntry(selected_aval){
+// 			this.setState({endorsed_index:selected_aval});
+//       ToastAndroid.show(selected_aval.toString(), ToastAndroid.SHORT);
     }
+		
+		_onEntryTap(_key){
+			let avales = this.state.avales.map((entry, index) => {
+				entry.checked = false;
+				if(entry._key==_key)
+				{
+					entry.checked = true;
+					this.setState({endorsed_index:index});
+				}
+				return entry;
+			});
+			this.setState({avales:avales});
+		}
 
 	  getSlides () {
-     return avales.map((entry, index) => {
-          return (
+			if(!this.state.avales)
+				return null;
+			return this.state.avales.map((entry, index) => {
+					entry.user_name = this.state.endorsed[0];			
+					return (
               <SliderEntry
                 key={`carousel-entry-${index}`}
                 {...entry}
+								onTap={(_key) => { this._onEntryTap(_key); }}
               />
           );
       });
     }
     
+//
 
     get avalesCarousel () {
         return (
@@ -107,7 +124,7 @@ class SelectEndorseType extends Component {
               showsHorizontalScrollIndicator={false}
               snapOnAndroid={true}
               removeClippedSubviews={false}
-              onSnapToItem={(slideIndex) => { this._currentEntry(slideIndex); }}
+  						onSnapToItem={(slideIndex) => { this._currentEntry(slideIndex); }}            
             >
                 { this.getSlides() }
             </Carousel>

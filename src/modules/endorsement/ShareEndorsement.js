@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text, 
   TextInput,
+  ToastAndroid,
   TouchableHighlight,
   TouchableOpacity,
   View
@@ -23,36 +24,70 @@ import * as config from '../../constants/config';
 import { AsyncStorage } from 'react-native'
 import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
-
+import Prompt from 'react-native-prompt';
 import SliderEntryMin from './components/SliderEntryMin';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+import { avales }  from './components/static/endorsements_const'
+import { avales_colors }  from './components/static/endorsements_const'
 
 class ShareEndorsement extends Component {
   
   static navigatorStyle = {
     navBarTextColor:        '#ffffff', 
-    navBarBackgroundColor:  '#0B5F83',
+    navBarBackgroundColor: '#2e2f3d', //0B5F83
     navBarButtonColor:      '#ffffff'
   }
   
   constructor(props) {
     super(props);
-    this._onSelectRecipient        = this._onSelectRecipient.bind(this);
     this._onSelectEndorsementType  = this._onSelectEndorsementType.bind(this);
     this._onNext                   = this._onNext.bind(this);
-    
+    this._onQuantityChosen         = this._onQuantityChosen.bind(this);
+		let _avales = this._getAvales4Endorsed(props.endorsed[0]);
     this.state = {
-      endorsements  : { I:{shown:false, amount:0}, X:{shown:false, amount:0}, XXX:{shown:false, amount:0}} ,
-      endorsed      : props.endorsed
+      endorsements  : _avales,
+      endorsed      : props.endorsed,
+      promptVisible : false,
+      current_idx   : 0
     };
     // this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
-  
+	
+	_getAvales4Endorsed(username){
+		let _avales = avales;
+		for(var i = 0; i < _avales.length; i++) {
+      _avales[i].user_name == username;
+    }
+// 		ToastAndroid.show('ENDORSED: ' + username, ToastAndroid.SHORT);
+		return _avales;
+	}
+	
+  getIndex(value, arr, prop) {
+    
+//     ToastAndroid.show('ARR len ' + arr.length.toString(), ToastAndroid.SHORT);
+    for(var i = 0; i < arr.length; i++) {
+      if(arr[i][prop] === value) {
+        return i;
+      }
+    }
+    return -1; //to handle the case where the value doesn't exist
+  }
   _onSelectEndorsementType(endorsement_type) {
     let _endorsements = this.state.endorsements;
-    _endorsements[endorsement_type].shown = !_endorsements[endorsement_type].shown;
-    this.setState({endorsements:_endorsements})
+    if(!_endorsements)
+		{
+			ToastAndroid.show('Avales array is NULL!', ToastAndroid.SHORT);
+			return null;
+		}
+    let idx = this.getIndex(endorsement_type, avales, '_key');
+    if(isNaN(idx) || idx<0)
+    {
+			ToastAndroid.show('idx NULL o MENOR A 0!', ToastAndroid.SHORT);
+			return null;
+		}
+    this.setState({endorsements:_endorsements, promptVisible:true, current_idx:idx})
   }
 
   _onNext(){
@@ -93,100 +128,72 @@ class ShareEndorsement extends Component {
   focus() {
   }
   
-  _render_entry(entry_type){
-    if(!this.state.endorsements[entry_type].shown)
-      return null;
-    const avales = {
-              'I': {
-                        title: '$1.000',
-                        subtitle: 'Individuos',
-                        bgcolor: 'I'
-                    },
-              'X': {
-                        title: '$10.000',
-                        subtitle: 'Productores y cuentapropistas',
-                        bgcolor: 'X',
-                   },
-              'XXX': {
-                        title: '$30.000',
-                        subtitle: 'Empresas',
-                        bgcolor: 'XXX'
-                    }
-    }
-    return (
-            <View style={[styles.button_row_card]}>
-              <SliderEntryMin
-                  key={`carousel-entry-${entry_type}`}
-                  {...avales[entry_type]}
-                />
-            </View>
-            )
+  _onQuantityChosen(value){
+    let _endorsements = this.state.endorsements;
+    _endorsements[this.state.current_idx].quantity = parseInt(value);
+    this.setState({endorsements:_endorsements, promptVisible:false});
   }
-  //minHeight:viewportHeight, 
+
+  _renderPrompt(){
+    if (!this.state.promptVisible)
+      return null;
+    let that = this;
+    let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
+    return (
+      <Prompt
+        title="Indique cantidad"
+        placeholder=""
+        value="{this.state.endorsements[this.state.current_idx].quantity}"
+        visible={ this.state.promptVisible }
+        {...inputProps}
+        onCancel={ () => this.setState({
+          promptVisible: false
+        }) }
+        onSubmit={ (value) => that._onQuantityChosen(value) }
+        
+      />
+    );
+  }
+  
+  _renderAvales(){
+    return this.state.endorsements.map((entry, index) => {
+      const _bg = avales_colors[entry._key];
+      const _bg_quantity = (entry.quantity>0)?styles.row_hour_set_white:styles.row_hour_set;
+      return (
+            <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} key={`touch-entry-${index}`} onPress={() => { this._onSelectEndorsementType(`${entry._key}`)}}>
+              <View style={styles.row_container}>
+                <View style={[styles.row_card, _bg ]}>
+                  <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+                </View>
+                <View style={styles.row_content}>            
+                  <View style={styles.row_line1}>
+                    <Text style={[styles.row_amount]}>{entry.amount_txt}</Text>
+                  </View>
+                  <Text style={[styles.row_amount]}>{entry.description}</Text>
+                  <Text style={styles.remaining}>Disponibles: {entry.remaining}</Text>
+                </View>
+                <View style={[styles.row_hour, _bg_quantity]}>
+                  <Text style={styles.row_hour_item}>{entry.quantity}</Text>
+                </View>
+              </View>
+            </TouchableHighlight>
+          );
+      });
+  }
+
   render() {
-    
+    //<Text style={[styles.title, styles.margin_top]}>Tipo y cantidad de avales</Text>
     return (
       <View style={styles.container}>
         <ScrollView style={{padding:16 }} contentContainerStyle={{ flexDirection:'column'}}>
-          <Text style={[styles.title, styles.margin_top]}>Tipo y cantidad de avales</Text>
-          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('I')}}>
-            <View style={styles.row_container}>
-              <View style={[styles.row_card, {backgroundColor:'#EF8B8A'}]}>
-                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
-              </View>
-              <View style={styles.row_content}>            
-                <View style={styles.row_line1}>
-                  <Text style={[styles.row_amount]}>$1.000 - Invidividuo</Text>
-                </View>
-                <Text style={styles.remaining}>Disponibles: 5</Text>
-              </View>
-              <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-arrow-down-outline']} style={[styles.row_plus]}/>
-              </View>
-            </View>
-          </TouchableHighlight>
-          { this._render_entry('I') }
           
-          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('X')}}>
-            <View style={styles.row_container}>
-              <View style={[styles.row_card, {backgroundColor:'#6E75AC'}]}>
-                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
-              </View>
-              <View style={styles.row_content}>            
-                <View style={styles.row_line1}>
-                  <Text style={[styles.row_amount]}>$10.000 - Cuentapropista</Text>
-                </View>
-                <Text style={styles.remaining}>Disponibles: 5</Text>
-              </View>
-              <View style={[styles.row_hour, styles.row_hour_set]}>
-                <Text style={styles.row_hour_item}>3</Text>
-              </View>
-            </View>
-          </TouchableHighlight>
-          { this._render_entry('X') }
-
-          <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this._onSelectEndorsementType('XXX')}}>
-            <View style={styles.row_container}>
-              <View style={[styles.row_card, {backgroundColor:'#5CD59E'}]}>
-                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
-              </View>
-              <View style={styles.row_content}>            
-                <View style={styles.row_line1}>
-                  <Text style={[styles.row_amount]}>$30.000 - Empresa</Text>
-                </View>
-                <Text style={styles.remaining}>Disponibles: 2</Text>
-                
-              </View>
-              <View style={styles.row_hour}>
-                <Image source={iconsMap['ios-arrow-down-outline']} style={[styles.row_plus]}/>
-              </View>
-            </View>
-          </TouchableHighlight>
-          { this._render_entry('XXX') }
+					{ this._renderAvales()}
           
         </ScrollView>
-
-        <KeyboardSpacer />
+        
+        {this._renderPrompt()}
+        
+				<KeyboardSpacer />
         <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
           <TouchableHighlight
               style={styles.fullWidthButton}

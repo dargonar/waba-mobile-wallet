@@ -14,6 +14,7 @@ const ICON_SIZE_ANDROID_BIG = __DEV__ ? 50 : PixelRatio.getPixelSizeForLayoutSiz
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   
+  "ios-checkmark-circle-outline" : [ICON_SIZE_ANDROID, "#fff"],
   
   "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],

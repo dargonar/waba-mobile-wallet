@@ -109,33 +109,36 @@ const styles = StyleSheet.create({
     
     width           : 30,
     height          : 30,
-    borderRadius    : 30,
-//     backgroundColor : '#eee',
+//     borderRadius    : 30,
     flexDirection   : 'column',
     alignItems      : 'center',
     justifyContent  : 'center',
     
   },
   row_hour_set:{
-    backgroundColor: '#DDDDDD'
+    backgroundColor: '#AAAAAA'
+  },
+	row_hour_set_white:{
+    backgroundColor: '#000000'
   },
   row_hour_item : {
-    fontFamily : 'roboto_light',
-    fontWeight : '100',
-    textAlign: 'center',
-    fontSize: 20
+    fontFamily 	: 'roboto_light',
+    fontWeight 	: '100',
+    textAlign		: 'center',
+    fontSize		: 20,
+		color				: '#ffffff'
   },
   button_row_card:{
-    backgroundColor: '#575863',
-		flex:1, 
-		justifyContent:'center', 
-		alignItems:'center',
-		paddingTop: 6,
+    backgroundColor	: '#575863',
+		flex						:1, 
+		justifyContent	:'center', 
+		alignItems			:'center',
+		paddingTop			: 6,
 	},
   button_row:{
-    backgroundColor: '#575863',
-    marginTop: 8,
-    marginBottom: 0,
+    backgroundColor					: '#575863',
+    marginTop								: 8,
+    marginBottom						: 0,
 		borderTopLeftRadius     : 3,
     borderTopRightRadius    : 3,
     borderBottomLeftRadius  : 3,
