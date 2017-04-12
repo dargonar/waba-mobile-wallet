@@ -16,7 +16,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import * as walletActions from './wallet.actions';
 import styles from './styles/ShareEndorsement';
-import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
@@ -25,7 +24,7 @@ import { AsyncStorage } from 'react-native'
 import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
 
-import SliderEntry from './components/SliderEntryMin';
+import SliderEntryMin from './components/SliderEntryMin';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -44,22 +43,12 @@ class ShareEndorsement extends Component {
     this._onNext                   = this._onNext.bind(this);
     
     this.state = {
-      endorsements          : { I:{shown:false, amount:0}, X:{shown:false, amount:0}, XXX:{shown:false, amount:0}} ,
-      recipient             : undefined
+      endorsements  : { I:{shown:false, amount:0}, X:{shown:false, amount:0}, XXX:{shown:false, amount:0}} ,
+      endorsed      : props.endorsed
     };
     // this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
   
-  _onSelectRecipient(){
-    this.props.navigator.showModal({
-      screen : 'wallet.NewAccount',
-      title :  'Creando cuenta',
-      passProps: {account_name: this.state.account_name},
-      animationType: 'slide-up',
-      navigatorStyle: {navBarHidden:true}
-    });
-  }
-
   _onSelectEndorsementType(endorsement_type) {
     let _endorsements = this.state.endorsements;
     _endorsements[endorsement_type].shown = !_endorsements[endorsement_type].shown;
@@ -79,11 +68,12 @@ class ShareEndorsement extends Component {
       //   return;
       // }
       this.props.navigator.push({
-        screen: 'wallet.SendConfirm',
+        screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',
         passProps: {
-          endorse_type:   1,
-          endorse_member: 1
+          endorsements      : this.state.endorsements,
+          endorsed          : this.state.endorsed,
+          share_or_endorse  : 'share'
         }
       });
     }
@@ -125,7 +115,7 @@ class ShareEndorsement extends Component {
     }
     return (
             <View style={[styles.button_row_card]}>
-              <SliderEntry
+              <SliderEntryMin
                   key={`carousel-entry-${entry_type}`}
                   {...avales[entry_type]}
                 />
@@ -213,8 +203,8 @@ class ShareEndorsement extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    endorsements: state.wallet.endorsements,
-    endorsed: state.wallet.endorsed
+    // endorsements: state.wallet.endorsements,
+    // endorsed: state.wallet.endorsed
   };
 }
 

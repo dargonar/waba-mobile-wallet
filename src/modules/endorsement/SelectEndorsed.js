@@ -108,13 +108,13 @@ class SelectEndorsed extends Component {
 			return;
 		
 		let next_title = 'Indique tipo de aval';
-		if (this.state.next_screen!='wallet.SelectEndorseType')
+		if (this.state.next_screen!='endorsement.SelectEndorseType')
 			next_title = 'Tipo y cantidad de avales';
 		this.setState({recipient_selected:true}); 
 		this.props.navigator.push({
-			screen: this.state.next_screen,
-			title: next_title,
-			passProps: {recipient: data}
+			screen     : this.state.next_screen,
+			title      : next_title,
+			passProps  : {endorsed: data}
 		});
 		
 	}

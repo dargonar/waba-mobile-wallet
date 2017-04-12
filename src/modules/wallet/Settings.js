@@ -13,7 +13,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/Settings';
-import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';

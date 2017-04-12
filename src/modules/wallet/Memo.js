@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { SearchBar } from 'react-native-elements'
 
 import {
   View,

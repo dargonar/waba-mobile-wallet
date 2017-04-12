@@ -2,23 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import styles from './styles/SliderEntry';
 import colors from './styles/SliderEntry';
+import avales_colors from './static/endorsements'
 
 export default class SliderEntryMin extends Component {
 
     static propTypes = {
-        title: PropTypes.string.isRequired,
-        bgcolor: PropTypes.string
+        amount_txt   : PropTypes.string,
+        key          : PropTypes.string,
     };
 
     render () {
-        const { title, subtitle, bgcolor } = this.props;
-        const bgcolors = {'I':colors.avalI_bg, 'X':colors.avalX_bg, 'XXX':colors.avalXXX_bg};
-        const bgcolor_css = bgcolors[bgcolor];
-        const uppercaseTitle = title ? (
-            <Text style={[styles.title]} numberOfLines={2}>{ title.toUpperCase() }</Text>
+        const { amount_txt, key } = this.props;
+        const bgcolor_css = avales_colors[key];
+        const uppercaseTitle = amount_txt ? (
+            <Text style={[styles.title]} numberOfLines={1}>{ amount_txt.toUpperCase() }</Text>
         ) : false;
-
-        // onPress={() => { alert(`You've clicked '${title}'`); }}
 
         return (
             <TouchableOpacity
@@ -31,17 +29,6 @@ export default class SliderEntryMin extends Component {
                   </View>
                   <View style={{flex:1}}>  
                     <Text style={[styles.title]}>{ uppercaseTitle }</Text>
-                  </View>
-                  <View style={{flex:1, flexDirection:'column'}}>
-                      <Text style={[styles.subtitle]}>TIPO</Text>  
-                      <Text style={[styles.content]} numberOfLines={2}>{ subtitle }</Text>  
-                  </View>
-                  <View style={{flex:1, flexDirection:'column'}}>
-                      <Text style={[styles.subtitle]}>CANTIDAD</Text>  
-                      <TextInput style={{fontSize:12, underlineColorAndroid:'#575863', height: 40, color:'#fff', placeholderTextColor:'#cccccc', backgroundColor:'#575863'}}
-                        keyboardType='numeric'
-                        placeholder='Cantidad'
-                      />
                   </View>
                 </View>
             </TouchableOpacity>

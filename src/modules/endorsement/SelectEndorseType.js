@@ -1,6 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { SearchBar } from 'react-native-elements'
-import { List, ListItem } from 'react-native-elements'
 import { ActivityIndicator } from 'react-native';
 
 import {
@@ -16,7 +14,7 @@ import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
 
 import styles from './styles/SelectEndorseType';
-
+import avales from './static/endorsements'
 import { sliderWidth, itemWidth } from './components/styles/SliderEntry';
 import SliderEntry from './components/SliderEntry';
 //import { ENTRIES1, ENTRIES2 } from 'example/src/static/entries';
@@ -33,11 +31,15 @@ class SelectEndorseType extends Component {
     super(props);
 		this.tid = undefined;
 		
+    this.state = {
+      endorsed      : props.endorsed,
+      endorsed_type : undefined
+    };
 	}
   
   
   componentWillMount() {
-    // this.setState({recipient_selected:false}); 
+    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,58 +64,41 @@ class SelectEndorseType extends Component {
       //   )
       //   return;
       // }
+
       this.props.navigator.push({
-        screen: 'wallet.SendConfirm',
+        screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',
         passProps: {
-          endorse_type:   1,
-          endorse_member: 1
+          endorsed_index    : this.state.selected_aval,
+          endorsed          : this.state.endorsed,
+          share_or_endorse  : 'endorse'
         }
       });
     }
 
-	  getSlides () {
-        const avales = [
-				{
-						title: '$1.000',
-						subtitle: 'Individuos',
-						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'I',
-						remaining: 2
-				},
-				{
-						title: '$10.000',
-						subtitle: 'Productores y cuentapropistas',
-						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'X',
-						remaining: 5
-				},
-				{
-						title: '$30.000',
-						subtitle: 'Empresas',
-						illustration: 'http://i.imgur.com/UYiroysl.jpg',
-						bgcolor: 'XXX',
-						remaining: 1
-				}
-			]
-
-					//even={(index + 1) % 2 === 0}
-        return avales.map((entry, index) => {
-            return (
-                <SliderEntry
-                  key={`carousel-entry-${index}`}
-                  {...entry}
-                />
-            );
-        });
+    _currentEntry(selected_aval){
+      this.setState({endorsed_type:selected_aval});
+      console.log(' -- _currentEntry:', selected_aval);
     }
+
+	  getSlides () {
+     return avales.map((entry, index) => {
+          return (
+              <SliderEntry
+                key={`carousel-entry-${index}`}
+                {...entry}
+              />
+          );
+      });
+    }
+    
 
     get avalesCarousel () {
         return (
             <Carousel
               sliderWidth={sliderWidth}
               itemWidth={itemWidth}
-              firstItem={1}
+              firstItem={0}
               inactiveSlideScale={0.94}
               inactiveSlideOpacity={0.6}
               enableMomentum={false}
@@ -122,6 +107,7 @@ class SelectEndorseType extends Component {
               showsHorizontalScrollIndicator={false}
               snapOnAndroid={true}
               removeClippedSubviews={false}
+              onSnapToItem={(slideIndex) => { this._currentEntry(slideIndex); }}
             >
                 { this.getSlides() }
             </Carousel>

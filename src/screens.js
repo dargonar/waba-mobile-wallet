@@ -21,6 +21,7 @@ import Endorsement from './modules/endorsement/Endorsement';
 import SelectEndorsed from './modules/endorsement/SelectEndorsed';
 import SelectEndorseType from './modules/endorsement/SelectEndorseType';
 import ShareEndorsement from './modules/endorsement/ShareEndorsement';
+import EndorseConfirm from './modules/endorsement/EndorseConfirm';
 
 export function registerScreens(store, Provider) {
 
@@ -41,8 +42,9 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
-  Navigation.registerComponent('wallet.Endorsement', () => Endorsement, store, Provider);
-  Navigation.registerComponent('wallet.SelectEndorsed', () => SelectEndorsed, store, Provider);
-  Navigation.registerComponent('wallet.SelectEndorseType', () => SelectEndorseType, store, Provider);
-	Navigation.registerComponent('wallet.ShareEndorsement', () => ShareEndorsement, store, Provider);
+  Navigation.registerComponent('endorsement.Endorsement', () => Endorsement, store, Provider);
+  Navigation.registerComponent('endorsement.SelectEndorsed', () => SelectEndorsed, store, Provider);
+  Navigation.registerComponent('endorsement.SelectEndorseType', () => SelectEndorseType, store, Provider);
+	Navigation.registerComponent('endorsement.ShareEndorsement', () => ShareEndorsement, store, Provider);
+	Navigation.registerComponent('endorsement.EndorseConfirm', () => EndorseConfirm, store, Provider);
 }

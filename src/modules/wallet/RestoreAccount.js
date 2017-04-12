@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { SearchBar } from 'react-native-elements'
 
 import {
   Alert,
@@ -16,7 +15,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/RestoreAccount';
-//import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import * as config from '../../constants/config';

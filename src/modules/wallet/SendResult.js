@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/SendResult';
-import { Button, SocialIcon, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 class SendResult extends Component {

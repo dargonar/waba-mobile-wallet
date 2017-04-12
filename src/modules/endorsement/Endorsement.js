@@ -13,7 +13,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import * as walletActions from './wallet.actions';
 import styles from './styles/Endorsement';
-import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
@@ -48,18 +47,18 @@ class Endorsement extends Component {
 
   _onSendOverdraft() {
     this.props.navigator.push({
-      screen: 'wallet.SelectEndorsed',
+      screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
-      passProps: {next_screen: 'wallet.SelectEndorseType'}
+      passProps: {next_screen: 'endorsement.SelectEndorseType'}
     });
   }
 
 
   _onShareEndorsement() {
     this.props.navigator.push({
-      screen: 'wallet.SelectEndorsed',
+      screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
-      passProps: {next_screen: 'wallet.ShareEndorsement'}
+      passProps: {next_screen: 'endorsement.ShareEndorsement'}
     });
   }
 
