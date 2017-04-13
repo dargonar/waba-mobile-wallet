@@ -1,7 +1,7 @@
 import colors from '../styles/SliderEntry';
 
 export const avales_colors = {'I':colors.avalI_bg, 'X':colors.avalX_bg, 'XXX':colors.avalXXX_bg};
-
+import * as config from '../../../../constants/config';
 export const avales = [
         {
           amount          : 1000,
@@ -11,7 +11,8 @@ export const avales = [
           remaining       : 0,
           user_name       : 'N/A',
           quantity        : 0,
-          checked         : false
+          checked         : false,
+          asset_id        : config.AVAL1000_ID
         },
         {
           amount          : 10000,
@@ -21,7 +22,8 @@ export const avales = [
           remaining       : 0,
           user_name       : 'N/A',
           quantity        : 0,
-          checked         : false
+          checked         : false,
+          asset_id        : config.AVAL10000_ID
         },
         {
           amount          : 30000,
@@ -31,6 +33,7 @@ export const avales = [
           remaining       : 0,
           user_name       : 'N/A',
           quantity        : 0,
-          checked         : false
+          checked         : false,
+          asset_id        : config.AVAL30000_ID
         }];
 

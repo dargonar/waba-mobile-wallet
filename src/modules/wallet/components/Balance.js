@@ -47,9 +47,9 @@ class Balance extends Component {
 		//const dec_part = 0;
 		
 		let r = 0;
-		if(this.props.balance) r = this.props.balance[0];
+		if(this.props.balance) r = this.props.balance[config.MONEDAPAR_ID] | 0;
 		let d = 0;
-		if(this.props.balance) d = this.props.balance[1];
+		if(this.props.balance) d = this.props.balance[config.DESCUBIERTO_ID] | 0;
 		
 		b = r - d;
 		//b = 32510.75;

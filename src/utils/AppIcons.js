@@ -16,6 +16,7 @@ const icons = {
   
   "ios-checkmark-circle-outline" : [ICON_SIZE_ANDROID, "#fff"],
   
+  "credit-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],

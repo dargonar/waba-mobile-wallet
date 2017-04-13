@@ -140,11 +140,11 @@ export function memoSuccess(memo) {
 }
 
 // USERS
-export function retrieveUsers(query) {
-
+export function retrieveUsers(query, with_no_credit) {
+    with_no_credit = with_no_credit | '';
 		return new Promise((resolve, reject) => {
 			// 			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
-			fetch(config.getAPIURL('/searchAccount?search='+query), {
+			fetch(config.getAPIURL('/searchAccount?search='+query+'&with_no_credit='+with_no_credit), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
@@ -304,7 +304,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			variables : { 
 				account 				  : account_name,
 				first_time        : first_time,
-				asset   					: config.ASSET_ID,
+				asset   					: config.MONEDAPAR_ID,
 				type              : start == 0 ? 'relative' : 'normal',
 				start   					: start
 			},
@@ -398,20 +398,13 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 				
 				let balance = data.account.balance;
 
+				let balance_map = {};
 				if(balance) {
-					let b = 0;
-					let d = 0;
 					for(var i=0; i<balance.length; i++) {
-						if(balance[i].asset.id == config.ASSET_ID) {
-							b = balance[i].quantity;
-							console.log('ENCONTRE MONEDA ESTO => ', b);
-						}
-						if(balance[i].asset.id == config.ASSET2_ID) {
-							d = balance[i].quantity;
-							console.log('ENCONTRE DESCUB ESTO => ', d);
-						}					
+						balance_map[balance[i].asset.id] = parseFloat(balance[i].quantity);
+						console.log('ENCONTRE ESTO ', balance[i].asset_id, ' => ', balance[i].quantity);
 					}
-					dispatch(retrieveBalanceSuccess([b,d]));
+					dispatch(retrieveBalanceSuccess(balance_map));
 				}
 				
 				//Decrypt memos

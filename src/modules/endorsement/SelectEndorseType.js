@@ -28,9 +28,19 @@ class SelectEndorseType extends Component {
   constructor(props) {
     super(props);
 		this.tid = undefined;
+
+		console.log('BALANCES EN ENDO =>', this.props.balance);
+    
+		let _avales = avales.filter((entry) => {
+			if( this.props.balance[entry.asset_id] ) {
+				entry.remaining = this.props.balance[entry.asset_id];
+				return true;
+			}
+		});
 		
-    this.state = {
-			avales 					: avales,
+		console.log( ' _avales -> ', _avales);
+		this.state = {
+			avales 					: _avales,
       endorsed      	: props.endorsed,
       endorsed_index  : 0
     };
@@ -91,6 +101,10 @@ class SelectEndorseType extends Component {
 				return entry;
 			});
 			this.setState({avales:avales});
+			
+			setTimeout( () => {
+				this._onNext();
+			}, 400);
 		}
 
 	  getSlides () {
@@ -147,21 +161,22 @@ class SelectEndorseType extends Component {
 								<Text style={styles.subtitle}>Privacidad: Guardamos la lista de a quien has invitado.</Text>
 								<Text style={styles.subtitle}>Abuso: Eres responsable solidario con aquéllos que avales.</Text>
 							</View>
-              <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-                <TouchableHighlight
-                    style={styles.fullWidthButton}
-                    onPress={this._onNext.bind(this)} >
-                  <Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
-                </TouchableHighlight>
-              </View>
+							
             </View>
         );
   }
 }
+// 						  <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+//                 <TouchableHighlight
+//                     style={styles.fullWidthButton}
+//                     onPress={this._onNext.bind(this)} >
+//                   <Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
+//                 </TouchableHighlight>
+//               </View>
 
 function mapStateToProps(state, ownProps) {
 	return {
-		// memo: state.wallet.memo
+		balance: state.wallet.balance
 	};
 }
 

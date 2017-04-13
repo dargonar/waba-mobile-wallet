@@ -294,6 +294,32 @@ class History extends Component {
 			};
 		}
 
+		console.log('TRANSFER=>', rowData.__typename, ' = ', rowData.amount.asset.id );
+
+		if(rowData.__typename == 'Transfer' && rowData.amount.asset.id == config.AVAL1000_ID ) {
+			let _tipo 		= rowData.type == 'up' ? config.TX_TYPE_CREDIT_UP : config.TX_TYPE_CREDIT_DOWN; 
+			let _msg_x    = rowData.type == 'up' ? 'incrementado' : 'decrementado';
+			let _msg      = 'AVALON ' + _msg_x + ' su crédito';
+
+			let _date  = this._getFechaHora(rowData.block.timestamp);
+			return {
+				type: _tipo,
+				from : {
+					name:					'comunidad_par',
+					account_id:		'',
+				},
+				to : {
+					name:					that.props.account.name,
+					account_id:		'',
+				},
+				fee    : '0.00',
+				amount : rowData.amount.quantity,
+				memo   : _msg,
+				date   : _date,
+				title  : ''
+			};
+		}
+
 		let mapa   = {received:'recibido', sent: 'enviado'};
 	 	let bg     = {received:'#B7F072', sent:'#ff9379'};
 	 	let dea    = {received:'De:', sent:'A:'};
@@ -328,6 +354,43 @@ class History extends Component {
 				)
 			}
 
+			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 ) {
+				//console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
+ 				
+				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
+				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
+				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
+				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
+				let title	 = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
+				let asset_symbol = 'AVALES ';
+				let fecha  = this._getFecha(rowData.block.timestamp);
+			  let hora   = this._getHora(rowData.block.timestamp);
+				let aval_desc = config.ALL_AVALS_DESC[rowData.amount.asset.id];
+				console.log( ' DESC DE AVAL: ', rowData.amount.asset.id, ' - ', config.ALL_AVALS_DESC[rowData.amount.asset.id], ' - ', config.ALL_AVALS_DESC);
+				return(
+					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+						<View style={styles.row_container}>
+							<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
+								<Image source={iconsMap['credit-card']} style={[styles.row_hand]}/>
+							</View>
+							<View style={styles.row_content}>            
+								<View style={styles.row_line1}>
+									<Text style={styles.row_amount}>{rowData.amount.quantity} aval(es) de {aval_desc}</Text>
+								</View>
+								<View style={styles.row_line2}>
+                <Text>Has recibido avales</Text>
+              </View>
+							</View>
+							<View style={styles.row_hour}>
+								<Text style={styles.row_hour_item}>{hora}</Text>
+								<Text style={styles.row_hour_item}>{fecha}</Text>
+							</View>
+						</View>
+					</TouchableHighlight>
+				)
+			}
+
+
 			if(rowData.__typename == 'OverdraftChange') {
 				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
@@ -353,7 +416,8 @@ class History extends Component {
               </View>
 							</View>
 							<View style={styles.row_hour}>
-								<Text>{fecha}</Text>
+								<Text style={styles.row_hour_item}>{hora}</Text>
+								<Text style={styles.row_hour_item}>{fecha}</Text>
 							</View>
 						</View>
 					</TouchableHighlight>
