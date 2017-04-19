@@ -140,6 +140,28 @@ export function memoSuccess(memo) {
 }
 
 // USERS
+export function createEndorsement(from, to, endorse_type) {
+	return new Promise((resolve, reject) => {
+		fetch(config.getAPIURL('/endorse/create'), {
+			method: 'POST',
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				from : from,
+				to : to,
+				endorse_type : endorse_type
+			})
+		})
+		.then((response) => response.json()) 
+		.then((responseJson) => {
+			return resolve(responseJson);
+		})
+		.catch((error) => {
+			return reject(error);
+		});
+	});
+}
+
+// USERS
 export function retrieveUsers(query, with_no_credit) {
     with_no_credit = with_no_credit | '';
 		return new Promise((resolve, reject) => {
@@ -242,6 +264,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 					account(name:$account) {
 						id
+						blacklistedBy(account:"propuesta-par")
 						balance {
 							quantity
 							asset {

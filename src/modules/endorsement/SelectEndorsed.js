@@ -110,11 +110,13 @@ class SelectEndorsed extends Component {
 		let next_title = 'Indique tipo de aval';
 		if (this.state.next_screen!='endorsement.SelectEndorseType')
 			next_title = 'Tipo y cantidad de avales';
+		
+		//console.log('DATA DATA =>', data);
 		this.setState({recipient_selected:true}); 
 		this.props.navigator.push({
 			screen     : this.state.next_screen,
 			title      : next_title,
-			passProps  : {endorsed: data}
+			passProps  : {endorsed: data[0]}
 		});
 		
 	}

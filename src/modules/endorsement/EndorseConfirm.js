@@ -35,11 +35,12 @@ class EndorseConfirm extends Component {
       share_or_endorse 	: props.share_or_endorse,
       endorsements 			: props.endorsements,
       endorsed 					: props.endorsed,
-      endorsed_index    : props.endorsed_index,
+      endorse_type      : props.endorse_type,
+			endorse_index     : props.endorse_index,
 // 			share_or_endorse 	: 'share', 
 //       endorsements 			: avales, 
 //       endorsed 					: ['trippa', 'trippor'],
-//       endorsed_index    : 0,
+//       endorse_index    : 0,
 			// memo 							: props.memo,
 			tx								: null,
 			fee								: 0,
@@ -48,8 +49,20 @@ class EndorseConfirm extends Component {
 			error 						: ''
     }
 		
+// 		console.log('******** endorse confirm');
+// 		console.log(this.state);
+// 		console.log(props.endorsed);
+		
 		this._onSendingError = this._onSendingError.bind(this);
 // 		this._buildMemo = this._buildMemo.bind(this);
+
+		walletActions.createEndorsement(this.props.account.name, this.state.endorsed, this.state.endorse_type).then( (res) => {
+			console.log('createEndorsement =>', JSON.stringify(res.tx));
+			this.setState({can_confirm:true});
+		}, err => {
+			console.log('createEndorsement ERR =>', JSON.stringify(err));
+			this.setState({can_confirm:false});
+		});
   }
 
 
@@ -179,18 +192,18 @@ class EndorseConfirm extends Component {
               );
           });
     }
-		if(isNaN(this.state.endorsed_index))
+		if(isNaN(this.state.endorse_index))
 		{
 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
 			return null;
 		}
-// 		if(!this.state.endorsed_index)
+// 		if(!this.state.endorse_index)
 // 		{
 // 			ToastAndroid.show('Vino nada!', ToastAndroid.SHORT);
 // 			return null;
 // 		}
-// 		ToastAndroid.show(this.state.endorsed_index.toString(), ToastAndroid.SHORT);	
-    let entry = avales[this.state.endorsed_index];
+// 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
+    let entry = avales[this.state.endorse_index];
 		entry.user_name = this.state.endorsed[0];
 		entry.quantity = 1;
     return (	
@@ -204,9 +217,9 @@ class EndorseConfirm extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	console.log(' -- SEND CONFIRM -> mapStateToProps');
+	//console.log(' -- SEND CONFIRM -> mapStateToProps', state.wallet.account);
 	return {
-		
+		account : state.wallet.account
 	};
 }
 

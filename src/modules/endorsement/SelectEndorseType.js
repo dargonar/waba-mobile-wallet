@@ -30,6 +30,7 @@ class SelectEndorseType extends Component {
 		this.tid = undefined;
 
 		console.log('BALANCES EN ENDO =>', this.props.balance);
+		console.log('BALANCES EN ENDO =>', this.props.endorsed);
     
 		let _avales = avales.filter((entry) => {
 			if( this.props.balance[entry.asset_id] ) {
@@ -41,8 +42,7 @@ class SelectEndorseType extends Component {
 		console.log( ' _avales -> ', _avales);
 		this.state = {
 			avales 					: _avales,
-      endorsed      	: props.endorsed,
-      endorsed_index  : 0
+      endorsed      	: props.endorsed
     };
 	}
   
@@ -73,12 +73,14 @@ class SelectEndorseType extends Component {
       //   )
       //   return;
       // }
-
+			console.log('por q aca no >', this.state.endorse_type);
+		
       this.props.navigator.push({
         screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',
         passProps: {
-          endorsed_index    : this.state.endorsed_index,
+          endorse_type      : this.state.endorse_type,
+					endorse_index     : this.state.endorse_index,
           endorsed          : this.state.endorsed,
           share_or_endorse  : 'endorse'
         }
@@ -96,7 +98,11 @@ class SelectEndorseType extends Component {
 				if(entry._key==_key)
 				{
 					entry.checked = true;
-					this.setState({endorsed_index:index});
+					console.log('aca va=>',entry.asset_id);
+					this.setState({
+						endorse_type  : entry.asset_id,
+						endorse_index : index
+					});
 				}
 				return entry;
 			});
