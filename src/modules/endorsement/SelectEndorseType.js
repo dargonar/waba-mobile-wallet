@@ -128,8 +128,6 @@ class SelectEndorseType extends Component {
       });
     }
     
-//
-
     get avalesCarousel () {
         return (
             <Carousel

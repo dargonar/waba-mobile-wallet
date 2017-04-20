@@ -22,6 +22,8 @@ import SelectEndorsed from './modules/endorsement/SelectEndorsed';
 import SelectEndorseType from './modules/endorsement/SelectEndorseType';
 import ShareEndorsement from './modules/endorsement/ShareEndorsement';
 import EndorseConfirm from './modules/endorsement/EndorseConfirm';
+import EndorseSending from './modules/endorsement/Sending';
+import EndorseResult from './modules/endorsement/Result';
 
 export function registerScreens(store, Provider) {
 
@@ -47,4 +49,6 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('endorsement.SelectEndorseType', () => SelectEndorseType, store, Provider);
 	Navigation.registerComponent('endorsement.ShareEndorsement', () => ShareEndorsement, store, Provider);
 	Navigation.registerComponent('endorsement.EndorseConfirm', () => EndorseConfirm, store, Provider);
+	Navigation.registerComponent('endorsement.Sending', () => EndorseSending, store, Provider);
+	Navigation.registerComponent('endorsement.Result', () => EndorseResult, store, Provider);
 }

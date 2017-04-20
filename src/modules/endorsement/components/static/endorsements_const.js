@@ -37,3 +37,17 @@ export const avales = [
           asset_id        : config.AVAL30000_ID
         }];
 
+export function getAvalByKey(key, _avales){
+  _avales.filter((entry) => {
+			if( entry._key==key ) {
+				return entry;
+			}
+		});
+  return null;
+}
+
+export function getAvalDesc(aval){
+	if(!aval)
+		return '';
+	return aval.description + ' - ' + aval.amount_txt;
+}

@@ -37,11 +37,6 @@ class EndorseConfirm extends Component {
       endorsed 					: props.endorsed,
       endorse_type      : props.endorse_type,
 			endorse_index     : props.endorse_index,
-// 			share_or_endorse 	: 'share', 
-//       endorsements 			: avales, 
-//       endorsed 					: ['trippa', 'trippor'],
-//       endorse_index    : 0,
-			// memo 							: props.memo,
 			tx								: null,
 			fee								: 0,
 			fee_txt						: 0,
@@ -58,12 +53,30 @@ class EndorseConfirm extends Component {
 
 		walletActions.createEndorsement(this.props.account.name, this.state.endorsed, this.state.endorse_type).then( (res) => {
 			console.log('createEndorsement =>', JSON.stringify(res.tx));
-			this.setState({can_confirm:true});
+			this.setState({can_confirm:true, tx:res.tx, fee_txt:res.tx.operations[0][1].fee.amount/config.ASSET_DIVIDER});
 		}, err => {
 			console.log('createEndorsement ERR =>', JSON.stringify(err));
-			this.setState({can_confirm:false});
+			this.setState({can_confirm:false, tx:null});
 		});
   }
+
+  _addSignature(tx, privkey) {				
+		return new Promise( (resolve, reject) => {
+			Bts2helper.txDigest( JSON.stringify(tx), config.CHAIN_ID).then( digest => {
+				console.log('_addSignature txDigest =>', digest);
+				Bts2helper.signCompact(digest, privkey).then( signature => {
+					console.log('_addSignature signCompact =>', signature);
+					if(!tx.signatures) tx.signatures = [];
+					tx.signatures.push(signature);
+					resolve(tx);
+				}, err => {
+					reject(err);
+				})
+			}, err => {
+				reject(err);						
+			});
+		});
+	}
 
 
   dateAdd(date, interval, units) {
@@ -81,18 +94,111 @@ class EndorseConfirm extends Component {
 		}
 		return ret;
 	}
+  
+	_onConfirm(){
+		if(!this.state.can_confirm)
+		{
+			Alert.alert(
+				'Fondos insuficientes',
+				'No dispone de fondos suficientes para realizar la operación.',
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}		
+		
+		console.log(' ==> this.props.balance', this.props.balance);
+		let final_amount = Number(this.state.fee_txt); 
+		let disp = (Number(this.props.balance[config.MONEDAPAR_ID])); // - Number(this.props.balance[0])).toFixed(2);
 
-  _onConfirm(){
+		console.log(disp, final_amount);
+		if(Number(disp) < final_amount)
+		{
+			Alert.alert(
+				'Fondos insuficientes',
+				'No dispone de fondos suficientes para realizar la operación.',
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}
 		
-		Alert.alert(
-			'Fondos insuficientes',
-			'No dispone de fondos suficientes para realizar la operación.',
-			[
-				{text: 'OK'},
-			]
-		)
-		return;
+		this.props.navigator.showModal({
+			screen : 'endorsement.Sending',
+			title :  'Autorizando crédito...',
+			passProps: {endorsed 			: this.state.endorsed,
+									endorse_type 	: this.state.endorse_type,
+									endorse_index : this.state.endorse_index,
+								  modal_type		: 'endorsing'},  // | sharing
+			animationType: 'slide-up',
+			navigatorStyle: {navBarHidden:true}
+		});
 		
+// 		let that = this;
+// 		setTimeout( () => {
+// 			that.props.navigator.dismissModal({
+// 				animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+// 			});
+// 			this.props.navigator.push({
+// 					screen:     'endorsement.Result',
+// 					title:      'Envío exitoso',
+// 					passProps:  {
+// 						endorsed 			: this.state.endorsed,
+// 						endorse_type 	: this.state.endorse_type,
+// 						endorse_index : this.state.endorse_index,
+// 						modal_type		: 'endorsing'
+// 					},
+// 					navigatorStyle: {navBarHidden:true}
+// 			});
+// 		}, 5000);
+		
+// 		return;
+// 	}
+
+// 	trippppo(){
+		
+		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
+		
+			fetch(config.getAPIURL('/push_tx'), {
+					method: 'POST',
+					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+					body: JSON.stringify({
+							tx : tx,
+					})
+			})
+			.then((response) => response.json()
+				, err => {
+						this._onSendingError(err);
+			})
+			.then((responseJson) => {
+					if(responseJson && responseJson.error) {
+						this._onSendingError(responseJson.error);
+						return;
+					}	
+
+					this.props.navigator.dismissModal({
+							animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+					});
+					this.props.navigator.push({
+							screen:     'endorsement.Result',
+							title:      'Envío exitoso',
+							passProps:  {
+									endorsed 			: this.state.endorsed,
+									endorse_type 	: this.state.endorse_type,
+									endorse_index : this.state.endorse_index,
+								  modal_type		: 'endorsing'
+							},
+							navigatorStyle: {navBarHidden:true}
+					});
+			}, err => {
+					this._onSendingError(err);
+			});
+
+		}, err => {
+			this._onSendingError(err);
+		});
 	}
 
 	_onSendingError(error){
@@ -111,9 +217,8 @@ class EndorseConfirm extends Component {
 				{text: 'OK', onPress: () => this.props.navigator.pop({ animated: true }) },
 			]
 		)
-
-		
 	}
+
 
   componentWillMount() {
   }
@@ -187,8 +292,8 @@ class EndorseConfirm extends Component {
 							return (
                   <SliderEntryMicro
                     key={`carousel-entry-${index}`}
-                    {...entry}
-                  />
+                    {...entry} 
+									/>
               );
           });
     }
@@ -204,7 +309,7 @@ class EndorseConfirm extends Component {
 // 		}
 // 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
     let entry = avales[this.state.endorse_index];
-		entry.user_name = this.state.endorsed[0];
+		entry.user_name = this.state.endorsed;
 		entry.quantity = 1;
     return (	
                 <SliderEntryMicro
@@ -217,9 +322,9 @@ class EndorseConfirm extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	//console.log(' -- SEND CONFIRM -> mapStateToProps', state.wallet.account);
 	return {
-		account : state.wallet.account
+		account : state.wallet.account,
+		balance    : state.wallet.balance,
 	};
 }
 

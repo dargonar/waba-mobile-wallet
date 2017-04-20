@@ -248,102 +248,8 @@ class History extends Component {
 	  let hora   = this._getHora(timestamp);
  		return fecha + ' ' + hora;
 	}
-	_getRowData(rowData){
-		console.log(' --- ON TX PRESSED ', JSON.stringify(rowData));
-		if(rowData.__typename == 'NoDetailOp') {
-			let _date  = this._getFechaHora(rowData.block.timestamp);
-			return {
-				type: config.TX_TYPE_UNKNOWN,
-				from : {
-					name:					'',
-					account_id:		'',
-				},
-				to : {
-					name:					'',
-					account_id:		'',
-				},
-				fee    : '',
-				amount : '',
-				memo   : '',
-				date   : _date,
-				title  : ''
-			};
-		}
-
-		if(rowData.__typename == 'OverdraftChange') {
-			let _tipo 		= rowData.type == 'up' ? config.TX_TYPE_CREDIT_UP : config.TX_TYPE_CREDIT_DOWN; 
-			let _msg_x    = rowData.type == 'up' ? 'incrementado' : 'decrementado';
-			let _msg      = 'Se ha ' + _msg_x + ' su crédito';
-
-			let _date  = this._getFechaHora(rowData.block.timestamp);
-			return {
-				type: _tipo,
-				from : {
-					name:					'comunidad_par',
-					account_id:		'',
-				},
-				to : {
-					name:					that.props.account.name,
-					account_id:		'',
-				},
-				fee    : '0.00',
-				amount : rowData.amount.quantity,
-				memo   : _msg,
-				date   : _date,
-				title  : ''
-			};
-		}
-
-		console.log('TRANSFER=>', rowData.__typename, ' = ', rowData.amount.asset.id );
-
-		if(rowData.__typename == 'Transfer' && rowData.amount.asset.id == config.AVAL1000_ID ) {
-			let _tipo 		= rowData.type == 'up' ? config.TX_TYPE_CREDIT_UP : config.TX_TYPE_CREDIT_DOWN; 
-			let _msg_x    = rowData.type == 'up' ? 'incrementado' : 'decrementado';
-			let _msg      = 'AVALON ' + _msg_x + ' su crédito';
-
-			let _date  = this._getFechaHora(rowData.block.timestamp);
-			return {
-				type: _tipo,
-				from : {
-					name:					'comunidad_par',
-					account_id:		'',
-				},
-				to : {
-					name:					that.props.account.name,
-					account_id:		'',
-				},
-				fee    : '0.00',
-				amount : rowData.amount.quantity,
-				memo   : _msg,
-				date   : _date,
-				title  : ''
-			};
-		}
-
-		let mapa   = {received:'recibido', sent: 'enviado'};
-	 	let bg     = {received:'#B7F072', sent:'#ff9379'};
-	 	let dea    = {received:'De:', sent:'A:'};
-	 	let _type  = rowData.from.name.endsWith(this.props.account.name) ? config.TX_TYPE_SENT : config.TX_TYPE_RECEIVED;
-	 	let _date  = this._getFechaHora(rowData.block.timestamp);
-	 	let message = rowData.message;
-		return {
-			type: _type,
-			from : {
-				name:					rowData.from.name,
-				account_id:		'',
-			},
-			to : {
-				name:					rowData.to.name,
-				account_id:		'',
-			},
-			fee    : rowData.fee.quantity,
-			amount : rowData.amount.quantity,
-			memo   : message,
-			date   : _date,
-			title  : ''
-		};
-	}
-
+	
+	
   _renderRow(rowData, sectionID, rowID) {
 			
 			if(rowData.__typename == 'NoDetailOp') {
@@ -357,6 +263,22 @@ class History extends Component {
 			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 ) {
 				//console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
  				
+				//if (rowData.message_raw)
+				// Si from!=me  && memo=='7e696575' 
+				//let _type = 'TE_HAN_OTORGADO_CREDITO';
+
+				// Si from==me  && memo=='7e696575'
+				//_type = 'HAS_OTORGADO_CREDITO';
+				
+				// ifrowData.from.name.endsWith(this.props.account.name)	
+				// Si from==me 
+				// Has shareado avales
+				
+				// Si from!=me  && memo=='7e696575'
+				// TE HAN OTORGADO CREDITO
+
+				// HAS RECIBIDO AVALES
+				
 				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
