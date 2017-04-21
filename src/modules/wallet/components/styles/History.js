@@ -110,7 +110,12 @@ const styles = StyleSheet.create({
     justifyContent  : 'flex-start',
     flex            : 1
   },
-
+  
+  row_simple : {
+    fontWeight      : '100', 
+    fontSize        : 15, 
+    color           : '#1f475b'
+  },
   row_dea : {
     fontWeight      : '500', 
     fontSize        : 15, 

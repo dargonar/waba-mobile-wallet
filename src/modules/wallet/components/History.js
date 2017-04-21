@@ -223,7 +223,7 @@ class History extends Component {
   
   _renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
     return (
-      <View key={`${sectionID}-${rowID}`} style={styles.separator}/>
+      <View key={`${sectionID}-${rowID}`} style={styles.separator}></View>
     );
   }
 
@@ -261,46 +261,73 @@ class History extends Component {
 			}
 
 			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 ) {
+				let aval_type 			= '';
+				let icon 						= '';
+				let line1 					= '';
+				let line2 					= '';
+				let pre_line2 		  = '';
+				let post_line2 			= '';
+				let aval_type_desc  = '';
+				let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
+				if(rowData.memo && rowData.memo.message=='7e696575')
+				{
+					aval_type = 'endorse';
+					icon 						= 'id-card-o';
+					aval_type_desc  = rowData.amount.quantity>1?'autorizaciones':'autorización';
+					if (!rowData.from.id.endsWith(this.props.account.id))
+					{
+						pre_line2       = '';
+						post_line2      = ' te ha autorizado a acceder a un crédito por ' + aval_amount;
+						//line2 					= rowData.from.name + ' te ha autorizado a acceder a un crédito por ' + aval_amount;
+					}
+					else
+					{
+						pre_line2       = 'Has autorizado a ';
+						post_line2      = ' a acceder a un crédito por ' + aval_amount;
+						//line2 					= 'Has autorizado a ' + rowData.to.name + ' a acceder a un crédito por ' + aval_amount;
+						
+					}
+					
+				}
+				else
+				{
+					aval_type = 'share';
+					icon 						= 'credit-card';
+					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';	
+					if (!rowData.from.id.endsWith(this.props.account.id))
+					{
+						pre_line2       = '';
+						post_line2      = ' te ha enviado avales para autorizar créditos por ' + aval_amount;
+						//line2 					= rowData.from.name + ' te ha enviado avales para autorizar créditos por ' + aval_amount;
+					}	
+					else
+					{	
+						pre_line2       = 'Has enviado avales a ';
+						post_line2      = ' para que pueda autorizar créditos por ' + aval_amount;
+						//line2 					= 'Has enviado avales a ' + rowData.to.name + ' para que pueda autorizar créditos por ' + aval_amount;
+					}
+				}	
+				line1     			= 'Has ' + (rowData.from.id.endsWith(this.props.account.id)?'enviado':'recibido') + ' ' + rowData.amount.quantity.toString() + ' ' + aval_type_desc; 
 				//console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
- 				
-				//if (rowData.message_raw)
-				// Si from!=me  && memo=='7e696575' 
-				//let _type = 'TE_HAN_OTORGADO_CREDITO';
 
-				// Si from==me  && memo=='7e696575'
-				//_type = 'HAS_OTORGADO_CREDITO';
+				let bg     			= {share:'#413932', endorse:'#f64d27'};
+				let fecha  			= this._getFecha(rowData.block.timestamp);
+			  let hora   			= this._getHora(rowData.block.timestamp);
+				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
 				
-				// ifrowData.from.name.endsWith(this.props.account.name)	
-				// Si from==me 
-				// Has shareado avales
-				
-				// Si from!=me  && memo=='7e696575'
-				// TE HAN OTORGADO CREDITO
-
-				// HAS RECIBIDO AVALES
-				
-				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
-				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
-				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
-				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
-				let title	 = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
-				let asset_symbol = 'AVALES ';
-				let fecha  = this._getFecha(rowData.block.timestamp);
-			  let hora   = this._getHora(rowData.block.timestamp);
-				let aval_desc = config.ALL_AVALS_DESC[rowData.amount.asset.id];
-				console.log( ' DESC DE AVAL: ', rowData.amount.asset.id, ' - ', config.ALL_AVALS_DESC[rowData.amount.asset.id], ' - ', config.ALL_AVALS_DESC);
+				// console.log( ' DESC DE AVAL: ', rowData.amount.asset.id, ' - ', config.ALL_AVALS_DESC[rowData.amount.asset.id], ' - ', config.ALL_AVALS_DESC);
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
-							<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
-								<Image source={iconsMap['credit-card']} style={[styles.row_hand]}/>
+							<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
+								<Image source={iconsMap[icon]} style={[styles.row_hand]}/>
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>{rowData.amount.quantity} aval(es) de {aval_desc}</Text>
+									<Text style={styles.row_amount}>{line1}</Text>
 								</View>
 								<View style={styles.row_line2}>
-                <Text>Has recibido avales</Text>
+									<Text style={styles.row_simple}>{pre_line2}<Text style={styles.row_dea}>{_recv_sent == 'received' ? rowData.from.name : rowData.to.name}</Text>{post_line2}</Text>
               </View>
 							</View>
 							<View style={styles.row_hour}>
@@ -312,9 +339,8 @@ class History extends Component {
 				)
 			}
 
-
 			if(rowData.__typename == 'OverdraftChange') {
-				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
+// 				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
@@ -334,7 +360,7 @@ class History extends Component {
 									<Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {title[_tipo]}</Text>
 								</View>
 								<View style={styles.row_line2}>
-                <Text>Se ha {msg[_tipo]} su crédito</Text>
+                <Text>Se ha {msg[_tipo]} tu crédito</Text>
               </View>
 							</View>
 							<View style={styles.row_hour}>
