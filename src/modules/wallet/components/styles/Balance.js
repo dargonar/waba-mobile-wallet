@@ -153,8 +153,31 @@ const styles = StyleSheet.create({
 	},
 	credit_amountRed:{
 	  color       : '#ed1c24'
-	}
+	}, 
 	
+	
+	
+	credit_available_wrapper:{
+		flex:1,
+		flexDirection:'row', 
+		justifyContent: 'center',
+		alignItems: 'center',
+		
+		borderRadius: 0,
+    backgroundColor: 'rgba(87, 87, 87, 0.5)'
+	},
+	credit_available:{
+		flex:1,
+		flexDirection:'row', 
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	credit_title2:{
+		fontFamily  : 'roboto_light',
+    fontSize    : 12,
+		lineHeight  : 14,
+		textAlign: 'center',
+	},
 });
 
 export default styles;

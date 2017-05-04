@@ -13,7 +13,7 @@ import {
 	Animated,
 	ToastAndroid
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import * as walletActions from '../wallet.actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -253,17 +253,20 @@ class History extends Component {
   _renderRow(rowData, sectionID, rowID) {
 			
 			if(rowData.__typename == 'CreditRequest') {
-				let icon 						= 'credit-card';
+				let icon 						= 'ios-card';
 			  let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
 				let aval_type 			= 'credit_request';
-				let bg     					= {credit_request:'#413932'}; 
-				let fecha  			= this._getFecha(rowData.block.timestamp);
-			  let hora   			= this._getHora(rowData.block.timestamp);
+				let bg     					= {credit_request:'#29c3cbt'}; 
+				let fecha  			    = this._getFecha(rowData.block.timestamp);
+			  let hora   			    = this._getHora(rowData.block.timestamp);
+				//<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
+				// <Image source={iconsMap[icon]} style={[styles.row_hand]}/>
+				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
-							<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
-								<Image source={iconsMap[icon]} style={[styles.row_hand]}/>
+							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[aval_type]}]}>
+								{_icon}
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
@@ -281,7 +284,7 @@ class History extends Component {
 			
 			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 && rowData.memo != null) {
 				
-				let bg     			= {share:'#413932', endorse:'#f64d27'};
+				let bg     			= {share:'#413932', endorse:'#ef5030'};
 				let fecha  			= this._getFecha(rowData.block.timestamp);
 			  let hora   			= this._getHora(rowData.block.timestamp);
 				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
@@ -308,7 +311,7 @@ class History extends Component {
 				if(prefix == config.I_ENDORSE_PREFIX)
 				{
 					aval_type 			 = 'endorse';
-					icon 						 = 'id-card-o';
+					icon 						 = 'ios-ribbon';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
 					pre_line2        = 'Has autorizado a ';
 					post_line2       = ' a solicitar un crédito por ' + aval_amount;
@@ -317,7 +320,7 @@ class History extends Component {
 				if(prefix == config.ENDORSED_BY_PREFIX)
 				{
 					aval_type 			 = 'endorse';
-					icon 						 = 'id-card-o';
+					icon 						 = 'md-checkmark';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
 					pre_line2        = '';
 					post_line2       = ' te ha autorizado a solicitar un crédito por ' + aval_amount;
@@ -327,7 +330,7 @@ class History extends Component {
 				if(prefix == config.ENDORSED_TX_PREFIX)
 				{
 					aval_type = 'share';
-					icon 						= 'credit-card';
+					icon 						= 'ios-card';
 					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';	
 					if (!rowData.from.id.endsWith(this.props.account.id))
 					{
@@ -355,11 +358,13 @@ class History extends Component {
 									<Text style={styles.row_simple}>{line1}</Text>
               	</View>);
 				}
+				// <Image source={iconsMap[icon]} style={[styles.row_hand, {color:bg[aval_type]}]}/>
+				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
-							<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
-								<Image source={iconsMap[icon]} style={[styles.row_hand]}/>
+							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[aval_type]}]}>
+								{_icon}
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
@@ -380,21 +385,23 @@ class History extends Component {
 // 				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
-				let bg     = {credit_up:'#60A3C0', credit_down:'#413932'}; //down -> #dddddd
+				let bg     = {credit_up:'#fda720', credit_down:'#413932'}; 
 				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
-				let title	 = {credit_up:'de crédito ampliado', credit_down:'de crédito reducido'};
+				let title	 = {credit_up:'Aumento', credit_down:'Reducción'};
 				let asset_symbol = config.ASSET_SYMBOL;
 				let fecha  = this._getFecha(rowData.block.timestamp);
 			  let hora   = this._getHora(rowData.block.timestamp);
+// 				<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
+// 					<Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
-							<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
-								<Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[_tipo]}]}>
+                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {title[_tipo]}</Text>
+									<Text style={styles.row_amount}>{title[_tipo]} de límite de crédito por {asset_symbol}{rowData.amount.quantity}</Text>
 								</View>
 								<View style={styles.row_line2}>
                 <Text>Se ha {msg[_tipo]} tu crédito</Text>
@@ -455,11 +462,12 @@ class History extends Component {
       );
 		}
 
+		//return null;
 		return(
-			<TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
-				<Text style={styles.row_amount}>Operacion no conocida</Text>				
-			</TouchableHighlight>
-		)
+ 			<TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+ 				<Text style={styles.row_unknown_op}>Operación no conocida</Text>				
+ 			</TouchableHighlight>
+ 		)
 	
   }
 

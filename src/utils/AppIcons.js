@@ -14,12 +14,13 @@ const ICON_SIZE_ANDROID_BIG = __DEV__ ? 50 : PixelRatio.getPixelSizeForLayoutSiz
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   
+  "ios-ribbon-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-share-alt-outline" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-checkmark-circle-outline" : [ICON_SIZE_ANDROID, "#fff"],
   // fa-id-card-o, fa-id-card, fa-address-card-o, fa-address-card
   "id-card-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "credit-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
-  "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
+  "handshake-o": [ICON_SIZE_ANDROID, "#fda720", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
   

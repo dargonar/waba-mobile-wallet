@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/RestoreAccount';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import * as config from '../../constants/config';
 
 import { AsyncStorage } from 'react-native'
@@ -236,13 +236,14 @@ constructor(props) {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <KeyboardSpacer />
-			  <TouchableHighlight
+        <HideWithKeyboard>
+				 	<TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-				</TouchableHighlight>
-        </View>
+					</TouchableHighlight>
+        </HideWithKeyboard>
+			 </View>
     );
   }
 }

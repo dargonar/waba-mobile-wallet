@@ -1,8 +1,10 @@
 /* eslint-disable new-cap */
 import React, { PropTypes, Component } from 'react';
 import {
+	Alert, 
 	Image,
 	Text,
+	TouchableHighlight, 
 	View
 } from 'react-native';
 
@@ -10,6 +12,8 @@ import { connect } from 'react-redux';
 import styles from './styles/Balance';
 import Sound from 'react-native-sound';
 import * as config from '../../../constants/config';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { avales }  from '../../endorsement/components/static/endorsements_const'
 
 class Balance extends Component {
 
@@ -24,8 +28,16 @@ class Balance extends Component {
 						'number of channels: ' + this.whoosh.getNumberOfChannels());
 			}
 		});
+		this._onAcceptCredit = this._onAcceptCredit.bind(this);
 	}
-
+	
+	_onAcceptCredit(){
+		this.props.navigator.push({
+      screen: 'endorsement.ApplyConfirm',
+      title: 'Aceptar crédito'
+    });		
+  }
+	
 	componentWillReceiveProps(nextProps) {
     console.log('Balance::componentWillReceiveProps =>', nextProps.balance);
 
@@ -71,6 +83,27 @@ class Balance extends Component {
 			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
 		}
+		if(this.props.credit_ready){
+			let _avales = avales.filter((entry) => {
+				if( this.props.balance[entry.asset_id] > 0 ) {
+					entry.remaining = this.props.balance[entry.asset_id];
+					return true;
+				}
+			});
+			if(_avales.length==0)
+				_avales.push(avales[0]);
+				j = undefined;
+				//<View style={styles.credit_available}>
+				
+				j = (
+					<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
+						<View style={styles.credit_available}>
+							<Icon name="ios-checkmark-circle" size={18} color="#ef5030" style={[{paddingRight:10}]} />
+							<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por <Text style={[styles.credit_amount, styles.bold_color]}>{_avales[0].amount_txt}</Text> </Text>
+					  </View>
+					</TouchableHighlight>
+					);	
+		}
 		// <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
@@ -101,7 +134,8 @@ class Balance extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		balance: state.wallet.balance
+		balance: state.wallet.balance,
+		credit_ready : state.wallet.credit_ready
 	};
 }
 
