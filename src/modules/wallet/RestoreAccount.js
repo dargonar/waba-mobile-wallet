@@ -236,12 +236,12 @@ constructor(props) {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <TouchableHighlight
+        <KeyboardSpacer />
+			  <TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
 				</TouchableHighlight>
-				<KeyboardSpacer />
         </View>
     );
   }

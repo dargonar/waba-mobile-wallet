@@ -140,14 +140,13 @@ export function memoSuccess(memo) {
 }
 
 // USERS
-export function createEndorsement(from, to, endorse_type) {
+export function endorseApply(from, endorse_type) {
 	return new Promise((resolve, reject) => {
-		fetch(config.getAPIURL('/endorse/create'), {
+		fetch(config.getAPIURL('/endorse/apply'), {
 			method: 'POST',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 			body: JSON.stringify({
-				from : from,
-				to : to,
+				from         : from,
 				endorse_type : endorse_type
 			})
 		})
@@ -232,6 +231,13 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
+export function creditReadySuccess(credit_ready) {
+	return {
+		type         : types.CREDIT_READY_SUCCESS,
+		credit_ready : credit_ready
+	};
+}
+
 export function retrieveHistory(account_name, keys, first_time, start) {
 	return function (dispatch) {
 		if (start === undefined) start=0;
@@ -289,6 +295,14 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 									}
 								}
 								type
+							}
+							... on CreditRequest {
+								amount {
+									quantity
+									asset {
+										id
+									}
+								}
 							}
 							... on Transfer {
 								from {
@@ -429,6 +443,8 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 					dispatch(retrieveBalanceSuccess(balance_map));
 				}
+				
+				dispatch(creditReadySuccess(data.account.blacklistedBy));
 				
 				//Decrypt memos
 				Promise.all(proms).then(res => {

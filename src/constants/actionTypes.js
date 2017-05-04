@@ -9,3 +9,4 @@ export const ASSET_SUCCESS            = 'ASSET_SUCCESS';
 export const BLOCKCHAIN_SUCCESS       = 'BLOCKCHAIN_SUCCESS';
 export const READY_SUCCESS            = 'READY_SUCCESS';
 export const RETRIEVE_HISTORY_ERROR   = 'RETRIEVE_HISTORY_ERROR';
+export const CREDIT_READY_SUCCESS     = 'CREDIT_READY_SUCCESS';

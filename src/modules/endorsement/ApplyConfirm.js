@@ -19,45 +19,33 @@ import Bts2helper from '../../utils/Bts2helper';
 import { avales }  from './components/static/endorsements_const'
 import * as config from '../../constants/config';
 
-class EndorseConfirm extends Component {
+class ApplyConfirm extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-//     navBarBackgroundColor: '#0B5F83',
 		navBarBackgroundColor: '#2e2f3d',
     navBarButtonColor: '#ffffff'
   }
   
   constructor(props) {
     super(props);
-  
-    this.state = {
-      share_or_endorse 	: props.share_or_endorse,
-      endorsements 			: props.endorsements,
-      endorsed 					: props.endorsed,
-      endorse_type      : props.endorse_type,
-			endorse_index     : props.endorse_index,
-			tx								: null,
-			fee								: 0,
-			fee_txt						: 0.6, 		// hack
-			can_confirm				: true, 	// hack
-			error 						: ''
+  	
+		let _avales = avales.filter((entry) => {
+			if( this.props.balance[entry.asset_id] > 0 ) {
+				entry.remaining = this.props.balance[entry.asset_id];
+				return true;
+			}
+		});
+		
+		this.state = {
+			endorse_index 		: 0,
+      can_confirm				: true,
+			error 						: '',
+			endorse_type      : _avales[0].asset_id,
+			entry 					  : _avales[0]
     }
 		
-// 		console.log('******** endorse confirm');
-// 		console.log(this.state);
-// 		console.log(props.endorsed);
-		
 		this._onSendingError = this._onSendingError.bind(this);
-// 		this._buildMemo = this._buildMemo.bind(this);
-
-// 		walletActions.createEndorsement(this.props.account.name, this.state.endorsed, this.state.endorse_type).then( (res) => {
-// 			console.log('createEndorsement =>', JSON.stringify(res.tx));
-// 			this.setState({can_confirm:true, tx:res.tx, fee_txt:res.tx.operations[0][1].fee.amount/config.ASSET_DIVIDER});
-// 		}, err => {
-// 			console.log('createEndorsement ERR =>', JSON.stringify(err));
-// 			this.setState({can_confirm:false, tx:null});
-// 		});
   }
 
   _addSignature(tx, privkey) {				
@@ -94,86 +82,24 @@ class EndorseConfirm extends Component {
 		}
 		return ret;
 	}
-  
-	_generateUnsignedTx(to, endorse_type) {				
-		//console.log('_generateUnsignedTx', params);
-		return new Promise( (resolve, reject) => {
-			tx = {
-				'expiration' : this.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
-				'ref_block_num'     : this.props.blockchain.refBlockNum,
-				'ref_block_prefix'  : this.props.blockchain.refBlockPrefix,
-				'operations' : [
-					 [
-						0,
-						{
-							from   : this.props.account.id,
-							to     : config.PROPUESTAPAR_ID, //https://www.cryptofresh.com/u/propuesta-par ID de propuesta-par
-							amount : {
-								amount   : 1,
-								asset_id : endorse_type
-							},
-							memo   : {message:config.toHex(config.ENDORSE_PREFIX+to)}
-						}
-					]
-				]
-			}
-
-			Bts2helper.calcFee(JSON.stringify(this.props.fees), [JSON.stringify(tx.operations[0])], JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
-				tx.operations[0][1].fee = {
-					asset_id  : config.MONEDAPAR_ID,
-					amount    : res[0]
-				}
-				resolve(tx);
-			}, err => {
-				reject(err);
-			});
-		}); //Promise
-	}
 
 	_onConfirm(){
-// 		if(!this.state.can_confirm)
-// 		{
-// 			Alert.alert(
-// 				'Fondos insuficientes',
-// 				'No dispone de fondos suficientes para realizar la operación.',
-// 				[
-// 					{text: 'OK'},
-// 				]
-// 			)
-// 			return;
-// 		}		
-		
-// 		console.log(' ==> this.props.balance', this.props.balance);
-// 		let final_amount = Number(this.state.fee_txt); 
-// 		let disp = (Number(this.props.balance[config.MONEDAPAR_ID])); // - Number(this.props.balance[0])).toFixed(2);
-
-// 		console.log(disp, final_amount);
-// 		if(Number(disp) < final_amount)
-// 		{
-// 			Alert.alert(
-// 				'Fondos insuficientes',
-// 				'No dispone de fondos suficientes para realizar la operación.',
-// 				[
-// 					{text: 'OK'},
-// 				]
-// 			)
-// 			return;
-// 		}
 		
 		this.props.navigator.showModal({
 			screen : 'endorsement.Sending',
 			title :  'Autorizando crédito...',
-			passProps: {endorsed 			: this.state.endorsed,
+			passProps: {endorsed 			: this.props.account.name,
 									endorse_type 	: this.state.endorse_type,
-									endorse_index : this.state.endorse_index,
-								  modal_type		: 'endorsing'},  // | sharing
+								  modal_type		: 'applying'},  // | endorsing | sharing
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 		
-		this._generateUnsignedTx(this.state.endorsed, this.state.endorse_type).then( res => {
-			this._addSignature(res, this.props.account.keys[1].privkey).then( tx => {
-
+		
+		walletActions.endorseApply(this.props.account.name, this.state.endorse_type).then( (res) => {
+			console.log('endorseApply =>', JSON.stringify(res.tx));
+			this._addSignature(res.tx, this.props.account.keys[1].privkey).then( tx => {
+		
 				fetch(config.getAPIURL('/push_tx'), {
 						method: 'POST',
 						headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -196,12 +122,11 @@ class EndorseConfirm extends Component {
 						});
 						this.props.navigator.push({
 								screen:     'endorsement.Result',
-								title:      'Envío exitoso',
+								title:      'SOLICITUD DE CREDITO ENVIADA',
 								passProps:  {
-										endorsed 			: this.state.endorsed,
+										endorsed 			: this.props.account.name,
 										endorse_type 	: this.state.endorse_type,
-										endorse_index : this.state.endorse_index,
-										modal_type		: 'endorsing'
+										modal_type		: 'apply'
 								},
 								navigatorStyle: {navBarHidden:true}
 						});
@@ -212,10 +137,12 @@ class EndorseConfirm extends Component {
 			}, err => {
 				this._onSendingError(err);
 			});
-			
+
+			//this.setState({can_confirm:true, tx:res.tx, fee_txt:res.tx.operations[0][1].fee.amount/config.ASSET_DIVIDER});
 		}, err => {
-			this._onSendingError(err);
-		})
+			console.log('createEndorsement ERR =>', JSON.stringify(err));
+			//this.setState({can_confirm:false, tx:null});
+		});
 		
 	}
 
@@ -242,7 +169,7 @@ class EndorseConfirm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-  	console.log('EndorseConfirm => componentWillReceiveProps');
+  	console.log('ApplyConfirm => componentWillReceiveProps');
 	}
 
   componentDidMount() {
@@ -270,21 +197,15 @@ class EndorseConfirm extends Component {
     
 		let send_disabled = !this.state.can_confirm;
 		// let total = this.getTotal();
-		let fee = this.state.fee_txt.toFixed(2);
-		
-// 		<Text style={styles.title_part}>A:</Text>
-// 		<Text style={styles.data_part}>{this.state.endorsed[0]}</Text>
 					
 		return (
       <View style={[styles.container]}>
 				<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
 					<View style={{flex:5, backgroundColor:'#2e2f3d', paddingTop:30, paddingRight:0, paddingBottom:30}}>
-						<Text style={styles.title_part}>{share_or_endorse_text}</Text>
+						<Text style={styles.title_part}>Tienes un crédito preacordado</Text>
 						<View style={{alignItems:'center',paddingTop:20, justifyContent:'center'}}>
 							{this._draw_endorsements()}
 						</View>
-						<Text style={styles.title_part}>Costo aproximado:</Text>
-						<Text style={styles.data_part_small}>$ {fee}</Text>
 					</View>
 				</ScrollView>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
@@ -292,7 +213,7 @@ class EndorseConfirm extends Component {
 							disabled={send_disabled}
 							style={[styles.fullWidthButton, btn_style]}
 							onPress={this._onConfirm.bind(this)}  >
-						<Text style={txt_style}>ENVIAR</Text>
+						<Text style={txt_style}>ACEPTAR CREDITO</Text>
 					</TouchableHighlight>
 				</View>
 				<KeyboardSpacer />
@@ -303,31 +224,14 @@ class EndorseConfirm extends Component {
 
 
   _draw_endorsements(){
-  	if(this.state.share_or_endorse=='share')
-    {
-			return this.state.endorsements.map((entry, index) => {
-						if(entry.quantity>0)
-							return (
-                  <SliderEntryMicro
-                    key={`carousel-entry-${index}`}
-                    {...entry} 
-									/>
-              );
-          });
-    }
-		if(isNaN(this.state.endorse_index))
+  	if(isNaN(this.state.endorse_index))
 		{
 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
 			return null;
 		}
-// 		if(!this.state.endorse_index)
-// 		{
-// 			ToastAndroid.show('Vino nada!', ToastAndroid.SHORT);
-// 			return null;
-// 		}
-// 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
-    let entry = avales[this.state.endorse_index];
-		entry.user_name = this.state.endorsed;
+
+    let entry = this.state.entry;
+		entry.user_name = this.props.account.name;
 		entry.quantity = 1;
     return (	
                 <SliderEntryMicro
@@ -341,11 +245,8 @@ class EndorseConfirm extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		account    : state.wallet.account,
-		balance    : state.wallet.balance,
-		fees       : state.wallet.fees,
-		asset      : state.wallet.asset,
-		blockchain : state.wallet.blockchain
+		account : state.wallet.account,
+		balance : state.wallet.balance,
 	};
 }
 
@@ -355,4 +256,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EndorseConfirm);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyConfirm);

@@ -252,15 +252,41 @@ class History extends Component {
 	
   _renderRow(rowData, sectionID, rowID) {
 			
-			if(rowData.__typename == 'NoDetailOp') {
+			if(rowData.__typename == 'CreditRequest') {
+				let icon 						= 'credit-card';
+			  let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
+				let aval_type 			= 'credit_request';
+				let bg     					= {credit_request:'#413932'}; 
+				let fecha  			= this._getFecha(rowData.block.timestamp);
+			  let hora   			= this._getHora(rowData.block.timestamp);
 				return(
-					<TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
-						<Text style={styles.row_amount}>Operacion no conocida</Text>				
+					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+						<View style={styles.row_container}>
+							<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
+								<Image source={iconsMap[icon]} style={[styles.row_hand]}/>
+							</View>
+							<View style={styles.row_content}>            
+								<View style={styles.row_line1}>
+									<Text style={styles.row_amount}>Has solicitado un crédito por <Text style={styles.row_dea}>{aval_amount}</Text></Text>
+								</View>
+							</View>
+							<View style={styles.row_hour}>
+								<Text style={styles.row_hour_item}>{hora}</Text>
+								<Text style={styles.row_hour_item}>{fecha}</Text>
+							</View>
+						</View>
 					</TouchableHighlight>
 				)
 			}
+			
+			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 && rowData.memo != null) {
+				
+				let bg     			= {share:'#413932', endorse:'#f64d27'};
+				let fecha  			= this._getFecha(rowData.block.timestamp);
+			  let hora   			= this._getHora(rowData.block.timestamp);
+				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
+				let to_account  = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
 
-			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 ) {
 				let aval_type 			= '';
 				let icon 						= '';
 				let line1 					= '';
@@ -269,27 +295,36 @@ class History extends Component {
 				let post_line2 			= '';
 				let aval_type_desc  = '';
 				let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
-				if(rowData.memo && rowData.memo.message=='7e696575')
+				
+				let prefix 					= '';
+				let memo_account 		= '';
+				if(rowData.memo && rowData.memo.message && rowData.memo.message.length > 2)
 				{
-					aval_type = 'endorse';
-					icon 						= 'id-card-o';
-					aval_type_desc  = rowData.amount.quantity>1?'autorizaciones':'autorización';
-					if (!rowData.from.id.endsWith(this.props.account.id))
-					{
-						pre_line2       = '';
-						post_line2      = ' te ha autorizado a acceder a un crédito por ' + aval_amount;
-						//line2 					= rowData.from.name + ' te ha autorizado a acceder a un crédito por ' + aval_amount;
-					}
-					else
-					{
-						pre_line2       = 'Has autorizado a ';
-						post_line2      = ' a acceder a un crédito por ' + aval_amount;
-						//line2 					= 'Has autorizado a ' + rowData.to.name + ' a acceder a un crédito por ' + aval_amount;
-						
-					}
-					
+					let msg 		 = config.fromHex(rowData.memo.message);
+					prefix 			 = msg.substring(0,3);
+					memo_account = msg.substring(4);
 				}
-				else
+
+				if(prefix == config.I_ENDORSE_PREFIX)
+				{
+					aval_type 			 = 'endorse';
+					icon 						 = 'id-card-o';
+					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
+					pre_line2        = 'Has autorizado a ';
+					post_line2       = ' a solicitar un crédito por ' + aval_amount;
+				}
+				
+				if(prefix == config.ENDORSED_BY_PREFIX)
+				{
+					aval_type 			 = 'endorse';
+					icon 						 = 'id-card-o';
+					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
+					pre_line2        = '';
+					post_line2       = ' te ha autorizado a solicitar un crédito por ' + aval_amount;
+				}
+
+				
+				if(prefix == config.ENDORSED_TX_PREFIX)
 				{
 					aval_type = 'share';
 					icon 						= 'credit-card';
@@ -306,16 +341,20 @@ class History extends Component {
 						post_line2      = ' para que pueda autorizar créditos por ' + aval_amount;
 						//line2 					= 'Has enviado avales a ' + rowData.to.name + ' para que pueda autorizar créditos por ' + aval_amount;
 					}
+					line1     			= 'Has ' + (rowData.from.id.endsWith(this.props.account.id)?'enviado':'recibido') + ' ' + rowData.amount.quantity.toString() + ' ' + aval_type_desc ; 
 				}	
-				line1     			= 'Has ' + (rowData.from.id.endsWith(this.props.account.id)?'enviado':'recibido') + ' ' + rowData.amount.quantity.toString() + ' ' + aval_type_desc; 
-				//console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
 
-				let bg     			= {share:'#413932', endorse:'#f64d27'};
-				let fecha  			= this._getFecha(rowData.block.timestamp);
-			  let hora   			= this._getHora(rowData.block.timestamp);
-				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
 				
-				// console.log( ' DESC DE AVAL: ', rowData.amount.asset.id, ' - ', config.ALL_AVALS_DESC[rowData.amount.asset.id], ' - ', config.ALL_AVALS_DESC);
+				//console.log(' -- LOCURA:', JSON.stringify(rowData));
+				//console.log(' -- AVALTYPE:' , aval_type, prefix, config.ENDORSE_TX_PREFIX);
+
+				let text2 = null;
+				if(line1)
+				{
+					text2 = (<View style={styles.row_line2}>
+									<Text style={styles.row_simple}>{line1}</Text>
+              	</View>);
+				}
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
@@ -324,11 +363,9 @@ class History extends Component {
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>{line1}</Text>
+									<Text style={styles.row_amount}>{pre_line2}<Text style={styles.row_dea}>{memo_account}</Text>{post_line2}</Text>
 								</View>
-								<View style={styles.row_line2}>
-									<Text style={styles.row_simple}>{pre_line2}<Text style={styles.row_dea}>{_recv_sent == 'received' ? rowData.from.name : rowData.to.name}</Text>{post_line2}</Text>
-              </View>
+								{text2}
 							</View>
 							<View style={styles.row_hour}>
 								<Text style={styles.row_hour_item}>{hora}</Text>
@@ -372,6 +409,13 @@ class History extends Component {
 				)
 			}
 
+// 			console.log('--------------RIW');
+// 			console.log(rowData);
+// 			console.log('---------------------------------');
+
+
+		if(rowData.__typename == 'Transfer' && config.MONEDAPAR_ID == rowData.amount.asset.id) {
+
        let mapa   = {received:'recibido', sent: 'enviado'};
        let rotato = {received:'135 deg', sent : '-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
@@ -409,6 +453,14 @@ class History extends Component {
           </View>
         </TouchableHighlight>
       );
+		}
+
+		return(
+			<TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+				<Text style={styles.row_amount}>Operacion no conocida</Text>				
+			</TouchableHighlight>
+		)
+	
   }
 
 	render() {

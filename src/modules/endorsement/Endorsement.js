@@ -37,11 +37,11 @@ class Endorsement extends Component {
   }
   
   _onApplyEndorsement(){
-    // this.props.navigator.push({
-    //   screen: 'wallet.SelectEndorsed',
-    //   title: 'Solicitar crédito',
+    this.props.navigator.push({
+      screen: 'endorsement.ApplyConfirm',
+      title: 'Aceptar crédito'
       
-    // });
+    });
 
   }
 
@@ -95,18 +95,23 @@ class Endorsement extends Component {
     const iconBuffer  = (<Icon name="logo-buffer" size={30} color="#1f475b" />);
     const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="#CF2E08" />);
     
-    return (
-      <View style={styles.container}>
-        <SettingsList>
-          <SettingsList.Item
+    let applyForCreditItem = null;
+    if(this.props.credit_ready){
+      applyForCreditItem = (<SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
                     {iconThumbsUp}
                   </View>}
             itemWidth={50}
             title='Solicitar mi crédito preacordado'
             onPress={this._onApplyEndorsement.bind(this)}
-          />
-          <SettingsList.Header headerText='Invitar nuevo miembro'/>
+          />);
+    }
+
+    return (
+      <View style={styles.container}>
+        <SettingsList>
+          {applyForCreditItem}
+          <SettingsList.Header headerText='Créditos'/>
           <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
                     {iconCard}
@@ -115,32 +120,17 @@ class Endorsement extends Component {
             title='Otorgar crédito'
             onPress={this._onSendOverdraft.bind(this)}
           />
-          <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconBuffer}
-                  </View>}
-            itemWidth={50}
-            title='Créditos otorgados'
-            onPress={this._onSendOverdraft.bind(this)}
-          />
           
-          <SettingsList.Header headerText='Autorizar entrega de créditos'/>
+          <SettingsList.Header headerText='Avales'/>
           <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
                     {iconShare}
                   </View>}
             itemWidth={50}
-            title='Enviar avales'
+            title='Enviar avales para otorgar créditos'
             onPress={this._onShareEndorsement.bind(this)}
           />
-          <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconBuffer}
-                  </View>}
-            itemWidth={50}
-            title='Avales enviados'
-            onPress={this._onShareEndorsement.bind(this)}
-          />
+          
         </SettingsList>
       </View>
     );
@@ -150,27 +140,26 @@ class Endorsement extends Component {
 /*
     <SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconSec}
+                    {iconBuffer}
                   </View>}
             itemWidth={50}
-            title='Mostrar palabras clave'
-            onPress={this._onShowWords.bind(this)}
-          />
-          
-      
+            title='Créditos otorgados'
+            onPress={this._onSendOverdraft.bind(this)}
+     /> 
+     <SettingsList.Item
+            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
+                    {iconBuffer}
+                  </View>}
+            itemWidth={50}
+            title='Avales enviados'
+            onPress={this._onShareEndorsement.bind(this)}
+     />
 */
 
 function mapStateToProps(state, ownProps) {
   return {
-//     memo: state.wallet.new_keys,
-//     account: state.wallet.account
+     credit_ready : state.wallet.credit_ready
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-//     actions: bindActionCreators(walletActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Endorsement);
+export default connect(mapStateToProps, null)(Endorsement);

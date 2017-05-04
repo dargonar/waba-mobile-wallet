@@ -12,7 +12,7 @@ export default {
 		account    : null,
 		account_id : null,
 		blockchain : {},
-
+		credit_ready : false,
 		endorsements: {},
 		endorsed: 		null
 	}

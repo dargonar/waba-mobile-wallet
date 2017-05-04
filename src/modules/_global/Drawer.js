@@ -118,20 +118,23 @@ class Drawer extends Component {
 		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
  		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// https://www.npmjs.com/package/react-native-icon-badge		
-		const iconEndorsementEx = (<IconBadge
-    MainElement={iconEndorsement}
-    BadgeElement={
-      <Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
-    }
- 
-    IconBadgeStyle={
-      {width:14,
-      height:14,
-			top:-6,
-  		right:-6,													 
-      backgroundColor: '#CF2E08'}
-    }
-    />);
+		let iconEndorsementEx = iconEndorsement;
+    if(this.props.credit_ready){
+			iconEndorsementEx = (<IconBadge
+				MainElement={iconEndorsement}
+				BadgeElement={
+					<Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
+				}
+				IconBadgeStyle={
+					{width:14,
+					height:14,
+					top:-6,
+					right:-6,													 
+					backgroundColor: '#CF2E08'}
+				}
+    	/>);
+		}													 
+													 
 		return (
 			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
 											style={styles.linearGradient}>
@@ -228,7 +231,9 @@ Drawer.propTypes = {
 function mapStateToProps(state, ownProps) {
 	//console.log('DRAWER->mapStateToProps', state.wallet.fees, state.wallet.asset);
 	return {
-		account: state.wallet.account
+		account: state.wallet.account,
+		balance: state.wallet.balance,
+		credit_ready : state.wallet.credit_ready
 	};
 }
 

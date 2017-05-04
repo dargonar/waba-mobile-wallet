@@ -24,6 +24,7 @@ import ShareEndorsement from './modules/endorsement/ShareEndorsement';
 import EndorseConfirm from './modules/endorsement/EndorseConfirm';
 import EndorseSending from './modules/endorsement/Sending';
 import EndorseResult from './modules/endorsement/Result';
+import ApplyConfirm from './modules/endorsement/ApplyConfirm';
 
 export function registerScreens(store, Provider) {
 
@@ -51,4 +52,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('endorsement.EndorseConfirm', () => EndorseConfirm, store, Provider);
 	Navigation.registerComponent('endorsement.Sending', () => EndorseSending, store, Provider);
 	Navigation.registerComponent('endorsement.Result', () => EndorseResult, store, Provider);
+	Navigation.registerComponent('endorsement.ApplyConfirm', () => ApplyConfirm, store, Provider);
 }

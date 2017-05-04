@@ -38,12 +38,12 @@ export const avales = [
         }];
 
 export function getAvalByKey(key, _avales){
-  _avales.filter((entry) => {
+  let avalon = _avales.filter((entry) => {
 			if( entry._key==key ) {
-				return entry;
+				return true;
 			}
 		});
-  return null;
+  return avalon[0];
 }
 
 export function getAvalDesc(aval){
