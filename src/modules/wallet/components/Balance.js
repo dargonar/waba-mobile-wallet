@@ -93,13 +93,13 @@ class Balance extends Component {
 			if(_avales.length==0)
 				_avales.push(avales[0]);
 				j = undefined;
-				//<View style={styles.credit_available}>
+				//<Text style={[styles.credit_amount, styles.bold_color]}>{_avales[0].amount_txt}</Text>
 				
 				j = (
 					<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
 						<View style={styles.credit_available}>
 							<Icon name="ios-checkmark-circle" size={18} color="#ef5030" style={[{paddingRight:10}]} />
-							<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por <Text style={[styles.credit_amount, styles.bold_color]}>{_avales[0].amount_txt}</Text> </Text>
+							<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por {_avales[0].amount_txt}</Text>
 					  </View>
 					</TouchableHighlight>
 					);	

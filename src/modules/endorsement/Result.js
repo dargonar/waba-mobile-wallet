@@ -28,8 +28,8 @@ class Result extends Component {
   
     this.state = {
       endorsed 				: props.endorsed,
-			endorse_type 		: props.endorse_type,
-			endorse_index		: props.endorse_index
+// 			endorse_type 		: props.endorse_type,
+// 			endorse_index		: props.endorse_index
     };
   }
   
@@ -65,8 +65,10 @@ class Result extends Component {
 
   render() {
 		
-		let aval_txt = fn_avales.getAvalDesc(fn_avales.avales[this.state.endorse_index]);
-		
+// 		let aval_txt = fn_avales.getAvalDesc(fn_avales.avales[this.state.endorse_index]);
+// 		<Text style={styles.title_part}>TIPO DE CREDITO</Text>
+// 		<Text style={[styles.data_part,styles.margin_bottom]}>{aval_txt}</Text>
+          
     return (
       
       <View style={styles.container}>
@@ -77,8 +79,6 @@ class Result extends Component {
           
           <Text style={styles.title_part}>DESTINATARIO</Text>
           <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.endorsed}</Text>
-          <Text style={styles.title_part}>TIPO DE CREDITO</Text>
-					<Text style={[styles.data_part,styles.margin_bottom]}>{aval_txt}</Text>
           
         </View>
         <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end'}}>

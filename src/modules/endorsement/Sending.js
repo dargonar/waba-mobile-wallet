@@ -123,11 +123,11 @@ class Sending extends Component {
 			else
 				return (
 				<View style={styles.container}>
-					<View style={{flex:3, justifyContent: 'center', alignItems:'center'}}>
-						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#B7F072"/>
+					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#2e2f3d'}}>
+						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#B7F072"/>
 					</View>
 					<View style={{flex:4, backgroundColor:'#2e2f3d', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
-						<Text style={styles.data_part}>Restaurando cuenta</Text>
+						<Text style={styles.data_part}>Enviando avales</Text>
 					</View>
 				</View>
 			);

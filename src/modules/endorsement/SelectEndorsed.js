@@ -5,7 +5,8 @@ import { ActivityIndicator } from 'react-native';
 
 import {
   View,
-  ListView
+  ListView,
+	ToastAndroid
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -37,11 +38,13 @@ class SelectEndorsed extends Component {
       dataSource          : dataSource,
       refreshing          : false,
 			recipient_selected  : false,
-      next_screen         : props.next_screen
+      next_screen         : props.next_screen,
+			with_no_credit      : props.with_no_credit
     };
-
+		
 
 		this.tid = undefined;
+		
 	}
   
   _onChangeText(text) {
@@ -78,7 +81,9 @@ class SelectEndorsed extends Component {
   pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		walletActions.retrieveUsers(search, '1').then( (users) => {
+		let _with_no_credit = this.state.with_no_credit ? '1' : '0';
+// 		ToastAndroid.show('Pedir with_no_credit: ' + _with_no_credit, ToastAndroid.SHORT);
+		walletActions.retrieveUsers(search, _with_no_credit).then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),

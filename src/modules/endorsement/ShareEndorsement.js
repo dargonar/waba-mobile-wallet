@@ -25,7 +25,6 @@ import { AsyncStorage } from 'react-native'
 import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
 import Prompt from 'react-native-prompt';
-import SliderEntryMin from './components/SliderEntryMin';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -45,22 +44,26 @@ class ShareEndorsement extends Component {
     this._onSelectEndorsementType  = this._onSelectEndorsementType.bind(this);
     this._onNext                   = this._onNext.bind(this);
     this._onQuantityChosen         = this._onQuantityChosen.bind(this);
-		let _avales = this._getAvales4Endorsed(props.endorsed[0]);
+		let _avales 									 = this._getAvales4Endorsed(props.endorsed[0]);
     this.state = {
       endorsements  : _avales,
       endorsed      : props.endorsed,
       promptVisible : false,
       current_idx   : 0
     };
-    // this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+    
   }
 	
 	_getAvales4Endorsed(username){
-		let _avales = avales;
-		for(var i = 0; i < _avales.length; i++) {
-      _avales[i].user_name == username;
-    }
-// 		ToastAndroid.show('ENDORSED: ' + username, ToastAndroid.SHORT);
+		let _avales = avales.filter((entry) => {
+			if( !(entry.asset_id in this.props.balance))
+        return false;
+			entry.remaining = this.props.balance[entry.asset_id];
+			if( entry.remaining<1 )
+				return false;
+			entry.user_name == username;
+			return true;
+		});
 		return _avales;
 	}
 	
@@ -81,7 +84,7 @@ class ShareEndorsement extends Component {
 			ToastAndroid.show('Avales array is NULL!', ToastAndroid.SHORT);
 			return null;
 		}
-    let idx = this.getIndex(endorsement_type, avales, '_key');
+    let idx = this.getIndex(endorsement_type, this.state.endorsements, '_key');
     if(isNaN(idx) || idx<0)
     {
 			ToastAndroid.show('idx NULL o MENOR A 0!', ToastAndroid.SHORT);
@@ -91,27 +94,37 @@ class ShareEndorsement extends Component {
   }
 
   _onNext(){
-      // if(Number(this.props.balance)<=Number(this.state.amount))
-      // {
-      //   Alert.alert(
-      //     'Fondos insuficientes',
-      //     'No dispone de fondos suficientes para realizar la operación.',
-      //     [
-      //       {text: 'OK'},
-      //     ]
-      //   )
-      //   return;
-      // }
-      this.props.navigator.push({
-        screen: 'endorsement.EndorseConfirm',
-        title: 'Confirmar envío',
-        passProps: {
-          endorsements      : this.state.endorsements,
-          endorsed          : this.state.endorsed,
-          share_or_endorse  : 'share'
-        }
-      });
-    }
+		let _avales = avales.filter((entry) => {
+			if( !(entry.asset_id in this.props.balance))
+        return false;
+			if(entry.quantity > this.props.balance[entry.asset_id])
+				return false;
+			if( entry.remaining<1 || entry.quantity<1 )
+				return false;
+			return true;
+		});
+		
+		if(_avales.length<1)
+		{
+		  Alert.alert(
+		    'Avales',
+		    'Debe seleccionar al menos un aval. La cantidad seleccionada no debe superar sus tenencias.',
+		    [
+		      {text: 'OK'},
+		    ]
+		  )
+		  return;
+		}
+		this.props.navigator.push({
+			screen: 'endorsement.ShareConfirm',
+			title: 'Confirmar envío',
+			passProps: {
+				endorsements      : this.state.endorsements,
+				endorsed          : this.state.endorsed,
+				share_or_endorse  : 'share'
+			}
+		});
+	}
 
   componentWillMount() {
   }
@@ -129,6 +142,11 @@ class ShareEndorsement extends Component {
   }
   
   _onQuantityChosen(value){
+		if(!value || isNaN(value))
+		{
+			this.setState({promptVisible:false});
+			return;
+		}
     let _endorsements = this.state.endorsements;
     _endorsements[this.state.current_idx].quantity = parseInt(value);
     this.setState({endorsements:_endorsements, promptVisible:false});
@@ -137,6 +155,11 @@ class ShareEndorsement extends Component {
   _renderPrompt(){
     if (!this.state.promptVisible)
       return null;
+		if (this.state.endorsements[this.state.current_idx].remainig<1)
+		{
+			ToastAndroid.show('No dispone de avales de este tipo', ToastAndroid.SHORT);
+			return null;
+		}
     let that = this;
     let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
     return (
@@ -163,7 +186,7 @@ class ShareEndorsement extends Component {
             <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} key={`touch-entry-${index}`} onPress={() => { this._onSelectEndorsementType(`${entry._key}`)}}>
               <View style={styles.row_container}>
                 <View style={[styles.row_card, _bg ]}>
-                  <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+                  <Image source={iconsMap['ios-card']} style={[styles.row_hand]}/>
                 </View>
                 <View style={styles.row_content}>            
                   <View style={styles.row_line1}>
@@ -210,8 +233,7 @@ class ShareEndorsement extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    // endorsements: state.wallet.endorsements,
-    // endorsed: state.wallet.endorsed
+    balance : state.wallet.balance
   };
 }
 

@@ -6,6 +6,7 @@ import {
   ListView,
   Text, 
   TextInput,
+  ToastAndroid,
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,7 +17,7 @@ import styles from './styles/Endorsement';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
-
+import { avales }  from './components/static/endorsements_const'
 import { AsyncStorage } from 'react-native'
 import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
@@ -31,9 +32,10 @@ class Endorsement extends Component {
   
   constructor(props) {
     super(props);
-    this._onShareEndorsement        = this._onShareEndorsement.bind(this);
+    this._onShareEndorsement       = this._onShareEndorsement.bind(this);
     this._onSendOverdraft          = this._onSendOverdraft.bind(this);
     this._onApplyEndorsement       = this._onApplyEndorsement.bind(this);
+    this.hasEndorsements           = this.hasEndorsements.bind(this);
   }
   
   _onApplyEndorsement(){
@@ -45,20 +47,40 @@ class Endorsement extends Component {
 
   }
 
+  hasEndorsements(){
+    let _avales = avales.filter((entry) => {
+      if( !(entry.asset_id in this.props.balance))
+        return false;
+			entry.remaining = this.props.balance[entry.asset_id];
+			if( entry.remaining<1 )
+				return false;
+			return true;
+		});
+    if(_avales.length<1){
+      ToastAndroid.show('No dispone de avales', ToastAndroid.SHORT);
+      return false;
+    }
+    return true;
+  }
+
   _onSendOverdraft() {
+    if(!this.hasEndorsements())
+      return;
     this.props.navigator.push({
       screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
-      passProps: {next_screen: 'endorsement.SelectEndorseType'}
+      passProps: {next_screen: 'endorsement.SelectEndorseType', with_no_credit: true}
     });
   }
 
 
   _onShareEndorsement() {
+    if(!this.hasEndorsements())
+      return;
     this.props.navigator.push({
       screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
-      passProps: {next_screen: 'endorsement.ShareEndorsement'}
+      passProps: {next_screen: 'endorsement.ShareEndorsement', with_no_credit: false}
     });
   }
 
@@ -158,7 +180,8 @@ class Endorsement extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-     credit_ready : state.wallet.credit_ready
+    credit_ready : state.wallet.credit_ready,
+    balance : state.wallet.balance
   };
 }
 

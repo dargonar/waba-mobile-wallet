@@ -35,8 +35,8 @@ class EndorseConfirm extends Component {
       share_or_endorse 	: props.share_or_endorse,
       endorsements 			: props.endorsements,
       endorsed 					: props.endorsed,
-      endorse_type      : props.endorse_type,
-			endorse_index     : props.endorse_index,
+      endorse_type      : props.share_or_endorse=='share'?null:props.endorse_type,
+			endorse_index     : props.share_or_endorse=='share'?null:props.endorse_index,
 			tx								: null,
 			fee								: 0,
 			fee_txt						: 0.6, 		// hack
@@ -44,20 +44,8 @@ class EndorseConfirm extends Component {
 			error 						: ''
     }
 		
-// 		console.log('******** endorse confirm');
-// 		console.log(this.state);
-// 		console.log(props.endorsed);
-		
 		this._onSendingError = this._onSendingError.bind(this);
-// 		this._buildMemo = this._buildMemo.bind(this);
 
-// 		walletActions.createEndorsement(this.props.account.name, this.state.endorsed, this.state.endorse_type).then( (res) => {
-// 			console.log('createEndorsement =>', JSON.stringify(res.tx));
-// 			this.setState({can_confirm:true, tx:res.tx, fee_txt:res.tx.operations[0][1].fee.amount/config.ASSET_DIVIDER});
-// 		}, err => {
-// 			console.log('createEndorsement ERR =>', JSON.stringify(err));
-// 			this.setState({can_confirm:false, tx:null});
-// 		});
   }
 
   _addSignature(tx, privkey) {				
@@ -96,7 +84,6 @@ class EndorseConfirm extends Component {
 	}
   
 	_generateUnsignedTx(to, endorse_type) {				
-		//console.log('_generateUnsignedTx', params);
 		return new Promise( (resolve, reject) => {
 			tx = {
 				'expiration' : this.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
@@ -303,19 +290,7 @@ class EndorseConfirm extends Component {
 
 
   _draw_endorsements(){
-  	if(this.state.share_or_endorse=='share')
-    {
-			return this.state.endorsements.map((entry, index) => {
-						if(entry.quantity>0)
-							return (
-                  <SliderEntryMicro
-                    key={`carousel-entry-${index}`}
-                    {...entry} 
-									/>
-              );
-          });
-    }
-		if(isNaN(this.state.endorse_index))
+  	if(isNaN(this.state.endorse_index))
 		{
 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
 			return null;
@@ -326,9 +301,9 @@ class EndorseConfirm extends Component {
 // 			return null;
 // 		}
 // 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
-    let entry = avales[this.state.endorse_index];
+    let entry 			= avales[this.state.endorse_index];
 		entry.user_name = this.state.endorsed;
-		entry.quantity = 1;
+		entry.quantity  = 1;
     return (	
                 <SliderEntryMicro
                   key={`carousel-entry-${0}`}

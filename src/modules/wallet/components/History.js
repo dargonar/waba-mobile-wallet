@@ -282,7 +282,7 @@ class History extends Component {
 				)
 			}
 			
-			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1 && rowData.memo != null) {
+			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1) {
 				
 				let bg     			= {share:'#413932', endorse:'#ef5030'};
 				let fecha  			= this._getFecha(rowData.block.timestamp);
@@ -307,7 +307,11 @@ class History extends Component {
 					prefix 			 = msg.substring(0,3);
 					memo_account = msg.substring(4);
 				}
-
+				else
+				{
+					memo_account = 'Administración PAR';
+					prefix =config.ENDORSED_TX_PREFIX;
+				}
 				if(prefix == config.I_ENDORSE_PREFIX)
 				{
 					aval_type 			 = 'endorse';
@@ -329,7 +333,7 @@ class History extends Component {
 				
 				if(prefix == config.ENDORSED_TX_PREFIX)
 				{
-					aval_type = 'share';
+					aval_type 			= 'share';
 					icon 						= 'ios-card';
 					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';	
 					if (!rowData.from.id.endsWith(this.props.account.id))
@@ -382,17 +386,20 @@ class History extends Component {
 			}
 
 			if(rowData.__typename == 'OverdraftChange') {
-// 				console.log(' -- DESCUBIERTO:', JSON.stringify(rowData));
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#fda720', credit_down:'#413932'}; 
-				let msg    = {credit_up:'incrementado', credit_down:'decrementado'};
-				let title	 = {credit_up:'Aumento', credit_down:'Reducción'};
+				let msg    = {credit_up:'incrementado', credit_down:'reducido'};
 				let asset_symbol = config.ASSET_SYMBOL;
+				let title  = 'Se ha '+ msg[_tipo] + 'tu límite de crédito en';
+				if(!rowData.memo || !rowData.memo.message)
+				{
+					title = '¡Solicitud de crédito aprobada! Has accedido a un crédito de';
+				}
 				let fecha  = this._getFecha(rowData.block.timestamp);
 			  let hora   = this._getHora(rowData.block.timestamp);
-// 				<View style={[styles.row_avatar, {backgroundColor:bg[_tipo]}]}>
-// 					<Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+//
+// 					<Text style={styles.row_amount}>{title[_tipo]} de límite de crédito por {asset_symbol}{rowData.amount.quantity}</Text>
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
@@ -401,11 +408,8 @@ class History extends Component {
 							</View>
 							<View style={styles.row_content}>            
 								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>{title[_tipo]} de límite de crédito por {asset_symbol}{rowData.amount.quantity}</Text>
+									<Text style={styles.row_amount}>{title} {asset_symbol}{rowData.amount.quantity}</Text>
 								</View>
-								<View style={styles.row_line2}>
-                <Text>Se ha {msg[_tipo]} tu crédito</Text>
-              </View>
 							</View>
 							<View style={styles.row_hour}>
 								<Text style={styles.row_hour_item}>{hora}</Text>
