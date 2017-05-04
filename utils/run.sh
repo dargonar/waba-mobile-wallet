@@ -7,7 +7,7 @@ echo "##############################"
 
 javac -cp "$CP" test.java
 if [[ $? -eq 0 ]]; then
-	java -cp "$CP" test $1 $2 $3
+	java -cp "$CP" test "$1" "$2" "$3"
 else
 	echo "NO NO"
 fi

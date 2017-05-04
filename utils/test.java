@@ -18,7 +18,7 @@ public class test {
   
   public static void main(String[] args) {
 
-    CryptoValidatorTest p = new CryptoValidatorTest(args[0]);
+    CryptoValidatorTest p = new CryptoValidatorTest(args[0], args.length > 1 ? args[1] : null );
 
     try {
       p.gen_mnemonic();
@@ -33,8 +33,10 @@ public class test {
 class CryptoValidatorTest implements UWFileOpener {
 
   String m_path;
-  public CryptoValidatorTest(String path) {
+  String m_words;
+  public CryptoValidatorTest(String path, String words) {
     m_path = path;
+    m_words = words;
   }
 
   public InputStream open(String file_name) throws IOException {
@@ -52,6 +54,10 @@ class CryptoValidatorTest implements UWFileOpener {
     tmp = impl.generateMnemonic("es", 128);
     String mnemonic_es = tmp.get("mnemonic");
     //mnemonic_es = "orgía balanza vereda candil batir panal separar vector rasgo rumor tobillo carbón";
+
+    if(m_words != null)
+      mnemonic_es = m_words;
+
     System.out.println(mnemonic_es);
 
     tmp = impl.mnemonicToMasterKey(mnemonic_es);
