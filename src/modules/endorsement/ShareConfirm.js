@@ -88,7 +88,7 @@ class ShareConfirm extends Component {
       let entry = this.state.endorsements[i];
       opers.push(
         [
-          i,
+          0,
           {
             from   : this.props.account.id,
             to     : config.PROPUESTAPAR_ID,
@@ -96,7 +96,7 @@ class ShareConfirm extends Component {
               amount   : entry.quantity,
               asset_id : entry.asset_id
             },
-            memo   : {message:config.toHex(config.ENDORSED_TX_PREFIX+this.state.endorsed)}
+            memo   : {message:config.toHex(config.ENDORSED_TX_PREFIX+':'+this.state.endorsed)}
           }
         ]
       );

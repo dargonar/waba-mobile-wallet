@@ -256,7 +256,7 @@ class History extends Component {
 				let icon 						= 'ios-card';
 			  let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
 				let aval_type 			= 'credit_request';
-				let bg     					= {credit_request:'#29c3cbt'}; 
+				let bg     					= {credit_request:'#29c3cb'}; 
 				let fecha  			    = this._getFecha(rowData.block.timestamp);
 			  let hora   			    = this._getHora(rowData.block.timestamp);
 				//<View style={[styles.row_avatar, {backgroundColor:bg[aval_type]}]}>
@@ -291,8 +291,8 @@ class History extends Component {
 				let to_account  = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
 
 				let aval_type 			= '';
-				let icon 						= '';
-				let line1 					= '';
+				let icon 						= 'ios-help'; // Meta hack
+				let line1 					= 'Operación desconocida'; // Meta hack
 				let line2 					= '';
 				let pre_line2 		  = '';
 				let post_line2 			= '';
@@ -312,6 +312,7 @@ class History extends Component {
 					memo_account = 'Administración PAR';
 					prefix =config.ENDORSED_TX_PREFIX;
 				}
+
 				if(prefix == config.I_ENDORSE_PREFIX)
 				{
 					aval_type 			 = 'endorse';
@@ -330,7 +331,6 @@ class History extends Component {
 					post_line2       = ' te ha autorizado a solicitar un crédito por ' + aval_amount;
 				}
 
-				
 				if(prefix == config.ENDORSED_TX_PREFIX)
 				{
 					aval_type 			= 'share';
@@ -351,10 +351,6 @@ class History extends Component {
 					line1     			= 'Has ' + (rowData.from.id.endsWith(this.props.account.id)?'enviado':'recibido') + ' ' + rowData.amount.quantity.toString() + ' ' + aval_type_desc ; 
 				}	
 
-				
-				//console.log(' -- LOCURA:', JSON.stringify(rowData));
-				//console.log(' -- AVALTYPE:' , aval_type, prefix, config.ENDORSE_TX_PREFIX);
-
 				let text2 = null;
 				if(line1)
 				{
@@ -363,6 +359,10 @@ class History extends Component {
               	</View>);
 				}
 				// <Image source={iconsMap[icon]} style={[styles.row_hand, {color:bg[aval_type]}]}/>
+// 				console.log('----------------------------------icon #1');
+// 				console.log(memo_account);
+//         console.log(icon);
+				
 				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
