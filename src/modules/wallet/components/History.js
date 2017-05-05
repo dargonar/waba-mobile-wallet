@@ -283,8 +283,7 @@ class History extends Component {
 			}
 			
 			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1) {
-				
-				let bg     			= {share:'#413932', endorse:'#ef5030'};
+				let bg     			= {share:'#413932', endorse:'#ef5030', share_received:'#B7F072', share_sent:'#ff9379'};
 				let fecha  			= this._getFecha(rowData.block.timestamp);
 			  let hora   			= this._getHora(rowData.block.timestamp);
 				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
@@ -315,6 +314,7 @@ class History extends Component {
 
 				if(prefix == config.I_ENDORSE_PREFIX)
 				{
+					line1 					 = null;
 					aval_type 			 = 'endorse';
 					icon 						 = 'ios-ribbon';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
@@ -324,6 +324,7 @@ class History extends Component {
 				
 				if(prefix == config.ENDORSED_BY_PREFIX)
 				{
+					line1 					 = null;
 					aval_type 			 = 'endorse';
 					icon 						 = 'md-checkmark';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
@@ -338,12 +339,14 @@ class History extends Component {
 					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';	
 					if (!rowData.from.id.endsWith(this.props.account.id))
 					{
+						aval_type 			= 'share_received';
 						pre_line2       = '';
 						post_line2      = ' te ha enviado avales para autorizar créditos por ' + aval_amount;
 						//line2 					= rowData.from.name + ' te ha enviado avales para autorizar créditos por ' + aval_amount;
 					}	
 					else
 					{	
+						aval_type 			= 'share_sent';
 						pre_line2       = 'Has enviado avales a ';
 						post_line2      = ' para que pueda autorizar créditos por ' + aval_amount;
 						//line2 					= 'Has enviado avales a ' + rowData.to.name + ' para que pueda autorizar créditos por ' + aval_amount;

@@ -99,7 +99,7 @@ class EndorseConfirm extends Component {
 								amount   : 1,
 								asset_id : endorse_type
 							},
-							memo   : {message:config.toHex(config.ENDORSE_PREFIX+':'+to)}
+							memo   : {message:config.toHex(config.I_ENDORSE_PREFIX+':'+to)}
 						}
 					]
 				]

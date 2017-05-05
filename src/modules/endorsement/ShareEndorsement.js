@@ -55,7 +55,8 @@ class ShareEndorsement extends Component {
   }
 	
 	_getAvales4Endorsed(username){
-		let _avales = avales.filter((entry) => {
+		let _avales = JSON.parse(JSON.stringify(avales));
+		_avales = _avales.filter((entry) => {
 			if( !(entry.asset_id in this.props.balance))
         return false;
 			entry.remaining = this.props.balance[entry.asset_id];
@@ -94,7 +95,7 @@ class ShareEndorsement extends Component {
   }
 
   _onNext(){
-		let _avales = avales.filter((entry) => {
+		let _avales = this.state.endorsements.filter((entry) => {
 			if( !(entry.asset_id in this.props.balance))
         return false;
 			if(entry.quantity > this.props.balance[entry.asset_id])
