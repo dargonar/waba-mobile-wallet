@@ -86,6 +86,7 @@ class ShareConfirm extends Component {
     let opers = [];
     for(var i = 0; i < this.state.endorsements.length; i++) {
       let entry = this.state.endorsements[i];
+			if(entry.quantity>0)
       opers.push(
         [
           0,
