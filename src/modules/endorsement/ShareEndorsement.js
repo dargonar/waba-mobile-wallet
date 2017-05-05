@@ -102,7 +102,7 @@ class ShareEndorsement extends Component {
 				return false;
 			if( entry.remaining<1) 
 				return false;
-			if(entry.quantity<1 ))
+			if(entry.quantity<1)
 				return false;
 			return true;
 		});
