@@ -81,9 +81,11 @@ class SelectEndorsed extends Component {
   pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		let _with_no_credit = this.state.with_no_credit ? '1' : '0';
-// 		ToastAndroid.show('Pedir with_no_credit: ' + _with_no_credit, ToastAndroid.SHORT);
-		walletActions.retrieveUsers(search, _with_no_credit).then( (users) => {
+// 		0=no filter (all)
+// 		1=solo sin credito y sin BL
+// 		2=solo con credito
+		let _search_filter = this.state.with_no_credit ? '1' : '2';
+		walletActions.retrieveUsers(search, _search_filter).then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),

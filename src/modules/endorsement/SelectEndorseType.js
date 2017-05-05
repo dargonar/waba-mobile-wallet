@@ -117,7 +117,7 @@ class SelectEndorseType extends Component {
 			if(!this.state.avales)
 				return null;
 			return this.state.avales.map((entry, index) => {
-					entry.user_name = this.state.endorsed[0];			
+					entry.user_name = this.state.endorsed;			
 					return (
               <SliderEntry
                 key={`carousel-entry-${index}`}

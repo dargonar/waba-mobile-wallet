@@ -119,7 +119,15 @@ class Endorsement extends Component {
     
     let applyForCreditItem = null;
     if(this.props.credit_ready){
-      applyForCreditItem = (<SettingsList.Item
+			let _avales = avales.filter((entry) => {
+				if( this.props.balance[entry.asset_id] > 0 ) {
+					entry.remaining = this.props.balance[entry.asset_id];
+					return true;
+				}
+				return false;
+			});
+			if(_avales.length>0)
+      	applyForCreditItem = (<SettingsList.Item
             icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
                     {iconThumbsUp}
                   </View>}
@@ -158,25 +166,6 @@ class Endorsement extends Component {
     );
   }
 }
-
-/*
-    <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconBuffer}
-                  </View>}
-            itemWidth={50}
-            title='Créditos otorgados'
-            onPress={this._onSendOverdraft.bind(this)}
-     /> 
-     <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconBuffer}
-                  </View>}
-            itemWidth={50}
-            title='Avales enviados'
-            onPress={this._onShareEndorsement.bind(this)}
-     />
-*/
 
 function mapStateToProps(state, ownProps) {
   return {

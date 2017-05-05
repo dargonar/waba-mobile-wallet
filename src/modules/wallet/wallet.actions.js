@@ -161,11 +161,11 @@ export function endorseApply(from, endorse_type) {
 }
 
 // USERS
-export function retrieveUsers(query, with_no_credit) {
-    with_no_credit = with_no_credit | '';
+export function retrieveUsers(query, search_filter) {
+    search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
 			// 			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
-			fetch(config.getAPIURL('/searchAccount?search='+query+'&with_no_credit='+with_no_credit), {
+			fetch(config.getAPIURL('/searchAccount?search='+query+'&search_filter='+search_filter), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})

@@ -78,7 +78,7 @@ class SelectRecipient extends Component {
   pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		walletActions.retrieveUsers(search).then( (users) => {
+		walletActions.retrieveUsers(search, '0').then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),

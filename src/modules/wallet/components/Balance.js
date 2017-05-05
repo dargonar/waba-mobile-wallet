@@ -89,12 +89,10 @@ class Balance extends Component {
 					entry.remaining = this.props.balance[entry.asset_id];
 					return true;
 				}
+				return false;
 			});
-			if(_avales.length==0)
-				_avales.push(avales[0]);
-				j = undefined;
-				//<Text style={[styles.credit_amount, styles.bold_color]}>{_avales[0].amount_txt}</Text>
-				
+			if(_avales.length>0)
+			{				
 				j = (
 					<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
 						<View style={styles.credit_available}>
@@ -103,6 +101,7 @@ class Balance extends Component {
 					  </View>
 					</TouchableHighlight>
 					);	
+			}
 		}
 		// <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 		return (

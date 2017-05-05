@@ -290,6 +290,7 @@ class History extends Component {
 				let to_account  = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
 
 				let aval_type 			= '';
+				let icon_type 			= '';
 				let icon 						= 'ios-help'; // Meta hack
 				let line1 					= 'Operación desconocida'; // Meta hack
 				let line2 					= '';
@@ -316,6 +317,7 @@ class History extends Component {
 				{
 					line1 					 = null;
 					aval_type 			 = 'endorse';
+					icon_type 			 = 'endorse';
 					icon 						 = 'ios-ribbon';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
 					pre_line2        = 'Has autorizado a ';
@@ -326,6 +328,7 @@ class History extends Component {
 				{
 					line1 					 = null;
 					aval_type 			 = 'endorse';
+					icon_type 			 = 'endorse';
 					icon 						 = 'md-checkmark';
 					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
 					pre_line2        = '';
@@ -335,18 +338,21 @@ class History extends Component {
 				if(prefix == config.ENDORSED_TX_PREFIX)
 				{
 					aval_type 			= 'share';
+					icon_type 			= 'share';
 					icon 						= 'ios-card';
 					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';	
 					if (!rowData.from.id.endsWith(this.props.account.id))
 					{
-						aval_type 			= 'share_received';
+						icon            = 'ios-card';
+						icon_type 			= 'share_received';
 						pre_line2       = '';
 						post_line2      = ' te ha enviado avales para autorizar créditos por ' + aval_amount;
 						//line2 					= rowData.from.name + ' te ha enviado avales para autorizar créditos por ' + aval_amount;
 					}	
 					else
 					{	
-						aval_type 			= 'share_sent';
+						icon            = 'ios-card-outline';
+						icon_type 			= 'share_sent';
 						pre_line2       = 'Has enviado avales a ';
 						post_line2      = ' para que pueda autorizar créditos por ' + aval_amount;
 						//line2 					= 'Has enviado avales a ' + rowData.to.name + ' para que pueda autorizar créditos por ' + aval_amount;
@@ -361,11 +367,7 @@ class History extends Component {
 									<Text style={styles.row_simple}>{line1}</Text>
               	</View>);
 				}
-				// <Image source={iconsMap[icon]} style={[styles.row_hand, {color:bg[aval_type]}]}/>
-// 				console.log('----------------------------------icon #1');
-// 				console.log(memo_account);
-//         console.log(icon);
-				
+
 				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>

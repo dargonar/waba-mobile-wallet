@@ -13,7 +13,7 @@ import IconBadge from 'react-native-icon-badge';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import styles from './styles/Drawer';
-
+import { avales }  from '../endorsement/components/static/endorsements_const'
 import { iconsMap } from '../../utils/AppIcons';
 import Bts2helper from '../../utils/Bts2helper';
 
@@ -120,19 +120,27 @@ class Drawer extends Component {
 		// https://www.npmjs.com/package/react-native-icon-badge		
 		let iconEndorsementEx = iconEndorsement;
     if(this.props.credit_ready){
-			iconEndorsementEx = (<IconBadge
-				MainElement={iconEndorsement}
-				BadgeElement={
-					<Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
+			let _avales = avales.filter((entry) => {
+				if( this.props.balance[entry.asset_id] > 0 ) {
+					entry.remaining = this.props.balance[entry.asset_id];
+					return true;
 				}
-				IconBadgeStyle={
-					{width:14,
-					height:14,
-					top:-6,
-					right:-6,													 
-					backgroundColor: '#CF2E08'}
-				}
-    	/>);
+				return false;
+			});
+			if(_avales.length>0)
+				iconEndorsementEx = (<IconBadge
+						MainElement={iconEndorsement}
+						BadgeElement={
+							<Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
+						}
+						IconBadgeStyle={
+							{width:14,
+							height:14,
+							top:-6,
+							right:-6,													 
+							backgroundColor: '#CF2E08'}
+						}
+					/>);
 		}													 
 													 
 		return (
