@@ -93,8 +93,30 @@ class ShareEndorsement extends Component {
 		}
     this.setState({endorsements:_endorsements, promptVisible:true, current_idx:idx})
   }
-
+	
+	showAvalError(msg){
+		Alert.alert(
+		    'Avales',
+		    msg,
+		    [
+		      {text: 'OK'},
+		    ]
+		  );
+	}
   _onNext(){
+		for(var i = 0; i < this.state.endorsements.length; i++) {
+			let entry = this.state.endorsements[i];
+      if( !(entry.asset_id in this.props.balance) || entry.remaining<1)
+			{
+				this.showAvalError('No dispone de avales por '+entry.amount_txt);
+				return false;
+			}
+			if(entry.quantity > this.props.balance[entry.asset_id])
+			{
+				this.showAvalError('No dispone de cantidad suficiente de avales por '+entry.amount_txt);
+				return false;
+			}
+    }
 		let _avales = this.state.endorsements.filter((entry) => {
 			if( !(entry.asset_id in this.props.balance))
         return false;
@@ -115,9 +137,10 @@ class ShareEndorsement extends Component {
 		    [
 		      {text: 'OK'},
 		    ]
-		  )
+		  );
 		  return;
 		}
+// 		this.setState({endorsements:_avales});
 		this.props.navigator.push({
 			screen: 'endorsement.ShareConfirm',
 			title: 'Confirmar envío',
@@ -150,7 +173,7 @@ class ShareEndorsement extends Component {
 			this.setState({promptVisible:false});
 			return;
 		}
-    let _endorsements = this.state.endorsements;
+    let _endorsements = JSON.parse(JSON.stringify(this.state.endorsements));
     _endorsements[this.state.current_idx].quantity = parseInt(value);
     this.setState({endorsements:_endorsements, promptVisible:false});
   }
