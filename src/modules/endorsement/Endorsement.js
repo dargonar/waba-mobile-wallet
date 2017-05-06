@@ -35,37 +35,25 @@ class Endorsement extends Component {
     this._onShareEndorsement       = this._onShareEndorsement.bind(this);
     this._onSendOverdraft          = this._onSendOverdraft.bind(this);
     this._onApplyEndorsement       = this._onApplyEndorsement.bind(this);
-    this.hasEndorsements           = this.hasEndorsements.bind(this);
   }
   
   _onApplyEndorsement(){
     this.props.navigator.push({
       screen: 'endorsement.ApplyConfirm',
-      title: 'Aceptar crédito'
-      
+      title: 'Aceptar crédito'      
     });
 
   }
 
-  hasEndorsements(){
-    let _avales = avales.filter((entry) => {
-      if( !(entry.asset_id in this.props.balance))
-        return false;
-			entry.remaining = this.props.balance[entry.asset_id];
-			if( entry.remaining<1 )
-				return false;
-			return true;
-		});
-    if(_avales.length<1){
-      ToastAndroid.show('No dispone de avales', ToastAndroid.SHORT);
-      return false;
-    }
-    return true;
-  }
-
   _onSendOverdraft() {
-    if(!this.hasEndorsements())
-      return;
+    if(!config.hasOverdraft(this.props.balance)){
+			ToastAndroid.show('Para poder autorizar crédito debe estar autorizado', ToastAndroid.SHORT);
+			return;
+		}
+		if(!config.hasEndorsements(this.props.balance)){
+			ToastAndroid.show('No dispone de avales', ToastAndroid.SHORT);
+			return;
+		}
     this.props.navigator.push({
       screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
@@ -73,24 +61,22 @@ class Endorsement extends Component {
     });
   }
 
-
   _onShareEndorsement() {
-    if(!this.hasEndorsements())
-      return;
+		if(!config.hasOverdraft(this.props.balance)){
+			ToastAndroid.show('Para poder enviar avales debe estar autorizado', ToastAndroid.SHORT);
+			return;
+		}
+    if(!config.hasEndorsements(this.props.balance)){
+			ToastAndroid.show('No dispone de avales', ToastAndroid.SHORT);
+			return;
+		}
+		
     this.props.navigator.push({
       screen: 'endorsement.SelectEndorsed',
       title: 'Seleccione destinatario',
       passProps: {next_screen: 'endorsement.ShareEndorsement', with_no_credit: false}
     });
   }
-
-//   _onShowWords() {
-//     this.props.navigator.push({
-//       screen:     'wallet.RecoveryKeywords',
-//       title:      'Palabras clave',
-//       passProps:  {mnemonic: this.props.account.mnemonic, hide_button:true}
-//     });
-//   }
 
   componentWillMount() {
   }
@@ -109,35 +95,22 @@ class Endorsement extends Component {
 
   render() {
     // https://www.npmjs.com/package/react-native-settings-list#usage
-    // <SettingsList.Header headerText='Different Grouping' headerStyle={{marginTop:50}}/>
-    // <SettingsList.Item titleInfo='Some Information' hasNavArrow={false} title='Information Example'/>
-          
-    const iconShare = (<Icon name="md-share-alt" size={30} color="#1f475b" />);
-    const iconCard  = (<Icon name="ios-card" size={30} color="#1f475b" />);
-    const iconBuffer  = (<Icon name="logo-buffer" size={30} color="#1f475b" />);
+  	        
+    const iconShare 		= (<Icon name="md-share-alt" size={30} color="#1f475b" />);
+    const iconCard  		= (<Icon name="ios-card" size={30} 	color="#1f475b" />);
+    const iconBuffer  	= (<Icon name="logo-buffer" size={30} color="#1f475b" />);
     const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="#CF2E08" />);
     
     let applyForCreditItem = null;
-    if(this.props.credit_ready){
-			let _avales = avales.filter((entry) => {
-				if( this.props.balance[entry.asset_id] > 0 ) {
-					entry.remaining = this.props.balance[entry.asset_id];
-					return true;
-				}
-				return false;
-			});
-			if(_avales.length>0)
-      	applyForCreditItem = (<SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconThumbsUp}
-                  </View>}
-            itemWidth={50}
-            title='Solicitar mi crédito preacordado'
-            onPress={this._onApplyEndorsement.bind(this)}
-          />);
-    }
-
-    return (
+		let available_credit 	 = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
+		if(available_credit!==false)
+			applyForCreditItem = (<SettingsList.Item
+															icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>{iconThumbsUp}</View>}
+															itemWidth={50}
+															title='Solicitar mi crédito preacordado'
+															onPress={this._onApplyEndorsement.bind(this)}
+														/>);
+  	return (
       <View style={styles.container}>
         <SettingsList>
           {applyForCreditItem}

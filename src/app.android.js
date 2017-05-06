@@ -33,7 +33,6 @@ try {
 			
 			registerScreens(store, Provider);
 
-// 			launchOnboard();
  			if(!account){
  				launchOnboard();
  			}
@@ -48,12 +47,11 @@ try {
 					} else if(s.wallet.errors > 0) {
 						
 						if(!(s.wallet.errors % 10)) {
-							ToastAndroid.show('Esta tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
+							ToastAndroid.show('Está tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
 						}
-
 						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
 					}
-				})
+				});
 
 				store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
  			}

@@ -37,6 +37,9 @@ export const avales = [
           asset_id        : config.AVAL30000_ID
         }];
 
+export function getAvales(){
+	return JSON.parse(JSON.stringify(avales));
+}
 export function getAvalByKey(key, _avales){
   let avalon = _avales.filter((entry) => {
 			if( entry._key==key ) {

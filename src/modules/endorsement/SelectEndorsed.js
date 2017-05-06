@@ -27,9 +27,7 @@ class SelectEndorsed extends Component {
   
   constructor(props) {
     super(props);
-    
     this._onChangeText        = this._onChangeText.bind(this);
-  	
     let dataSource = new ListView.DataSource({
       rowHasChanged : this._rowHasChanged.bind(this)
     });
@@ -42,7 +40,6 @@ class SelectEndorsed extends Component {
 			with_no_credit      : props.with_no_credit
     };
 		
-
 		this.tid = undefined;
 		
 	}
@@ -54,7 +51,6 @@ class SelectEndorsed extends Component {
 			that.pedir(text);				
 		}
 		, 300);
-		//console.log(text);
 	}
   
   _rowHasChanged(oldRow, newRow) {
@@ -68,14 +64,6 @@ class SelectEndorsed extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-//     if (nextProps.users !== this.props.users) {
-//       let data = nextProps.users;
-//       //console.log('componentWillReceiveProps:', data);
-//       this.setState({
-//         dataSource: this.state.dataSource.cloneWithRows(data),
-//         refreshing: false,
-//       })
-//     }
   }
 
   pedir(search) {
@@ -114,7 +102,7 @@ class SelectEndorsed extends Component {
 		if(this.state.recipient_selected)
 			return;
 		
-		let next_title = 'Indique tipo de aval';
+		let next_title = 'Crédito a autorizar';
 		if (this.state.next_screen!='endorsement.SelectEndorseType')
 			next_title = 'Tipo y cantidad de avales';
 		
@@ -165,6 +153,7 @@ class SelectEndorsed extends Component {
 																			title={rowData[0]}
 																		/>}
 						dataSource={this.state.dataSource}
+						enableEmptySections={true}
 					/>
 				</List>
 			)

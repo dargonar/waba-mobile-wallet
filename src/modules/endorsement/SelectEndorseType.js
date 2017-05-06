@@ -13,7 +13,8 @@ import * as walletActions from '../wallet/wallet.actions';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
 import styles from './styles/SelectEndorseType';
-import { avales }  from './components/static/endorsements_const'
+import { avales }  from './components/static/endorsements_const';
+import * as fn_avales  from './components/static/endorsements_const';
 import { sliderWidth, itemWidth } from './components/styles/SliderEntry';
 import SliderEntry from './components/SliderEntry';
 
@@ -32,14 +33,15 @@ class SelectEndorseType extends Component {
 		console.log('BALANCES EN ENDO =>', this.props.balance);
 		console.log('BALANCES EN ENDO =>', this.props.endorsed);
     
-		let _avales = avales.filter((entry) => {
-			if( this.props.balance[entry.asset_id] ) {
-				entry.remaining = this.props.balance[entry.asset_id];
-				return true;
+		let _avales = fn_avales.getAvales().filter((entry) => {
+			if(entry.asset_id in this.props.balance)
+				if( this.props.balance[entry.asset_id] ) {
+					entry.remaining = this.props.balance[entry.asset_id];
+					return true;
 			}
+			return false;
 		});
 		
-		console.log( ' _avales -> ', _avales);
 		this.state = {
 			avales 					: _avales,
       endorsed      	: props.endorsed
@@ -62,27 +64,12 @@ class SelectEndorseType extends Component {
   }
   	
 	_onNext(){
-      // if(Number(this.props.balance)<=Number(this.state.amount))
-      // {
-      //   Alert.alert(
-      //     'Fondos insuficientes',
-      //     'No dispone de fondos suficientes para realizar la operación.',
-      //     [
-      //       {text: 'OK'},
-      //     ]
-      //   )
-      //   return;
-      // }
-			console.log('por q aca no >', this.state.endorse_type);
-		
       this.props.navigator.push({
         screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',
         passProps: {
           endorse_type      : this.state.endorse_type,
-					endorse_index     : this.state.endorse_index,
-          endorsed          : this.state.endorsed,
-          share_or_endorse  : 'endorse'
+          endorsed          : this.state.endorsed
         }
       });
     }
@@ -100,8 +87,7 @@ class SelectEndorseType extends Component {
 					entry.checked = true;
 					console.log('aca va=>',entry.asset_id);
 					this.setState({
-						endorse_type  : entry.asset_id,
-						endorse_index : index
+						endorse_type  : entry.asset_id
 					});
 				}
 				return entry;
@@ -170,13 +156,6 @@ class SelectEndorseType extends Component {
         );
   }
 }
-// 						  <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-//                 <TouchableHighlight
-//                     style={styles.fullWidthButton}
-//                     onPress={this._onNext.bind(this)} >
-//                   <Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
-//                 </TouchableHighlight>
-//               </View>
 
 function mapStateToProps(state, ownProps) {
 	return {

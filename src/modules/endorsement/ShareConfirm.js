@@ -33,7 +33,6 @@ class ShareConfirm extends Component {
     super(props);
   
     this.state = {
-      share_or_endorse 	: props.share_or_endorse,
       endorsements 			: props.endorsements,
       endorsed 					: props.endorsed,
       tx								: null,
@@ -156,7 +155,7 @@ class ShareConfirm extends Component {
 			screen : 'endorsement.Sending',
 			title :  'Enviando avales...',
 			passProps: {endorsed 			: this.state.endorsed,
-									modal_type		: 'sharing'},  // | sharing
+									modal_type		: 'sharing'},
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
@@ -243,7 +242,7 @@ class ShareConfirm extends Component {
   }
 
   render() {
-  	let share_or_endorse_text = 'Avales a compartir con: ' + this.state.endorsed;
+  	let title = 'Avales a compartir con: ' + this.state.endorsed;
   	
   	let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
@@ -264,7 +263,7 @@ class ShareConfirm extends Component {
       <View style={[styles.container]}>
 				<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
 					<View style={{flex:5, backgroundColor:'#2e2f3d', paddingTop:30, paddingRight:0, paddingBottom:30}}>
-						<Text style={styles.title_part}>{share_or_endorse_text}</Text>
+						<Text style={styles.title_part}>{title}</Text>
 						<View style={{alignItems:'center',paddingTop:20, justifyContent:'center'}}>
 							{this._draw_endorsements()}
 						</View>

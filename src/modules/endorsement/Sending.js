@@ -45,7 +45,6 @@ class Sending extends Component {
 				this.state = {
 					endorsed 				: props.endorsed,
 					endorse_type 		: props.endorse_type,
-					endorse_index		: props.endorse_index,
 					types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
 					size						: 100,
 					color						: "#F64D27",
@@ -87,7 +86,6 @@ class Sending extends Component {
   	let type = this.state.types[8];
 		let type2 = this.state.types[0];
  		let aval = fn_avales.getAvalByKey(this.state.endorse_type , avales);
-//  		let aval_txt = fn_avales.getAvalDesc(avales[this.state.endorse_index]);
 		let aval_txt = fn_avales.getAvalDesc(aval);
 		
     if(this.state.modal_type == 'applying')

@@ -1,6 +1,4 @@
-// import axios from 'axios';
 import * as types from '../../constants/actionTypes';
-// import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
 import * as config from '../../constants/config';
 import UWCrypto from '../../utils/Crypto';
 import Bts2helper from '../../utils/Bts2helper';
@@ -96,7 +94,6 @@ export function createAccount(name) {
 									keys     : res3,
 									name     : name
 								};
-
 								createAccountSuccessHACK(account);
 								return resolve(account);
 							}
@@ -164,7 +161,6 @@ export function endorseApply(from, endorse_type) {
 export function retrieveUsers(query, search_filter) {
     search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
-			// 			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
 			fetch(config.getAPIURL('/searchAccount?search='+query+'&search_filter='+search_filter), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}

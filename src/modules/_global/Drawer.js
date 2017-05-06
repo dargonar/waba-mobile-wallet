@@ -119,16 +119,9 @@ class Drawer extends Component {
  		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// https://www.npmjs.com/package/react-native-icon-badge		
 		let iconEndorsementEx = iconEndorsement;
-    if(this.props.credit_ready){
-			let _avales = avales.filter((entry) => {
-				if( this.props.balance[entry.asset_id] > 0 ) {
-					entry.remaining = this.props.balance[entry.asset_id];
-					return true;
-				}
-				return false;
-			});
-			if(_avales.length>0)
-				iconEndorsementEx = (<IconBadge
+    let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
+		if(available_credit!==false)
+			iconEndorsementEx = (<IconBadge
 						MainElement={iconEndorsement}
 						BadgeElement={
 							<Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
@@ -140,12 +133,10 @@ class Drawer extends Component {
 							right:-6,													 
 							backgroundColor: '#CF2E08'}
 						}
-					/>);
-		}													 
+					/>);												 
 													 
 		return (
-			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
-											style={styles.linearGradient}>
+			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} style={styles.linearGradient}>
 				<View style={styles.container}>
 					<View style={{flex:3, padding:5, flexDirection:'column', justifyContent: 'center' }}>
 						<View style={{flex:3, flexDirection:'row', justifyContent: 'center'}}>

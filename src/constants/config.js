@@ -50,3 +50,24 @@ export function fromHex(hex) {
     for (var i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
 }
+
+export function hasOverdraft(balances){
+	if(DESCUBIERTO_ID in balances)
+		return balances[DESCUBIERTO_ID];
+	return false;
+}
+
+export function hasEndorsements(balances){
+	for(var i = 0; i < ALL_AVALS.length; i++) {
+		if(ALL_AVALS[i] in balances) 
+			if(Number(balances[ALL_AVALS[i]])>0)
+				return ALL_AVALS[i];
+	}
+	return false;
+}
+
+export function readyToRequestCredit(balances, credit_ready){
+	if(!credit_ready)
+		return false;
+	return hasEndorsements(balances);
+}

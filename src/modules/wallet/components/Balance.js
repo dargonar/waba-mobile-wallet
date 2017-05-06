@@ -83,27 +83,18 @@ class Balance extends Component {
 			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
 	    balanceStyle = styles.balance_wrapper;
 		}
-		if(this.props.credit_ready){
-			let _avales = avales.filter((entry) => {
-				if( this.props.balance[entry.asset_id] > 0 ) {
-					entry.remaining = this.props.balance[entry.asset_id];
-					return true;
-				}
-				return false;
-			});
-			if(_avales.length>0)
-			{				
-				j = (
-					<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
-						<View style={styles.credit_available}>
-							<Icon name="ios-checkmark-circle" size={18} color="#ef5030" style={[{paddingRight:10}]} />
-							<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por {_avales[0].amount_txt}</Text>
-					  </View>
-					</TouchableHighlight>
-					);	
-			}
+		let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
+		if(available_credit!==false)
+		{				
+			j = (
+				<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
+					<View style={styles.credit_available}>
+						<Icon name="ios-checkmark-circle" size={18} color="#ef5030" style={[{paddingRight:10}]} />
+						<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por {config.ALL_AVALS_DESC[available_credit]}</Text>
+					</View>
+				</TouchableHighlight>
+				);	
 		}
-		// <Text style={[styles.gray_color, styles.balanceText]}>SU BALANCE</Text>
 		return (
       <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
         <View style={styles.wrapper}> 

@@ -163,6 +163,7 @@ class SelectRecipient extends Component {
 																			title={rowData[0]}
 																		/>}
 						dataSource={this.state.dataSource}
+						enableEmptySections={true}
 					/>
 				</List>
 			)

@@ -17,6 +17,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SliderEntryMicro from './components/SliderEntryMicro';
 import Bts2helper from '../../utils/Bts2helper';
 import { avales }  from './components/static/endorsements_const'
+import * as fn_avales  from './components/static/endorsements_const';
 import * as config from '../../constants/config';
 
 class EndorseConfirm extends Component {
@@ -32,11 +33,8 @@ class EndorseConfirm extends Component {
     super(props);
   
     this.state = {
-      share_or_endorse 	: props.share_or_endorse,
-      endorsements 			: props.endorsements,
       endorsed 					: props.endorsed,
-      endorse_type      : props.share_or_endorse=='share'?null:props.endorse_type,
-			endorse_index     : props.share_or_endorse=='share'?null:props.endorse_index,
+      endorse_type      : props.endorse_type,
 			tx								: null,
 			fee								: 0,
 			fee_txt						: 0.6, 		// hack
@@ -152,7 +150,6 @@ class EndorseConfirm extends Component {
 			title :  'Autorizando crédito...',
 			passProps: {endorsed 			: this.state.endorsed,
 									endorse_type 	: this.state.endorse_type,
-									endorse_index : this.state.endorse_index,
 								  modal_type		: 'endorsing'},  // | sharing
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
@@ -187,7 +184,6 @@ class EndorseConfirm extends Component {
 								passProps:  {
 										endorsed 			: this.state.endorsed,
 										endorse_type 	: this.state.endorse_type,
-										endorse_index : this.state.endorse_index,
 										modal_type		: 'endorsing'
 								},
 								navigatorStyle: {navBarHidden:true}
@@ -243,9 +239,7 @@ class EndorseConfirm extends Component {
   }
 
   render() {
-  	let share_or_endorse_text = 'Crédito a otorgar';
-  	if (this.state.share_or_endorse=='share')
-  		share_or_endorse_text = 'Avales a compartir';
+  	let title = 'Crédito a autorizar';
   	
   	let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
@@ -258,15 +252,11 @@ class EndorseConfirm extends Component {
 		let send_disabled = !this.state.can_confirm;
 		// let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
-		
-// 		<Text style={styles.title_part}>A:</Text>
-// 		<Text style={styles.data_part}>{this.state.endorsed[0]}</Text>
-					
 		return (
       <View style={[styles.container]}>
 				<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
 					<View style={{flex:5, backgroundColor:'#2e2f3d', paddingTop:30, paddingRight:0, paddingBottom:30}}>
-						<Text style={styles.title_part}>{share_or_endorse_text}</Text>
+						<Text style={styles.title_part}>{title}</Text>
 						<View style={{alignItems:'center',paddingTop:20, justifyContent:'center'}}>
 							{this._draw_endorsements()}
 						</View>
@@ -279,7 +269,7 @@ class EndorseConfirm extends Component {
 							disabled={send_disabled}
 							style={[styles.fullWidthButton, btn_style]}
 							onPress={this._onConfirm.bind(this)}  >
-						<Text style={txt_style}>ENVIAR</Text>
+						<Text style={txt_style}>AUTORIZAR</Text>
 					</TouchableHighlight>
 				</View>
 				<KeyboardSpacer />
@@ -290,18 +280,16 @@ class EndorseConfirm extends Component {
 
 
   _draw_endorsements(){
-  	if(isNaN(this.state.endorse_index))
-		{
-			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
-			return null;
-		}
-// 		if(!this.state.endorse_index)
+//   	if(isNaN(this.state.endorse_index))
 // 		{
-// 			ToastAndroid.show('Vino nada!', ToastAndroid.SHORT);
+// 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
 // 			return null;
 // 		}
+
 // 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
-    let entry 			= avales[this.state.endorse_index];
+    
+// 		let entry 			= avales[this.state.endorse_index];
+		let entry       = fn_avales.getAvalByKey(this.state.endorse_type, avales);
 		entry.user_name = this.state.endorsed;
 		entry.quantity  = 1;
     return (	

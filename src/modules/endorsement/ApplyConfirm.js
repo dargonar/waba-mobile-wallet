@@ -17,6 +17,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import SliderEntryMicro from './components/SliderEntryMicro';
 import Bts2helper from '../../utils/Bts2helper';
 import { avales }  from './components/static/endorsements_const'
+import * as fn_avales  from './components/static/endorsements_const';
 import * as config from '../../constants/config';
 
 class ApplyConfirm extends Component {
@@ -30,16 +31,15 @@ class ApplyConfirm extends Component {
   constructor(props) {
     super(props);
   	
-		let _avales = avales.filter((entry) => {
-			if( this.props.balance[entry.asset_id] > 0 ) {
-				entry.remaining = this.props.balance[entry.asset_id];
+		let _avales = fn_avales.getAvales().filter((entry) => {
+			if( entry.asset_id in this.props.balance) 
+				if( this.props.balance[entry.asset_id] > 0 )
 				return true;
-			}
+			return false;
 		});
 		
 		this.state = {
-			endorse_index 		: 0,
-      can_confirm				: true,
+			can_confirm				: true,
 			error 						: '',
 			endorse_type      : _avales[0].asset_id,
 			entry 					  : _avales[0]
@@ -87,7 +87,7 @@ class ApplyConfirm extends Component {
 		
 		this.props.navigator.showModal({
 			screen : 'endorsement.Sending',
-			title :  'Autorizando crédito...',
+			title :  'Solicitando autorización de crédito...',
 			passProps: {endorsed 			: this.props.account.name,
 									endorse_type 	: this.state.endorse_type,
 								  modal_type		: 'applying'},  // | endorsing | sharing
@@ -224,11 +224,11 @@ class ApplyConfirm extends Component {
 
 
   _draw_endorsements(){
-  	if(isNaN(this.state.endorse_index))
-		{
-			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
-			return null;
-		}
+//   	if(isNaN(this.state.endorse_index))
+// 		{
+// 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
+// 			return null;
+// 		}
 
     let entry = this.state.entry;
 		entry.user_name = this.props.account.name;

@@ -28,7 +28,8 @@ import Prompt from 'react-native-prompt';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-import { avales }  from './components/static/endorsements_const'
+import { avales }  from './components/static/endorsements_const';
+import * as fn_avales  from './components/static/endorsements_const';
 import { avales_colors }  from './components/static/endorsements_const'
 
 class ShareEndorsement extends Component {
@@ -44,7 +45,7 @@ class ShareEndorsement extends Component {
     this._onSelectEndorsementType  = this._onSelectEndorsementType.bind(this);
     this._onNext                   = this._onNext.bind(this);
     this._onQuantityChosen         = this._onQuantityChosen.bind(this);
-		let _avales 									 = this._getAvales4Endorsed(props.endorsed[0]);
+		let _avales 									 = this._getShareableAvales(props.endorsed[0]);
     this.state = {
       endorsements  : _avales,
       endorsed      : props.endorsed,
@@ -54,8 +55,8 @@ class ShareEndorsement extends Component {
     
   }
 	
-	_getAvales4Endorsed(username){
-		let _avales = JSON.parse(JSON.stringify(avales));
+	_getShareableAvales(username){
+		let _avales = fn_avales.getAvales();
 		_avales = _avales.filter((entry) => {
 			if( !(entry.asset_id in this.props.balance))
         return false;
@@ -78,6 +79,7 @@ class ShareEndorsement extends Component {
     }
     return -1; //to handle the case where the value doesn't exist
   }
+
   _onSelectEndorsementType(endorsement_type) {
     let _endorsements = this.state.endorsements;
     if(!_endorsements)
@@ -140,14 +142,14 @@ class ShareEndorsement extends Component {
 		  );
 		  return;
 		}
-// 		this.setState({endorsements:_avales});
+ 		// this.setState({endorsements:_avales});
+		// this.state.endorsements,
 		this.props.navigator.push({
 			screen: 'endorsement.ShareConfirm',
 			title: 'Confirmar envío',
 			passProps: {
-				endorsements      : this.state.endorsements,
-				endorsed          : this.state.endorsed,
-				share_or_endorse  : 'share'
+				endorsements      : _avales,
+				endorsed          : this.state.endorsed
 			}
 		});
 	}
@@ -168,12 +170,16 @@ class ShareEndorsement extends Component {
   }
   
   _onQuantityChosen(value){
+		this.setState({promptVisible:false});
 		if(!value || isNaN(value))
 		{
-			this.setState({promptVisible:false});
 			return;
 		}
-    let _endorsements = JSON.parse(JSON.stringify(this.state.endorsements));
+    let _endorsements = this.state.endorsements;
+		if(_endorsements[this.state.current_idx].remaining<Number(value)){
+			ToastAndroid.show('No dispone de suficiente(s) avale(s).', ToastAndroid.SHORT);
+			return;	
+		}
     _endorsements[this.state.current_idx].quantity = parseInt(value);
     this.setState({endorsements:_endorsements, promptVisible:false});
   }
