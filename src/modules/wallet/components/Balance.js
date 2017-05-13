@@ -13,8 +13,10 @@ import styles from './styles/Balance';
 import Sound from 'react-native-sound';
 import * as config from '../../../constants/config';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { avales }  from '../../endorsement/components/static/endorsements_const'
-
+import { iconsMap } from '../../../utils/AppIcons';
+import { avales }  from '../../endorsement/components/static/endorsements_const';
+import { avales_colors }  from '../../endorsement/components/static/endorsements_const';
+import * as fn_avales  from '../../endorsement/components/static/endorsements_const'
 class Balance extends Component {
 
 	constructor(props) {
@@ -80,8 +82,25 @@ class Balance extends Component {
     let j = undefined;
 	  if(d>0)
 	  {
-			j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
-	    balanceStyle = styles.balance_wrapper;
+			let entry = fn_avales.getAvalByAmount(d, avales);
+// 			if(entry && entry.length>0)
+			if(entry)
+			{
+// 				const _bg = avales_colors[entry[0]._key];
+				const _bg = avales_colors[entry._key];
+				j = (
+					<View style={[styles.credit_card_container ]}>
+						<View style={[styles.row_card, _bg ]}>
+							<Image source={iconsMap['ios-card']} style={[styles.row_hand]}/>
+							<Text style={[styles.credit_card_amount, styles.white_color]}>{asset_symbol}{d}</Text>
+						</View>
+					</View>);	
+				balanceStyle = styles.balance_wrapper;
+			}
+		 else{
+				j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
+				balanceStyle = styles.balance_wrapper;
+			}
 		}
 		let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
 		if(available_credit!==false)

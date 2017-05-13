@@ -179,6 +179,40 @@ const styles = StyleSheet.create({
 		lineHeight  : 14,
 		textAlign: 'center',
 	},
+	
+	credit_card_amount:{
+		fontFamily  : 'roboto_light',
+    color       : '#FFFFFF',
+    fontSize    : 11,
+		fontWeight  : '400',
+		lineHeight  : 14,
+		marginLeft:10
+	},
+	credit_card_container:{
+		flex:1,
+		flexDirection   : 'row',
+    justifyContent  : 'center',
+		alignItems      : 'center',
+		marginBottom: 3
+	},
+	row_card:{
+    borderTopLeftRadius     : 6,
+    borderTopRightRadius    : 6,
+    borderBottomLeftRadius  : 6,
+    borderBottomRightRadius : 6,
+    width                   : 75,
+    height                  : 25,
+    alignItems      				: 'center',
+    justifyContent  				: 'center',
+		flexDirection   				: 'row',
+		marginLeft     	 				: 3,
+		marginRight     				: 3,
+  },
+	row_hand : {
+    resizeMode      :'contain', 
+    height          :15, 
+    width           :15
+  },
 });
 
 export default styles;

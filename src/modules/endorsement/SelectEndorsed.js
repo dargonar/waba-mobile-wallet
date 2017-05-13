@@ -20,6 +20,7 @@ import styles from './styles/SelectEndorsed';
 class SelectEndorsed extends Component {
   
   static navigatorStyle = {
+		navBarTextFontFamily: 'roboto_thin',
     navBarTextColor: '#ffffff', 
     navBarBackgroundColor: '#2e2f3d', //0B5F83
     navBarButtonColor: '#ffffff'

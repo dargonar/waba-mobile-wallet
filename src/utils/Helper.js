@@ -3,14 +3,31 @@ import UWCrypto from './Crypto';
 import { iconsMap } from './AppIcons';
 
 
+function launchTest(){
+	
+	Navigation.startSingleScreenApp({
+    portraitOnlyMode : true,
+		screen: {
+      screen: 'endorsement.Register2',
+			title: 'Registro',
+      navigatorStyle : {
+       navBarButtonColor : '#ffffff',
+       drawUnderNavBar   : true,
+       navBarTransparent : true
+       //navBarHidden: true
+      }
+    },
+    animationType : 'none',
+  });
+	
+	
+}
+
 function launchWallet() {
   Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-// 			screen			: 'endorsement.EndorseConfirm',
-// 			title				: 'Confirmación',
-      
-			screen				 : 'wallet.Main',
+ 			screen				 : 'wallet.Main',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,

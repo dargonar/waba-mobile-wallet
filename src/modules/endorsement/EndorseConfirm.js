@@ -23,8 +23,7 @@ import * as config from '../../constants/config';
 class EndorseConfirm extends Component {
   
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-//     navBarBackgroundColor: '#0B5F83',
+    navBarTextColor: '#ffffff',
 		navBarBackgroundColor: '#2e2f3d',
     navBarButtonColor: '#ffffff'
   }
@@ -280,25 +279,23 @@ class EndorseConfirm extends Component {
 
 
   _draw_endorsements(){
-//   	if(isNaN(this.state.endorse_index))
-// 		{
-// 			ToastAndroid.show('No Vino numero!', ToastAndroid.SHORT);
-// 			return null;
-// 		}
-
-// 		ToastAndroid.show(this.state.endorse_index.toString(), ToastAndroid.SHORT);	
-    
-// 		let entry 			= avales[this.state.endorse_index];
-		let entry       = fn_avales.getAvalByKey(this.state.endorse_type, avales);
-		entry.user_name = this.state.endorsed;
-		entry.quantity  = 1;
-    return (	
-                <SliderEntryMicro
-                  key={`carousel-entry-${0}`}
-                  {...entry}
-                />
-            );
-  }
+		let entry_       = fn_avales.getAvalByKey(this.state.endorse_type, avales);
+// 		if(entry_ && entry_.length>0)
+		if(entry_)
+		{
+// 			let entry = entry_[0];
+			let entry = entry_;
+			entry.user_name = this.state.endorsed;
+			entry.quantity  = 1;
+			return (	
+									<SliderEntryMicro
+										key={`carousel-entry-${0}`}
+										{...entry}
+									/>
+							);
+		}
+		return undefined;
+	}
 
 }
 

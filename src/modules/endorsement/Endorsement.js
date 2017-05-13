@@ -25,7 +25,8 @@ import * as helperActions from '../../utils/Helper.js';
 class Endorsement extends Component {
   
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
+    navBarTextColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin',
     navBarBackgroundColor: '#2e2f3d', //0B5F83
     navBarButtonColor: '#ffffff'
   }

@@ -86,7 +86,10 @@ class Sending extends Component {
   	let type = this.state.types[8];
 		let type2 = this.state.types[0];
  		let aval = fn_avales.getAvalByKey(this.state.endorse_type , avales);
-		let aval_txt = fn_avales.getAvalDesc(aval);
+		
+		let aval_txt = '';
+		if(aval)
+			aval_txt = fn_avales.getAvalDesc(aval);
 		
     if(this.state.modal_type == 'applying')
 		{

@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './screens';
 import configureStore from './store/configureStore';
 import { iconsLoaded, iconsMap } from './utils/AppIcons';
-import { launchOnboard, launchWallet } from './utils/Helper';
+import { launchTest, launchOnboard, launchWallet } from './utils/Helper';
 import initialState from './reducers/initialState';
 import * as walletActions from './modules/wallet/wallet.actions';
 
@@ -32,7 +32,7 @@ try {
 			const store = configureStore(initialState);
 			
 			registerScreens(store, Provider);
-
+						
  			if(!account){
  				launchOnboard();
  			}
