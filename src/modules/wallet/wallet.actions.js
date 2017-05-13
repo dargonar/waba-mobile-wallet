@@ -123,6 +123,22 @@ export function blockChainSuccess(blockchain) {
 	};
 }
 
+// ---------------------
+// Address
+export function addressSuccessHACK(address) {
+	return {
+		type      : types.ADDRESS_SUCCESS,
+		address  	: address
+	};
+}
+
+export function addressSuccess(address) {
+	return function (dispatch) {
+		dispatch(addressSuccessHACK(address));	
+	}
+}
+// ---------------------
+
 export function memoSuccessHACK(memo) {
 	return {
 		type      : types.MEMO_SUCCESS,

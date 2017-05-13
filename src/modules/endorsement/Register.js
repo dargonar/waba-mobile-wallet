@@ -108,19 +108,21 @@ class Register extends Component {
     //showModal
     this.props.navigator.push({
       screen: 'endorsement.LocationFull', // unique ID registered with Navigation.registerScreen
-      title: 'Dirección', // title of the screen as appears in the nav bar (optional)
-      navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-      animationType: 'slide-down', // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+      title: 'Dirección',  								// title of the screen as appears in the nav bar (optional)
+      navigatorStyle: {}, 								// override the navigator style for the screen, see "Styling the navigator" below (optional)
+      animationType: 'slide-down', 				// 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
       rightButtons: [
         {
-          icon: iconsMap['ios-trash-outline'],
-          id: 'clearAddress'
+          icon: iconsMap['md-checkmark'].uri,
+          id: 'selectAddress'
         }
       ]
     });
   }
 
   render() {
+		let addy = this.props.address?this.props.address.full_address:'...';
+		
     return (
       <ScrollView keyboardShouldPersistTaps={true} style={styles.container}>
 				<View style={styles.header}>
@@ -150,7 +152,7 @@ class Register extends Component {
 						this._showLocationSearch();
 						}}>
 						<View style={{ flex:1, flexDirection:'row', justifyContent:'center' , alignItems:'center'}}>
-							<Text style={[{ flex:5, height: 40}, styles.textInputReadonly]}>{this.state.direccion}</Text>
+							<Text style={[{ flex:5, height: 40}, styles.textInputReadonly]}> {addy} </Text>
 							<View style={[{ flex:1, justifyContent:'center' , alignItems:'center'}, styles.textInputReadonlyEx]}>	
 								<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
 							</View>
@@ -198,7 +200,7 @@ class Register extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-// 		address: state.register.address,
+ 		address: state.wallet.address
  	};
 }
 

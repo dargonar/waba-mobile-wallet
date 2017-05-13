@@ -23,11 +23,12 @@ import * as config from '../../constants/config';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
-const ASPECT_RATIO = width / height;
+const MAP_HEIGHT = height - 58 - 80;
+const ASPECT_RATIO = width / MAP_HEIGHT;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-const map_height = height - 58;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -36,22 +37,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff00ff'
   },
   map: {
-		height: map_height
+		height: MAP_HEIGHT
 //     position: 'absolute',
 //     top: 0,
 //     left: 0,
 //     right: 0,
 //     bottom: 0,
-// 		flex:8
+// 		 flex:8
   },
   actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
+    fontSize: 30,
+    height: 30,
     color: 'white',
   },
+	actionButton: {
+  },
 });
-//...StyleSheet.absoluteFillObject,
-
 
 class LocationFull extends Component {
   
@@ -68,11 +69,15 @@ class LocationFull extends Component {
 		this.state = {
       refreshing          : false,
       recipient_selected  : false,
-      next_screen         : props.next_screen,
-      with_no_credit      : props.with_no_credit,
-			can_search 				  : true,
+      can_search 				  : true,
 			searchText					: '',
 			locked : false,
+			initialRegion: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
+      },
       region: {
         latitude: 0,
         longitude: 0,
@@ -101,10 +106,12 @@ class LocationFull extends Component {
 //       }
 //     };
     
-    this.tid = undefined;
-    this.onRegionChange = this.onRegionChange.bind(this);
-    this.onLockMap      = this.onLockMap.bind(this);
-		this.geoSearch			= this.geoSearch.bind(this);
+    this.tid 							= undefined;
+    this.onRegionChange 	= this.onRegionChange.bind(this);
+    this.onLockMap      	= this.onLockMap.bind(this);
+		this.centerMarker   	= this.centerMarker.bind(this);
+		this.geoSearch				= this.geoSearch.bind(this);
+		this.reverseGeoSearch	= this.reverseGeoSearch.bind(this);
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
   
@@ -119,20 +126,30 @@ class LocationFull extends Component {
   }
   
 	_onNavigatorEvent(event) { 
+		let addy = {
+					full_address	: this.state.searchText,
+					latitude			: this.state.marker.latitude,
+					longitude			: this.state.marker.longitude
+				};
+		console.log(' --- Direccion geo seteada!!!!');
+		console.log(JSON.stringify(addy));
+		console.log(' --- END Direccion geo seteada!!!!');
     if (event.id == 'selectAddress') { 
-      // this.props.actions.memoSuccess('');
-    }
-//     if(event.id=='lockMap')
-//      {
-//        let locked = !this.state.locked;
-//        this.setState({locked: locked });
-//      }
-  }
+			this.props.actions.addressSuccess(
+				addy
+			);
+			this.props.navigator.pop();
+		}
+	}
 	
+	centerMarker(){
+		this.setState({ marker : this.state.region });
+	}
+
   onLockMap(value){
     let locked = value; //!this.state.locked;
     this.setState({locked: value });
-    if(value){
+    if(value==true){
       this.setState({ marker : this.state.region });
     }
   }
@@ -155,14 +172,31 @@ class LocationFull extends Component {
   focus() {
   }
   
+	reverseGeoSearch(coordinate){
+		this.setState({ marker: coordinate, can_search:false }); 
+		Geocoder.geocodePosition({
+				lat: coordinate.latitude,
+				lng: coordinate.longitude
+			}).then(res => {
+			console.log(' ---------- REV GEOCODE ......');
+			console.log(JSON.stringify(res));
+			if(!res || res.length==0)
+			{
+				this.setState({can_search:true});
+				return;
+			}
+			this.setState({searchText: res[0].formattedAddress, can_search:true});
+		})
+		.catch(err => {
+			console.log(' --- DRAG END ERR');
+			console.log(JSON.stringify(err));
+			this.setState({can_search:true});
+		});
+	}
+
 	geoSearch(search) {
-    console.log(' ---------- Pedimos......');
-		console.log(search);
     this.setState({refreshing:true});
 		Geocoder.geocodeAddress(search).then(res => {
-			console.log(' ---------- Pedimos......');
-			console.log(JSON.stringify(res));
-//     	let region = JSON.stringify(this.state.region);
 			if(!res || res.length==0){
 				this.setState({
 					refreshing: false,
@@ -183,10 +217,6 @@ class LocationFull extends Component {
 									longitude  : res_item.position.lng
 								}
       });
-// 				region : {
-// 					latitude  : res_item.position.lat, 
-// 					longitude  : res_item.position.lng
-// 					},
 		})
 		.catch((err) => {
 			this.setState({refreshing:false});
@@ -196,7 +226,7 @@ class LocationFull extends Component {
 	}
 
   onRegionChange(region) {
-//     this.setState({ region : region });
+		this.setState({ region : region });
 //     if(!this.state.locked)
 //       return;
 //     clearTimeout(this.tid);
@@ -211,6 +241,7 @@ class LocationFull extends Component {
     let buttonColor = '#1abc9c';
     if(this.state.locked)
       buttonColor = '#3498db';
+		let icon = (<Icon name="ios-locate-outline" style={styles.actionButtonIcon} />);
     return (
       <View style={styles.container}>
 				<View style={{height:58}}>
@@ -235,50 +266,28 @@ class LocationFull extends Component {
         <MapView 
 					ref={ref => { this.map = ref; }}
           style={styles.map} 
-					initialRegion={this.state.region}
+					initialRegion={this.state.initialRegion}
           provider={this.props.provider}
           onRegionChange={this.onRegionChange}
           >
           <MapView.Marker draggable
             coordinate={this.state.marker}
-            onDragEnd={(e) => {	
-											 	this.setState({ marker: e.nativeEvent.coordinate, can_search:false }); 
-												Geocoder.geocodePosition({
-														lat: e.nativeEvent.coordinate.latitude,
-														lng: e.nativeEvent.coordinate.longitude
-													}).then(res => {
-													console.log(' ---------- REV GEOCODE ......');
-													console.log(JSON.stringify(res));
-													if(!res || res.length==0)
-													{
-														this.setState({can_search:true});
-														return;
-													}
-// 													console.log(' ---- A', res[0].formattedAddress);
-// 													this.searchText.value = res[0].formattedAddress;
-// 													console.log(' ---- B');
-													this.setState({searchText: res[0].formattedAddress, can_search:true});
-												})
-												.catch(err => {
-													console.log(' --- DRAG END ERR');
-													console.log(JSON.stringify(err));
-													this.setState({can_search:true});
-												});						
-										} }
+            onDragEnd={(e) => {	this.reverseGeoSearch(e.nativeEvent.coordinate);} }
           />
         </MapView>
-        <ActionButton buttonColor={buttonColor}>
-          <ActionButton.Item buttonColor='#1abc9c' title="Pin Libre" onPress={() => {this.onLockMap(false)}}>
-            <Icon name="ios-pin-outline" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="Centrar pin" onPress={() => {this.onLockMap(true)}}>
-            <Icon name="ios-pin" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-        </ActionButton>
+				<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.centerMarker() }} icon={ icon } />
       </View>
     );
   }
 }
+// <ActionButton buttonColor={buttonColor}>
+// 	<ActionButton.Item buttonColor='#1abc9c' title="Pin Libre" onPress={() => {this.onLockMap(false)}}>
+// 		<Icon name="ios-pin-outline" style={styles.actionButtonIcon} />
+// 	</ActionButton.Item>
+// 	<ActionButton.Item buttonColor='#3498db' title="Centrar pin" onPress={() => {this.onLockMap(true)}}>
+// 		<Icon name="ios-pin" style={styles.actionButtonIcon} />
+// 	</ActionButton.Item>
+// </ActionButton>
 
 LocationFull.propTypes = {
   provider: MapView.ProviderPropType,
@@ -286,6 +295,7 @@ LocationFull.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
+		address: state.wallet.address,
   };
 }
 

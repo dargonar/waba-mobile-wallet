@@ -72,6 +72,12 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				new_keys: action.new_keys
 			};
+		
+		case types.ADDRESS_SUCCESS:
+			return {
+				...state,
+				address: action.address
+			};
 			
 		case types.MEMO_SUCCESS:
 			return {
