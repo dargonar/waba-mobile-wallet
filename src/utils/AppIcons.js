@@ -5,17 +5,31 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   PixelRatio
 } from 'react-native';
-const ICON_SIZE_ANDROID    = __DEV__ ? 30 : PixelRatio.getPixelSizeForLayoutSize(30);
-const ICON_SIZE_ANDROID_25 = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize(25);
+const ICON_SIZE_ANDROID     = __DEV__ ? 30 : PixelRatio.getPixelSizeForLayoutSize(30);
+const ICON_SIZE_ANDROID_25  = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize(25);
+const ICON_SIZE_ANDROID_BIG = __DEV__ ? 50 : PixelRatio.getPixelSizeForLayoutSize(50);
 
 // define your suffixes by yourself..
 // here we use active, big, small, very-big..
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
-  
-  "handshake-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
+  "ios-locate-outline": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-card-outline": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-help": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-card": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-ribbon-outline": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-share-alt-outline" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-checkmark-circle-outline" : [ICON_SIZE_ANDROID, "#fff"],
+  "md-checkmark" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-checkmark" : [ICON_SIZE_ANDROID, "#fff"],
+  // fa-id-card-o, fa-id-card, fa-address-card-o, fa-address-card
+  "id-card-o": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
+  "credit-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
+  "handshake-o": [ICON_SIZE_ANDROID, "#fda720", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
+  "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
   
+  "ios-add-circle-outline": [ICON_SIZE_ANDROID_BIG, "#fff"],
   "ios-add" : [ICON_SIZE_ANDROID, "#fff"],
   
   "ios-backspace" : [ICON_SIZE_ANDROID, "#fff"],

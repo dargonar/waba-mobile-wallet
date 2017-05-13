@@ -20,6 +20,9 @@ import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
 import com.react.rnspinkit.RNSpinkitPackage;  
 import com.zmxv.RNSound.RNSoundPackage;
 
+import com.devfd.RNGeocoder.RNGeocoderPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+
 public class MainApplication extends NavigationApplication {
 
   protected void attachBaseContext(Context base) {
@@ -39,7 +42,9 @@ public class MainApplication extends NavigationApplication {
         new ReactNativeConfigPackage(),
         new ReactNativeOneSignalPackage(),
         new RNSpinkitPackage(),
-        new RNSoundPackage()
+        new RNSoundPackage(),
+        new RNGeocoderPackage(),
+        new MapsPackage()
     );
 
     //return null;

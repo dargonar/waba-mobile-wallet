@@ -219,7 +219,7 @@ class Start extends Component {
 			
 			<View style={styles.container}>
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('./img/logo.rc2.png')} style={{width: 100, height: 100}} />
+					<Image source={require('./img/logo.shadow.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput

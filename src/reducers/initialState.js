@@ -1,6 +1,6 @@
 export default {
 	wallet: {
-		balance    : [0,0],
+		balance    : {},
 		history    : [],
 		at_end     : false,
 		ready      : 0,
@@ -8,9 +8,12 @@ export default {
 		fees       : {},
 		asset      : {},
 		new_keys   : {},
-		memo: 		 '',
+		memo			 : '',
 		account    : null,
 		account_id : null,
-		blockchain : {}
+		blockchain : {},
+		credit_ready : false,
+		endorsements: {},
+		endorsed: 		null
 	}
 };

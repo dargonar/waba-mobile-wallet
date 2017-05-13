@@ -153,8 +153,66 @@ const styles = StyleSheet.create({
 	},
 	credit_amountRed:{
 	  color       : '#ed1c24'
-	}
+	}, 
 	
+	
+	
+	credit_available_wrapper:{
+		flex:1,
+		flexDirection:'row', 
+		justifyContent: 'center',
+		alignItems: 'center',
+		
+		borderRadius: 0,
+    backgroundColor: 'rgba(87, 87, 87, 0.5)'
+	},
+	credit_available:{
+		flex:1,
+		flexDirection:'row', 
+		justifyContent: 'center',
+		alignItems: 'center',
+		
+	},
+	credit_title2:{
+		fontFamily  : 'roboto_light',
+    fontSize    : 12,
+		lineHeight  : 14,
+		textAlign: 'center',
+	},
+	
+	credit_card_amount:{
+		fontFamily  : 'roboto_light',
+    color       : '#FFFFFF',
+    fontSize    : 11,
+		fontWeight  : '400',
+		lineHeight  : 14,
+		marginLeft:10
+	},
+	credit_card_container:{
+		flex:1,
+		flexDirection   : 'row',
+    justifyContent  : 'center',
+		alignItems      : 'center',
+		marginBottom: 3
+	},
+	row_card:{
+    borderTopLeftRadius     : 6,
+    borderTopRightRadius    : 6,
+    borderBottomLeftRadius  : 6,
+    borderBottomRightRadius : 6,
+    width                   : 75,
+    height                  : 25,
+    alignItems      				: 'center',
+    justifyContent  				: 'center',
+		flexDirection   				: 'row',
+		marginLeft     	 				: 3,
+		marginRight     				: 3,
+  },
+	row_hand : {
+    resizeMode      :'contain', 
+    height          :15, 
+    width           :15
+  },
 });
 
 export default styles;

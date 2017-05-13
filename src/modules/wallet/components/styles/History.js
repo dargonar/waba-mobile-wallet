@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   row_avatar : {
     width           : 30,
     height          : 30,
-    marginLeft      : 3,
+    
     flexDirection   : 'column',
     alignItems      : 'center',
     justifyContent  : 'center',
@@ -110,7 +110,12 @@ const styles = StyleSheet.create({
     justifyContent  : 'flex-start',
     flex            : 1
   },
-
+  
+  row_simple : {
+    fontWeight      : '100', 
+    fontSize        : 15, 
+    color           : '#1f475b'
+  },
   row_dea : {
     fontWeight      : '500', 
     fontSize        : 15, 
@@ -122,7 +127,16 @@ const styles = StyleSheet.create({
     fontSize        : 16,
     color           : '#1f475b',
   },  
-    
+  row_unknown_op: {
+    fontSize        : 12,
+    color           : '#2e2f3d',
+    fontFamily      : 'roboto_thin',
+    fontWeight      : '100',
+    paddingLeft     : 57,
+    paddingRight    : 8,
+    paddingTop      : 8,
+    paddingBottom   : 8
+  },
   row_hour : {
     alignSelf       : 'center', 
     marginRight     : 5,

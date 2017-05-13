@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { SearchBar } from 'react-native-elements'
 
 import {
   Alert,
@@ -16,9 +15,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/RestoreAccount';
-//import { Button } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import * as config from '../../constants/config';
 
 import { AsyncStorage } from 'react-native'
@@ -97,14 +95,6 @@ constructor(props) {
 		
 		let that = this;
 		
-// 		if(words=='p')
-// 			words = 'orgía balanza vereda candil batir panal separar vector rasgo rumor tobillo carbón'; // pablo
-// 		if(words=='t')
-// 			words = 'candil pasión talón fraude favor baño pinza farol adorno manco verbo acudir'; // tuti
-// 		words = 'curioso tripa torpedo unidad asno deseo reposo batir orador tira rapaz buitre';
-		
-		//console.log('RESTORE ACCOUNT::WORDS', words);
-		
 		UWCrypto.mnemonicToMasterKey(words).then( res => {
 			
 			let p = []
@@ -144,6 +134,14 @@ constructor(props) {
 						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {
 							that.props.actions.createAccountSuccessHACK(account);
 							helperActions.launchWallet();
+							
+							setTimeout( function() {
+								that.props.actions.retrieveHistory(
+									that.props.account.name, 
+									that.props.account.keys,
+									!that.props.account.id);  
+							}, 1500);
+							
 						}, err => {
 							that._onRestoreError(JSON.stringify(err));
 						});
@@ -238,13 +236,14 @@ constructor(props) {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <TouchableHighlight
+        <HideWithKeyboard>
+				 	<TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-				</TouchableHighlight>
-				<KeyboardSpacer />
-        </View>
+					</TouchableHighlight>
+        </HideWithKeyboard>
+			 </View>
     );
   }
 }

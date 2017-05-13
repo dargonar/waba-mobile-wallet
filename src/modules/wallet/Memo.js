@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { SearchBar } from 'react-native-elements'
 
 import {
   View,
@@ -15,6 +14,8 @@ import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/Memo';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 class Memo extends Component {
   
@@ -86,6 +87,7 @@ class Memo extends Component {
           textAlignVertical='top'
 					underlineColorAndroid ="transparent"
         />
+				<HideWithKeyboard>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							style={styles.fullWidthButton}
@@ -93,7 +95,7 @@ class Memo extends Component {
 						<Text style={styles.fullWidthButtonText}>AGREGAR MENSAJE</Text>
 					</TouchableHighlight>
 				</View>
-        <KeyboardSpacer />
+        </HideWithKeyboard>
                     
         </View>
     );

@@ -9,10 +9,11 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconBadge from 'react-native-icon-badge';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import styles from './styles/Drawer';
-
+import { avales }  from '../endorsement/components/static/endorsements_const'
 import { iconsMap } from '../../utils/AppIcons';
 import Bts2helper from '../../utils/Bts2helper';
 
@@ -28,12 +29,23 @@ class Drawer extends Component {
 		this._onGoToMercadoPar  			= this._onGoToMercadoPar.bind(this);
 		this._onGoToMercadoParEmpleos = this._onGoToMercadoParEmpleos.bind(this);
 		this._onSettings 							= this._onSettings.bind(this);
+		this._openEndorsement 				= this._openEndorsement.bind(this);
 	}
 	
 	_onPower(){
 		this._onFnDisabled();	
 	}
 	
+	_openEndorsement(){
+		
+		this._toggleDrawer();
+		this.props.navigator.push({
+			screen: 'endorsement.Endorsement',
+			//screen: 'endorsement.SelectEndorseType',
+			title: 'Avales'
+		});		
+	}
+
 	_onSettings(){
 		
 		this._toggleDrawer();
@@ -102,9 +114,29 @@ class Drawer extends Component {
 		const iconMap 			= (<Icon name="md-pin" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconJob 			= (<Icon name="md-construct" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+
+		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+ 		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		// https://www.npmjs.com/package/react-native-icon-badge		
+		let iconEndorsementEx = iconEndorsement;
+    let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
+		if(available_credit!==false)
+			iconEndorsementEx = (<IconBadge
+						MainElement={iconEndorsement}
+						BadgeElement={
+							<Text style={{color:'#FFFFFF', fontFamily : 'roboto_normal',fontWeight : '100',fontSize:10}}>1</Text>
+						}
+						IconBadgeStyle={
+							{width:14,
+							height:14,
+							top:-6,
+							right:-6,													 
+							backgroundColor: '#CF2E08'}
+						}
+					/>);												 
+													 
 		return (
-			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} 
-											style={styles.linearGradient}>
+			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} style={styles.linearGradient}>
 				<View style={styles.container}>
 					<View style={{flex:3, padding:5, flexDirection:'column', justifyContent: 'center' }}>
 						<View style={{flex:3, flexDirection:'row', justifyContent: 'center'}}>
@@ -157,6 +189,14 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
+						<TouchableOpacity onPress={this._openEndorsement}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+								{iconEndorsementEx}
+								<Text style={styles.drawerListItemText}>
+									Avales
+								</Text>
+							</View>
+						</TouchableOpacity>
 					 	<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconJob}
@@ -190,7 +230,9 @@ Drawer.propTypes = {
 function mapStateToProps(state, ownProps) {
 	//console.log('DRAWER->mapStateToProps', state.wallet.fees, state.wallet.asset);
 	return {
-		account: state.wallet.account
+		account: state.wallet.account,
+		balance: state.wallet.balance,
+		credit_ready : state.wallet.credit_ready
 	};
 }
 

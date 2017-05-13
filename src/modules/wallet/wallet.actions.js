@@ -1,6 +1,4 @@
-// import axios from 'axios';
 import * as types from '../../constants/actionTypes';
-// import { TMDB_URL, TMDB_API_KEY } from '../../constants/api';
 import * as config from '../../constants/config';
 import UWCrypto from '../../utils/Crypto';
 import Bts2helper from '../../utils/Bts2helper';
@@ -96,7 +94,6 @@ export function createAccount(name) {
 									keys     : res3,
 									name     : name
 								};
-
 								createAccountSuccessHACK(account);
 								return resolve(account);
 							}
@@ -140,11 +137,31 @@ export function memoSuccess(memo) {
 }
 
 // USERS
-export function retrieveUsers(query) {
+export function endorseApply(from, endorse_type) {
+	return new Promise((resolve, reject) => {
+		fetch(config.getAPIURL('/endorse/apply'), {
+			method: 'POST',
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				from         : from,
+				endorse_type : endorse_type
+			})
+		})
+		.then((response) => response.json()) 
+		.then((responseJson) => {
+			return resolve(responseJson);
+		})
+		.catch((error) => {
+			return reject(error);
+		});
+	});
+}
 
+// USERS
+export function retrieveUsers(query, search_filter) {
+    search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
-			// 			fetch('http://35.161.140.21:8080/api/v1/searchAccount?search='+query, {
-			fetch(config.getAPIURL('/searchAccount?search='+query), {
+			fetch(config.getAPIURL('/searchAccount?search='+query+'&search_filter='+search_filter), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
@@ -210,6 +227,13 @@ export function retrieveBalanceSuccess(balance) {
 	};
 }
 
+export function creditReadySuccess(credit_ready) {
+	return {
+		type         : types.CREDIT_READY_SUCCESS,
+		credit_ready : credit_ready
+	};
+}
+
 export function retrieveHistory(account_name, keys, first_time, start) {
 	return function (dispatch) {
 		if (start === undefined) start=0;
@@ -242,6 +266,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 					account(name:$account) {
 						id
+						blacklistedBy(account:"propuesta-par")
 						balance {
 							quantity
 							asset {
@@ -266,6 +291,14 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 									}
 								}
 								type
+							}
+							... on CreditRequest {
+								amount {
+									quantity
+									asset {
+										id
+									}
+								}
 							}
 							... on Transfer {
 								from {
@@ -304,7 +337,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			variables : { 
 				account 				  : account_name,
 				first_time        : first_time,
-				asset   					: config.ASSET_ID,
+				asset   					: config.MONEDAPAR_ID,
 				type              : start == 0 ? 'relative' : 'normal',
 				start   					: start
 			},
@@ -398,21 +431,16 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 				
 				let balance = data.account.balance;
 
+				let balance_map = {};
 				if(balance) {
-					let b = 0;
-					let d = 0;
 					for(var i=0; i<balance.length; i++) {
-						if(balance[i].asset.id == config.ASSET_ID) {
-							b = balance[i].quantity;
-							console.log('ENCONTRE MONEDA ESTO => ', b);
-						}
-						if(balance[i].asset.id == config.ASSET2_ID) {
-							d = balance[i].quantity;
-							console.log('ENCONTRE DESCUB ESTO => ', d);
-						}					
+						balance_map[balance[i].asset.id] = parseFloat(balance[i].quantity);
+						console.log('ENCONTRE ESTO ', balance[i].asset_id, ' => ', balance[i].quantity);
 					}
-					dispatch(retrieveBalanceSuccess([b,d]));
+					dispatch(retrieveBalanceSuccess(balance_map));
 				}
+				
+				dispatch(creditReadySuccess(data.account.blacklistedBy));
 				
 				//Decrypt memos
 				Promise.all(proms).then(res => {

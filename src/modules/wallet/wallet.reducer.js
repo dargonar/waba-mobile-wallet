@@ -4,6 +4,12 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
+		case types.CREDIT_READY_SUCCESS:
+			return {
+				...state,
+				credit_ready: action.credit_ready
+			};
+			
 		case types.READY_SUCCESS:
 			return {
 				...state,

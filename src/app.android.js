@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './screens';
 import configureStore from './store/configureStore';
 import { iconsLoaded, iconsMap } from './utils/AppIcons';
-import { launchOnboard, launchWallet } from './utils/Helper';
+import { launchTest, launchOnboard, launchWallet } from './utils/Helper';
 import initialState from './reducers/initialState';
 import * as walletActions from './modules/wallet/wallet.actions';
 
@@ -17,6 +17,7 @@ import {
 
 let account = null;
 try {
+	//AsyncStorage.removeItem('@Store:data');
 	AsyncStorage.getItem('@Store:data').then((value)=>{
 		//console.log('@Store:data => ', value);
 		
@@ -31,8 +32,7 @@ try {
 			const store = configureStore(initialState);
 			
 			registerScreens(store, Provider);
-
-// 			launchOnboard();
+						
  			if(!account){
  				launchOnboard();
  			}
@@ -47,12 +47,11 @@ try {
 					} else if(s.wallet.errors > 0) {
 						
 						if(!(s.wallet.errors % 10)) {
-							ToastAndroid.show('Esta tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
+							ToastAndroid.show('Está tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
 						}
-
 						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
 					}
-				})
+				});
 
 				store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
  			}

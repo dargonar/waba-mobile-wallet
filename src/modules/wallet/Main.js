@@ -34,7 +34,8 @@ class Main extends Component {
 
     if(event.id == 'newTx') {
       this.props.navigator.push({
-        screen: 'wallet.SelectRecipient',
+//         screen: 'wallet.SelectRecipient',
+				screen: 'endorsement.Register',
 				title: 'Seleccione destinatario'
       });
     }
