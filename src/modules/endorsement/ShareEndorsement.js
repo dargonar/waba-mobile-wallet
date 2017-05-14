@@ -248,8 +248,7 @@ class ShareEndorsement extends Component {
         
         {this._renderPrompt()}
         
-				<KeyboardSpacer />
-        <View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
           <TouchableHighlight
               style={styles.fullWidthButton}
               onPress={this._onNext.bind(this)} >

@@ -11,8 +11,9 @@ import { connect } from 'react-redux';
 import styles from './styles/Main';
 import Balance from './components/Balance';
 import History from './components/History';
-
+import ActionButton from 'react-native-action-button';
 import { iconsMap } from '../../utils/AppIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class Main extends Component {
 
@@ -20,6 +21,7 @@ class Main extends Component {
 		super(props);
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 		this.state = {account:''};
+		this.newTx = this.newTx.bind(this);
 	}
 	
 	componentWillMount() {
@@ -30,15 +32,20 @@ class Main extends Component {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
 
+	newTx(){
+		this.props.navigator.push({
+      screen: 'wallet.SelectRecipient',
+			title: 'Seleccione destinatario'
+		});
+	}
   _onNavigatorEvent(event) {
 
-    if(event.id == 'newTx') {
-      this.props.navigator.push({
+//     if(event.id == 'newTx') {
+//       this.props.navigator.push({
 //         screen: 'wallet.SelectRecipient',
-				screen: 'endorsement.Register',
-				title: 'Seleccione destinatario'
-      });
-    }
+// 				title: 'Seleccione destinatario'
+//       });
+//     }
 		if(event.id == 'qrCode') {
 			Alert.alert(
 				'No disponible',
@@ -52,10 +59,13 @@ class Main extends Component {
   }
 
 	render() {
+		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
+		let buttonColor =	'#0B5F83';
 		return (
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>
         <History {...this.props} style={styles.history}/>
+				<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
       </View>
 		);
 	}

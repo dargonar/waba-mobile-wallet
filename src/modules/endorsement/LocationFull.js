@@ -7,6 +7,7 @@ import Geocoder from 'react-native-geocoder';
 import {
 	ActivityIndicator,
   View,
+	Linking,
   ListView,
   StyleSheet,
   ToastAndroid,

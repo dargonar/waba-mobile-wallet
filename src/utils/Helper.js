@@ -8,7 +8,7 @@ function launchTest(){
 	Navigation.startSingleScreenApp({
     portraitOnlyMode : true,
 		screen: {
-      screen: 'endorsement.Register2',
+      screen: 'endorsement.Register',
 			title: 'Registro',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
@@ -33,11 +33,11 @@ function launchWallet() {
        drawUnderNavBar   : true,
        navBarTransparent : true
       },
-      fab: {
-        collapsedId: 'newTx',
-        collapsedIcon: iconsMap['ios-add'].uri,
-        backgroundColor: '#0B5F83'
-      },
+//       fab: {
+//         collapsedId: 'newTx',
+//         collapsedIcon: iconsMap['ios-add'].uri,
+//         backgroundColor: '#0B5F83'
+//       },
 			
 //       rightButtons: [
 // 				{

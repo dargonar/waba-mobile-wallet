@@ -61,10 +61,19 @@ class History extends Component {
 			errors : 0
     };
 		
-		this._onPressButton = this._onPressButton.bind(this);
+		this._onPressButton   = this._onPressButton.bind(this);
+		this._openEndorsement = this._openEndorsement.bind(this);
 // 		this.state.bounceValue.addListener((v)=>{
 // 			console.log('bounceValue=>', v);
 // 		});
+	}
+	
+	_openEndorsement(prefix, rowID, rowData){
+		if(prefix == config.ENDORSED_BY_PREFIX || prefix == config.ENDORSED_TX_PREFIX)
+			this.props.navigator.push({
+				screen: 'endorsement.Endorsement',
+				title: 'Avales'
+			});		
 	}
 
 	refreshHistory(start_offset) {
@@ -370,7 +379,7 @@ class History extends Component {
 
 				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
-					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._openEndorsement(prefix, rowID, rowData)}}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[aval_type]}]}>
 								{_icon}
