@@ -198,7 +198,7 @@ class ShareEndorsement extends Component {
       <Prompt
         title="Indique cantidad"
         placeholder=""
-        value="{this.state.endorsements[this.state.current_idx].quantity}"
+        defaultValue={this.state.endorsements[this.state.current_idx].quantity}
         visible={ this.state.promptVisible }
         {...inputProps}
         onCancel={ () => this.setState({

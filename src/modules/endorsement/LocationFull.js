@@ -70,24 +70,24 @@ class LocationFull extends Component {
 		this.state = {
       refreshing          : false,
       recipient_selected  : false,
-      can_search 				  : true,
-			searchText					: '',
+      can_search 				  : false,
+			searchText					: props.address?props.address.full_address:'',
 			locked : false,
 			initialRegion: {
-        latitude: 0,
-        longitude: 0,
+        latitude: props.address?props.address.latitude:0,
+        longitude: props.address?props.address.longitude:0,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       },
       region: {
-        latitude: 0,
-        longitude: 0,
+        latitude: props.address?props.address.latitude:0,
+        longitude: props.address?props.address.longitude:0,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       },
       marker:  {
-        latitude: 0,
-        longitude: 0
+        latitude: props.address?props.address.latitude:0,
+        longitude: props.address?props.address.longitude:0,
       }
     };
     
@@ -127,19 +127,21 @@ class LocationFull extends Component {
   }
   
 	_onNavigatorEvent(event) { 
-		let addy = {
-					full_address	: this.state.searchText,
-					latitude			: this.state.marker.latitude,
-					longitude			: this.state.marker.longitude
-				};
-		console.log(' --- Direccion geo seteada!!!!');
-		console.log(JSON.stringify(addy));
-		console.log(' --- END Direccion geo seteada!!!!');
-    if (event.id == 'selectAddress') { 
-			this.props.actions.addressSuccess(
-				addy
-			);
-			this.props.navigator.pop();
+		if (event.id == 'selectAddress') { 
+			let addy = {
+						full_address	: this.state.searchText,
+						latitude			: this.state.marker.latitude,
+						longitude			: this.state.marker.longitude
+					};
+			console.log(' --- Direccion geo seteada!!!!');
+			console.log(JSON.stringify(addy));
+			console.log(' --- END Direccion geo seteada!!!!');
+			if (event.id == 'selectAddress') { 
+				this.props.actions.addressSuccess(
+					addy
+				);
+				this.props.navigator.pop();
+			}
 		}
 	}
 	
@@ -163,7 +165,7 @@ class LocationFull extends Component {
 
   componentDidMount() {
 //     AppState.addEventListener('change', this.handleAppStateChange);
-    
+    this.setState({can_search:true});
   }
 
   componentWillUnmount() {

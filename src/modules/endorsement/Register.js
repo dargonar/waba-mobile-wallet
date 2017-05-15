@@ -7,12 +7,15 @@ import {
 	Text,
 	TextInput, 
 	TouchableHighlight,
+	TouchableOpacity,
 	ToastAndroid,
   View
 } from 'react-native';
 
+import Prompt from 'react-native-prompt';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as walletActions from '../wallet/wallet.actions';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsMap } from '../../utils/AppIcons';
@@ -26,22 +29,21 @@ const styles = StyleSheet.create({
 		color:'#bbbbbb'
 	},
 	inputWrapper:{
-		//borderTopColor: '#f0f0f0', 
-		//borderTopWidth: 1,
 		padding: 10		
 	},
 	inputWrapperNoBorder:{padding: 10 },
 	textInput:{
-		height: 40, 
-		borderBottomColor: '#f0f0f0', 
-		borderBottomWidth: 1,
-// 		backgroundColor: '#f0f0f0',
-// 		borderRadius: 4,
+		height							: 40, 
+		borderBottomColor		: '#f0f0f0', 
+		borderBottomWidth		: 1,
+		fontFamily          : 'roboto_regular',
+		fontSize        		: 18,
+		lineHeight 					: 20
   },
 	label:{
 		paddingBottom: 4,
 		fontFamily      : 'roboto_regular',
-    fontSize        : 16,
+    fontSize        : 12,
     color           : '#858585', //1f475b
 	},
 	labelError:{
@@ -59,7 +61,10 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 4,
 		borderTopRightRadius: 0,
 		borderBottomLeftRadius: 4,
-		borderBottomRightRadius: 0
+		borderBottomRightRadius: 0,
+		fontFamily          : 'roboto_regular',
+		fontSize        		: 18,
+		lineHeight 					: 20,		
   },
 	textInputReadonlyEx:{
 		height: 40, 
@@ -67,18 +72,21 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 0,
 		borderTopRightRadius: 4,
 		borderBottomLeftRadius: 0,
-		borderBottomRightRadius: 4
+		borderBottomRightRadius: 4,
+		flex:1, justifyContent:'center' , alignItems:'center',
+		borderLeftColor		: '#999999', 
+		borderLeftWidth		: 1,
   },
 	header:{
 		height:40,
-		backgroundColor : '#DDDDDD',
+		backgroundColor : '#f2f4f5',
 		justifyContent	: 'center'
 	},
 	headerText:{
 		fontFamily      : 'roboto_regular',
    	fontWeight 			: '100',
    	fontSize   			: 15,
-		color           : '#858585',
+		color           : '#96a7b6',
 		paddingLeft			: 10		
 	},
 	clearButton:{
@@ -99,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#044967' 
+		backgroundColor: '#575863' 
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
@@ -135,32 +143,63 @@ class Register extends Component {
 			can_accept   : false,
 			nombre			 : '',
 			rubro				 : '',
-			direccion		 : '',
+// 			direccion		 : '',
 			web					 : '',
 			email				 : '',
-			phone				 : ''
+			phone				 : '',
+			
+			promptVisible : false
 		}
 		
-		this._showLocationSearch = this._showLocationSearch.bind(this);
 		this.validators = {
 			email : { regex: /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/ 
 							 	, message: 'Formato válido: nombre@dominio.extension' }
 			,web   : { regex: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
 								, message: 'Formato válido: www.dominio.extension' }
 		};
-		// 			,web   : new RegExp('^(https?:\\/\\/)?'+ // protocol
-		// 								'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-		// 								'((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-		// 								'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-		// 								'(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-		// 								'(\\#[-a-z\\d_]*)?$','i') 
-		//(ftp|http|https):\/\//(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-		this.validate    = this.validate.bind(this);
-		this._onRegister = this._onRegister.bind(this);
+		
+		this._showLocationSearch = this._showLocationSearch.bind(this);
+		this._changeAddressText  = this._changeAddressText.bind(this);
+		this.validate    				 = this.validate.bind(this);
+		this._onRegister 				 = this._onRegister.bind(this);
+		this.setAddressText 		 = this.setAddressText.bind(this);
   }
 	
 	_onRegister(){
 		
+		let ok  = true;
+		let msg = '';
+		if(!this.state.nombre || this.state.nombre.trim()=='')
+			{ok=false; msg='nombre';}
+		if(!this.state.rubro || this.state.rubro.trim()=='')
+			{ok=false;msg='rubro';}
+		if(!this.props.address)
+			{ok=false;msg='address';}
+		if(!this.state.web || this.state.web.trim()=='' || !this.validate('web', this.state.web))
+			{ok=false;msg='web';}
+		if(!this.state.email || this.state.email.trim()=='' || !this.validate('email', this.state.email))
+			{ok=false;msg='email';}
+		if(!this.state.phone || this.state.phone.trim()=='')
+			{ok=false;msg='phone';}
+		
+		if(!ok)
+		{
+			Alert.alert(
+				'Formulario incompleto/con errores',
+				'Complete todos los campos del formulario con el formato solicitado. '+msg,
+				[
+					{text: 'OK'},
+				]
+			);
+			return;
+		}
+		Alert.alert(
+			'Formulario OK',
+			'',
+			[
+				{text: 'OK'},
+			]
+		);
 	}
 	validate(_type, value){
 		if(!value)
@@ -175,6 +214,41 @@ class Register extends Component {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
 	
+	_renderPrompt(){
+    if (!this.state.promptVisible)
+      return null;
+	  let that = this;
+    
+    return (
+      <Prompt
+        title="Modificar texto de dirección"
+        placeholder=""
+        defaultValue={this.props.address.full_address}
+        visible={ this.state.promptVisible }
+        onCancel={ () => this.setState({ promptVisible: false }) }
+        onSubmit={ (value) => {that.setAddressText(value);} }
+        
+      />
+    );
+  }
+	
+	setAddressText(value){
+		this.setState({promptVisible: false});
+		let addy = this.props.address;
+		addy.full_address = value;
+		this.props.actions.addressSuccess(addy);
+	}
+	_changeAddressText(){
+		
+		if(!this.props.address)
+		{
+			this._showLocationSearch();
+			return;
+		}
+		
+		this.setState({ promptVisible: true });
+	}	
+
 	_showLocationSearch(){
     //showModal
     this.props.navigator.push({
@@ -197,12 +271,13 @@ class Register extends Component {
 		
 		let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
-		if(!this.state.can_accept)
-		{
-			btn_style = styles.fullWidthButtonDisabled;
-			txt_style = styles.fullWidthButtonTextDisabled;
-		}
-		let send_disabled = !this.state.can_accept;
+// 		if(!this.state.can_accept)
+// 		{
+// 			btn_style = styles.fullWidthButtonDisabled;
+// 			txt_style = styles.fullWidthButtonTextDisabled;
+// 		}
+// 		let send_disabled = !this.state.can_accept;
+		let send_disabled = false;
 		
     return (
       <ScrollView keyboardShouldPersistTaps={true} style={styles.container}>
@@ -210,7 +285,7 @@ class Register extends Component {
 					<Text style={styles.headerText}>EMPRESA</Text>
 				</View>
 				<View style={styles.inputWrapperNoBorder}>
-					<Text style={styles.label}>Nombre</Text>
+					<Text style={styles.label}>NOMBRE</Text>
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
@@ -228,7 +303,7 @@ class Register extends Component {
 					</View>
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>Rubro</Text>
+					<Text style={styles.label}>RUBRO</Text>
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
@@ -246,20 +321,20 @@ class Register extends Component {
 					</View>
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>Dirección</Text>
-					<TouchableHighlight onPress={() => {
-						this._showLocationSearch();
-						}}>
-						<View style={{ flex:1, flexDirection:'row', justifyContent:'center' , alignItems:'center'}}>
-							<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ flex:5, height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
-							<View style={[{ flex:1, justifyContent:'center' , alignItems:'center'}, styles.textInputReadonlyEx]}>	
-								<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
-							</View>
-						</View>
-					</TouchableHighlight>
+					<Text style={styles.label}>DIRECCIÓN</Text>
+					<View style={{ flex:1, flexDirection:'row'}}>
+						<TouchableOpacity style={{ flex:5}} onPress={() => {this._changeAddressText(); }}>
+								<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
+						</TouchableOpacity>	
+						<TouchableOpacity style={{ flex:1}} onPress={() => {this._showLocationSearch(); }}>		
+								<View style={[styles.textInputReadonlyEx]}>	
+									<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
+								</View>
+						</TouchableOpacity>
+					</View>
 				</View>
 				<View style={styles.inputWrapper}>		
-					<Text style={styles.label}>Sitio Web</Text>
+					<Text style={styles.label}>SITIO WEB</Text>
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -282,7 +357,7 @@ class Register extends Component {
 					<Text style={styles.headerText}>CONTACTO</Text>
 				</View>
 				<View style={styles.inputWrapperNoBorder}>
-					<Text style={styles.label}>Correo electrónico</Text>
+					<Text style={styles.label}>CORREO ELECTRÓNICO</Text>
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -302,7 +377,7 @@ class Register extends Component {
 					{ this.validate('email', this.state.email)?null:(<Text style={styles.labelError}>{this.validators['email'].message}</Text>) }
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>Teléfono</Text>
+					<Text style={styles.label}>TELÉFONO</Text>
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -319,6 +394,9 @@ class Register extends Component {
 							</TouchableHighlight>):null}
 					</View>
 				</View>
+				
+				{this._renderPrompt()}
+
 				<HideWithKeyboard>
 				<View style={{flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
@@ -333,9 +411,21 @@ class Register extends Component {
     );
   }
 
-
 }
 
+/*
+				<View style={styles.inputWrapper}>
+					<Text style={styles.label}>DIRECCIÓN</Text>
+					<TouchableOpacity onPress={() => {this._showLocationSearch();}}>
+						<View style={{ flex:1, flexDirection:'row', justifyContent:'center' , alignItems:'center'}}>
+							<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ flex:5, height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
+							<View style={[styles.textInputReadonlyEx]}>	
+								<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
+							</View>
+						</View>
+					</TouchableOpacity>
+				</View>
+*/
 function mapStateToProps(state, ownProps) {
   return {
  		address: state.wallet.address
@@ -344,7 +434,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-// 		actions: bindActionCreators(walletActions, dispatch)
+ 		actions: bindActionCreators(walletActions, dispatch)
 	};
 }
 
