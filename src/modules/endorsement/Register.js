@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
 	},
 	textInputReadonly:{
 		paddingTop:12,
-		paddingLeft:4,
+		paddingLeft:1,
 		height: 40, 
-		backgroundColor: '#f0f0f0',
+		//backgroundColor: '#f0f0f0',
 		borderTopLeftRadius: 4,
 		borderTopRightRadius: 0,
 		borderBottomLeftRadius: 4,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
 	textInputReadonlyEx:{
 		height: 40, 
-		backgroundColor: '#f0f0f0',
+		//backgroundColor: '#f0f0f0',
 		borderTopLeftRadius: 0,
 		borderTopRightRadius: 4,
 		borderBottomLeftRadius: 0,
@@ -266,7 +266,7 @@ class Register extends Component {
   }
 
   render() {
-		let addy       = this.props.address?this.props.address.full_address:'Ingrese dirección de su local';
+		let addy       = this.props.address?this.props.address.full_address:'Ingrese dirección de su comercio';
 		let addyStyle  = this.props.address?null:styles.placeholderColor;
 		
 		let btn_style = styles.fullWidthButton2;
@@ -285,7 +285,7 @@ class Register extends Component {
 					<Text style={styles.headerText}>EMPRESA</Text>
 				</View>
 				<View style={styles.inputWrapperNoBorder}>
-					<Text style={styles.label}>NOMBRE</Text>
+					
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
@@ -303,7 +303,7 @@ class Register extends Component {
 					</View>
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>RUBRO</Text>
+					
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
@@ -321,8 +321,8 @@ class Register extends Component {
 					</View>
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>DIRECCIÓN</Text>
-					<View style={{ flex:1, flexDirection:'row'}}>
+					
+					<View style={{ flex:1, flexDirection:'row', borderBottomColor		: '#f0f0f0', borderBottomWidth		: 1}}>
 						<TouchableOpacity style={{ flex:5}} onPress={() => {this._changeAddressText(); }}>
 								<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
 						</TouchableOpacity>	
@@ -334,7 +334,7 @@ class Register extends Component {
 					</View>
 				</View>
 				<View style={styles.inputWrapper}>		
-					<Text style={styles.label}>SITIO WEB</Text>
+					
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -357,7 +357,7 @@ class Register extends Component {
 					<Text style={styles.headerText}>CONTACTO</Text>
 				</View>
 				<View style={styles.inputWrapperNoBorder}>
-					<Text style={styles.label}>CORREO ELECTRÓNICO</Text>
+					
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -377,7 +377,7 @@ class Register extends Component {
 					{ this.validate('email', this.state.email)?null:(<Text style={styles.labelError}>{this.validators['email'].message}</Text>) }
 				</View>
 				<View style={styles.inputWrapper}>
-					<Text style={styles.label}>TELÉFONO</Text>
+					
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
@@ -414,6 +414,13 @@ class Register extends Component {
 }
 
 /*
+<Text style={styles.label}>TELÉFONO</Text>
+<Text style={styles.label}>NOMBRE</Text>
+<Text style={styles.label}>RUBRO</Text>
+<Text style={styles.label}>DIRECCIÓN</Text>
+<Text style={styles.label}>SITIO WEB</Text>
+<Text style={styles.label}>CORREO ELECTRÓNICO</Text>
+
 				<View style={styles.inputWrapper}>
 					<Text style={styles.label}>DIRECCIÓN</Text>
 					<TouchableOpacity onPress={() => {this._showLocationSearch();}}>
