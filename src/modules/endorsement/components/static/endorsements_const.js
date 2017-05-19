@@ -10,7 +10,7 @@ export const avales = [
           amount          : 1000,
           amount_txt      : '$1.000',
           description     : 'Individuos',
-          _key            : config.AVAL10000_ID,
+          _key            : config.AVAL1000_ID,
           remaining       : 0,
           user_name       : 'N/A',
           quantity        : 0,

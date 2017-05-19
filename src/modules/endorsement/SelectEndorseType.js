@@ -64,6 +64,19 @@ class SelectEndorseType extends Component {
   }
   	
 	_onNext(){
+			if(this.state.endorse_type!=config.AVAL1000_ID)
+			{
+				this.props.actions.addressSuccess(null);
+				this.props.navigator.push({
+					screen: 'endorsement.Register',
+					title: 'Perfil del prestatario',
+					passProps: {
+						endorse_type      : this.state.endorse_type,
+						endorsed          : this.state.endorsed
+					}
+				});
+				return;
+			}
       this.props.navigator.push({
         screen: 'endorsement.EndorseConfirm',
         title: 'Confirmar envío',

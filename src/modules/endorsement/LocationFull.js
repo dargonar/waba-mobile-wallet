@@ -6,10 +6,12 @@ import Geocoder from 'react-native-geocoder';
 
 import {
 	ActivityIndicator,
-  View,
+  Keyboard,
+	View,
 	Linking,
   ListView,
   StyleSheet,
+	TouchableHighlight,
   ToastAndroid,
   Dimensions 
 } from 'react-native';
@@ -26,7 +28,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { width, height } = Dimensions.get('window');
 const MAP_HEIGHT = height - 58 - 80;
 const ASPECT_RATIO = width / MAP_HEIGHT;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.023; //0.0461; //0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 
@@ -46,6 +48,18 @@ const styles = StyleSheet.create({
 //     bottom: 0,
 // 		 flex:8
   },
+		clearButton:{
+		position: 'absolute',
+    right: 10,
+    top: 10,
+		width: 40,
+		height: 40,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTopRightRadius: 4,
+		borderBottomRightRadius: 4
+	},
+
   actionButtonIcon: {
     fontSize: 30,
     height: 30,
@@ -74,20 +88,20 @@ class LocationFull extends Component {
 			searchText					: props.address?props.address.full_address:'',
 			locked : false,
 			initialRegion: {
-        latitude: props.address?props.address.latitude:0,
-        longitude: props.address?props.address.longitude:0,
+        latitude: props.address?props.address.latitude:-34.596160,
+        longitude: props.address?props.address.longitude:-58.373331,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       },
       region: {
-        latitude: props.address?props.address.latitude:0,
-        longitude: props.address?props.address.longitude:0,
+        latitude: props.address?props.address.latitude:-34.596160,
+        longitude: props.address?props.address.longitude:-58.373331,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA
       },
       marker:  {
-        latitude: props.address?props.address.latitude:0,
-        longitude: props.address?props.address.longitude:0,
+        latitude: props.address?props.address.latitude:-34.596160,
+        longitude: props.address?props.address.longitude:-58.373331,
       }
     };
     
@@ -264,7 +278,14 @@ class LocationFull extends Component {
 						placeholderTextColor="#999999"
 						underlineColorAndroid ="transparent"
 						clearIconX ={{ color: '#86939e', name: 'clear' }}
+						returnKeyType="done"
+						onSubmitEditing={(event) => { 
+							Keyboard.dismiss();
+						}}
 					/>
+					<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({searchText:''})} }>
+						<Icon style={{color:'#999999'}} name='ios-close-circle-outline' size={25} />
+					</TouchableHighlight>
 				</View>
         <MapView 
 					ref={ref => { this.map = ref; }}
@@ -283,6 +304,7 @@ class LocationFull extends Component {
     );
   }
 }
+
 // <ActionButton buttonColor={buttonColor}>
 // 	<ActionButton.Item buttonColor='#1abc9c' title="Pin Libre" onPress={() => {this.onLockMap(false)}}>
 // 		<Icon name="ios-pin-outline" style={styles.actionButtonIcon} />

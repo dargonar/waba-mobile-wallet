@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 
 import {
 	Alert,
+	Keyboard,
 	ScrollView,
 	StyleSheet,
 	Text,
@@ -22,17 +23,27 @@ import { iconsMap } from '../../utils/AppIcons';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'#ffffff', 
+    backgroundColor:'#2e2f3d',  //f0f0f0
 		height:200
   },
 	placeholderColor:{
 		color:'#bbbbbb'
 	},
 	inputWrapper:{
-		padding: 10		
+		paddingTop: 20		,
+		paddingRight: 10		,
+		paddingBottom: 20		,
+		paddingLeft: 10		
 	},
-	inputWrapperNoBorder:{padding: 10 },
+	inputWrapperNoBorder:{
+		paddingTop: 20		,
+		paddingRight: 10		,
+		paddingBottom: 20		,
+		paddingLeft: 10		
+	},
 	textInput:{
+// 		backgroundColor:'#ffffff',
+		color 							: '#ffffff',
 		height							: 40, 
 		borderBottomColor		: '#f0f0f0', 
 		borderBottomWidth		: 1,
@@ -54,7 +65,8 @@ const styles = StyleSheet.create({
     color           : '#FF0000'
 	},
 	textInputReadonly:{
-		paddingTop:12,
+		color 							: '#ffffff',
+		paddingTop:10,
 		paddingLeft:1,
 		height: 40, 
 		//backgroundColor: '#f0f0f0',
@@ -65,6 +77,7 @@ const styles = StyleSheet.create({
 		fontFamily          : 'roboto_regular',
 		fontSize        		: 18,
 		lineHeight 					: 20,		
+		
   },
 	textInputReadonlyEx:{
 		height: 40, 
@@ -79,7 +92,7 @@ const styles = StyleSheet.create({
   },
 	header:{
 		height:40,
-		backgroundColor : '#f2f4f5',
+// 		backgroundColor : '#f2f4f5',
 		justifyContent	: 'center'
 	},
 	headerText:{
@@ -88,6 +101,12 @@ const styles = StyleSheet.create({
    	fontSize   			: 15,
 		color           : '#96a7b6',
 		paddingLeft			: 10		
+	},
+	
+	pseudoInputWrapper:{
+		flex:1, flexDirection:'row', 
+// 		backgroundColor:'#ffffff', 
+		borderBottomColor		: '#f0f0f0', borderBottomWidth		: 1
 	},
 	clearButton:{
 		position: 'absolute',
@@ -107,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#575863' 
+		backgroundColor: '#2c3f50' //'#575863'  
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
@@ -140,15 +159,17 @@ class Register extends Component {
     super(props);
 		
   	this.state = {
-			can_accept   : false,
-			nombre			 : '',
-			rubro				 : '',
-// 			direccion		 : '',
-			web					 : '',
-			email				 : '',
-			phone				 : '',
+			can_accept   			: false,
+			nombre			 			: '',
+			rubro							: '',
+			web					 			: '',
+			email				 			: '',
+			phone				 			: '',
 			
-			promptVisible : false
+			promptVisible 		: false,
+			
+			endorse_type      : props.endorse_type,
+			endorsed          : props.endorsed
 		}
 		
 		this.validators = {
@@ -186,20 +207,29 @@ class Register extends Component {
 		{
 			Alert.alert(
 				'Formulario incompleto/con errores',
-				'Complete todos los campos del formulario con el formato solicitado. '+msg,
+				'Complete todos los campos del formulario con el formato solicitado.',
 				[
 					{text: 'OK'},
 				]
 			);
 			return;
 		}
-		Alert.alert(
-			'Formulario OK',
-			'',
-			[
-				{text: 'OK'},
-			]
-		);
+		this.props.navigator.push({
+        screen: 'endorsement.EndorseConfirm',
+        title: 'Confirmar envío',
+        passProps: {
+          endorse_type      : this.state.endorse_type,
+          endorsed          : this.state.endorsed,
+					profile 					: {
+						nombre			 			: this.state.nombre,
+						rubro							: this.state.rubro,
+						address					 	: this.props.address,
+						web					 			: this.state.web,
+						email				 			: this.state.email,
+						phone				 			: this.state.phone,
+					}
+        }
+      });
 	}
 	validate(_type, value){
 		if(!value)
@@ -239,14 +269,14 @@ class Register extends Component {
 		this.props.actions.addressSuccess(addy);
 	}
 	_changeAddressText(){
+		this._showLocationSearch();
+// 		if(!this.props.address)
+// 		{
+// 			this._showLocationSearch();
+// 			return;
+// 		}
 		
-		if(!this.props.address)
-		{
-			this._showLocationSearch();
-			return;
-		}
-		
-		this.setState({ promptVisible: true });
+// 		this.setState({ promptVisible: true });
 	}	
 
 	_showLocationSearch(){
@@ -266,9 +296,9 @@ class Register extends Component {
   }
 
   render() {
-		let addy       = this.props.address?this.props.address.full_address:'Ingrese dirección de su comercio';
-		let addyStyle  = this.props.address?null:styles.placeholderColor;
-		
+		let addy       						= this.props.address?this.props.address.full_address:'Ingrese dirección de su comercio';
+		let addyStyle  						= this.props.address?null:styles.placeholderColor;
+		let _placeholderTextColor = '#999999';
 		let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
 // 		if(!this.state.can_accept)
@@ -294,7 +324,11 @@ class Register extends Component {
 							value={this.state.nombre}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese nombre de su empresa"
-							placeholderTextColor="#bbbbbb"
+							placeholderTextColor={_placeholderTextColor}
+							returnKeyType="next"
+							onSubmitEditing={(event) => { 
+								this.refs.rubro_input.focus(); 
+							}}
 						/>
 						{this.state.nombre?
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({nombre:''})} }>
@@ -312,7 +346,12 @@ class Register extends Component {
 							value={this.state.rubro}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese rubro o actividad"
-							placeholderTextColor="#bbbbbb"
+							placeholderTextColor={_placeholderTextColor}
+							ref="rubro_input"
+							returnKeyType="next"
+							onSubmitEditing={(event) => { 
+								this._showLocationSearch();
+							}}
 						/>
 						{this.state.rubro?
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({rubro:''})} }>
@@ -322,13 +361,13 @@ class Register extends Component {
 				</View>
 				<View style={styles.inputWrapper}>
 					
-					<View style={{ flex:1, flexDirection:'row', borderBottomColor		: '#f0f0f0', borderBottomWidth		: 1}}>
+					<View style={styles.pseudoInputWrapper}>
 						<TouchableOpacity style={{ flex:5}} onPress={() => {this._changeAddressText(); }}>
 								<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
 						</TouchableOpacity>	
 						<TouchableOpacity style={{ flex:1}} onPress={() => {this._showLocationSearch(); }}>		
 								<View style={[styles.textInputReadonlyEx]}>	
-									<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
+									<Icon style={{color:'#f0f0f0'}} name='ios-pin-outline' size={20} />
 								</View>
 						</TouchableOpacity>
 					</View>
@@ -344,7 +383,11 @@ class Register extends Component {
 							underlineColorAndroid ="transparent"
 							keyboardType="url"
 							placeholder="Ingrese dirección web"
-							placeholderTextColor="#bbbbbb"
+							placeholderTextColor={_placeholderTextColor}
+							returnKeyType="next"
+							onSubmitEditing={(event) => { 
+								this.refs.email_input.focus(); 
+							}}
 						/>
 						{this.state.web?
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({web:''})} }>
@@ -367,7 +410,12 @@ class Register extends Component {
 							underlineColorAndroid ="transparent"
 							keyboardType="email-address"
 							placeholder="Ingrese correo electrónico"
-							placeholderTextColor="#bbbbbb"
+							placeholderTextColor={_placeholderTextColor}
+							ref="email_input"
+							returnKeyType="next"
+							onSubmitEditing={(event) => { 
+								this.refs.phone_input.focus(); 
+							}}
 						/>
 						{this.state.email?
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({email:''})} }>
@@ -386,7 +434,12 @@ class Register extends Component {
 							value={this.state.phone}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese teléfono de contacto"
-							placeholderTextColor="#bbbbbb"
+							placeholderTextColor={_placeholderTextColor}
+							ref="phone_input"
+							returnKeyType="done"
+							onSubmitEditing={(event) => { 
+								Keyboard.dismiss();
+							}}
 						/>
 						{this.state.phone?
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({phone:''})} }>
@@ -403,7 +456,7 @@ class Register extends Component {
 							disabled={send_disabled}
 							style={[styles.fullWidthButton, btn_style]}
 							onPress={this._onRegister.bind(this)} >
-						<Text style={txt_style}>ACEPTAR CREDITO</Text>
+						<Text style={txt_style}>CONTINUAR</Text>
 					</TouchableHighlight>
 				</View>
         </HideWithKeyboard>

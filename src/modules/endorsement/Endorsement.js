@@ -184,8 +184,12 @@ class Endorsement extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-						
-				<TouchableOpacity style={styles.button} onPress={this._onRegister.bind(this)}>
+      </View>
+    );
+	}
+
+		/*
+		<TouchableOpacity style={styles.button} onPress={this._onRegister.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#575863' }, buttonInnerDisabled]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
 							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Data</Text>
@@ -196,52 +200,6 @@ class Endorsement extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-      </View>
-    );
-	}
-
-		/*
-		const iconShare 		= (<Icon name="md-share-alt" size={30} color="#1f475b" />);
-    const iconCard  		= (<Icon name="ios-card" size={30} 	color="#1f475b" />);
-    const iconBuffer  	= (<Icon name="logo-buffer" size={30} color="#1f475b" />);
-    const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="#CF2E08" />);
-    
-    let applyForCreditItem = null;
-		let available_credit 	 = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
-		if(available_credit!==false)
-			applyForCreditItem = (<SettingsList.Item
-															icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>{iconThumbsUp}</View>}
-															itemWidth={50}
-															title='Solicitar mi crédito preacordado'
-															onPress={this._onApplyEndorsement.bind(this)}
-														/>);
-  	return (
-      <View style={styles.container}>
-        <SettingsList>
-          {applyForCreditItem}
-          <SettingsList.Header headerText='Créditos'/>
-          <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconCard}
-                  </View>}
-            itemWidth={50}
-            title='Otorgar crédito'
-            onPress={this._onSendOverdraft.bind(this)}
-          />
-          
-          <SettingsList.Header headerText='Avales'/>
-          <SettingsList.Item
-            icon={<View style={{height:30,marginLeft:10,alignSelf:'center'}}>
-                    {iconShare}
-                  </View>}
-            itemWidth={50}
-            title='Enviar avales para otorgar créditos'
-            onPress={this._onShareEndorsement.bind(this)}
-          />
-          
-        </SettingsList>
-      </View>
-    );
 		*/
  
 }
