@@ -60,7 +60,7 @@ import com.android.build.OutputFile
  *   inputExcludes: ["android/**", "ios/**"],
  *
  *   // override which node gets called and with what additional arguments
- *   nodeExecutableAndArgs: ["node"]
+ *   nodeExecutableAndArgs: ["node"],
  *
  *   // supply additional arguments to the packager
  *   extraPackagerArgs: []
@@ -193,10 +193,12 @@ dependencies {
     
     compile project(':react-native-geocoder')
     
+    
     compile(project(':react-native-maps')){
       exclude group: 'com.google.android.gms', module: 'play-services-base'
       exclude group: 'com.google.android.gms', module: 'play-services-maps'
     }
+    
 
     //compile 'com.google.android.gms:play-services-base:9.8.0'
     //compile 'com.google.android.gms:play-services-maps:9.8.0'
@@ -207,7 +209,7 @@ dependencies {
     //compile 'com.google.android.gms:play-services-base:10.2.0'
     //compile 'com.google.android.gms:play-services-maps:10.2.0'
     
-    //compile project(':react-native-maps')
+    compile project(':react-native-maps')
     
     //TEST
     androidTestCompile 'junit:junit:4.12'
