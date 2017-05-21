@@ -23,11 +23,11 @@ import { iconsMap } from '../../utils/AppIcons';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'#2e2f3d',  //f0f0f0
+    backgroundColor:'#ffffff',  //2e2f3d
 		height:200
   },
 	placeholderColor:{
-		color:'#bbbbbb'
+		color:'#999999'
 	},
 	inputWrapper:{
 		paddingTop: 20		,
@@ -43,11 +43,21 @@ const styles = StyleSheet.create({
 	},
 	textInput:{
 // 		backgroundColor:'#ffffff',
-		color 							: '#ffffff',
+		color 							: '#1f475b',
 		height							: 40, 
 		borderBottomColor		: '#f0f0f0', 
 		borderBottomWidth		: 1,
 		fontFamily          : 'roboto_regular',
+		fontSize        		: 18,
+		lineHeight 					: 20
+  },
+	textInputPlaceholder:{
+// 		backgroundColor:'#ffffff',
+		color 							: '#f0f0f0',
+		fontFamily          : 'roboto_thin',
+		height							: 40, 
+		borderBottomColor		: '#f0f0f0', 
+		borderBottomWidth		: 1,
 		fontSize        		: 18,
 		lineHeight 					: 20
   },
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
     color           : '#FF0000'
 	},
 	textInputReadonly:{
-		color 							: '#ffffff',
+		color 							: '#1f475b',
 		paddingTop:10,
 		paddingLeft:1,
 		height: 40, 
@@ -79,6 +89,20 @@ const styles = StyleSheet.create({
 		lineHeight 					: 20,		
 		
   },
+	textInputReadonlyPlaceHolder:{
+		paddingTop:10,
+		paddingLeft:1,
+		height: 40, 
+		borderTopLeftRadius: 4,
+		borderTopRightRadius: 0,
+		borderBottomLeftRadius: 4,
+		borderBottomRightRadius: 0,
+		fontSize        		: 18,
+		lineHeight 					: 20,		
+	
+		color 							: '#999999',
+		fontFamily          : 'roboto_thin',
+	},
 	textInputReadonlyEx:{
 		height: 40, 
 		//backgroundColor: '#f0f0f0',
@@ -99,7 +123,7 @@ const styles = StyleSheet.create({
 		fontFamily      : 'roboto_regular',
    	fontWeight 			: '100',
    	fontSize   			: 15,
-		color           : '#96a7b6',
+		color           : '#2e2f3d',
 		paddingLeft			: 10		
 	},
 	
@@ -297,8 +321,7 @@ class Register extends Component {
 
   render() {
 		let addy       						= this.props.address?this.props.address.full_address:'Ingrese dirección de su comercio';
-		let addyStyle  						= this.props.address?null:styles.placeholderColor;
-		let _placeholderTextColor = '#999999';
+		let addyStyle  						= this.props.address?styles.textInputReadonly:styles.textInputReadonlyPlaceHolder;
 		let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
 // 		if(!this.state.can_accept)
@@ -310,7 +333,7 @@ class Register extends Component {
 		let send_disabled = false;
 		
     return (
-      <ScrollView keyboardShouldPersistTaps={true} style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>EMPRESA</Text>
 				</View>
@@ -319,12 +342,11 @@ class Register extends Component {
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
-							style={styles.textInput}
+							style={this.state.nombre?styles.textInput:styles.textInputPlaceholder}
 							onChangeText={(text) => this.setState( { nombre:text } ) }
 							value={this.state.nombre}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese nombre de su empresa"
-							placeholderTextColor={_placeholderTextColor}
 							returnKeyType="next"
 							onSubmitEditing={(event) => { 
 								this.refs.rubro_input.focus(); 
@@ -341,12 +363,11 @@ class Register extends Component {
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="words"
-							style={styles.textInput}
+							style={this.state.rubro?styles.textInput:styles.textInputPlaceholder}
 							onChangeText={(text) => this.setState( { rubro:text } ) }
 							value={this.state.rubro}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese rubro o actividad"
-							placeholderTextColor={_placeholderTextColor}
 							ref="rubro_input"
 							returnKeyType="next"
 							onSubmitEditing={(event) => { 
@@ -363,11 +384,11 @@ class Register extends Component {
 					
 					<View style={styles.pseudoInputWrapper}>
 						<TouchableOpacity style={{ flex:5}} onPress={() => {this._changeAddressText(); }}>
-								<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ height: 40}, styles.textInputReadonly, addyStyle]}> {addy} </Text>
+								<Text adjustsFontSizeToFit={true} numberOfLines={1} style={[{ height: 40}, addyStyle]}> {addy} </Text>
 						</TouchableOpacity>	
 						<TouchableOpacity style={{ flex:1}} onPress={() => {this._showLocationSearch(); }}>		
 								<View style={[styles.textInputReadonlyEx]}>	
-									<Icon style={{color:'#f0f0f0'}} name='ios-pin-outline' size={20} />
+									<Icon style={{color:'#999999'}} name='ios-pin-outline' size={20} />
 								</View>
 						</TouchableOpacity>
 					</View>
@@ -377,13 +398,12 @@ class Register extends Component {
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
-							style={styles.textInput}
+							style={this.state.web?styles.textInput:styles.textInputPlaceholder}
 							onChangeText={(text) => this.setState( { web:text } ) }
 							value={this.state.web}
 							underlineColorAndroid ="transparent"
 							keyboardType="url"
 							placeholder="Ingrese dirección web"
-							placeholderTextColor={_placeholderTextColor}
 							returnKeyType="next"
 							onSubmitEditing={(event) => { 
 								this.refs.email_input.focus(); 
@@ -404,13 +424,12 @@ class Register extends Component {
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
-							style={styles.textInput}
+							style={this.state.email?styles.textInput:styles.textInputPlaceholder}
 							onChangeText={(text) => this.setState( { email:text } ) }
 							value={this.state.email}
 							underlineColorAndroid ="transparent"
 							keyboardType="email-address"
 							placeholder="Ingrese correo electrónico"
-							placeholderTextColor={_placeholderTextColor}
 							ref="email_input"
 							returnKeyType="next"
 							onSubmitEditing={(event) => { 
@@ -429,12 +448,11 @@ class Register extends Component {
 					<View style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
-							style={styles.textInput}
+							style={this.state.phone?styles.textInput:styles.textInputPlaceholder}
 							onChangeText={(text) => this.setState( { phone:text } ) }
 							value={this.state.phone}
 							underlineColorAndroid ="transparent"
 							placeholder="Ingrese teléfono de contacto"
-							placeholderTextColor={_placeholderTextColor}
 							ref="phone_input"
 							returnKeyType="done"
 							onSubmitEditing={(event) => { 

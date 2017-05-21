@@ -19,7 +19,8 @@ class Result extends Component {
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
     navBarBackgroundColor: '#2e2f3d',
-    navBarButtonColor: '#ffffff'
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
   
   

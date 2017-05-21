@@ -21,7 +21,8 @@ class SelectRecipient extends Component {
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
     navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
   
   constructor(props) {

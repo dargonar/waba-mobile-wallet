@@ -45,6 +45,14 @@ function launchWallet() {
 // 					id: 'qrCode'
 // 				}
 // 			]
+			leftButtons: [
+		{
+			icon: iconsMap['ios-menu'],
+			// icon: Platform.OS === 'ios' ? iconsMap['ios-menu'] : null,
+			title: '',
+			id: 'sideMenu'
+		}
+	]
     },
     animationType : 'none',
     drawer: {

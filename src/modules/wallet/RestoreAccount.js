@@ -28,7 +28,8 @@ class RestoreAccount extends Component {
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
     navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
 	
 // 	let keyboardWillShowSub;
@@ -236,13 +237,12 @@ constructor(props) {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <HideWithKeyboard>
-				 	<TouchableHighlight
+         	<TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
 					</TouchableHighlight>
-        </HideWithKeyboard>
+        
 			 </View>
     );
   }
