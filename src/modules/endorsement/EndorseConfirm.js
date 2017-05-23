@@ -38,13 +38,25 @@ class EndorseConfirm extends Component {
 			profile 				  : props.profile,
 			tx								: null,
 			fee								: 0,
-			fee_txt						: 0.6, 		// hack
+			fee_txt						: 0, 	// hack
 			can_confirm				: true, 	// hack
 			error 						: ''
     }
 		
 		this._onSendingError = this._onSendingError.bind(this);
+		
+		this._generateUnsignedTx(this.state.endorsed, this.state.endorse_type).then( tx => {
+			
+			let amount = Number(tx.operations[0][1].fee.amount);
+			console.log('amount1 =>', tx.operations[0][1].fee.amount);
+			if(tx.operations.length > 1) {
+				console.log('amount2 =>', tx.operations[1][1].fee.amount);
+				amount += Number(tx.operations[1][1].fee.amount);
+			}
 
+			this.setState({fee_txt:amount/100});
+		});
+	
   }
 
   _addSignature(tx, privkey) {				
