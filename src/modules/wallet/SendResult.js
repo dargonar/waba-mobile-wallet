@@ -39,7 +39,14 @@ class SendResult extends Component {
     
     };
 
-//     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+		let that = this;
+    setTimeout( function() {
+      that.props.actions.retrieveHistory(
+				that.props.account.name, 
+				that.props.account.keys,
+				!that.props.account.id);  
+    }, 1500);
+	
   }
 
   
@@ -53,13 +60,13 @@ class SendResult extends Component {
 //   }
   
   _onOkPress(){
-   let that = this;
-    setTimeout( function() {
-      that.props.actions.retrieveHistory(
-				that.props.account.name, 
-				that.props.account.keys,
-				!that.props.account.id);  
-    }, 1500);
+//    let that = this;
+//     setTimeout( function() {
+//       that.props.actions.retrieveHistory(
+// 				that.props.account.name, 
+// 				that.props.account.keys,
+// 				!that.props.account.id);  
+//     }, 1500);
     
     
     this.props.navigator.popToRoot({

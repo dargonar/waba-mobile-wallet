@@ -32,17 +32,18 @@ class Result extends Component {
 // 			endorse_type 		: props.endorse_type,
 // 			endorse_index		: props.endorse_index
     };
-  }
-  
-  _onOkPress(){
-   let that = this;
+		
+		let that = this;
     setTimeout( function() {
       that.props.actions.retrieveHistory(
 				that.props.account.name, 
 				that.props.account.keys,
 				!that.props.account.id);  
     }, 1500);
-    
+	
+  }
+  
+  _onOkPress(){
     this.props.navigator.popToRoot({
       animated: true 
     });

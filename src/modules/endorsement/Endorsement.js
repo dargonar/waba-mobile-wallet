@@ -187,20 +187,9 @@ class Endorsement extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-						
-						
-						<TouchableOpacity style={styles.button} onPress={this._onRegister.bind(this)}>
-					<View style={[styles.buttonInner, {  backgroundColor	: '#575863' }, buttonInnerDisabled]}>
-						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Data</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>TEST REGISTRO</Text>
-						</View>	
-						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
-							{iconPerson}		
-						</View>
-					</View>
-			</TouchableOpacity>
-			</View>
+			
+		</View>
+			
     );
 	}
 

@@ -3,6 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import {
 	Alert,
 	Keyboard,
+	KeyboardAvoidingView,
 	ScrollView,
 	StyleSheet,
 	Text,
@@ -324,16 +325,10 @@ class Register extends Component {
 		let addyStyle  						= this.props.address?styles.textInputReadonly:styles.textInputReadonlyPlaceHolder;
 		let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
-// 		if(!this.state.can_accept)
-// 		{
-// 			btn_style = styles.fullWidthButtonDisabled;
-// 			txt_style = styles.fullWidthButtonTextDisabled;
-// 		}
-// 		let send_disabled = !this.state.can_accept;
 		let send_disabled = false;
 		
     return (
-      <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="always" style={styles.container} ref="scrollView">
 				<View style={styles.header}>
 					<Text style={styles.headerText}>EMPRESA</Text>
 				</View>
@@ -445,7 +440,7 @@ class Register extends Component {
 				</View>
 				<View style={styles.inputWrapper}>
 					
-					<View style={{height:40}}>
+					<KeyboardAvoidingView behavior="padding" style={{height:40}}>
 						<TextInput
 							autoCapitalize="none"
 							style={this.state.phone?styles.textInput:styles.textInputPlaceholder}
@@ -463,7 +458,7 @@ class Register extends Component {
 						 (<TouchableHighlight underlayColor='#999999' style={styles.clearButton} onPress={() => {this.setState({phone:''})} }>
 							<Icon style={{color:'#999999'}} name='ios-close-circle-outline' size={25} />
 							</TouchableHighlight>):null}
-					</View>
+					</KeyboardAvoidingView>
 				</View>
 				
 				{this._renderPrompt()}
