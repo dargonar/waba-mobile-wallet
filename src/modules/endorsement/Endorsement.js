@@ -39,8 +39,9 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
 	button:{
-		marginBottom:10,
+		marginBottom:5,
 		minHeight:100,
+		maxHeight:150,
 		flex: 1
 	},
 	buttonInner: {
@@ -186,7 +187,12 @@ class Endorsement extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.button} onPress={this._onRegister.bind(this)}>
+			</View>
+    );
+	}
+
+		/*
+		<TouchableOpacity style={styles.button} onPress={this._onRegister.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#575863' }, buttonInnerDisabled]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
 							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Data</Text>
@@ -197,12 +203,6 @@ class Endorsement extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-			</View>
-    );
-	}
-
-		/*
-		
 		*/
  
 }

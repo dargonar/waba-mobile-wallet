@@ -35,6 +35,7 @@ class EndorseConfirm extends Component {
     this.state = {
       endorsed 					: props.endorsed,
       endorse_type      : props.endorse_type,
+			profile 				  : props.profile,
 			tx								: null,
 			fee								: 0,
 			fee_txt						: 0.6, 		// hack
@@ -59,7 +60,7 @@ class EndorseConfirm extends Component {
 					reject(err);
 				})
 			}, err => {
-				reject(err);						
+				reject(err);
 			});
 		});
 	}
@@ -81,41 +82,123 @@ class EndorseConfirm extends Component {
 		return ret;
 	}
   
+	getMemoKey(account_name) {
+
+		return new Promise( (resolve, reject) => {
+			
+			fetch(config.getAPIURL('/account/')+account_name, {
+				method: 'GET',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+			})
+			.then((response) => response.json()
+				, err => {
+					console.log(JSON.stringify(err));
+				  reject(err);
+				}) 
+			.then((responseJson) => {
+				resolve(responseJson.options.memo_key);
+			}, err => {
+				console.log(JSON.stringify(err));
+				reject(err);
+			}); 
+		});
+		
+	}
+
+
+	encryptUserData(user_data, endorse_type) {
+		console.log(' -- encryptUserData #X');
+		return new Promise( (resolve, reject) => {
+			console.log(' -- encryptUserData #Y');
+			if(endorse_type==config.AVAL1000_ID)
+			{
+				resolve(null);
+				return;
+			}
+			console.log(' -- encryptUserData #1');
+			this.getMemoKey('gobierno-par').then( (memo_key) => {
+				console.log(' -- encryptUserData #2');
+				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, memo_key, JSON.stringify(user_data)).then(res => {
+					resolve(config.toHex(res));
+				}, err => {
+					console.log(' -- encryptUserData #3');
+					console.log(err);
+					reject(err);
+				})
+
+			} , err => {
+				console.log(' -- encryptUserData #4');
+				console.log(err);
+				reject(err);
+			})
+		});
+	}
+	
 	_generateUnsignedTx(to, endorse_type) {				
 		return new Promise( (resolve, reject) => {
-			tx = {
-				'expiration' : this.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
-				'ref_block_num'     : this.props.blockchain.refBlockNum,
-				'ref_block_prefix'  : this.props.blockchain.refBlockPrefix,
-				'operations' : [
-					 [
-						0,
-						{
-							from   : this.props.account.id,
-							to     : config.PROPUESTAPAR_ID, //https://www.cryptofresh.com/u/propuesta-par ID de propuesta-par
-							amount : {
-								amount   : 1,
-								asset_id : endorse_type
-							},
-							memo   : {message:config.toHex(config.I_ENDORSE_PREFIX+':'+to)}
-						}
+			
+			let user_data = this.state.profile;
+			console.log(JSON.stringify(user_data));
+			this.encryptUserData(user_data, endorse_type).then( (encrypted_user_data) => {
+				console.log(encrypted_user_data);
+				tx = {
+					'expiration' : this.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
+					'ref_block_num'     : this.props.blockchain.refBlockNum,
+					'ref_block_prefix'  : this.props.blockchain.refBlockPrefix,
+					'operations' : [
+						 [
+							0,
+							{
+								from   : this.props.account.id,
+								to     : config.PROPUESTAPAR_ID, //https://www.cryptofresh.com/u/propuesta-par ID de propuesta-par
+								amount : {
+									amount   : 1,
+									asset_id : endorse_type
+								},
+								memo   : {message:config.toHex(config.I_ENDORSE_PREFIX+':'+to)}
+							}
+						]
 					]
-				]
-			}
-
-			Bts2helper.calcFee(JSON.stringify(this.props.fees), [JSON.stringify(tx.operations[0])], JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
-				tx.operations[0][1].fee = {
-					asset_id  : config.MONEDAPAR_ID,
-					amount    : res[0]
 				}
-				resolve(tx);
+				if(encrypted_user_data){
+					tx.operations.push([
+																35,
+																{
+																	payer            : this.props.account.id,
+																	data             : encrypted_user_data
+																}
+															]);
+				}
+				let ops_for_fee = [JSON.stringify(tx.operations[0])];
+				if(encrypted_user_data){
+					ops_for_fee.push(JSON.stringify(tx.operations[1]));
+				}	
+				
+				Bts2helper.calcFee(JSON.stringify(this.props.fees), ops_for_fee, JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
+					tx.operations[0][1].fee = {
+						asset_id  : config.MONEDAPAR_ID,
+						amount    : res[0]
+					}
+					if(res.length>1){
+						tx.operations[1][1].fee = {
+							asset_id  : config.MONEDAPAR_ID,
+							amount    : res[1]
+						}	
+					}
+					resolve(tx);
+				}, err => {
+					reject(err);
+				});
+					
+					
 			}, err => {
 				reject(err);
 			});
 		}); //Promise
 	}
-
-	_onConfirm(){
+	
+	
+		_onConfirm(){
 // 		if(!this.state.can_confirm)
 // 		{
 // 			Alert.alert(
@@ -155,6 +238,10 @@ class EndorseConfirm extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 		
+// 		if(this.state.endorse_type!=config.AVAL1000_ID)
+// 		{
+					
+// 		}
 		this._generateUnsignedTx(this.state.endorsed, this.state.endorse_type).then( res => {
 			this._addSignature(res, this.props.account.keys[1].privkey).then( tx => {
 
