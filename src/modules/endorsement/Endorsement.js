@@ -137,10 +137,10 @@ class Endorsement extends Component {
   }
 
   render(){
-    const iconShare 		= (<Icon name="md-share-alt" size={30} color="white" />);
-    const iconCard  		= (<Icon name="ios-card" size={30} 	color="white" />);
-    const iconThumbsUp  = (<Icon name="md-thumbs-up" size={30} color="white" />);
-    const iconPerson    = (<Icon name="ios-person" size={30} color="white" />);
+    const iconShare 		= (<Icon name="md-share-alt" style={{paddingTop:25}} size={30} color="white" />);
+    const iconCard  		= (<Icon name="ios-card" style={{paddingTop:25}} size={30} 	color="white" />);
+    const iconThumbsUp  = (<Icon name="md-thumbs-up" style={{paddingTop:25}} size={30} color="white" />);
+    const iconPerson    = (<Icon name="ios-person" style={{paddingTop:25}} size={30} color="white" />);
 		
     let applyForCreditItem = null;
 		let available_credit 	 = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
@@ -151,8 +151,8 @@ class Endorsement extends Component {
 			applyForCreditItem = (<TouchableOpacity style={styles.button} onPress={this._onApplyEndorsement.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#CF2E08' }]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Solicitar mi crédito preacordado</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>SOLICITAR CREDITO</Text>
+							<Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Solicitar mi crédito preacordado</Text>
+							<Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>SOLICITAR CREDITO</Text>
 						</View>	
 						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
 							{iconThumbsUp}		
@@ -167,8 +167,8 @@ class Endorsement extends Component {
 				<TouchableOpacity style={styles.button} onPress={this._onSendOverdraft.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#575863' }, buttonInnerDisabled]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Enviar autorización de solicitud de crédito</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>DAR CREDITO</Text>
+							<Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Enviar autorización de solicitud de crédito</Text>
+							<Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>DAR CREDITO</Text>
 						</View>	
 						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
 							{iconCard}		
@@ -179,8 +179,8 @@ class Endorsement extends Component {
 				<TouchableOpacity style={styles.button} onPress={this._onShareEndorsement.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#575863' }, buttonInnerDisabled]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Enviar avales para autorizar créditos</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>ENVIAR AVALES</Text>
+							<Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Enviar avales para autorizar créditos</Text>
+							<Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>ENVIAR AVALES</Text>
 						</View>	
 						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
 							{iconShare}		

@@ -73,15 +73,15 @@ class Settings extends Component {
 		// <SettingsList.Header headerText='Different Grouping' headerStyle={{marginTop:50}}/>
 		// <SettingsList.Item titleInfo='Some Information' hasNavArrow={false} title='Information Example'/>
           
-		const iconSwap = (<Icon name="ios-swap" size={30} color="#ffffff" />);
-		const iconSec  = (<Icon name="ios-key" size={30} color="#ffffff" />);
+		const iconSwap = (<Icon name="ios-swap" style={{paddingTop:25}}  size={30} color="#ffffff" />);
+		const iconSec  = (<Icon name="ios-key" style={{paddingTop:25}} size={30} color="#ffffff" />);
 		
 		return (<View style={styles.container}>
 				<TouchableOpacity style={styles.button} onPress={this._onShowWords.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#044967' }]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Mostrar palabras para recupero de cuenta</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>PALABRAS CLAVE</Text>
+							<Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Mostrar palabras para recupero de cuenta</Text>
+							<Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>PALABRAS CLAVE</Text>
 						</View>	
 						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
 							{iconSec}		
@@ -92,8 +92,8 @@ class Settings extends Component {
 				<TouchableOpacity style={styles.button} onPress={this._onRestoreAccount.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#044967' }]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-							<Text style={{ flex:1, color:'white', fontSize:10, fontFamily : 'roboto_light', fontWeight: '100' }}>Restaurar una cuenta a partir de palabras</Text>
-							<Text style={{ flex:1, color:'white', fontSize:16, fontFamily : 'roboto_normal', }}>RESTAURAR CUENTA</Text>
+							<Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Restaurar una cuenta a partir de palabras</Text>
+							<Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>RESTAURAR CUENTA</Text>
 						</View>	
 						<View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
 							{iconSwap}		
