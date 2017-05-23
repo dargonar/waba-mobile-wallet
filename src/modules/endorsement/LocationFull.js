@@ -256,9 +256,8 @@ class LocationFull extends Component {
   }
 
   render() {
-    let buttonColor = '#1abc9c';
-    if(this.state.locked)
-      buttonColor = '#3498db';
+    let buttonColor = '#2e2f3d'; //1abc9c';
+    
 		let icon = (<Icon name="ios-locate-outline" style={styles.actionButtonIcon} />);
     return (
       <View style={styles.container}>
@@ -302,8 +301,10 @@ class LocationFull extends Component {
 					onPanDrag={() => { 
 						Keyboard.dismiss();
 					}}
-					onLongPress={() => { 
-						this.centerMarker();
+					onLongPress={(e) => { 
+ 						this.reverseGeoSearch(e.nativeEvent.coordinate);
+// 						console.log(' ---- onLongPress');
+// 					  console.log(JSON.stringify(e.nativeEvent.coordinate));
 					}}
           >
           <MapView.Marker draggable
@@ -311,7 +312,7 @@ class LocationFull extends Component {
             onDragEnd={(e) => {	this.reverseGeoSearch(e.nativeEvent.coordinate);} }
           />
         </MapView>
-				<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.centerMarker() }} icon={ icon } />
+				<ActionButton buttonColor="#2e2f3d" style={styles.actionButton} onPress={() => {  this.centerMarker() }} icon={ icon } />
       </View>
     );
   }
