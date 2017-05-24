@@ -6,7 +6,7 @@ import { iconsMap } from './AppIcons';
 function launchTest(){
 	
 	Navigation.startSingleScreenApp({
-    portraitOnlyMode : true,
+    appStyle : { orientation : 'portrait' },
 		screen: {
       screen: 'endorsement.Register',
 			title: 'Registro',
@@ -25,7 +25,7 @@ function launchTest(){
 
 function launchWallet() {
   Navigation.startSingleScreenApp({
-    portraitOnlyMode : true,
+    appStyle : { orientation : 'portrait' },
 		screen: {
  			screen				 : 'wallet.Main',
       navigatorStyle : {
@@ -66,7 +66,7 @@ function launchWallet() {
 function launchOnboard() {
 	// 
   Navigation.startSingleScreenApp({
-    portraitOnlyMode : true,
+    appStyle : { orientation : 'portrait' },
 		screen: {
       screen				 : 'wallet.Onboarding',
       navigatorStyle : {
