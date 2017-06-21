@@ -20,13 +20,20 @@ var Onboarding = React.createClass({
 		});
 	},
 	
-	_onRestoreAccount: function() {
+	_onSelectProgram: function() {
 		this.props.navigator.push({
-			screen: 'wallet.RestoreAccount',
-			title: 'Restaurar cuenta'
+			screen: 'program.ProgramList',
+			title: 'Elegir programa'
 		});
 	},
 
+// 	<TouchableHighlight
+// 			style={[styles.fullWidthButton, styles.fullWidthButton2]}
+// 			onPress={this._onCreateAccount} >
+// 		<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
+// 	</TouchableHighlight>
+
+						
   render: function() {
     return (
       <View style={styles.container}>
@@ -35,15 +42,9 @@ var Onboarding = React.createClass({
         </View>
         <View style={styles.buttons}>
           <TouchableHighlight
-              style={[styles.fullWidthButton, styles.fullWidthButton2]}
-              onPress={this._onCreateAccount} >
-            <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
               style={[styles.fullWidthButton, styles.fullWidthButton1]}
-              onPress={this._onRestoreAccount} >
-            <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+              onPress={this._onSelectProgram} >
+            <Text style={styles.fullWidthButtonText}>ELEGIR PROGRAMA</Text>
           </TouchableHighlight>
         </View>												
       </View>
@@ -56,32 +57,38 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-  	backgroundColor: '#0B5F83'
+  	backgroundColor: '#FFFFFF'
+		/* 0B5F83 */
 	},
-  subcontainer: {
+  
+	subcontainer: {
     flex: 4
   },
-  viewpager: {
+  
+	viewpager: {
     flex: 4,
     flexDirection: 'column'
   },
+	
   buttons:{
-    flex:2, 
+    flex:1, 
     paddingLeft:15,
     paddingRight:15, 
     flexDirection:'column', 
     alignItems: 'stretch', 
     justifyContent:'center' 
   },
-  fullWidthButton: {
+  
+	fullWidthButton: {
 		borderRadius: 5,
     height:60,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
+	
 	fullWidthButton1: {
-    backgroundColor: '#1e759b'
+    backgroundColor: '#014372'
   },
 	fullWidthButton2: {
     backgroundColor: '#6bbd07',

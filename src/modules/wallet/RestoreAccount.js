@@ -27,7 +27,7 @@ class RestoreAccount extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarBackgroundColor: '#3F779D',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin'
   }
@@ -217,7 +217,7 @@ constructor(props) {
 		let mensaje = undefined;
 		if(this.state.keyboardOpen==false)
 		{
-			mensaje = (<View style={{flex:2, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
+			mensaje = (<View style={{flex:2, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#3F779D'}}>
 						<Text style={styles.keywordsTitle} numberOfLines={4}>
 							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
 							orden y minúscula/mayúscula. 

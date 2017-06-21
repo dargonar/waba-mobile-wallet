@@ -33,7 +33,7 @@ class RecoveryKeywords extends Component {
 	
 	static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarBackgroundColor: '#3F779D',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin'
   }
