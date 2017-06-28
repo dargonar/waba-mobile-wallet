@@ -11,11 +11,13 @@ import {
 
 import styles from './styles/CreateAccount';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import * as walletActions from './wallet.actions';
 import * as config from '../../constants/config';
 import Bts2helper from '../../utils/Bts2helper';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-class Start extends Component {
+class CreateAccount extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -163,11 +165,12 @@ class Start extends Component {
 			btn_style = styles.fullWidthButtonDisabled;
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
+		let data = config.PROGRAMS[this.props.program];
 		return (
 			
 			<View style={styles.container}>
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('../program/img/aqua.png')} style={{width: 100, height: 100}} />
+					<Image source={data[0]} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput
@@ -201,14 +204,14 @@ class Start extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		program    : state.wallet.program
+		program: state.wallet.program
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-	return {
-		actions: bindActionCreators(walletActions, dispatch)
-	};
+  return {
+    actions: bindActionCreators(walletActions, dispatch)
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Start);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount);

@@ -85,7 +85,8 @@ class History extends Component {
 			this.props.account.name, 
 			this.props.account.keys,
 			!this.props.account.id,
-			start_offset
+			start_offset,
+			this.props.program
 		);
 	}
 	
@@ -141,7 +142,7 @@ class History extends Component {
 				console.log('UserId = ', device.userId);
 				console.log('PushToken = ', device.pushToken);
 				//fetch('http://35.161.140.21:8080/api/v1/push_id', {
-				fetch(config.getAPIURL('/push_id', this.props.program), {
+				fetch(config.getAPIURL('/push_id', that.props.program), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 					body: JSON.stringify({
@@ -557,7 +558,6 @@ class History extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	//console.log('HISTORY::mapStateToProps');
 	return {
 		history   : state.wallet.history,
 		account   : state.wallet.account,

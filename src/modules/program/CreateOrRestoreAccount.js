@@ -9,7 +9,8 @@ import {
   View,
 } from 'react-native';
 
-
+import * as config from '../../constants/config'; 
+	
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -78,11 +79,6 @@ var styles = StyleSheet.create({
   }  
 });
 
-var PROGRAMS = {
-  'aqua'  : [require('./img/aqua.png'), 'Aqua', 'Moeda Ambiental de São Paulo'],
-  'ecoin' : [require('./img/ecoin.png'), 'eCOin', 'Moneda Complementaria - UOC'],
-};
-
 
 class CreateOrRestoreAccount extends Component {
 
@@ -110,7 +106,8 @@ class CreateOrRestoreAccount extends Component {
   }
   
   render() {
-    let data = PROGRAMS[this.props.program];
+    let data = config.PROGRAMS[this.props.program];
+
      return (
        <View style={styles.container}>
           <View style={styles.subcontainer}>

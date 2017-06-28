@@ -38,7 +38,10 @@ class Result extends Component {
       that.props.actions.retrieveHistory(
 				that.props.account.name, 
 				that.props.account.keys,
-				!that.props.account.id);  
+				!that.props.account.id,
+				0,
+				that.props.program
+			);  
     }, 1500);
 	
   }
@@ -101,7 +104,8 @@ class Result extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
- 		account: state.wallet.account,
+ 		account : state.wallet.account,
+		program : state.wallet.program
 	};
 }
 

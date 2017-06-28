@@ -107,7 +107,7 @@ constructor(props) {
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
-				fetch( config.getAPIURL('/find_account', this.props.program), {
+				fetch( config.getAPIURL('/find_account', that.props.program), {
 // 				fetch('http://35.161.140.21:8080/api/v1/find_account', {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -140,7 +140,9 @@ constructor(props) {
 								that.props.actions.retrieveHistory(
 									that.props.account.name, 
 									that.props.account.keys,
-									!that.props.account.id);  
+									!that.props.account.id,
+								  0,
+								  that.props.program);  
 							}, 1500);
 							
 						}, err => {
@@ -250,8 +252,8 @@ constructor(props) {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		memo: state.wallet.new_keys,
-    account: state.wallet.account,
+		memo			 : state.wallet.new_keys,
+    account		 : state.wallet.account,
     program    : state.wallet.program
 	};
 }

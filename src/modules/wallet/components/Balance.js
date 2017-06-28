@@ -114,6 +114,7 @@ class Balance extends Component {
 				</TouchableHighlight>
 				);	
 		}
+		let asset = config.PROGRAMS[this.props.program][3];
 		return (
       <View style={styles.container}>
         <View style={styles.wrapper}> 
@@ -124,7 +125,7 @@ class Balance extends Component {
 								
 								<View style={styles.balanceAmountWrapper}> 
 									{p}
-									<Text style={[styles.gray_color, styles.par_part]}> AQUA</Text>
+									<Text style={[styles.gray_color, styles.par_part]}> {asset}</Text>
 								</View>
 						</View>
 						

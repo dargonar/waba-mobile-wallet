@@ -53,11 +53,11 @@ try {
 							if(!(s.wallet.errors % 10)) {
 								ToastAndroid.show('Está tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
 							}
-							store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
+							store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, program) );
 						}
 					});
 
-					store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0) );
+					store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, program) );
 
 		    }, err => {
 		      

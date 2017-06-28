@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import * as walletActions from '../wallet/wallet.actions';
+import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native'
+import { bindActionCreators } from 'redux';
 
 var styles = StyleSheet.create({
   container: {

@@ -5,10 +5,11 @@ import Bts2helper from '../../utils/Bts2helper';
 import gql from 'graphql-tag';
 
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
-const networkInterface = createNetworkInterface(config.GRAPHQL_URL);
-const apollo = new ApolloClient({
-  networkInterface,
-});
+let networkInterface = null; //createNetworkInterface(config.getGRAPHQLURL());
+let apollo = null;
+// new ApolloClient({
+//   networkInterface,
+// });
 
 let memo_cache = {};
 
@@ -265,7 +266,7 @@ export function creditReadySuccess(credit_ready) {
 	};
 }
 
-export function retrieveHistory(account_name, keys, first_time, start) {
+export function retrieveHistory(account_name, keys, first_time, start, program) {
 	return function (dispatch) {
 		if (start === undefined) start=0;
 		console.log( 'retrieveHistory()', account_name, first_time, start);
@@ -286,6 +287,13 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			x = 1;
 		}, 10000);
 		
+		if(apollo==null)
+		{
+			networkInterface = createNetworkInterface(config.getGRAPHQLURL(program));
+			apollo =  new ApolloClient({
+									networkInterface,
+								});		
+		}
 		const query = apollo.query({
 			query: gql`
 				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!) {

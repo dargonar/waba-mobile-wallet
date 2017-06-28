@@ -88,7 +88,7 @@ export default function (state = initialState.wallet, action) {
 		case types.PROGRAM_SUCCESS:
 			return {
 				...state,
-				memo: action.program
+				program: action.program
 			};
 
 		case types.RETRIEVE_BALANCE_SUCCESS:
