@@ -134,7 +134,7 @@ class Drawer extends Component {
 							backgroundColor: '#CF2E08'}
 						}
 					/>);												 
-													 
+// 		console.log(' -- account ', JSON.stringify(this.props.account));													 
 		return (
 			
 				<View style={styles.container}>

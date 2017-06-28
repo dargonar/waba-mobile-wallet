@@ -107,6 +107,7 @@ constructor(props) {
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
 				console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
+				console.log(' -- PROGRAM:', that.props.program);
 				fetch( config.getAPIURL('/find_account', that.props.program), {
 // 				fetch('http://35.161.140.21:8080/api/v1/find_account', {
 					method: 'POST',
