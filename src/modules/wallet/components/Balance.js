@@ -76,7 +76,7 @@ class Balance extends Component {
 		if(parts[1] != '00')
 			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
 		
-		let asset_symbol = config.ASSET_SYMBOL;
+		let asset_symbol = config.getAssetSymbol(this.props.program);
 		
 		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
@@ -143,8 +143,9 @@ class Balance extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		balance: state.wallet.balance,
-		credit_ready : state.wallet.credit_ready
+		balance 			: state.wallet.balance,
+		credit_ready  : state.wallet.credit_ready,
+		program 			: state.wallet.program
 	};
 }
 

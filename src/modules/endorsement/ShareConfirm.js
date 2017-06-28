@@ -163,7 +163,7 @@ class ShareConfirm extends Component {
 		this._generateUnsignedTx(this.state.endorsed, this.state.endorse_type).then( res => {
 			this._addSignature(res, this.props.account.keys[1].privkey).then( tx => {
 
-				fetch(config.getAPIURL('/push_tx'), {
+				fetch(config.getAPIURL('/push_tx', this.props.program), {
 						method: 'POST',
 						headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 						body: JSON.stringify({
@@ -306,7 +306,8 @@ function mapStateToProps(state, ownProps) {
 		balance    : state.wallet.balance,
 		fees       : state.wallet.fees,
 		asset      : state.wallet.asset,
-		blockchain : state.wallet.blockchain
+		blockchain : state.wallet.blockchain,
+    program    : state.wallet.program
 	};
 }
 

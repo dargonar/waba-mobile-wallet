@@ -141,7 +141,7 @@ class History extends Component {
 				console.log('UserId = ', device.userId);
 				console.log('PushToken = ', device.pushToken);
 				//fetch('http://35.161.140.21:8080/api/v1/push_id', {
-				fetch(config.getAPIURL('/push_id'), {
+				fetch(config.getAPIURL('/push_id', this.props.program), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 					body: JSON.stringify({
@@ -295,11 +295,11 @@ class History extends Component {
 			}
 			
 			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1) {
-				let bg     			= {share:'#413932', endorse:'#ef5030', share_received:'#B7F072', share_sent:'#ff9379'};
-				let fecha  			= this._getFecha(rowData.block.timestamp);
-			  let hora   			= this._getHora(rowData.block.timestamp);
-				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
-				let to_account  = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
+				let bg     			    = {share:'#413932', endorse:'#ef5030', share_received:'#B7F072', share_sent:'#ff9379'};
+				let fecha  			    = this._getFecha(rowData.block.timestamp);
+			  let hora   			    = this._getHora(rowData.block.timestamp);
+				let _recv_sent      = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
+				let to_account      = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
 
 				let aval_type 			= '';
 				let icon_type 			= '';
@@ -401,13 +401,14 @@ class History extends Component {
 					</TouchableHighlight>
 				)
 			}
+      
+      let asset_symbol = config.getAssetSymbol(this.props.program);
 
 			if(rowData.__typename == 'OverdraftChange') {
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down'; 
 				//let _tipo  = rowData.from.name.endsWith(this.props.account.name) ? 'credit_up' : 'credit_down'; // testing
 				let bg     = {credit_up:'#fda720', credit_down:'#413932'}; 
 				let msg    = {credit_up:'incrementado', credit_down:'reducido'};
-				let asset_symbol = config.ASSET_SYMBOL;
 				let title  = 'Se ha '+ msg[_tipo] + 'tu límite de crédito en';
 				if(!rowData.memo || !rowData.memo.message)
 				{
@@ -453,8 +454,7 @@ class History extends Component {
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
        let fecha  = this._getFecha(rowData.block.timestamp);
 			 let hora   = this._getHora(rowData.block.timestamp);
-			 let asset_symbol = config.ASSET_SYMBOL;
-       let message = undefined;
+			 let message = undefined;
        if(rowData.message)
          message = (<Text style={styles.row_message}>{rowData.message}</Text>);
        
@@ -562,7 +562,8 @@ function mapStateToProps(state, ownProps) {
 		history   : state.wallet.history,
 		account   : state.wallet.account,
 		at_end    : state.wallet.at_end,
-		errors    : state.wallet.errors
+		errors    : state.wallet.errors,
+    program    : state.wallet.program
 	};
 }
 

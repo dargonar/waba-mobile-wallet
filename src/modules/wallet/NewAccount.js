@@ -55,7 +55,7 @@ class NewAccount extends Component {
 // 	}
 
   _onCreateAccount(){
-		walletActions.createAccount(this.state.account_name).then( (data) => {
+		walletActions.createAccount(this.state.account_name, this.props.program).then( (data) => {
 			AsyncStorage.setItem('@Store:data', JSON.stringify(data));
 			
 			this.props.actions.createAccountSuccessHACK(data);
@@ -135,7 +135,7 @@ class NewAccount extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		
+    program    : state.wallet.program
 	};
 }
 

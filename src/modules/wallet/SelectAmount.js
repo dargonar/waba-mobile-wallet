@@ -75,7 +75,7 @@ class SelectAmount extends React.Component {
     componentDidMount() {
 
 			if(!this.state.memo_key) {
-				fetch(config.getAPIURL('/account/')+this.props.recipient[0], {
+				fetch(config.getAPIURL('/account/', this.props.program)+this.props.recipient[0], {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
@@ -200,8 +200,9 @@ class SelectAmount extends React.Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		memo: state.wallet.memo,
-		balance: state.wallet.balance
+		memo       : state.wallet.memo,
+		balance    : state.wallet.balance,
+    program    : state.wallet.program
 	};
 }
 

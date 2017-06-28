@@ -110,7 +110,7 @@ class CreateOrRestoreAccount extends Component {
   }
   
   render() {
-    let data = PROGRAMS[this.state.program];
+    let data = PROGRAMS[this.props.program];
      return (
        <View style={styles.container}>
           <View style={styles.subcontainer}>

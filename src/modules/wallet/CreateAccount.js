@@ -69,7 +69,7 @@ class Start extends Component {
 					return;
 				}
 				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
-				fetch(config.getAPIURL('/account/')+text, {
+				fetch(config.getAPIURL('/account/', this.props.program)+text, {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
@@ -199,4 +199,16 @@ class Start extends Component {
 }
 
 
-export default Start;
+function mapStateToProps(state, ownProps) {
+	return {
+		program    : state.wallet.program
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		actions: bindActionCreators(walletActions, dispatch)
+	};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Start);

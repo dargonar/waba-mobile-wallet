@@ -11,9 +11,10 @@ export default {
 		memo			 : '',
 		account    : null,
 		account_id : null,
-		blockchain : {},
+		blockchain 	 : {},
 		credit_ready : false,
-		endorsements: {},
-		endorsed: 		null
+		endorsements : {},
+		endorsed		 : null,
+		program			 : null
 	}
 };

@@ -130,7 +130,7 @@ _getRecipientInfo(recipient) {
 				return;
 			}
 			
-			fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
+			fetch(config.getAPIURL('/account/', this.props.program)+this.state.recipient.name, {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
@@ -269,7 +269,7 @@ _getRecipientInfo(recipient) {
 		
 		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 		
-			fetch(config.getAPIURL('/push_tx'), {
+			fetch(config.getAPIURL('/push_tx', this.props.program), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 					body: JSON.stringify({
@@ -410,7 +410,8 @@ function mapStateToProps(state, ownProps) {
 		balance    : state.wallet.balance,
 		fees       : state.wallet.fees,
 		asset      : state.wallet.asset,
-		blockchain : state.wallet.blockchain
+		blockchain : state.wallet.blockchain,
+		program    : state.wallet.program
 	};
 }
 

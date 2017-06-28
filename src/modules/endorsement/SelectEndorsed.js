@@ -74,7 +74,7 @@ class SelectEndorsed extends Component {
 // 		1=solo sin credito y sin BL
 // 		2=solo con credito
 		let _search_filter = this.state.with_no_credit ? '1' : '2';
-		walletActions.retrieveUsers(search, _search_filter).then( (users) => {
+		walletActions.retrieveUsers(search, _search_filter, this.props.program).then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),
@@ -182,7 +182,7 @@ class SelectEndorsed extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		// memo: state.wallet.memo
+		program: state.wallet.program
 	};
 }
 

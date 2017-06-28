@@ -84,6 +84,13 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				memo: action.memo
 			};
+
+		case types.PROGRAM_SUCCESS:
+			return {
+				...state,
+				memo: action.program
+			};
+
 		case types.RETRIEVE_BALANCE_SUCCESS:
 			return {
 				...state,

@@ -79,7 +79,7 @@ class SelectRecipient extends Component {
   pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		walletActions.retrieveUsers(search, '0').then( (users) => {
+		walletActions.retrieveUsers(search, '0', this.props.program).then( (users) => {
 			console.log('Traemos');
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),
@@ -192,7 +192,8 @@ class SelectRecipient extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		memo: state.wallet.memo
+		memo: state.wallet.memo,
+    program: state.wallet.program
 	};
 }
 

@@ -55,7 +55,7 @@ export function createAccountSuccessHACK(account) {
 // }
 
 
-export function createAccount(name) {
+export function createAccount(name, program) {
 
 		return new Promise((resolve, reject) => {
 
@@ -70,7 +70,7 @@ export function createAccount(name) {
 					]).then(function(res3) {
 						
 						//fetch('http://35.161.140.21:8080/api/v1/register', {
-						fetch(config.getAPIURL('/register'), {
+						fetch(config.getAPIURL('/register', program), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 							body: JSON.stringify({
@@ -139,6 +139,7 @@ export function addressSuccess(address) {
 }
 // ---------------------
 
+// MEMO
 export function memoSuccessHACK(memo) {
 	return {
 		type      : types.MEMO_SUCCESS,
@@ -152,10 +153,24 @@ export function memoSuccess(memo) {
 	}
 }
 
+// PROGRAM
+export function programSuccessHACK(program) {
+	return {
+		type      : types.PROGRAM_SUCCESS,
+		program  	: program
+	};
+}
+
+export function programSuccess(program) {
+	return function (dispatch) {
+		dispatch(programSuccessHACK(program));	
+	}
+}
+
 // USERS
-export function endorseApply(from, endorse_type) {
+export function endorseApply(from, endorse_type, program) {
 	return new Promise((resolve, reject) => {
-		fetch(config.getAPIURL('/endorse/apply'), {
+		fetch(config.getAPIURL('/endorse/apply', program), {
 			method: 'POST',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 			body: JSON.stringify({
@@ -174,10 +189,10 @@ export function endorseApply(from, endorse_type) {
 }
 
 // USERS
-export function retrieveUsers(query, search_filter) {
+export function retrieveUsers(query, search_filter, program) {
     search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
-			fetch(config.getAPIURL('/searchAccount?search='+query+'&search_filter='+search_filter), {
+			fetch(config.getAPIURL('/searchAccount?search='+query+'&search_filter='+search_filter, program), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})

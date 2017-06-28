@@ -97,11 +97,11 @@ class ApplyConfirm extends Component {
 		});
 		
 		
-		walletActions.endorseApply(this.props.account.name, this.state.endorse_type).then( (res) => {
+		walletActions.endorseApply(this.props.account.name, this.state.endorse_type, this.props.program).then( (res) => {
 			console.log('endorseApply =>', JSON.stringify(res.tx));
 			this._addSignature(res.tx, this.props.account.keys[1].privkey).then( tx => {
 		
-				fetch(config.getAPIURL('/push_tx'), {
+				fetch(config.getAPIURL('/push_tx', this.props.program), {
 						method: 'POST',
 						headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 						body: JSON.stringify({
@@ -248,6 +248,7 @@ function mapStateToProps(state, ownProps) {
 	return {
 		account : state.wallet.account,
 		balance : state.wallet.balance,
+		program : state.wallet.program
 	};
 }
 
