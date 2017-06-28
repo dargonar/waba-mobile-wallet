@@ -84,7 +84,7 @@ class CreateOrRestoreAccount extends Component {
 
   constructor(props) {
     super(props);
-    this._onCreateAccount       = this._onCreateAccount.bind(this);
+    this._onCreateAccount   = this._onCreateAccount.bind(this);
     this._onRestoreAccount  = this._onRestoreAccount.bind(this);
     
     this.state = {program:props.program};

@@ -71,13 +71,13 @@ class CreateAccount extends React.Component {
 					return;
 				}
 				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
-				fetch(config.getAPIURL('/account/', this.props.program)+text, {
+				fetch(config.getAPIURL('/account/', that.props.program)+text, {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
 				.then((response) => response.json()
 					, (err) => {
-						this.setState({
+						that.setState({
 							error: 			'Error de red!',
 							refreshing: false,
 							disabled: 	true
@@ -86,7 +86,7 @@ class CreateAccount extends React.Component {
 				) 
 				.then((responseJson) => {
 					if(responseJson){
-						this.setState({
+						that.setState({
 							error: 			'Ya existe un usuario con ese nombre',
 							refreshing: false,
 							disabled: 	true
@@ -94,14 +94,14 @@ class CreateAccount extends React.Component {
 					}
 					else
 					{
-						this.setState({
+						that.setState({
 							error: 			'',
 							refreshing: false,
 							disabled: 	false
 						});
 					}
 				}, (err) => {
-						this.setState({
+						that.setState({
 							error: 			'Error de red!',
 							refreshing: false,
 							disabled: 	true
@@ -110,7 +110,7 @@ class CreateAccount extends React.Component {
 				)
 				.catch((error) => {
 					console.error(error);
-					this.setState({
+					that.setState({
 							error: 			error,
 							refreshing: false,
 							disabled: 	true
@@ -118,7 +118,7 @@ class CreateAccount extends React.Component {
 				});
 			}, error => {
 					console.error(error);
-					this.setState({
+					that.setState({
 							error: 			error,
 							refreshing: false,
 							disabled: 	true
