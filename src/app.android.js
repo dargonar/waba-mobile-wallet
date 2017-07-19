@@ -19,7 +19,7 @@ let account = null;
 try {
 	//AsyncStorage.removeItem('@Store:data');
 	AsyncStorage.getItem('@Store:data').then((value)=>{
-		//console.log('@Store:data => ', value);
+		console.log('@Store:data => ', value);
 		
 		if (value !== null) {
 			account = JSON.parse(value);
@@ -28,6 +28,10 @@ try {
 		}
 		
 		iconsLoaded.then(() => {
+			if(account)
+			{
+				account.name = account.name.replace('uoc-mc.','').replace('aqua-mc.','');
+			}
 			initialState.wallet.account = account;
 			const store = configureStore(initialState);
 			
@@ -39,7 +43,9 @@ try {
  			else{
         
         AsyncStorage.getItem('@Store:program').then( (program) => {
-		      
+		      console.log(' --- @Store:program');
+					console.log(program);
+					console.log(' --- ');
 		      store.dispatch(walletActions.programSuccess(program) );
 
 					let unsubscribe = store.subscribe(() => {

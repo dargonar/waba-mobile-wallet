@@ -129,7 +129,7 @@ constructor(props) {
 						let account = {
 							mnemonic   : words,
 							keys       : res2,
-							name       : responseJson[0], //.name
+							name       : responseJson[0].replace('uoc-mc.','').replace('aqua-mc.',''), //.name META HACK
 							id         : responseJson[1] //.id
 						};
 
@@ -218,11 +218,12 @@ constructor(props) {
 		// defaultValue="recaer líder alivio pecado vereda aire moneda oasis reposo haz iris altura"
 		console.log("-- this.state.keyboardOpen", this.state.keyboardOpen);
 		let mensaje = undefined;
+		let __program = this.props.program;
 		if(this.state.keyboardOpen==false)
 		{
 			mensaje = (<View style={{flex:2, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#3F779D'}}>
 						<Text style={styles.keywordsTitle} numberOfLines={4}>
-							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
+								 Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
 							orden y minúscula/mayúscula. 
 						</Text>
 					</View>);	

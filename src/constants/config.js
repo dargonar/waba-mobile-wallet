@@ -1,6 +1,10 @@
 export const API_URL         = { 
 																	'aqua' : 'http://aqua-demo.waba.co.in',
-																	'ecoin'  : 'http://uoc-demo.waba.co.in'
+																	'ecoin': 'http://uoc-demo.waba.co.in'
+																};
+export const ACCOUNT_PREFIX  = { 
+																	'aqua' : 'aqua-mc',
+																	'ecoin': 'uoc-mc'
 																};
 export const PROGRAMS = {
   'aqua'  : [require('../modules/program/img/aqua.png'), 'Aqua', 'Moeda Ambiental de São Paulo', 'AQUA'],
@@ -51,7 +55,11 @@ export function getGRAPHQLURL(program) {
 	
 }
 
-
+export function getACCOUNTPREFIX(program){
+	if (!program || program==='' )
+		return '';
+	return ACCOUNT_PREFIX[program];
+}
 export function getAPIURL(path, program) {
 	
 	if (!program || program==='' )

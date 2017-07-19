@@ -287,9 +287,13 @@ export function retrieveHistory(account_name, keys, first_time, start, program) 
 			x = 1;
 		}, 10000);
 		
+		console.log(' -- retrieveHistory');
+		console.log('account:', account_name, '  program:', program);
 		if(apollo==null)
 		{
-			networkInterface = createNetworkInterface(config.getGRAPHQLURL(program));
+			let uri = config.getGRAPHQLURL(program);
+			console.log('uri:', uri);
+			networkInterface = createNetworkInterface(uri);
 			apollo =  new ApolloClient({
 									networkInterface,
 								});		
