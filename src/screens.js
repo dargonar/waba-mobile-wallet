@@ -32,6 +32,9 @@ import LocationSearch from './modules/endorsement/LocationSearch';
 import LocationMap from './modules/endorsement/LocationMap';
 import LocationFull from './modules/endorsement/LocationFull';
 
+import ProgramList from './modules/program/ProgramList';
+import CreateOrRestoreAccount from './modules/program/CreateOrRestoreAccount';
+
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
@@ -65,5 +68,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('endorsement.Register', () => Register, store, Provider);
 	Navigation.registerComponent('endorsement.LocationSearch', () => LocationSearch	, store, Provider);
 	Navigation.registerComponent('endorsement.LocationMap', () => LocationMap	, store, Provider);
-	Navigation.registerComponent('endorsement.LocationFull', () => LocationFull	, store, Provider);
+	
+	Navigation.registerComponent('program.ProgramList', () => ProgramList	, store, Provider);
+	Navigation.registerComponent('program.CreateOrRestoreAccount', () => CreateOrRestoreAccount	, store, Provider);
 }

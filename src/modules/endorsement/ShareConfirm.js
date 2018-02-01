@@ -24,7 +24,7 @@ class ShareConfirm extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-//     navBarBackgroundColor: '#0B5F83',
+		navBarTextFontFamily: 'roboto_thin',
 		navBarBackgroundColor: '#2e2f3d',
     navBarButtonColor: '#ffffff'
   }

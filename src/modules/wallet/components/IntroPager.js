@@ -25,11 +25,12 @@ var PAGES = [
   'Page 4',
 ];
 
+// [require('../img/logo.shadow.png'), 'Bienvenido a PAR', 'Una nueva forma de dinero'],
 var PAGES = [
-  [require('../img/logo.shadow.png'), 'Bienvenido a PAR', 'Una nueva forma de dinero'],
-  [require('../img/bank.png'), 'Desde tu teléfono', 'Disponible, seguro y accesible desde tu teléfono, sin cuenta de banco'],
-  [require('../img/shop.png'), 'Mercado', 'Localizá los miles de productos y servicios ofrecidos en la red'],
-  [require('../img/discover.png'), 'Empleos', 'Descubre la oferta de empleos y ofrece tus servicios']  
+  [require('../img/waba.png'), '', 'Powered by Blockchain, driven by Communities', 'img_bold'],
+  [require('../img/bank.png'), 'Dinero digital', 'Siempre disponible, seguro y accesible desde tu teléfono, sin cuenta de banco', 'img_thin'],
+  [require('../img/shop.png'), 'Economías más fuertes', 'Las monedas locales conectan recursos disponibles con necesidades insatisfechas de la comunidad', 'img_thin'],
+  [require('../img/discover.png'), 'Conecciones locales', 'Las monedas locales crean conexiones entre las personas, aumentando la cooperación y fomentando proyectos sociales', 'img_thin']  
 ];
 
 // var IMGS = [
@@ -81,17 +82,19 @@ var ImagesScreen = React.createClass({
   _renderPage: function(
     data: Object,
     pageID: number | string,) {
-    return (
-      <View style={styles.page}>
-        <Image
-          source={data[0]}
-          style={{width: 150, height: 150, marginBottom:20}}
-        />
-        <Text style={styles.titleText}>{data[1]}</Text>
-        <Text style={styles.tagLine}>{data[2]}</Text>
-        
-      </View>
-    );
+			let img_style = (data[3]=='img_bold')?styles.img_bold:styles.img_thin;
+    	return (
+				<View style={styles.page}>
+					<Image
+						resizeMode='contain'
+						source={data[0]}
+						style={styles.img_bold}
+					/>
+					<Text style={styles.titleText}>{data[1]}</Text>
+					<Text style={styles.tagLine}>{data[2]}</Text>
+
+				</View>
+			);
   },
 
   _onChangePage: function(
@@ -111,12 +114,22 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0B5F83',
+    backgroundColor: 'transparent',
     paddingLeft:20,
     paddingRight:20
   },
+	img_bold: {
+    width: 300,
+    height: 120,
+		marginBottom:20
+  },
+	img_thin: {
+    width: 150,
+    height: 150,
+		marginBottom:20
+  },
   titleText: {
-        color:"#ffffff", 
+        color:"#014372", 
         textAlign:'center',
         fontFamily : 'roboto_light',
         fontWeight : '100',
@@ -125,7 +138,7 @@ var styles = StyleSheet.create({
         marginBottom:20
   },
 	tagLine:{
-      color:"#ffffff", 
+      color:"#014372", 
       textAlign:'center',
       fontFamily : 'roboto_light',
       fontWeight : '100',

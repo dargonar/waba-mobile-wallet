@@ -60,7 +60,7 @@ class Main extends Component {
 
 	render() {
 		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
-		let buttonColor =	'#0B5F83';
+		let buttonColor =	'#0B86C2';
 		return (
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>

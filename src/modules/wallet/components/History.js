@@ -69,6 +69,9 @@ class History extends Component {
 	}
 	
 	_openEndorsement(prefix, rowID, rowData){
+		let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
+		if(!available_credit)
+			return;
 		if(prefix == config.ENDORSED_BY_PREFIX || prefix == config.ENDORSED_TX_PREFIX)
 			this.props.navigator.push({
 				screen: 'endorsement.Endorsement',

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     
-    backgroundColor: '#ff00ff'
+    backgroundColor: '#ffffff'
   },
   map: {
 		height: MAP_HEIGHT
@@ -161,6 +161,7 @@ class LocationFull extends Component {
 	
 	centerMarker(){
 		this.setState({ marker : this.state.region });
+		{	this.reverseGeoSearch(this.state.region);}
 	}
 
   onLockMap(value){
@@ -255,9 +256,8 @@ class LocationFull extends Component {
   }
 
   render() {
-    let buttonColor = '#1abc9c';
-    if(this.state.locked)
-      buttonColor = '#3498db';
+    let buttonColor = '#2e2f3d'; //1abc9c';
+    
 		let icon = (<Icon name="ios-locate-outline" style={styles.actionButtonIcon} />);
     return (
       <View style={styles.container}>
@@ -270,7 +270,7 @@ class LocationFull extends Component {
 						}
   					value={this.state.searchText}
 						autoFocus={true}
-						textInputRef={(param)=> this.searchText = param}
+						textInputRef="searchText"
 						ref={(searchBar) => this.searchBar = searchBar} 
 						placeholderStyle={{}}
 						inputStyle={{color:'#000000', textDecorationLine :'none'}}
@@ -293,13 +293,26 @@ class LocationFull extends Component {
 					initialRegion={this.state.initialRegion}
           provider={this.props.provider}
           onRegionChange={this.onRegionChange}
+					onPress={() => { 
+						console.log('Pressed!');
+						Keyboard.dismiss();
+						console.log('Dismiseado');
+					}}
+					onPanDrag={() => { 
+						Keyboard.dismiss();
+					}}
+					onLongPress={(e) => { 
+ 						this.reverseGeoSearch(e.nativeEvent.coordinate);
+// 						console.log(' ---- onLongPress');
+// 					  console.log(JSON.stringify(e.nativeEvent.coordinate));
+					}}
           >
           <MapView.Marker draggable
             coordinate={this.state.marker}
             onDragEnd={(e) => {	this.reverseGeoSearch(e.nativeEvent.coordinate);} }
           />
         </MapView>
-				<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.centerMarker() }} icon={ icon } />
+				<ActionButton buttonColor="#2e2f3d" style={styles.actionButton} onPress={() => {  this.centerMarker() }} icon={ icon } />
       </View>
     );
   }

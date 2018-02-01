@@ -32,8 +32,9 @@ class SelectAmount extends React.Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarBackgroundColor: '#3F779D',
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
   
 //   static navigatorButtons = { rightButtons : [

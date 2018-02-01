@@ -5,9 +5,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   PixelRatio
 } from 'react-native';
-const ICON_SIZE_ANDROID     = __DEV__ ? 30 : PixelRatio.getPixelSizeForLayoutSize(30);
-const ICON_SIZE_ANDROID_25  = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize(25);
-const ICON_SIZE_ANDROID_BIG = __DEV__ ? 50 : PixelRatio.getPixelSizeForLayoutSize(50);
+//const ICON_SIZE_ANDROID     = __DEV__ ? 30 : PixelRatio.getPixelSizeForLayoutSize(30);
+//const ICON_SIZE_ANDROID_25  = __DEV__ ? 25 : PixelRatio.getPixelSizeForLayoutSize(25);
+//const ICON_SIZE_ANDROID_BIG = __DEV__ ? 50 : PixelRatio.getPixelSizeForLayoutSize(50);
+
+const ICON_SIZE_ANDROID     = 30;// : PixelRatio.getPixelSizeForLayoutSize(30);
+const ICON_SIZE_ANDROID_25  = 25;// : PixelRatio.getPixelSizeForLayoutSize(25);
+const ICON_SIZE_ANDROID_BIG = 50;// : PixelRatio.getPixelSizeForLayoutSize(50);
 
 // define your suffixes by yourself..
 // here we use active, big, small, very-big..

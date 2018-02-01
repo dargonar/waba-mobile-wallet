@@ -20,7 +20,7 @@ class Start extends Component {
 	constructor(props) {
 		super(props);
 		this._onNewAccount 			= this._onNewAccount.bind(this);
-		this._onChangeText        = this._onChangeText.bind(this);
+		this._onChangeText      = this._onChangeText.bind(this);
 		this.state = {
 			account_name: 		'',
 			refreshing: false,
@@ -31,63 +31,11 @@ class Start extends Component {
 	
 	static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarBackgroundColor: '#3F779D',
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
-	/*
-	isValidAccountName(account_name) {
-		var dot, subname, supername;
-		if (!account_name) {
-// 			console.log('1');
-			return false;
-		}
-		if (account_name.length < 1) {
-// 			console.log('2');
-			return false;
-		}
-		if (account_name.length > 63) {
-// 			console.log('3');
-			return false;
-		}
-
-		//if (!(/^[a-z]/i.test(account_name))) {
-		if (!(/^[a-z]/.test(account_name))) {
-// 			console.log('4');
-			return false;
-		}
-		//if (!(/[a-z0-9]$/i.test(account_name))) {
-		if (!(/[a-z0-9]$/.test(account_name))) {
-// 			console.log('5');
-			return false;
-		}
-		if (/[A-Z]$/.test(account_name)) {
-// 			console.log('6');
-			return false;
-		}
-		subname = account_name;
-		supername = "";
-		dot = account_name.indexOf('.');
-		if (dot !== -1) {
-			subname = account_name.substring(0, dot);
-			supername = account_name.substring(dot + 1);
-		}
-		//if (!(/[a-z0-9]$/i.test(subname) || /[A-Z]$/.test(subname))) {
-		if (!(/[a-z0-9]$/.test(subname) || /[A-Z]$/.test(subname))) {
-// 			console.log('7');
-			return false;
-		}
-		//if (!(/[a-z0-9-\.]$/i.test(subname))) {
-		if (!(/[a-z0-9-\.]$/.test(subname))) {
-// 			console.log('8');
-			return false;
-		}
-		if (supername === "") {
-// 			console.log('9');
-			return true;
-		}
-		return this.isValidAccountName(supername);
-	}
-  */
+	
 	_onChangeText(text) {
 		
 		clearTimeout(this.tid);
@@ -219,7 +167,7 @@ class Start extends Component {
 			
 			<View style={styles.container}>
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('./img/logo.shadow.png')} style={{width: 100, height: 100}} />
+					<Image source={require('../program/img/aqua.png')} style={{width: 100, height: 100}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput

@@ -27,8 +27,9 @@ class RestoreAccount extends Component {
   
   static navigatorStyle = {
     navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff'
+    navBarBackgroundColor: '#3F779D',
+    navBarButtonColor: '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
 	
 // 	let keyboardWillShowSub;
@@ -216,7 +217,7 @@ constructor(props) {
 		let mensaje = undefined;
 		if(this.state.keyboardOpen==false)
 		{
-			mensaje = (<View style={{flex:3, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
+			mensaje = (<View style={{flex:2, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#3F779D'}}>
 						<Text style={styles.keywordsTitle} numberOfLines={4}>
 							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
 							orden y minúscula/mayúscula. 
@@ -228,7 +229,7 @@ constructor(props) {
         	{mensaje}
 				
         <TextInput
-          style={{flex:6, fontSize:25}}
+          style={{flex:4, fontSize:25}}
           editable={true}
           //maxLength={120}
           multiline={true}
@@ -236,13 +237,12 @@ constructor(props) {
 					underlineColorAndroid ="transparent"
 					onChangeText={this._onChangeText}
         />
-        <HideWithKeyboard>
-				 	<TouchableHighlight
+         	<TouchableHighlight
 							style={styles.fullWidthButton}
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
 					</TouchableHighlight>
-        </HideWithKeyboard>
+        
 			 </View>
     );
   }

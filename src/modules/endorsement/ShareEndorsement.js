@@ -37,7 +37,8 @@ class ShareEndorsement extends Component {
   static navigatorStyle = {
     navBarTextColor:        '#ffffff', 
     navBarBackgroundColor: '#2e2f3d', //0B5F83
-    navBarButtonColor:      '#ffffff'
+    navBarButtonColor:      '#ffffff',
+		navBarTextFontFamily: 'roboto_thin'
   }
   
   constructor(props) {
@@ -194,11 +195,13 @@ class ShareEndorsement extends Component {
 		}
     let that = this;
     let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
+		let value = this.state.endorsements[this.state.current_idx].quantity || 0;
+		value = value.toString();
     return (
       <Prompt
         title="Indique cantidad"
         placeholder=""
-        defaultValue={this.state.endorsements[this.state.current_idx].quantity}
+        defaultValue={value}
         visible={ this.state.promptVisible }
         {...inputProps}
         onCancel={ () => this.setState({

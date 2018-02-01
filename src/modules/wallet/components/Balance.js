@@ -115,7 +115,7 @@ class Balance extends Component {
 				);	
 		}
 		return (
-      <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.wrapper}> 
 					<View style={balanceStyle}> 
 						<View style={styles.balance}> 
@@ -124,14 +124,14 @@ class Balance extends Component {
 								
 								<View style={styles.balanceAmountWrapper}> 
 									{p}
-									<Text style={[styles.gray_color, styles.par_part]}> PAR</Text>
+									<Text style={[styles.gray_color, styles.par_part]}> AQUA</Text>
 								</View>
 						</View>
 						
 					</View>
 					{j}
       	</View>
-			</Image>      
+			</View>      
     );
 	}
 }

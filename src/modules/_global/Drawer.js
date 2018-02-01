@@ -109,14 +109,14 @@ class Drawer extends Component {
 // 								</Text>
 // 							</View>
 // 						</TouchableOpacity>
-		const iconRecipient = (<Icon name="ios-send" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconMap 			= (<Icon name="md-pin" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconJob 			= (<Icon name="md-construct" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const info 					= (<Icon name="ios-information-circle" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconRecipient = (<Icon name="ios-send" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconMap 			= (<Icon name="md-pin" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconJob 			= (<Icon name="md-construct" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const info 					= (<Icon name="ios-information-circle" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 
-		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
- 		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#B7F072" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		// const iconEndorsement = (<Icon name="md-ribbon" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+ 		const iconEndorsement = (<Icon name="md-thumbs-up" size={26} color="#D8E92D" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// https://www.npmjs.com/package/react-native-icon-badge		
 		let iconEndorsementEx = iconEndorsement;
     let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
@@ -136,14 +136,14 @@ class Drawer extends Component {
 					/>);												 
 													 
 		return (
-			<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} style={styles.linearGradient}>
+			
 				<View style={styles.container}>
 					<View style={{flex:3, padding:5, flexDirection:'column', justifyContent: 'center' }}>
 						<View style={{flex:3, flexDirection:'row', justifyContent: 'center'}}>
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#D8E92D' }}
 									name='ios-power'
 									type='ionicon'
 									color='#cccccc'
@@ -154,10 +154,10 @@ class Drawer extends Component {
 							<View style={{flex:2, justifyContent: 'center', alignItems: 'center'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#D8E92D' }}
 									name='md-person'
 									type='ionicon'
-									color='#B7F072'
+									color='#D8E92D'
 									underlayColor='#415261'
 									onPress={this._onPower.bind(this)} 
 									size={60} />	
@@ -165,7 +165,7 @@ class Drawer extends Component {
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
 								<Icon
 									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
+									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#D8E92D' }}
 									name='ios-settings'
 									type='ionicon'
 									color='#cccccc'
@@ -189,19 +189,11 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this._openEndorsement}>
-							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
-								{iconEndorsementEx}
-								<Text style={styles.drawerListItemText}>
-									Avales
-								</Text>
-							</View>
-						</TouchableOpacity>
-					 	<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
+						<TouchableOpacity onPress={this._onGoToMercadoParEmpleos}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconJob}
 								<Text style={styles.drawerListItemText}>
-									Bolsa de trabajo
+									Actividades
 								</Text>
 							</View>
 						</TouchableOpacity>
@@ -218,7 +210,7 @@ class Drawer extends Component {
 						{/* 'v1.0.0' */}
 					</Text>
 				</View>
-			</LinearGradient>
+			
 		);
 	}
 }
