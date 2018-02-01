@@ -296,7 +296,7 @@ class Register extends Component {
   }
 
   render() {
-		let addy       						= this.props.address?this.props.address.full_address:'Ingrese dirección de su comercio';
+		let addy       						= this.props.address?this.props.address.full_address:'Ingrese dirección del local';
 		let addyStyle  						= this.props.address?null:styles.placeholderColor;
 		let _placeholderTextColor = '#999999';
 		let btn_style = styles.fullWidthButton2;
@@ -323,7 +323,7 @@ class Register extends Component {
 							onChangeText={(text) => this.setState( { nombre:text } ) }
 							value={this.state.nombre}
 							underlineColorAndroid ="transparent"
-							placeholder="Ingrese nombre de su empresa"
+							placeholder="Ingrese nombre"
 							placeholderTextColor={_placeholderTextColor}
 							returnKeyType="next"
 							onSubmitEditing={(event) => { 
