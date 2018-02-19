@@ -19,3 +19,7 @@ unzip ~/android-sdk
 
 export ANDROID_HOME=/home/ubuntu/android-sdk
 export PATH=${PATH}:$ANDROID_HOME/tools
+
+
+
+# scp -i waba_dev.pem ubuntu@34.213.89.188:wallet/android/app/build/outputs/apk/app-armeabi-v7a-debug.apk .
