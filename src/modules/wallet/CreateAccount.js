@@ -114,17 +114,17 @@ class Start extends Component {
 		this.tid = setTimeout( () => {
 			Bts2helper.isValidName(text).then( is_valid => {
 				if(!is_valid){
-					that.setState({
-						error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
-						refreshing: false,
-						disabled: 	true
-					});
-					return;
+					            that.setState({
+						          error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
+						          refreshing: false,
+						          disabled: 	true
+					            });
+					return; 
 				}
 				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
 				fetch(config.getAPIURL('/account/')+text, {
-					method: 'GET',
-					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+					         method: 'GET',
+					         headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
 				.then((response) => response.json()
 					, (err) => {
@@ -142,6 +142,7 @@ class Start extends Component {
 							refreshing: false,
 							disabled: 	true
 						});
+						console.log('R:' + JSON.stringify(responseJson));
 					}
 					else
 					{

@@ -26,7 +26,7 @@ import EndorseSending from './modules/endorsement/Sending';
 import EndorseResult from './modules/endorsement/Result';
 import ApplyConfirm from './modules/endorsement/ApplyConfirm';
 import ShareConfirm from './modules/endorsement/ShareConfirm';
-
+import SignUp from './modules/wallet/SignUp';
 import Register from './modules/endorsement/Register';
 import LocationSearch from './modules/endorsement/LocationSearch';
 import LocationMap from './modules/endorsement/LocationMap';
@@ -52,6 +52,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
+	Navigation.registerComponent('wallet.SignUp', () => SignUp, store, Provider);
   
 	Navigation.registerComponent('endorsement.Endorsement', () => Endorsement, store, Provider);
   Navigation.registerComponent('endorsement.SelectEndorsed', () => SelectEndorsed, store, Provider);

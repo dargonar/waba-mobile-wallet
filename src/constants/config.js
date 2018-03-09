@@ -1,4 +1,6 @@
-export const API_URL         = 'https://api.monedapar.com';
+//export const API_URL         = 'https://api.monedapar.com';
+export const API_URL         = 'http://35.163.59.126:8080';
+
 export const API_URL_V1      = API_URL+'/api/v3';
 export const MERCADOPAR_URL  = 'http://mercado.monedapar.com?category=productos-y-servicios';
 export const EMPLEOSPAR_URL  = 'http://mercado.monedapar.com?category=empleos-solicitados';

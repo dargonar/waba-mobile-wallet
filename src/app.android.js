@@ -43,6 +43,7 @@ try {
 					console.log('READY =>', s.wallet.ready);
 					if(s.wallet.ready) {
 						unsubscribe();
+						//launchTest();
 						launchWallet();
 					} else if(s.wallet.errors > 0) {
 						

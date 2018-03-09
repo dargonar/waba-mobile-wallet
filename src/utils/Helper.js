@@ -8,8 +8,8 @@ function launchTest(){
 	Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
-      screen: 'endorsement.Register',
-			title: 'Registro',
+     screen: 'endorsement.Register',
+		 title: 'Registro',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
@@ -27,7 +27,7 @@ function launchWallet() {
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
- 			screen				 : 'wallet.Main',
+ 			screen				 : 'wallet.SignUp', //Main
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,

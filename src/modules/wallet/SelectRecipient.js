@@ -81,6 +81,7 @@ class SelectRecipient extends Component {
 		this.setState({refreshing:true});
 		walletActions.retrieveUsers(search, '0').then( (users) => {
 			console.log('Traemos');
+			console.log(users);
 			this.setState({
 				dataSource: this.state.dataSource.cloneWithRows(users),
 				refreshing: false,
@@ -128,6 +129,7 @@ class SelectRecipient extends Component {
 	}
 				
   renderRow (rowData, sectionID) {
+		//console.log(rowData);
 		return (
       <ListItem
 				onPress={this._onRecipientSelected.bind(this, rowData)} 
@@ -157,11 +159,11 @@ class SelectRecipient extends Component {
 			content = ( 
 				<List>
 					<ListView
-						renderRow={(rowData, sectionID) => <ListItem
+						renderRow={(rowData, sectionID, rowId) => <ListItem
 																			onPress={this._onRecipientSelected.bind(this, rowData)} 
 																			underlayColor='#cccccc'
-																			key={sectionID}
-																			title={rowData[0]}
+																			key={rowData}
+																			title={rowId}
 																		/>}
 						dataSource={this.state.dataSource}
 						enableEmptySections={true}

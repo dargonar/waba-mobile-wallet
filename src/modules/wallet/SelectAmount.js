@@ -4,6 +4,7 @@ import {
 	View, 
   Text, 
   StyleSheet, 
+	ToastAndroid,
   TouchableHighlight
 } from 'react-native';
 
@@ -81,7 +82,12 @@ class SelectAmount extends React.Component {
 				})
 				.then((response) => response.json(), err => {}) 
 				.then((responseJson) => {
-					this.setState({memo_key:responseJson.options.memo_key});
+					console.log('SelectAmount::componentDidMount');
+					console.log(responseJson);
+					if(responseJson)
+						this.setState({memo_key:responseJson.options.memo_key});
+					else
+						ToastAndroid.show('responseJson is NONE!!!!', ToastAndroid.SHORT);
 				}, err => {
 				}); 
 			}
