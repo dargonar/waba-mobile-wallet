@@ -68,8 +68,17 @@ export function createAccount(name) {
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 2),
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
 					]).then(function(res3) {
+						console.log('==== generateMnemonic:');
+						console.log(JSON.stringify(res1));
+						console.log('==== mnemonicToMasterKey:');
+						console.log(JSON.stringify(res2));
+						console.log('==== derivatePrivate:');
+						console.log(JSON.stringify(res3));
 						
-						//fetch('http://35.161.140.21:8080/api/v1/register', {
+						reject('LISTO!');
+
+						return;
+						
 						fetch(config.getAPIURL('/register'), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},

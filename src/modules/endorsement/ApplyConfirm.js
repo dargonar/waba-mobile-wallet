@@ -89,9 +89,9 @@ class ApplyConfirm extends Component {
 		this.props.navigator.showModal({
 			screen : 'endorsement.Sending',
 			title :  'Solicitando autorización de crédito...',
-			passProps: {endorsed 			: this.props.account.name,
-									endorse_type 	: this.state.endorse_type,
-								  modal_type		: 'applying'},  // | endorsing | sharing
+			passProps: {	endorsed 			: this.props.account.name,
+										endorse_type 	: this.state.endorse_type,
+										modal_type		: 'applying'},  // | endorsing | sharing
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
