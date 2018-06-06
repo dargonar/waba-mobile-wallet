@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0B5F83',
+		backgroundColor: '#f15d44',
 	},
   title_part : {
     fontFamily : 'roboto_light',
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     fontSize    : 20
   },
   spinner:{
-    
+
   }
 });
 

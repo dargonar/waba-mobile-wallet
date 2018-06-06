@@ -4,7 +4,7 @@ import { iconsMap } from './AppIcons';
 
 
 function launchTest(){
-	
+
 	Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
@@ -13,14 +13,14 @@ function launchTest(){
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
-       //navBarHidden: true
+       navBarTransparent : true,
+       topBarElevationShadowEnabled: false
       }
     },
     animationType : 'none',
   });
-	
-	
+
+
 }
 
 function launchWallet() {
@@ -28,20 +28,23 @@ function launchWallet() {
     appStyle : { orientation : 'portrait' },
 		screen: {
  			screen				 : 'wallet.Main',
+			// screen				 : 'discoin.Main',
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
+       navBarTransparent : true,
+			 navBarNoBorder 	 : true,
+			 topBarElevationShadowEnabled: false
       },
 //       fab: {
 //         collapsedId: 'newTx',
 //         collapsedIcon: iconsMap['ios-add'].uri,
 //         backgroundColor: '#0B5F83'
 //       },
-			
+
 //       rightButtons: [
 // 				{
-// 					icon: iconsMap['qrcode'], 
+// 					icon: iconsMap['qrcode'],
 // 					id: 'qrCode'
 // 				}
 // 			]
@@ -64,7 +67,7 @@ function launchWallet() {
 }
 
 function launchOnboard() {
-	// 
+	// screen				 : 'wallet.Onboarding',
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {

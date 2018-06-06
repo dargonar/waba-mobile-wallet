@@ -26,10 +26,10 @@ var PAGES = [
 ];
 
 var PAGES = [
-  [require('../img/logo.shadow.png'), 'Bienvenido a PAR', 'Una nueva forma de dinero'],
-  [require('../img/bank.png'), 'Desde tu teléfono', 'Disponible, seguro y accesible desde tu teléfono, sin cuenta de banco'],
-  [require('../img/shop.png'), 'Mercado', 'Localizá los miles de productos y servicios ofrecidos en la red'],
-  [require('../img/discover.png'), 'Empleos', 'Descubre la oferta de empleos y ofrece tus servicios']  
+  [require('../img/logo.shadow.png'), 'Bienvenido', 'Una nueva forma de comprar'],
+  [require('../img/bank.png'), 'Desde tu teléfono', 'Recibí los puntos de recompensa directamente en tu smartphone'],
+  [require('../img/shop.png'), 'Miles de comercios', 'Localizá los miles de productos y servicios ofrecidos en la red'],
+  [require('../img/discover.png'), 'Pago móvil', 'Descubre las ofertas del día cerca tuyo y paga desde tu smartphone']
 ];
 
 // var IMGS = [
@@ -61,7 +61,7 @@ var ImagesScreen = React.createClass({
     };
   },
 
-  // this.props.style || 
+  // this.props.style ||
   render: function() {
     return (
       <ViewPager
@@ -73,8 +73,8 @@ var ImagesScreen = React.createClass({
         autoPlay={false}/>
     );
   },
-  
-//   source={require(data)}  
+
+//   source={require(data)}
 //   source={{uri: data}}
 //   style={styles.page}
   // <Text style={styles.text}>Page {pageID}</Text>
@@ -89,7 +89,7 @@ var ImagesScreen = React.createClass({
         />
         <Text style={styles.titleText}>{data[1]}</Text>
         <Text style={styles.tagLine}>{data[2]}</Text>
-        
+
       </View>
     );
   },
@@ -102,6 +102,11 @@ var ImagesScreen = React.createClass({
 
 });
 
+/*
+DISCOIN COLORS
+  >  #f15d44
+  > rgb(241, 93, 68)
+*/
 var styles = StyleSheet.create({
   viewpager:{
     flex:4,
@@ -111,12 +116,12 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0B5F83',
+    backgroundColor: '#ffffff', //0B5F83
     paddingLeft:20,
     paddingRight:20
   },
   titleText: {
-        color:"#ffffff", 
+        color:"#f15d44",
         textAlign:'center',
         fontFamily : 'roboto_light',
         fontWeight : '100',
@@ -125,7 +130,7 @@ var styles = StyleSheet.create({
         marginBottom:20
   },
 	tagLine:{
-      color:"#ffffff", 
+      color:"#f15d44",
       textAlign:'center',
       fontFamily : 'roboto_light',
       fontWeight : '100',

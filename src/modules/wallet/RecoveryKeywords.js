@@ -24,20 +24,21 @@ class RecoveryKeywords extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mnemonic: props.mnemonic,
+			mnemonic: props.mnemonic || 'retrato grumo cumbre paella cambio tienda pijama violín aporte potencia bonito marfil',
 			hide_button : props.hide_button
 		}
     this._onInitWallet 					= this._onInitWallet.bind(this);
 // 		this._setClipboardContent 	= this._setClipboardContent.bind(this);
 	}
-	
+
 	static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+    navBarTextColor: '#0A566B',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#0A566B',
+		navBarTextFontFamily: 'roboto_thin',
+		topBarElevationShadowEnabled: false
   }
-	
+
 	_onInitWallet() {
 		helperActions.launchWallet();
 	}
@@ -59,18 +60,18 @@ class RecoveryKeywords extends Component {
 						<Text style={styles.fullWidthButtonText}>INICIAR BILLETERA</Text>
 					</TouchableHighlight>
 				</View>
-			)			
+			)
 		}
 		return (
 			<View style={styles.container}>
-				
+
 				<View style={{flex:4, justifyContent:'flex-start', margin:20, padding:15}}>
 					<Text style={styles.keywordsTitle} numberOfLines={4}>
             Copie y guarde las palabras listadas a continuación.
-            La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas. 
+            La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas.
           </Text>
           <TouchableWithoutFeedback onPress={this._setClipboardContent}>
-						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#044967'}}>
+						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#0A566B'}}>
             		<Text style={styles.keywordsText}>
 								{this.state.mnemonic}
 							</Text>

@@ -16,15 +16,16 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Spinner from 'react-native-spinkit';
 
 class Sending extends Component {
-  
+
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarTextColor: '#ffffff',
+    navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+		navBarTextFontFamily: 'roboto_thin',
+    topBarElevationShadowEnabled: false
   }
-  
-  
+
+
   constructor(props) {
     super(props);
 		if(props.modal_type == 'sending')
@@ -33,7 +34,7 @@ class Sending extends Component {
 				recipient : props.recipient,
 				amount :    props.amount,
 				memo :      props.memo,
-				types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
+				types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle',
 										 '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
 				size:       100,
 				color:      "#F64D27",
@@ -43,7 +44,7 @@ class Sending extends Component {
 		}
 		else{
 			this.state = {
-      types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
+      types:      ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle',
                    '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
       size:       100,
       color:      "#F64D27",
@@ -51,11 +52,11 @@ class Sending extends Component {
 			modal_type: props.modal_type
     };
 	}
-    
+
 //     console.log(' -- this.state.recipient => ', this.state.recipient);
-    
+
   }
-  
+
   componentWillMount() {
   }
 
@@ -67,7 +68,7 @@ class Sending extends Component {
 
   componentWillUnmount() {
   }
-  
+
   focus() {
   }
 
@@ -86,11 +87,11 @@ class Sending extends Component {
 			}
 			return (
 				<View style={styles.container}>
-					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
-						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#B7F072"/>
+					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'transparent'}}>
+						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#f15d44"/>
 					</View>
-					<View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
-						<Text style={styles.title_part}>Enviando:</Text>
+					<View style={{flex:4, backgroundColor:'transparent', paddingLeft:30, paddingRight:30}}>
+						<Text style={styles.title_part}>Pagando:</Text>
 						<Text style={styles.data_part}>$ {this.state.amount}</Text>
 						<Text style={styles.title_part}>A:</Text>
 						<Text style={styles.data_part}>{this.state.recipient.name}</Text>

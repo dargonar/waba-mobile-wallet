@@ -28,12 +28,13 @@ class Start extends Component {
 			error:			''
 		}
 	}
-	
+
 	static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+    navBarTextColor: '#ffffff',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#f15d44',
+		navBarTextFontFamily: 'roboto_thin',
+		topBarElevationShadowEnabled: false
   }
 	/*
 	isValidAccountName(account_name) {
@@ -90,17 +91,18 @@ class Start extends Component {
 	}
   */
 	_onChangeText(text) {
-		
+
 		clearTimeout(this.tid);
-		
+
 		this.setState({
 			error: 						'',
 			refreshing: 			true,
 			disabled: 				true,
 			account_name: 	  text
 		});
-		
-		
+
+		console.log('CreateAccount::_onChangeText::#1');
+		console.log(text);
 		if(!text || text==''){
 			this.setState({
 				error: 			'',
@@ -109,20 +111,22 @@ class Start extends Component {
 			});
 			return;
 		}
-		
+
+		console.log('CreateAccount::_onChangeText::#2');
 		let that = this;
 		this.tid = setTimeout( () => {
+			console.log('CreateAccount::_onChangeText::#3');
 			Bts2helper.isValidName(text).then( is_valid => {
 				if(!is_valid){
 					that.setState({
-						error: 			'Sólo números, letras en minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número.',
+						error: 			'Sólo números, minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
 						refreshing: false,
 						disabled: 	true
 					});
 					return;
 				}
 				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
-				fetch(config.getAPIURL('/account/')+text, {
+				fetch(config.getAPIURL('/account/by_name/')+text, {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
@@ -133,10 +137,13 @@ class Start extends Component {
 							refreshing: false,
 							disabled: 	true
 						});
-					} 
-				) 
+					}
+				)
 				.then((responseJson) => {
-					if(responseJson){
+					console.log('CreateAccount::_onChangeText::#4');
+					console.log(JSON.stringify(responseJson));
+					if(responseJson && !responseJson['error'] ){
+						console.log('CreateAccount::_onChangeText::#5');
 						this.setState({
 							error: 			'Ya existe un usuario con ese nombre',
 							refreshing: false,
@@ -144,7 +151,10 @@ class Start extends Component {
 						});
 					}
 					else
+					if(responseJson && responseJson['error'] && responseJson['res'] && responseJson['res']=='account_not_found' )
+					// {"error":1,"res":"account_not_found"}
 					{
+						console.log('CreateAccount::_onChangeText::#6');
 						this.setState({
 							error: 			'',
 							refreshing: false,
@@ -179,7 +189,7 @@ class Start extends Component {
 		, 400);
 		//console.log(text);
 	}
-	
+
 	_onNewAccount() {
 		if(!this.state.account_name)
 		{
@@ -200,7 +210,7 @@ class Start extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 	}
-	
+
 	_handleKeyDown(e) {
     if(e.nativeEvent.key == "Enter"){
         dismissKeyboard();
@@ -217,7 +227,7 @@ class Start extends Component {
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
 		return (
-			
+
 			<View style={styles.container}>
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
 					<Image source={require('./img/logo.shadow.png')} style={{width: 100, height: 100}} />
@@ -230,12 +240,12 @@ class Start extends Component {
 							placeholderStyle={{fontFamily:'roboto_light', fontWeight:'100'}}
 							placeholder="Ingrese su nombre"
 							placeholderTextColor="#aaaaaa"
-							underlineColorAndroid ="#ffffff"
+							underlineColorAndroid ="#f15d44"
 							onChangeText={this._onChangeText}
-							
+
 						/>
 						<Text style={styles.textError} numberOfLines={3} >{_error}</Text>
-						
+
 				</View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight

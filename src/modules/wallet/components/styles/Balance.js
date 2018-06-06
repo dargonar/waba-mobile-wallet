@@ -4,43 +4,43 @@ const styles = StyleSheet.create({
 	container: {
     width           : undefined,
     height          : undefined,
-    backgroundColor : 'transparent',
+    backgroundColor : '#f15d44' ,//'transparent',
     justifyContent  : 'center',
     alignItems      : 'center',
 		flex            : 3
 	},
-	
+
 	wrapper:{
 		flex:1,
-		flexDirection:'column', 
+		flexDirection:'column',
 		justifyContent  : 'center',
     alignItems      : 'center',
 // 		backgroundColor: '#0B5F83'
 // 		backgroundColor: '#044967'
 	},
-	
+
 	balance_wrapper:{
 		flex:2,
-		flexDirection:'column', 
+		flexDirection:'column',
 		justifyContent  : 'center',
     alignItems      : 'center',
 		paddingTop: 30
 	},
 	balance_wrapperNoCredit:{
 		flex:2,
-		flexDirection:'column', 
+		flexDirection:'column',
 		justifyContent  : 'center',
     alignItems      : 'center',
-		
+
 	},
-	
-	
+
+
   balance : {
     flexDirection : 'row',
 		justifyContent: 'center',
-    
+
   },
-	
+
 	symbol_part:{
 		flex:1,
 // 		fontFamily : 'roboto_light',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 		textAlign  : 'right',
 		alignSelf  : 'center'
 	},
-	
+
 	int_part : {
 		flex:0,
   //  fontFamily : 'roboto_regular',
@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
     fontSize   : 45,
 		lineHeight : 45,
 		alignSelf : 'flex-end',
-		
+
   },
-	
+
 	balanceAmountWrapper:{
 		flex:1,
 		flexDirection : 'row',
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
 		marginVertical: 6,
 // 		alignSelf : 'flex-start',
 		paddingLeft: 0,
-		
+
   },
-	
+
 	par_part:{
 		flex:1,
 		fontFamily : 'roboto_thin',
@@ -96,23 +96,23 @@ const styles = StyleSheet.create({
 		textShadowOffset: {width: 0.5, height: 0.5},
 		textShadowRadius: 4
 	},
-	
+
 	gray_color:{
-		color       : '#ccc',
+		color       : '#e0e0e0', //ccc
 	},
 	bold_color:{
-		color      : '#B7F072',
+		color      : '#FFFFFF',
 	},
 	white_color:{
 		color      : '#FFFFFF',
 	},
-	
+
 	red_color:{
 // 		color: '#CF2E08'
  		color: '#FF9379'
 // 		color: '#FFFFFF'
 	},
-  
+
 	balanceText : {
     fontFamily  : 'roboto_light',
 		fontWeight : '100',
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
 // 		textShadowRadius: 3,
 		marginBottom: 5
   },
-  
-	
+
+
 	credit_wrapper:{
 		flex:1,
-		flexDirection:'row', 
+		flexDirection:'row',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -153,25 +153,25 @@ const styles = StyleSheet.create({
 	},
 	credit_amountRed:{
 	  color       : '#ed1c24'
-	}, 
-	
-	
-	
+	},
+
+
+
 	credit_available_wrapper:{
 		flex:1,
-		flexDirection:'row', 
+		flexDirection:'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		
+
 		borderRadius: 0,
     backgroundColor: 'rgba(87, 87, 87, 0.5)'
 	},
 	credit_available:{
 		flex:1,
-		flexDirection:'row', 
+		flexDirection:'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		
+
 	},
 	credit_title2:{
 		fontFamily  : 'roboto_light',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
 		lineHeight  : 14,
 		textAlign: 'center',
 	},
-	
+
 	credit_card_amount:{
 		fontFamily  : 'roboto_light',
     color       : '#FFFFFF',
@@ -209,8 +209,8 @@ const styles = StyleSheet.create({
 		marginRight     				: 3,
   },
 	row_hand : {
-    resizeMode      :'contain', 
-    height          :15, 
+    resizeMode      :'contain',
+    height          :15,
     width           :15
   },
 });

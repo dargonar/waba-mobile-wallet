@@ -3,13 +3,13 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0B5F83',
+		backgroundColor: '#ffffff',
 		padding: 30
 	},
   title: {
     fontFamily : 'roboto_light',
     fontWeight : '100',
-    color      : '#ffffff',
+    color      : '#a9a9a9',
     fontSize   : 40,
     lineHeight : 45,
     marginBottom:20
@@ -19,22 +19,22 @@ const styles = StyleSheet.create({
     lineHeight : 45,
     fontFamily : 'roboto_light',
     fontWeight : '100',
-    color      : '#B7F072'
+    color      : '#f15d44'
   },
   margin_bottom:{marginBottom:10},
 	data_part : {
     fontFamily : 'roboto_normal',
-    color      : '#B7F072',
+    color      : '#f15d44',
     fontSize   : 18
   },
   title_part : {
     fontFamily  : 'roboto_regular',
-    color       : '#ffffff',
+    color       : '#a9a9a9',
     lineHeight  : 25,
     fontSize    : 12
   },
   spinner:{
-    
+
   }
 });
 

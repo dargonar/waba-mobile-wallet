@@ -10,16 +10,16 @@ import {
 } from 'react-native';
 
 var IntroPager = require('./components/IntroPager');
-	
+
 var Onboarding = React.createClass({
-	
+
 	_onCreateAccount: function() {
 		this.props.navigator.push({
 			screen : 'wallet.CreateAccount',
 			title :  'Crear cuenta'
 		});
 	},
-	
+
 	_onRestoreAccount: function() {
 		this.props.navigator.push({
 			screen: 'wallet.RestoreAccount',
@@ -27,6 +27,13 @@ var Onboarding = React.createClass({
 		});
 	},
 
+  /*
+  <TouchableHighlight
+      style={[styles.fullWidthButton, styles.fullWidthButton1]}
+      onPress={this._onRestoreAccount} >
+    <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+  </TouchableHighlight>
+  */
   render: function() {
     return (
       <View style={styles.container}>
@@ -40,12 +47,8 @@ var Onboarding = React.createClass({
             <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
           </TouchableHighlight>
 
-          <TouchableHighlight
-              style={[styles.fullWidthButton, styles.fullWidthButton1]}
-              onPress={this._onRestoreAccount} >
-            <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-          </TouchableHighlight>
-        </View>												
+
+        </View>
       </View>
     );
   },
@@ -56,7 +59,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-  	backgroundColor: '#0B5F83'
+  	backgroundColor: '#ffffff' //'#0B5F83'
 	},
   subcontainer: {
     flex: 4
@@ -66,12 +69,12 @@ var styles = StyleSheet.create({
     flexDirection: 'column'
   },
   buttons:{
-    flex:2, 
+    flex:2,
     paddingLeft:15,
-    paddingRight:15, 
-    flexDirection:'column', 
-    alignItems: 'stretch', 
-    justifyContent:'center' 
+    paddingRight:15,
+    flexDirection:'column',
+    alignItems: 'stretch',
+    justifyContent:'center'
   },
   fullWidthButton: {
 		borderRadius: 5,
@@ -81,13 +84,13 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
 	fullWidthButton1: {
-    backgroundColor: '#1e759b'
+    backgroundColor: '#f15d44' //'#1e759b'
   },
 	fullWidthButton2: {
-    backgroundColor: '#6bbd07',
+    backgroundColor: '#f15d44', //'#6bbd07',
     marginBottom:20
   },
-  
+
 	fullWidthButtonText: {
     fontFamily : 'roboto_regular',
 		fontWeight : '400',

@@ -3,8 +3,8 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#1E759B',
-		// backgroundColor: '#2e2f3d',		
+		backgroundColor: '#ffffff',
+		// backgroundColor: '#2e2f3d',
 		padding: 10
 	},
   keywordsTitle:{
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 		color: 'white',
     marginBottom: 15
   },
-	
+
 	button:{
 		marginBottom:5,
 		minHeight:100,

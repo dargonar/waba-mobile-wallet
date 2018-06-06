@@ -32,10 +32,10 @@ const icons = {
   "handshake-o": [ICON_SIZE_ANDROID, "#fda720", FontAwesome],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "ios-add-circle-outline": [ICON_SIZE_ANDROID_BIG, "#fff"],
   "ios-add" : [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "ios-backspace" : [ICON_SIZE_ANDROID, "#fff"],
 
   "ios-person": [ICON_SIZE_ANDROID, "#bbb"],
@@ -44,7 +44,7 @@ const icons = {
   "ios-person--active": [ICON_SIZE_ANDROID, "#fff"],
   "ios-person--active--big": [50, "#fff"],
   "ios-person--active--very-big": [100, "#fff"],
-  
+
   "ios-people": [ICON_SIZE_ANDROID, "#bbb"],
   "ios-people--active": [ICON_SIZE_ANDROID, "#fff"],
 
@@ -53,35 +53,35 @@ const icons = {
 
   "ios-chatbubbles": [ICON_SIZE_ANDROID, "#bbb"],
   "ios-chatbubbles--active": [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "logo-usd": [ICON_SIZE_ANDROID, "#bbb"],
   "logo-usd--active": [ICON_SIZE_ANDROID, "#fff"],
-   
+
   "ios-backspace": [ICON_SIZE_ANDROID, "#bbb"],
   "ios-backspace--active": [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "ios-attach": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-attach--active": [ICON_SIZE_ANDROID, "#ffffff"],
-  
+
   "ios-trash-outline": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-trash-outline--active": [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "ios-add": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-add--active": [ICON_SIZE_ANDROID, "#fff"],
-  
+
   "ios-information-circle": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-information-circle--active": [ICON_SIZE_ANDROID, "#ffffff"],
   // Use other Icon provider, see the logic at L39
   "facebook": [ICON_SIZE_ANDROID, "#bbb", FontAwesome],
   "facebook--active": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
-  
+
   "qrcode": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
   "qrcode--active": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
-  
+
 //   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
-  
+
 }
 
 const defaultIconProvider = Ionicons;

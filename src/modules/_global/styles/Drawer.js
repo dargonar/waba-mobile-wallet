@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor : '#f15d44'
 	},
 	drawerList: {
 		flex:6,
@@ -20,8 +21,14 @@ const styles = StyleSheet.create({
 		paddingBottom: 23,
 		paddingTop: 23
 	},
-	drawerListItemBB: {	
-		borderBottomColor: '#aaaaaa', 
+	drawerListItem2: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingBottom: 23,
+		paddingTop: 40
+	},
+	drawerListItemBB: {
+		borderBottomColor: '#aaaaaa',
 		borderBottomWidth: 0.25
 	},
 	drawerListItemText: {
@@ -41,12 +48,13 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	_version: {
+		textAlign: 'center',
 		color: '#3c3c3c',
 		position: 'absolute',
 		bottom: 25,
 		marginLeft: 53
 	},
-	
+
 	usernameTitle:{
     fontFamily : 'roboto_light',
 		fontWeight : '100',

@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff'
 	},
 	inputText:{
-		textAlign:'right', 
+		textAlign:'right',
 		textAlignVertical:'center',
 		/* backgroundColor: '#ff00ff' */
 		flex:1,
 		fontSize: 25
-		
+
 	},
 	fullWidthButton: {
 		borderRadius: 0,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#044967' 
+		backgroundColor: '#f15d44' 
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'

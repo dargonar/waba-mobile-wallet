@@ -3,24 +3,24 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0B5F83'
+		backgroundColor: '#ffffff'
 	},
-	
+
 	separator : {
     height             : 1,
     backgroundColor    : '#85858544',
   },
-	
+
 	input:{
-		
-		color:"#ffffff", 
+
+		color:"#f15d44",
 		textAlign:'center',
 		fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 25,
 		lineHeight : 25
 	},
-	
+
 	fullWidthButton: {
 		borderRadius: 0,
     height:60,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#415261'
   },
 	fullWidthButton2: {
-    backgroundColor: '#044967'
+    backgroundColor: '#f15d44'
   },
   fullWidthButtonDisabled: {
     backgroundColor: '#999999'

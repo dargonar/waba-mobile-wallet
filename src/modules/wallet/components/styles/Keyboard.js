@@ -28,7 +28,7 @@ export default StyleSheet.create({
 export let keyStyle = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: '#0B5F83'
+        backgroundColor: '#ffffff'
     },
     bd: {
         flex: 1,
@@ -42,14 +42,14 @@ export let keyStyle = StyleSheet.create({
         fontFamily : 'roboto_light',
         fontWeight: '100',
         fontSize: 20,
-        color: '#f4f4f4'
+        color: '#0B5F83'
     },
     otherText: {
         fontSize: 10,
-        color: '#333',
+        color: '#0B5F83',
     },
     bg_d2d5dc: {
-        backgroundColor: '#0B5F83',//BG_COLOR,
+        backgroundColor: '#f0f0f0',//BG_COLOR,
         borderBottomWidth: hairlineWidth,
         borderColor: '#a5a5a5'
     },
@@ -59,7 +59,7 @@ export let keyStyle = StyleSheet.create({
     },
     dot: {
         height: 30,
-        fontSize: 30, 
+        fontSize: 30,
         lineHeight: 25
     }
 });

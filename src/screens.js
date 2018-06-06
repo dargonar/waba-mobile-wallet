@@ -32,10 +32,13 @@ import LocationSearch from './modules/endorsement/LocationSearch';
 import LocationMap from './modules/endorsement/LocationMap';
 import LocationFull from './modules/endorsement/LocationFull';
 
+// import DscMain from './modules/discoin/DscMain';
+import Business from './modules/discoin/Business';
+
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
-	
+
 	Navigation.registerComponent('wallet.CreateAccount', () => CreateAccount);
 	Navigation.registerComponent('wallet.NewAccount', () => NewAccount, store, Provider);
 	Navigation.registerComponent('wallet.Main', () => Main, store, Provider);
@@ -52,7 +55,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
-  
+
 	Navigation.registerComponent('endorsement.Endorsement', () => Endorsement, store, Provider);
   Navigation.registerComponent('endorsement.SelectEndorsed', () => SelectEndorsed, store, Provider);
   Navigation.registerComponent('endorsement.SelectEndorseType', () => SelectEndorseType, store, Provider);
@@ -66,4 +69,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('endorsement.LocationSearch', () => LocationSearch	, store, Provider);
 	Navigation.registerComponent('endorsement.LocationMap', () => LocationMap	, store, Provider);
 	Navigation.registerComponent('endorsement.LocationFull', () => LocationFull	, store, Provider);
+
+	// Navigation.registerComponent('discoin.Main', () => DscMain	, store, Provider);
+	Navigation.registerComponent('discoin.Business', () => Business	, store, Provider);
 }

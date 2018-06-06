@@ -1,12 +1,38 @@
 http://stackoverflow.com/questions/35935060/how-can-i-generate-an-apk-that-can-run-without-server-with-react-native
 
 
+(((13245768)))
 keytool -genkey -v -keystore my-app-key.keystore -alias my-app-alias -keyalg RSA -keysize 2048 -validity 10000
 
 react-native bundle --platform android --dev false --entry-file index.android.js \
   --bundle-output android/app/src/main/assets/index.android.bundle \
   --assets-dest android/app/src/main/res/
 
+export ANDROID_HOME=/home/tuti/android-sdk
+
 cd android && ./gradlew assembleRelease
 
-adb install -r ./app/build/outputs/apk/app-release-unsigned.apk
+adb install -r ./app/build/outputs/apk/app-armeabi-v7a-release.apk
+
+scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/app/discoin/discoin.apk
+
+
+ssh -i discoin_alpha.pem ubuntu@54.245.222.250
+
+--------------------------------
+DISCOIN
+
+Acceso Administracion Discoin
+http://54.245.222.250:8080/
+
+Acceso Negocios
+http://54.245.222.250:8081/
+
+Billetera Discoin
+http://54.245.222.250:8081/discoin.apk
+
+discoin.com.ar/beta
+
+https://discoin.com.ar/wp-admin
+mail: ptutino@gmail.com
+pass: ZNrIqbFDO0iTkbsrL1cnHVye

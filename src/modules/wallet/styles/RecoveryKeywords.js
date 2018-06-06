@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#0B5F83'
+		backgroundColor: '#ffffff'
 		//justifyContent:'flex-start'
 	},
   fullWidthButton: {
@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 	fullWidthButton1: {
-    backgroundColor: '#415261'
+    backgroundColor: '#f15d44'
   },
 	fullWidthButton2: {
     backgroundColor: '#2c3f50'
   },
-  
+
 	fullWidthButtonText: {
     fontFamily : 'roboto_light',
 		fontWeight : '100',
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
 		fontWeight : '100',
     fontSize   : 25,
     lineHeight : 40,
-		color: 'white'
+		color: '#ffffff'
   },
   keywordsTitle:{
     fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 15,
     lineHeight : 25,
-		color: 'white'
+		color: '#b0b0b0'
   }
 
 });

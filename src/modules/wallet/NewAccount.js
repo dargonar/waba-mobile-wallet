@@ -17,19 +17,20 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Spinner from 'react-native-spinkit';
 
 class NewAccount extends Component {
-  
+
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
+    navBarTextColor: '#ffffff',
     navBarBackgroundColor: '#0B5F83',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+		navBarTextFontFamily: 'roboto_thin',
+    topBarElevationShadowEnabled: false
   }
-  
-  
+
+
   constructor(props) {
     super(props);
     this.state = {
-      types:      	['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', 
+      types:      	['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle',
                    	'9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
       size:       	100,
       color:      	"#B7F072",
@@ -39,7 +40,7 @@ class NewAccount extends Component {
     this._onCreateAccount = this._onCreateAccount.bind(this);
 		this._back 						= this._back.bind(this);
 	}
-  
+
 // 	_onCreateAccount(){
 // 		setTimeout(() => {
 //  			this._back();
@@ -55,11 +56,12 @@ class NewAccount extends Component {
 // 	}
 
   _onCreateAccount(){
+
 		walletActions.createAccount(this.state.account_name).then( (data) => {
 			AsyncStorage.setItem('@Store:data', JSON.stringify(data));
-			
+
 			this.props.actions.createAccountSuccessHACK(data);
-			
+
 			this.props.navigator.dismissModal({
 				animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 			});
@@ -75,18 +77,18 @@ class NewAccount extends Component {
 				[
 					{text: 'OK', onPress: () => this._back  }
 				]
-			)	
+			)
 			console.log('Error');
 		})
-	
+
   }
-	
+
   _back(){
 // 		this.props.navigator.pop({animated: true});
 		this.props.navigator.dismissModal({
 			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 		});
-	}					
+	}
   componentWillMount() {
   }
 
@@ -101,7 +103,7 @@ class NewAccount extends Component {
 
   componentWillUnmount() {
   }
-  
+
   focus() {
   }
 
@@ -109,16 +111,16 @@ class NewAccount extends Component {
   	let type = this.state.types[3];
     return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
-          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#B7F072"/>
+        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#f15d44'}}>
+          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#DEDEDE"/>
         </View>
-        <View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
-					<View style={{flexDirection:'row', justifyContent:'center'}}>	
+        <View style={{flex:4, backgroundColor:'#f15d44', paddingLeft:30, paddingRight:30}}>
+					<View style={{flexDirection:'row', justifyContent:'center'}}>
 						<Text style={styles.title_part}>Creando cuenta {this.state.account_name}</Text>
 					</View>
         </View>
-				<View style={{flex:1, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30}}>
-					<View style={{flexDirection:'row', justifyContent:'center'}}>	
+				<View style={{flex:1, backgroundColor:'#f15d44', paddingLeft:30, paddingRight:30}}>
+					<View style={{flexDirection:'row', justifyContent:'center'}}>
 						<Text style={styles.title_part}>Por favor aguarde...</Text>
 					</View>
         </View>
@@ -135,7 +137,7 @@ class NewAccount extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		
+
 	};
 }
 

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {
-	Alert, 
+	Alert,
 	View
 } from 'react-native';
 
@@ -23,9 +23,9 @@ class Main extends Component {
 		this.state = {account:''};
 		this.newTx = this.newTx.bind(this);
 	}
-	
+
 	componentWillMount() {
-	
+
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -35,7 +35,7 @@ class Main extends Component {
 	newTx(){
 		this.props.navigator.push({
       screen: 'wallet.SelectRecipient',
-			title: 'Seleccione destinatario'
+			title: 'Comercio'
 		});
 	}
   _onNavigatorEvent(event) {
@@ -53,14 +53,14 @@ class Main extends Component {
 				[
 					{text: 'OK'},
 				]
-			)      
+			)
     }
-    
+
   }
 
 	render() {
 		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
-		let buttonColor =	'#0B5F83';
+		let buttonColor =	'#f15d44';
 		return (
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>

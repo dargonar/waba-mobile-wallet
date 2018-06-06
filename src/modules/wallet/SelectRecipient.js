@@ -17,21 +17,22 @@ import * as config from '../../constants/config';
 import styles from './styles/SelectRecipient';
 
 class SelectRecipient extends Component {
-  
+
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarTextColor: '#ffffff',
+    navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+		navBarTextFontFamily: 'roboto_thin',
+    topBarElevationShadowEnabled: false
   }
-  
+
   constructor(props) {
     super(props);
 //     this._onNavigatorEvent = this._onNavigatorEvent.bind(this);
 //     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-    
+
     this._onChangeText        = this._onChangeText.bind(this);
-  	
+
     let dataSource = new ListView.DataSource({
       rowHasChanged : this._rowHasChanged.bind(this)
     });
@@ -39,30 +40,31 @@ class SelectRecipient extends Component {
     this.state = {
       dataSource : dataSource,
       refreshing : false,
-			recipient_selected : false
+			recipient_selected : false,
+      error: false
     };
 
 		this.tid = undefined;
 	}
-  
+
   _onChangeText(text) {
 		clearTimeout(this.tid);
 		let that = this;
 		this.tid = setTimeout( () => {
-			that.pedir(text);				
+			that.pedir(text);
 		}
 		, 300);
 		//console.log(text);
 	}
-  
+
   _rowHasChanged(oldRow, newRow) {
     //console.log('rowHasChanged::', oldRow, '--->', newRow);
     //return true;
     return oldRow.id !== newRow.id;
   }
-  
+
   componentWillMount() {
-    this.setState({recipient_selected:false}); 
+    this.setState({recipient_selected:false});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -79,13 +81,14 @@ class SelectRecipient extends Component {
   pedir(search) {
     console.log('Pedimos');
 		this.setState({refreshing:true});
-		walletActions.retrieveUsers(search, '0').then( (users) => {
+		walletActions.retrieveUsers(search, '2').then( (users) => {
 			console.log('Traemos');
 			this.setState({
-				dataSource: this.state.dataSource.cloneWithRows(users),
+				dataSource: this.state.dataSource.cloneWithRows(users['res']),
 				refreshing: false,
+        error:      false
 			})
-			
+
 		}, (err) => {
 			this.setState({refreshing:true});
 			console.log('Error');
@@ -100,37 +103,37 @@ class SelectRecipient extends Component {
   componentWillUnmount() {
 //     AppState.removeEventListener('change', this.handleAppStateChange);
   }
-  
+
   focus() {
   }
-	
+
 	_onRecipientSelected(data){
 // 		if(this.state.recipient_selected)
 // 			return;
-		
+
 		//data.push(undefined);
-		//console.log('_onRecipientSelected =>', data);
-		
-		this.setState({recipient_selected:true}); 
-		this.props.actions.memoSuccess('');		
+
+    this.setState({recipient_selected:true});
+		this.props.actions.memoSuccess('');
 		this.props.navigator.push({
 			screen: 'wallet.SelectAmount',
-			title: 'Indique monto',
-			passProps: {recipient: data},
-			rightButtons: [
-				{
-					icon: iconsMap['ios-attach'],
-					id: 'attachMemo'
-				}
-			]
+			title: 'Monto de factura',
+			passProps: {recipient: data}
+			// ,rightButtons: [
+			// 	{
+			// 		icon: iconsMap['ios-attach'],
+			// 		id: 'attachMemo'
+			// 	}
+			// ]
 		});
-		
+
 	}
-				
+
   renderRow (rowData, sectionID) {
+
 		return (
       <ListItem
-				onPress={this._onRecipientSelected.bind(this, rowData)} 
+				onPress={this._onRecipientSelected.bind(this, rowData)}
 				underlayColor='#cccccc'
         key={sectionID}
         title={rowData[0]}
@@ -141,24 +144,24 @@ class SelectRecipient extends Component {
       />
     )
   }
-	
+
 	//renderRow={this.renderRow}
   render() {
-    //console.log(this.state.dataSource);
-		
-		let content = undefined;
+    // console.log(this.state.dataSource);
+    console.log(' -- SelectRecipient::render()');
+    let content = undefined;
 		if ( this.state.refreshing )
-			content = (	
+			content = (
 				<View style={{ flex: 1, justifyContent: 'center'}}>
 					<ActivityIndicator size="large" color="#0B5F83" />
 				</View>
 			)
 		else
-			content = ( 
+			content = (
 				<List>
 					<ListView
 						renderRow={(rowData, sectionID) => <ListItem
-																			onPress={this._onRecipientSelected.bind(this, rowData)} 
+																			onPress={this._onRecipientSelected.bind(this, rowData)}
 																			underlayColor='#cccccc'
 																			key={sectionID}
 																			title={rowData[0]}
@@ -168,19 +171,18 @@ class SelectRecipient extends Component {
 					/>
 				</List>
 			)
-		
+
 		return (
-      
+
       <View style={styles.container}>
         <SearchBar
           lightTheme
           onChangeText={this._onChangeText}
           autoFocus={true}
-					ref={(searchBar) => this.searchBar = searchBar} 
-					placeholder='Buscar destinatario...' 
+					ref={(searchBar) => this.searchBar = searchBar}
+					placeholder='Buscar comercio...'
 					placeholderStyle={{}}
 					inputStyle={{color:'#000000', textDecorationLine :'none'}}
-					placeholder="Ingrese nombre"
 					placeholderTextColor="#999999"
 					underlineColorAndroid ="transparent"
 				/>

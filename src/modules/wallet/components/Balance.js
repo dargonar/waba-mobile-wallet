@@ -1,10 +1,10 @@
 /* eslint-disable new-cap */
 import React, { PropTypes, Component } from 'react';
 import {
-	Alert, 
+	Alert,
 	Image,
 	Text,
-	TouchableHighlight, 
+	TouchableHighlight,
 	View
 } from 'react-native';
 
@@ -32,14 +32,14 @@ class Balance extends Component {
 		});
 		this._onAcceptCredit = this._onAcceptCredit.bind(this);
 	}
-	
+
 	_onAcceptCredit(){
 		this.props.navigator.push({
       screen: 'endorsement.ApplyConfirm',
       title: 'Aceptar crédito'
-    });		
+    });
   }
-	
+
 	componentWillReceiveProps(nextProps) {
     console.log('Balance::componentWillReceiveProps =>', nextProps.balance);
 
@@ -50,21 +50,21 @@ class Balance extends Component {
 				} else {
 					console.log('playback failed due to audio decoding errors');
 				}
-			});			
+			});
 		}
   }
 
 	render() {
 		//const { info, viewMovie } = this.props;
-		
+
 		//const int_part = 0;
 		//const dec_part = 0;
-		
+
 		let r = 0;
-		if(this.props.balance) r = this.props.balance[config.MONEDAPAR_ID] | 0;
+		if(this.props.balance) r = this.props.balance[config.ASSET_ID] | 0;
 		let d = 0;
 		if(this.props.balance) d = this.props.balance[config.DESCUBIERTO_ID] | 0;
-		
+
 		b = r - d;
 		//b = 32510.75;
 		//b = 31.1;
@@ -75,9 +75,9 @@ class Balance extends Component {
 		let p = undefined;
 		if(parts[1] != '00')
 			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
-		
+
 		let asset_symbol = config.ASSET_SYMBOL;
-		
+
 		let balanceStyle = styles.balance_wrapperNoCredit;
     let j = undefined;
 	  if(d>0)
@@ -94,17 +94,17 @@ class Balance extends Component {
 							<Image source={iconsMap['ios-card']} style={[styles.row_hand]}/>
 							<Text style={[styles.credit_card_amount, styles.white_color]}>{asset_symbol}{d}</Text>
 						</View>
-					</View>);	
+					</View>);
 				balanceStyle = styles.balance_wrapper;
 			}
 		 else{
-				j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);	
+				j = (<View style={styles.credit_wrapper}><Text style={[styles.gray_color, styles.credit_title]}>Crédito <Text style={[styles.credit_amount, styles.bold_color]}>{asset_symbol}{d}</Text> </Text></View>);
 				balanceStyle = styles.balance_wrapper;
 			}
 		}
 		let available_credit = config.readyToRequestCredit(this.props.balance, this.props.credit_ready);
 		if(available_credit!==false)
-		{				
+		{
 			j = (
 				<TouchableHighlight style={styles.credit_available_wrapper} onPress={ this._onAcceptCredit }>
 					<View style={styles.credit_available}>
@@ -112,27 +112,47 @@ class Balance extends Component {
 						<Text style={[styles.gray_color, styles.credit_title2]}>Tienes un crédito preacordado por {config.ALL_AVALS_DESC[available_credit]}</Text>
 					</View>
 				</TouchableHighlight>
-				);	
+				);
 		}
+
 		return (
-      <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
-        <View style={styles.wrapper}> 
-					<View style={balanceStyle}> 
-						<View style={styles.balance}> 
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+					<View style={balanceStyle}>
+						<View style={styles.balance}>
 								<Text style={[styles.bold_color, styles.symbol_part]}>{asset_symbol} </Text>
 								<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}</Text>
-								
-								<View style={styles.balanceAmountWrapper}> 
+
+								<View style={styles.balanceAmountWrapper}>
 									{p}
-									<Text style={[styles.gray_color, styles.par_part]}> PAR</Text>
+									<Text style={[styles.gray_color, styles.par_part]}> DSC</Text>
 								</View>
 						</View>
-						
+
 					</View>
 					{j}
       	</View>
-			</Image>      
+			</View>
     );
+		// return (
+    //   <Image source={require('./img/bg-dashboard3.png')} style={styles.container}>
+    //     <View style={styles.wrapper}>
+		// 			<View style={balanceStyle}>
+		// 				<View style={styles.balance}>
+		// 						<Text style={[styles.bold_color, styles.symbol_part]}>{asset_symbol} </Text>
+		// 						<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}</Text>
+		//
+		// 						<View style={styles.balanceAmountWrapper}>
+		// 							{p}
+		// 							<Text style={[styles.gray_color, styles.par_part]}> DSC</Text>
+		// 						</View>
+		// 				</View>
+		//
+		// 			</View>
+		// 			{j}
+    //   	</View>
+		// 	</Image>
+    // );
 	}
 }
 

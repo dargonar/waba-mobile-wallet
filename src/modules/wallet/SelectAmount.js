@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import {
   Alert,
-	View, 
-  Text, 
-  StyleSheet, 
+	View,
+  Text,
+  StyleSheet,
   TouchableHighlight
 } from 'react-native';
 
@@ -14,29 +14,30 @@ import Keyboard from './components/Keyboard';
 import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
 
-var homeIcon;  
+var homeIcon;
 
 class SelectAmount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 	 '', 
+      amount: 	 '',
 			recipient: props.recipient,
 			memo_key: undefined
     };
-		
-		
+
+
 //     Icon.getImageSource('ios-attach', 30).then((source) => { homeIcon = source});
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
-  
+
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
+    navBarTextColor: '#ffffff',
+    navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+		navBarTextFontFamily: 'roboto_thin',
+    topBarElevationShadowEnabled: false
   }
-  
+
 //   static navigatorButtons = { rightButtons : [
 //     {
 //       //disableIconTint: true,
@@ -45,7 +46,7 @@ class SelectAmount extends React.Component {
 //       id: 'attachMemo' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
 //     }
 //   ]}
-  
+
   _showMemo(){
     //showModal
     this.props.navigator.push({
@@ -61,16 +62,16 @@ class SelectAmount extends React.Component {
       ]
     });
   }
-  
-  _onNavigatorEvent(event) { 
-    if (event.type == 'NavBarButtonPress') { 
-      if (event.id == 'attachMemo') { 
+
+  _onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'attachMemo') {
 //         AlertIOS.alert('NavBar', 'Edit button pressed');
-        this._showMemo();        
+        this._showMemo();
       }
     }
   }
-  
+
 
     componentDidMount() {
 
@@ -79,15 +80,15 @@ class SelectAmount extends React.Component {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 				})
-				.then((response) => response.json(), err => {}) 
+				.then((response) => response.json(), err => {})
 				.then((responseJson) => {
 					this.setState({memo_key:responseJson.options.memo_key});
 				}, err => {
-				}); 
+				});
 			}
 
-			
-			
+
+
 			//         model.onChange((model) => {
 //             this.setState({text: model.getKeys().join('')});
 //         });
@@ -109,7 +110,7 @@ class SelectAmount extends React.Component {
     }
 
     _handleKeyPress(key){
-      
+
       if('0123456789'.indexOf(key)>=0)
       {
         if (this.state.amount=='0' && key=='0')
@@ -117,18 +118,18 @@ class SelectAmount extends React.Component {
         if (this.state.amount=='0' && key!='0')
         {
           this.setState({
-            amount : key  
+            amount : key
           });
           return;
-        } 
+        }
       }
-      
+
 //       if (this.state.text.length==1 && key=='0')
 //         return;
-      
+
       if((key==',' || key=='.') && this.state.amount.indexOf(key)>=0)
         return;
-      
+
       if((key==',' || key=='.') && this.state.amount.length==0)
       {
         this.setState({
@@ -137,10 +138,10 @@ class SelectAmount extends React.Component {
         return;
       }
       this.setState({
-        amount : this.state.amount+key  
+        amount : this.state.amount+key
       });
     }
-    
+
     _onNext(){
 			if(Number(this.props.balance)<=Number(this.state.amount))
 			{
@@ -158,8 +159,8 @@ class SelectAmount extends React.Component {
         title: 'Confirmar envío',
         passProps: {
           recipient: 	this.state.recipient,
-					memo_key:   this.state.memo_key, 
-					memo: 			this.props.memo, 
+					memo_key:   this.state.memo_key,
+					memo: 			this.props.memo,
 					amount: 		this.state.amount
 				}
     	});
@@ -169,7 +170,7 @@ class SelectAmount extends React.Component {
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
-                
+
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 7, flexDirection: 'column'}}>
                   <Text style={styles.inputText}>
@@ -180,7 +181,7 @@ class SelectAmount extends React.Component {
                   {iconMoney}
                 </View>
               </View>
-              <Keyboard 
+              <Keyboard
                   keyboardType="decimal-pad"
                   onClear={this._handleClear.bind(this)}
                   onDelete={this._handleDelete.bind(this)}
@@ -206,4 +207,3 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default connect(mapStateToProps, null)(SelectAmount);
-

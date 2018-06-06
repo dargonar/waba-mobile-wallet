@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import {
-  View, 
-  Text, 
-  Image, 
+  View,
+  Text,
+  Image,
   TouchableHighlight
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -57,17 +57,17 @@ class Keyboard extends React.Component {
 
     _renderKey(key, index) {
         return (
-            <TouchableHighlight 
-                key={index} 
-                underlayColor={BG_COLOR} 
-                style={keyStyle.wrapper} 
+            <TouchableHighlight
+                key={index}
+                underlayColor={BG_COLOR}
+                style={keyStyle.wrapper}
                 onPress={this._onPress.bind(this, key.mainText)}
             >
                 <View style={keyStyle.bd}>
                     <Text style={keyStyle.mainText}>{key.mainText}</Text>
-                    
+
                 </View>
-            </TouchableHighlight>    
+            </TouchableHighlight>
         );
     }
     // <Text style={keyStyle.otherText}>{key.otherText}</Text>
@@ -92,33 +92,33 @@ class Keyboard extends React.Component {
             dotNode = <Text style={[keyStyle.mainText, keyStyle.dot]}>.</Text>;
         }
         return (
-            <TouchableHighlight 
-                underlayColor="#ffffff" 
-                style={[keyStyle.wrapper, keyStyle.bg_d2d5dc]} 
+            <TouchableHighlight
+                underlayColor="#ffffff"
+                style={[keyStyle.wrapper, keyStyle.bg_d2d5dc]}
                 onPress={this._onPress.bind(this, dotText)}
             >
                 <View style={keyStyle.bd}>{dotNode}</View>
             </TouchableHighlight>
         );
     }
-    
+
     ////style={styles.mainText}
-    
+
     render() {
         let props = this.props;
-        const iconBackspace = (<Icon name="ios-backspace" size={26} color="#f4f4f4" />);
+        const iconBackspace = (<Icon name="ios-backspace" size={26} color="#0B5F83" />);
         return (
             <View style={styles.wrapper}>
-                
+
               <View style={styles.main}>
-          
-                    {this._renderNumberKeys()}    
-                        
+
+                    {this._renderNumberKeys()}
+
                     <View style={styles.row}>
                         {this._renderDotKey()}
-                        
-                        <TouchableHighlight 
-                            underlayColor={BG_COLOR} 
+
+                        <TouchableHighlight
+                            underlayColor={BG_COLOR}
                             style={[keyStyle.wrapper, keyStyle.bottomBordered]}
                             onPress={this._onPress.bind(this, '0')}>
                             <View style={keyStyle.bd}>
@@ -126,8 +126,8 @@ class Keyboard extends React.Component {
                             </View>
                         </TouchableHighlight>
 
-                        <TouchableHighlight 
-                            underlayColor="#ffffff" 
+                        <TouchableHighlight
+                            underlayColor="#ffffff"
                             style={[keyStyle.wrapper, keyStyle.bg_d2d5dc]}
                             onPress={this._onPress.bind(this, 'del')}
                             onLongPress={this._clearAll.bind(this)}
@@ -136,7 +136,7 @@ class Keyboard extends React.Component {
                               {iconBackspace}
                             </View>
                         </TouchableHighlight>
-                    </View>    
+                    </View>
                 </View>
             </View>
         );
