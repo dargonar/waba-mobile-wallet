@@ -49,7 +49,8 @@ class Sending extends Component {
       size:       100,
       color:      "#F64D27",
       isVisible:  true,
-			modal_type: props.modal_type
+			modal_type: props.modal_type,
+      message   : props.message
     };
 	}
 
@@ -104,11 +105,11 @@ class Sending extends Component {
 		else
 			return (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#0B5F83'}}>
-          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#B7F072"/>
+        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'transparent'}}>
+          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#f15d44"/>
         </View>
-        <View style={{flex:4, backgroundColor:'#0B5F83', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
-          <Text style={styles.data_part}>Restaurando cuenta</Text>
+        <View style={{flex:4, backgroundColor:'transparent', paddingLeft:30, paddingRight:30, alignItems:'center'}}>
+          <Text style={styles.data_part}>{this.state.message}</Text>
         </View>
       </View>
     );

@@ -5,12 +5,18 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff'
 	},
-  keywordsTitle:{
+	keywordsBG:{flex:2,
+		justifyContent:'center',
+		alignItems:'center',
+		padding:15,
+		backgroundColor: '#DFE2CF'
+	},
+	keywordsTitle:{
     fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 15,
     lineHeight : 25,
-		color: 'white',
+		color: '#0a0a0a',
     marginBottom: 15
   },
 	fullWidthButton: {
@@ -20,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#044967' 
+		backgroundColor: '#F15D44'
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'

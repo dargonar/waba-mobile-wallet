@@ -34,3 +34,7 @@ react-native run-android
 -----------------------
 
 # scp -i waba_dev.pem ubuntu@34.213.89.188:wallet/android/app/build/outputs/apk/app-armeabi-v7a-debug.apk .
+
+
+app-armeabi-v7a-debug.apk
+adb install -r ./app/build/outputs/apk/app-armeabi-v7a-debug.apk

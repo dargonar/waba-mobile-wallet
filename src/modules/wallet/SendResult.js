@@ -45,31 +45,14 @@ class SendResult extends Component {
       that.props.actions.retrieveHistory(
 				that.props.account.name,
 				that.props.account.keys,
-				!that.props.account.id);
+				!that.props.account.id,
+        undefined,
+        that.props.account.subaccount);
     }, 1500);
 
   }
 
-
-
-//   _onNavigatorEvent(event) {
-//     if (event.type == 'NavBarButtonPress') {
-//       if (event.id == 'clearMemo') {
-//          this.setState({memo:''});
-//       }
-//     }
-//   }
-
   _onOkPress(){
-//    let that = this;
-//     setTimeout( function() {
-//       that.props.actions.retrieveHistory(
-// 				that.props.account.name,
-// 				that.props.account.keys,
-// 				!that.props.account.id);
-//     }, 1500);
-
-
     this.props.navigator.popToRoot({
       animated: true
     });

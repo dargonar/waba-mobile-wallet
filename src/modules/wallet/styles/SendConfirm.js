@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
     color      : '#f15d44',
     fontSize   : 32
   },
+	data_part2 : {
+    fontFamily : 'roboto_normal',
+    color      : '#a9a9a9',
+    fontSize   : 26
+  },
 	data_part_small : {
     fontFamily : 'roboto_normal',
     color      : '#f15d44',
@@ -29,6 +34,15 @@ const styles = StyleSheet.create({
     color       : '#a9a9a9',
     lineHeight  : 35,
     fontSize    : 16
+  },
+
+	rewardButton: {
+		borderRadius: 0,
+    height:100,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+		backgroundColor: '#1abc9c'
   },
 
 

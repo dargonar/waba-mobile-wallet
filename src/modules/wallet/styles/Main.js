@@ -12,7 +12,11 @@ const styles = StyleSheet.create({
   },
 	actionButton: {
   },
-
+	row_arrow : {
+    resizeMode      :'stretch',
+    height          :20,
+    width           :20,
+  },
 });
 
 export default styles;

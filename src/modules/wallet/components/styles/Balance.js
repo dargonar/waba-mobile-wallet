@@ -10,6 +10,15 @@ const styles = StyleSheet.create({
 		flex            : 3
 	},
 
+	container_subaccount: {
+    width           : undefined,
+    height          : undefined,
+    backgroundColor : '#0A566B' ,//'transparent',
+    justifyContent  : 'center',
+    alignItems      : 'center',
+		flex            : 3
+	},
+
 	wrapper:{
 		flex:1,
 		flexDirection:'column',

@@ -75,7 +75,8 @@ function launchOnboard() {
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
+       navBarTransparent : true,
+			 topBarElevationShadowEnabled: false
        //navBarHidden: true
       }
     },

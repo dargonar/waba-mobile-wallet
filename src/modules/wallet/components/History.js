@@ -54,11 +54,12 @@ class History extends Component {
     });
 
     this.state = {
-      dataSource : dataSource.cloneWithRowsAndSections(this.buildSections(props.history || [])),
-      refreshing : false,
-			infiniteLoading : false,
-			bounceValue: new Animated.Value(0),
-			errors : 0
+      dataSource :        dataSource.cloneWithRowsAndSections(this.buildSections(props.history || [])),
+      refreshing :        false,
+			infiniteLoading :   false,
+			bounceValue:        new Animated.Value(0),
+			errors :            0,
+      is_subaccount:      config.isSubaccountMode(props.account.subaccount)
     };
 
 		this._onPressButton   = this._onPressButton.bind(this);
@@ -85,7 +86,8 @@ class History extends Component {
 			this.props.account.name,
 			this.props.account.keys,
 			!this.props.account.id,
-			start_offset
+			start_offset,
+      this.props.account.subaccount
 		);
 	}
 
@@ -264,7 +266,64 @@ class History extends Component {
 
   _renderRow(rowData, sectionID, rowID) {
 
-			if(rowData.__typename == 'CreditRequest') {
+    if(rowData.__typename == 'WithdrawPermissionClaim' && this.state.is_subaccount) {
+      let icon 						= 'ios-card-outline';
+      let bg     					= {credit_request:'#29c3cb'};
+      let fecha  			    = this._getFecha(rowData.block.timestamp);
+      let hora   			    = this._getHora(rowData.block.timestamp);
+      let asset_symbol = config.ASSET_SYMBOL;
+
+      const _icon = (<Icon name={icon} size={18} color={bg['credit_request']} />);
+      return(
+        <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+          <View style={styles.row_container}>
+            <View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg['credit_request']}]}>
+              {_icon}
+            </View>
+            <View style={styles.row_content}>
+              <View style={styles.row_line1}>
+                <Text style={styles.row_amount}><Text style={styles.row_dea}>{asset_symbol}{rowData.amount.quantity}</Text> recibidos para inicio de caja</Text>
+              </View>
+            </View>
+            <View style={styles.row_hour}>
+              <Text style={styles.row_hour_item}>{hora}</Text>
+              <Text style={styles.row_hour_item}>{fecha}</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
+      )
+    }
+
+
+    if(rowData.__typename == 'WithdrawPermission' && this.state.is_subaccount) {
+      let icon 						= 'ios-card';
+      let bg     					= {credit_request:'#29c3cb'};
+      let fecha  			    = this._getFecha(rowData.block.timestamp);
+      let hora   			    = this._getHora(rowData.block.timestamp);
+      let asset_symbol = config.ASSET_SYMBOL;
+
+      const _icon = (<Icon name={icon} size={18} color={bg['credit_request']} />);
+      return(
+        <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+          <View style={styles.row_container}>
+            <View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg['credit_request']}]}>
+              {_icon}
+            </View>
+            <View style={styles.row_content}>
+              <View style={styles.row_line1}>
+                <Text style={styles.row_amount}>Te han asignado como subcuenta por <Text style={styles.row_dea}>{asset_symbol}{rowData.amount.quantity}</Text> diarios</Text>
+              </View>
+            </View>
+            <View style={styles.row_hour}>
+              <Text style={styles.row_hour_item}>{hora}</Text>
+              <Text style={styles.row_hour_item}>{fecha}</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
+      )
+    }
+
+		if(rowData.__typename == 'CreditRequest') {
 				let icon 						= 'ios-card';
 			  let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
 				let aval_type 			= 'credit_request';
@@ -294,113 +353,6 @@ class History extends Component {
 				)
 			}
 
-			if(rowData.__typename == 'Transfer' && config.ALL_AVALS.indexOf(rowData.amount.asset.id) != -1) {
-				let bg     			= {share:'#413932', endorse:'#ef5030', share_received:'#B7F072', share_sent:'#ff9379'};
-				let fecha  			= this._getFecha(rowData.block.timestamp);
-			  let hora   			= this._getHora(rowData.block.timestamp);
-				let _recv_sent  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
-				let to_account  = _recv_sent == 'received' ? rowData.from.name : rowData.to.name;
-
-				let aval_type 			= '';
-				let icon_type 			= '';
-				let icon 						= 'ios-help'; // Meta hack
-				let line1 					= 'Operación desconocida'; // Meta hack
-				let line2 					= '';
-				let pre_line2 		  = '';
-				let post_line2 			= '';
-				let aval_type_desc  = '';
-				let aval_amount 	  = config.ALL_AVALS_DESC[rowData.amount.asset.id];
-
-				let prefix 					= '';
-				let memo_account 		= '';
-				if(rowData.memo && rowData.memo.message && rowData.memo.message.length > 2)
-				{
-					let msg 		 = config.fromHex(rowData.memo.message);
-					prefix 			 = msg.substring(0,3);
-					memo_account = msg.substring(4);
-				}
-				else
-				{
-					memo_account = 'Administración PAR';
-					prefix =config.ENDORSED_TX_PREFIX;
-				}
-
-				if(prefix == config.I_ENDORSE_PREFIX)
-				{
-					line1 					 = null;
-					aval_type 			 = 'endorse';
-					icon_type 			 = 'endorse';
-					icon 						 = 'ios-ribbon';
-					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
-					pre_line2        = 'Has autorizado a ';
-					post_line2       = ' a solicitar un crédito por ' + aval_amount;
-				}
-
-				if(prefix == config.ENDORSED_BY_PREFIX)
-				{
-					line1 					 = null;
-					aval_type 			 = 'endorse';
-					icon_type 			 = 'endorse';
-					icon 						 = 'md-checkmark';
-					aval_type_desc   = rowData.amount.quantity>1?'autorizaciones':'autorización';
-					pre_line2        = '';
-					post_line2       = ' te ha autorizado a solicitar un crédito por ' + aval_amount;
-				}
-
-				if(prefix == config.ENDORSED_TX_PREFIX)
-				{
-					aval_type 			= 'share';
-					icon_type 			= 'share';
-					icon 						= 'ios-card';
-					aval_type_desc  = rowData.amount.quantity>1?'avales':'aval';
-					if (!rowData.from.id.endsWith(this.props.account.id))
-					{
-						icon            = 'ios-card';
-						icon_type 			= 'share_received';
-						pre_line2       = '';
-						post_line2      = ' te ha enviado avales para autorizar créditos por ' + aval_amount;
-						//line2 					= rowData.from.name + ' te ha enviado avales para autorizar créditos por ' + aval_amount;
-					}
-					else
-					{
-						icon            = 'ios-card-outline';
-						icon_type 			= 'share_sent';
-						pre_line2       = 'Has enviado avales a ';
-						post_line2      = ' para que pueda autorizar créditos por ' + aval_amount;
-						//line2 					= 'Has enviado avales a ' + rowData.to.name + ' para que pueda autorizar créditos por ' + aval_amount;
-					}
-					line1     			= 'Has ' + (rowData.from.id.endsWith(this.props.account.id)?'enviado':'recibido') + ' ' + rowData.amount.quantity.toString() + ' ' + aval_type_desc ;
-				}
-
-				let text2 = null;
-				if(line1)
-				{
-					text2 = (<View style={styles.row_line2}>
-									<Text style={styles.row_simple}>{line1}</Text>
-              	</View>);
-				}
-
-				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
-				return(
-					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._openEndorsement(prefix, rowID, rowData)}}>
-						<View style={styles.row_container}>
-							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[aval_type]}]}>
-								{_icon}
-							</View>
-							<View style={styles.row_content}>
-								<View style={styles.row_line1}>
-									<Text style={styles.row_amount}>{pre_line2}<Text style={styles.row_dea}>{memo_account}</Text>{post_line2}</Text>
-								</View>
-								{text2}
-							</View>
-							<View style={styles.row_hour}>
-								<Text style={styles.row_hour_item}>{hora}</Text>
-								<Text style={styles.row_hour_item}>{fecha}</Text>
-							</View>
-						</View>
-					</TouchableHighlight>
-				)
-			}
 
 			if(rowData.__typename == 'OverdraftChange') {
  				let _tipo = rowData.type == 'up' ? 'credit_up' : 'credit_down';
@@ -415,8 +367,7 @@ class History extends Component {
 				}
 				let fecha  = this._getFecha(rowData.block.timestamp);
 			  let hora   = this._getHora(rowData.block.timestamp);
-//
-// 					<Text style={styles.row_amount}>{title[_tipo]} de límite de crédito por {asset_symbol}{rowData.amount.quantity}</Text>
+
 				return(
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
@@ -437,20 +388,16 @@ class History extends Component {
 				)
 			}
 
-// 			console.log('--------------RIW');
-// 			console.log(rowData);
-// 			console.log('---------------------------------');
-
-
 		if(rowData.__typename == 'Transfer' && config.ASSET_ID == rowData.amount.asset.id) {
 
-       let mapa   = {received:'recibido', sent: 'enviado', refunded:'recompensado', discounted:'pagado'};
+       let mapa   = {received:'recibidos', sent: 'enviados', refunded:'recompensados', discounted:'pagados con descuento'};
        let rotato = {received:'135 deg', sent : '-45 deg', refunded:'135 deg'     , discounted:'-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
 			 //let bg     = {received:'#A2EA4A', sent:'#FF7251'};
-			 let bg     = {received:'#B7F072', sent:'#ff9379', refunded:'#B7F072', discounted:'#ff9379'};
+			 let bg     = {received:'#3498db', sent:'#1abc9c', refunded:'#3498db', discounted:'#1abc9c'};
        let dea    = {received:'De:', sent:'A:', refunded:'De:', discounted:'A:'};
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
+       let _dea   = _type;
        let fecha  = this._getFecha(rowData.block.timestamp);
 			 let hora   = this._getHora(rowData.block.timestamp);
 			 let asset_symbol = config.ASSET_SYMBOL;
@@ -460,14 +407,16 @@ class History extends Component {
        else
         if(rowData.memo)
         {
-          let msg 		 = config.fromHex(rowData.memo.message);
-					let prefix 			 = msg.substring(0,3);
+          let msg 		      = config.fromHex(rowData.memo.message);
+					let prefix 	      = msg.substring(0,3);
           if(prefix==config.REFUND_PREFIX)
           {
+            _dea  = !this.state.is_subaccount?'refunded':'discounted';
             _type = 'refunded';
           }
           if(prefix==config.PAYDISCOUNTED_PREFIX)
           {
+            _dea  = !this.state.is_subaccount?'discounted':'refunded';
             _type = 'discounted';
           }
 					// let memo_account = msg.substring(4);
@@ -482,11 +431,11 @@ class History extends Component {
             </View>
             <View style={styles.row_content}>
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_type]}s</Text>
+                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_type]}</Text>
               </View>
               <View style={styles.row_line2}>
-                <Text style={styles.row_dea}>{dea[_type]} </Text>
-                <Text>{(_type == 'received' || _type == 'refunded') ? rowData.from.name : rowData.to.name}</Text>
+                <Text style={styles.row_dea}>{dea[_dea]} </Text>
+                <Text>{((_type == 'received' || _type == 'refunded') && !this.state.is_subaccount) ? rowData.from.name : rowData.to.name}</Text>
               </View>
               {message}
             </View>
@@ -529,7 +478,7 @@ class History extends Component {
 							isVisible={true}
 							size={30}
 							type='Wave'
-							color='#B7F072'
+							color='#3498db'
 						/>
 					</Animated.View>
 				)
@@ -542,7 +491,7 @@ class History extends Component {
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh.bind(this)}
-              colors={['#8ec919', '#fcc4cb', '#B7F072']}
+              colors={['#8ec919', '#fcc4cb', '#3498db']}
             />}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}

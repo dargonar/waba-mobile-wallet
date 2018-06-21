@@ -6,9 +6,21 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor : '#f15d44'
 	},
+	container_subaccount: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor : '#0A566B'
+	},
+
+	row_arrow : {
+    resizeMode      :'stretch',
+    height          :10,
+    width           :10,
+  },
+
 	drawerList: {
 		flex:6,
-		justifyContent: 'center',
+		justifyContent: 'flex-start',
 		paddingLeft: 25,
 		paddingRight: 25
 	},
@@ -18,22 +30,44 @@ const styles = StyleSheet.create({
 	drawerListItem: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingBottom: 23,
-		paddingTop: 23
+		paddingBottom: 15,
+		paddingTop: 15
 	},
-	drawerListItem2: {
+	drawerListItemVersion: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingBottom: 23,
+		paddingTop: 23,
+		backgroundColor: '#2c2c2c'
+	},
+	drawerListItem3: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingBottom: 23,
-		paddingTop: 40
+		paddingTop: 23,
+		paddingLeft: 25,
+		borderTopColor: '#ffffff',
+		borderTopWidth: 0.25,
+		borderBottomColor: '#ffffff',
+		borderBottomWidth: 0.25,
+		backgroundColor: '#000000'
 	},
 	drawerListItemBB: {
 		borderBottomColor: '#aaaaaa',
 		borderBottomWidth: 0.25
 	},
+	drawerListItemText2: {
+		color: 'white',
+		fontSize: 15,
+		paddingLeft: 15,
+		flex: 1,
+		fontFamily : 'roboto_light',
+		fontWeight: '100'
+	},
 	drawerListItemText: {
 		color: 'white',
-		fontSize: 20,
+		fontSize: 15,
 		paddingLeft: 15,
 		flex: 1,
 		fontFamily : 'roboto_light',
@@ -49,10 +83,11 @@ const styles = StyleSheet.create({
 	},
 	_version: {
 		textAlign: 'center',
-		color: '#3c3c3c',
+		color: '#a0a0a0',
 		position: 'absolute',
-		bottom: 25,
-		marginLeft: 53
+		bottom: 10,
+		marginLeft: 53,
+		fontSize: 10
 	},
 
 	usernameTitle:{
@@ -65,9 +100,16 @@ const styles = StyleSheet.create({
 	usernameText:{
     fontFamily : 'roboto_light',
 		fontWeight : '100',
-    fontSize   : 25,
-    lineHeight : 30,
+    fontSize   : 18,
+    lineHeight : 25,
 		color: 'white'
+  },
+	subaccountText:{
+    fontFamily : 'roboto_light',
+		fontWeight : '100',
+    fontSize   : 10,
+    lineHeight : 10,
+		color 		 : '#ffffff'
   }
 });
 

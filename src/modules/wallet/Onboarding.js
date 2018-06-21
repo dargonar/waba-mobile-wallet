@@ -28,11 +28,7 @@ var Onboarding = React.createClass({
 	},
 
   /*
-  <TouchableHighlight
-      style={[styles.fullWidthButton, styles.fullWidthButton1]}
-      onPress={this._onRestoreAccount} >
-    <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-  </TouchableHighlight>
+
   */
   render: function() {
     return (
@@ -47,6 +43,11 @@ var Onboarding = React.createClass({
             <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
           </TouchableHighlight>
 
+          <TouchableHighlight
+              style={[styles.fullWidthButton, styles.fullWidthButton1]}
+              onPress={this._onRestoreAccount} >
+            <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+          </TouchableHighlight>
 
         </View>
       </View>

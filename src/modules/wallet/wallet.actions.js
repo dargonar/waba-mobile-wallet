@@ -87,7 +87,9 @@ export function createAccount(name) {
 						})
 						.then((response) => response.json())
 						.then((responseJson) => {
-							// return resolve(responseJson);
+
+              console.log(' #### /account/register:', responseJson);
+              // return resolve(responseJson);
 							if(responseJson.error){
 								reject(responseJson.error);
 								return;
@@ -97,7 +99,8 @@ export function createAccount(name) {
 								let account = {
 									mnemonic : res1.mnemonic,
 									keys     : res3,
-									name     : name
+									name     : name,
+                  identicon: responseJson.identicon
 								};
 								createAccountSuccessHACK(account);
 								return resolve(account);
@@ -117,7 +120,6 @@ export function createAccount(name) {
 			}, function(err) {
 				reject(err);
 			});
-
 		});
 }
 
@@ -182,7 +184,7 @@ export function endorseApply(from, endorse_type) {
 export function retrieveUsers(query, search_filter) {
     search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
-			fetch(config.getAPIURL('/account/search?search='+query+'&search_filter='+search_filter), {
+			fetch(config.getAPIURL('/account/search2?search='+query+'&search_filter='+search_filter), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
@@ -256,7 +258,6 @@ export function assetSuccess(asset) {
 	};
 }
 
-
 // HISTORY
 export function retrieveHistoryError() {
 	return {
@@ -286,10 +287,14 @@ export function creditReadySuccess(credit_ready) {
 	};
 }
 
-export function retrieveHistory(account_name, keys, first_time, start) {
-	return function (dispatch) {
+
+export function retrieveHistory(account_name, keys, first_time, start, subaccount) {
+
+  console.log(' -- retrieveHistory::subaccount->', JSON.stringify(subaccount));
+
+  return function (dispatch) {
 		if (start === undefined) start=0;
-		console.log( 'retrieveHistory()', account_name, first_time, start);
+		console.log( 'retrieveHistory()', account_name, first_time, start, JSON.stringify(subaccount));
 
 		let memo_key_map = {};
 		for(var i=0; i<keys.length; i++) {
@@ -307,7 +312,15 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			x = 1;
 		}, 10000);
 
-		const query = apollo.query({
+    console.log(JSON.stringify({
+      account 				  : account_name,
+      first_time        : first_time,
+      asset   					: config.DISCOIN_ID,
+      type              : start == 0 ? 'relative' : 'normal',
+      start   					: start
+    }));
+
+		let query = apollo.query({
 			query: gql`
 				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!) {
   				asset(id:$asset) @include(if:$first_time)
@@ -334,24 +347,38 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 							... on NoDetailOp {
 								id
 							}
-							... on OverdraftChange {
-								amount {
-									quantity
-									asset {
-										symbol
-										id
-									}
-								}
-								type
-							}
-							... on CreditRequest {
-								amount {
-									quantity
-									asset {
-										id
-									}
-								}
-							}
+							... on WithdrawPermission {
+                amount {
+                  quantity
+                  asset {
+                    id
+                  }
+                }
+                from {
+                  id
+                  name
+                }
+                to {
+                  id
+                  name
+                }
+              }
+              ... on WithdrawPermissionClaim {
+                amount {
+                  quantity
+                  asset {
+                    id
+                  }
+                }
+                from {
+                  id
+                  name
+                }
+                to {
+                  id
+                  name
+                }
+              }
 							... on Transfer {
 								from {
 									id
@@ -396,13 +423,111 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			forceFetch: true
 		});
 
-    console.log(JSON.stringify({
-      account 				  : account_name,
-      first_time        : first_time,
-      asset   					: config.DISCOIN_ID,
-      type              : start == 0 ? 'relative' : 'normal',
-      start   					: start
-    }));
+    // NUNCA
+    if(config.isSubaccountMode(subaccount) && false)
+    {
+      query = apollo.query({
+  			query: gql`
+        query getTodo($account: String!, $asset: String!, $first_time: Boolean!, $start: String!, $type: String!) {
+          asset(id: $asset) @include(if: $first_time)
+          blockchain {
+            refBlockNum
+            refBlockPrefix
+            fees @include(if: $first_time)
+          }
+          account(name: $account) {
+            id
+            blacklistedBy(account: "discoin.admin")
+            balance {
+              quantity
+              asset {
+                id
+              }
+            }
+            history(type: $type, start: $start, limit: 25) {
+              id
+              __typename
+              block {
+                timestamp
+              }
+              ... on WithdrawPermission {
+                amount {
+                  quantity
+                  asset {
+                    id
+                  }
+                }
+                from {
+                  id
+                  name
+                }
+                to {
+                  id
+                  name
+                }
+              }
+              ... on WithdrawPermissionClaim {
+                amount {
+                  quantity
+                  asset {
+                    id
+                  }
+                }
+                from {
+                  id
+                  name
+                }
+                to {
+                  id
+                  name
+                }
+              }
+              ... on Transfer {
+                from {
+                  id
+                  name
+                }
+                to {
+                  id
+                  name
+                }
+                memo {
+                  from
+                  to
+                  nonce
+                  message
+                }
+                amount {
+                  quantity
+                  asset {
+                    symbol
+                    id
+                  }
+                }
+                fee {
+                  quantity
+                  asset {
+                    symbol
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+  			`,
+  			variables : {
+  				account 				  : account_name,
+  				first_time        : first_time,
+  				asset   					: config.DISCOIN_ID,
+  				type              : start == 0 ? 'relative' : 'normal',
+  				start   					: start
+  			},
+  			forceFetch: true
+  		});
+    }
+
+
 
 		query.then((graphQLResult) => {
       clearTimeout(timer);
@@ -528,3 +653,58 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 	} //dispatch
 
 } //function
+
+// ************************************************************************************
+// WALLET MODE
+export function switchModeSuccess(wallet_mode) {
+	return {
+		type         : types.SWITCH_MODE_SUCCESS,
+		wallet_mode  : wallet_mode
+	};
+}
+
+
+export function getBusiness(account_id) {
+  return new Promise((resolve, reject) => {
+		fetch(config.getAPIURL('/dashboard/business/profile/'+account_id+'/load'), {
+			method: 'GET',
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+		})
+		.then((response) => response.json())
+		.then((responseJson) => {
+      console.log(' -- wallet.actions:: call getBusiness: ')
+      console.log(JSON.stringify(responseJson));
+
+      resolve(responseJson);
+      return;
+    })
+    .catch((error) => {
+      console.error(error);
+      reject(error);
+      return;
+    });
+  });
+}
+
+export function getSubAccountPermissions(account_id) {
+    return new Promise((resolve, reject) => {
+			fetch(config.getAPIURL('/business/subaccount/list/'+account_id), {
+				method: 'GET',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+        console.log(' -- wallet.actions:: call switchMode -> getCurrentPermissions')
+        console.log(JSON.stringify(responseJson));
+
+        resolve(responseJson);
+        return;
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+        return;
+      });
+
+		});
+}

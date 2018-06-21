@@ -17,6 +17,10 @@ const ICON_SIZE_ANDROID_BIG = 50;// : PixelRatio.getPixelSizeForLayoutSize(50);
 // here we use active, big, small, very-big..
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
+  "ios-send": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-switch": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-cash": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-cart": [ICON_SIZE_ANDROID, "#fff"],
   "ios-locate-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-card-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-help": [ICON_SIZE_ANDROID, "#fff"],

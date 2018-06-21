@@ -86,7 +86,6 @@ class Balance extends Component {
 // 			if(entry && entry.length>0)
 			if(entry)
 			{
-// 				const _bg = avales_colors[entry[0]._key];
 				const _bg = avales_colors[entry._key];
 				j = (
 					<View style={[styles.credit_card_container ]}>
@@ -115,8 +114,13 @@ class Balance extends Component {
 				);
 		}
 
+		let container_style = styles.container;
+		if(config.isSubaccountMode(this.props.account.subaccount))
+		{
+			container_style = styles.container_subaccount;
+		}
 		return (
-      <View style={styles.container}>
+      <View style={[container_style]}>
         <View style={styles.wrapper}>
 					<View style={balanceStyle}>
 						<View style={styles.balance}>
@@ -164,6 +168,7 @@ class Balance extends Component {
 function mapStateToProps(state, ownProps) {
 	return {
 		balance: state.wallet.balance,
+		account: state.wallet.account,
 		credit_ready : state.wallet.credit_ready
 	};
 }

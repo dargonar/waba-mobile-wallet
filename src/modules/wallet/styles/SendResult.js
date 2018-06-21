@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     lineHeight  : 25,
     fontSize    : 12
   },
+	title_part_2 : {
+    fontFamily  : 'roboto_regular',
+    color       : '#a9a9a9',
+    fontSize    : 12
+  },
   spinner:{
 
   }

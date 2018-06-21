@@ -35,6 +35,16 @@ import LocationFull from './modules/endorsement/LocationFull';
 // import DscMain from './modules/discoin/DscMain';
 import Business from './modules/discoin/Business';
 
+import SwitchConfirm from './modules/_global/SwitchConfirm';
+
+import FindUser from './modules/wallet/FindUser';
+import SelectCustomer from './modules/wallet/SelectCustomer';
+import SetDiscount from './modules/wallet/SetDiscount';
+import RewardConfirm from './modules/wallet/RewardConfirm';
+import RewardResult from './modules/wallet/RewardResult';
+import Rewarding from './modules/wallet/Rewarding';
+import SwitchResult from './modules/wallet/SwitchResult';
+
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
@@ -72,4 +82,12 @@ export function registerScreens(store, Provider) {
 
 	// Navigation.registerComponent('discoin.Main', () => DscMain	, store, Provider);
 	Navigation.registerComponent('discoin.Business', () => Business	, store, Provider);
+	Navigation.registerComponent('discoin.SwitchConfirm', () => SwitchConfirm	, store, Provider);
+	Navigation.registerComponent('wallet.FindUser', () => FindUser	, store, Provider);
+	Navigation.registerComponent('wallet.SelectCustomer', () => SelectCustomer	, store, Provider);
+	Navigation.registerComponent('wallet.SetDiscount', () => SetDiscount	, store, Provider);
+	Navigation.registerComponent('wallet.RewardConfirm', () => RewardConfirm	, store, Provider);
+	Navigation.registerComponent('wallet.RewardResult', () => RewardResult	, store, Provider);
+	Navigation.registerComponent('wallet.Rewarding', () => Rewarding	, store, Provider);
+	Navigation.registerComponent('wallet.SwitchResult', () => SwitchResult	, store, Provider);
 }

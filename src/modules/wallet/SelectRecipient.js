@@ -28,8 +28,6 @@ class SelectRecipient extends Component {
 
   constructor(props) {
     super(props);
-//     this._onNavigatorEvent = this._onNavigatorEvent.bind(this);
-//     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 
     this._onChangeText        = this._onChangeText.bind(this);
 

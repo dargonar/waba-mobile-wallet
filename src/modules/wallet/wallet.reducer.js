@@ -9,7 +9,7 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				credit_ready: action.credit_ready
 			};
-			
+
 		case types.READY_SUCCESS:
 			return {
 				...state,
@@ -21,19 +21,19 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				blockchain: action.blockchain
 			};
-			
+
 		case types.ASSET_SUCCESS:
 			return {
 				...state,
 				asset: action.asset
 			};
-			
+
 		case types.FEE_SCHEDULE_SUCCESS:
 			return {
 				...state,
 				fees: action.fees
 			};
-		
+
 		case types.MY_ACCOUNT_ID_SUCCESS:
 			account    = state.account
 			account.id = action.id
@@ -41,7 +41,7 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				account: account
 			};
-			
+
 		case types.RETRIEVE_HISTORY_ERROR:
 			console.log('RETRIEVE_HISTORY_ERROR ==> ', state.errors+1);
 			return {
@@ -65,20 +65,20 @@ export default function (state = initialState.wallet, action) {
 					errors    : 0
 				};
 			}
-			
+
 
 		case types.CREATE_KEYS_SUCCESS:
 			return {
 				...state,
 				new_keys: action.new_keys
 			};
-		
+
 		case types.ADDRESS_SUCCESS:
 			return {
 				...state,
 				address: action.address
 			};
-			
+
 		case types.MEMO_SUCCESS:
 			return {
 				...state,
@@ -89,14 +89,14 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				balance: action.balance
 			};
-		
+
 		case types.CREATE_ACCOUNT_SUCCESS:
 			console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
 			return {
 				...state,
 				account: action.account
 			};
-			
+
 // 		case types.RETRIEVE_NOWPLAYING_MOVIES_SUCCESS:
 // 			return {
 // 				...state,
@@ -132,6 +132,14 @@ export default function (state = initialState.wallet, action) {
 // 				...state,
 // 				searchResults: action.searchResults
 // 			};
+
+		case types.SWITCH_MODE_SUCCESS:
+			console.log(' -- REDUCER -> SWITCH_MODE_SUCCESS');
+			return {
+				...state,
+				wallet_mode: action.wallet_mode
+			};
+
 		default:
 			return state;
 	}

@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	buttonInner: {
-		 flex:1, flexDirection:'row', height:80, padding:10,
-		 borderTopLeftRadius: 4,
-		 borderTopRightRadius: 4,
-		 borderBottomLeftRadius: 4,
-		 borderBottomRightRadius: 4
+		 flex:1, flexDirection:'row', height:80, padding:10
+		 // borderTopLeftRadius: 4,
+		 // borderTopRightRadius: 4,
+		 // borderBottomLeftRadius: 4,
+		 // borderBottomRightRadius: 4,
 	},
 	buttonInnerDisabled: {
 		backgroundColor:'#c0c0c0'

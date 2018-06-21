@@ -1,11 +1,15 @@
 // export const API_URL         = 'https://api.monedapar.com';
-export const API_URL          = 'http://35.163.59.126:8089';
+// export const API_URL          = 'http://35.163.59.126:8089';
+
+import Identicon from 'identicon.js';
+
+export const API_URL          = 'http://35.163.59.126:8088';
 export const API_URL_V1       = API_URL+'/api/v3';
 export const MERCADOPAR_URL   = 'http://mercado.monedapar.com?category=productos-y-servicios';
 export const EMPLEOSPAR_URL   = 'http://mercado.monedapar.com?category=empleos-solicitados';
 export const WABA_NETWORK_URL = 'https://waba.network';
 
-export const API_GRAPHQL_URL = 'http://35.163.59.126:8080';
+export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
 export const GRAPHQL_URL     = API_GRAPHQL_URL+'/graphql/v3';
 
 export const ASSET_PRECISION = 2;
@@ -99,6 +103,41 @@ function leadingZeros(n){
 }
 
 export function getUTCNow(){
-	var d = new Date();
+	// var d = new Date();
+	var now = new Date();
+	var d = new Date( now.getTime() + (now.getTimezoneOffset() * 60000));
 	return leadingZeros(d.getUTCFullYear())+leadingZeros(d.getUTCMonth())+leadingZeros(d.getUTCDate());
+}
+
+export function getFullUTCNow(){
+	// var d = new Date();
+	var now = new Date();
+	var d = new Date( now.getTime() + (now.getTimezoneOffset() * 60000));
+	return d.toISOString().replace('Z', '');
+}
+
+export function dateAdd(date, interval, units) {
+	var ret = new Date(date); //don't change original date
+	switch(interval.toLowerCase()) {
+		case 'year'   :  ret.setFullYear(ret.getFullYear() + units);  break;
+		case 'quarter':  ret.setMonth(ret.getMonth() + 3*units);  break;
+		case 'month'  :  ret.setMonth(ret.getMonth() + units);  break;
+		case 'week'   :  ret.setDate(ret.getDate() + 7*units);  break;
+		case 'day'    :  ret.setDate(ret.getDate() + units);  break;
+		case 'hour'   :  ret.setTime(ret.getTime() + units*3600000);  break;
+		case 'minute' :  ret.setTime(ret.getTime() + units*60000);  break;
+		case 'second' :  ret.setTime(ret.getTime() + units*1000);  break;
+		default       :  ret = undefined;  break;
+	}
+	return ret;
+}
+
+export function isSubaccountMode(subaccount){
+	return (subaccount && subaccount.wallet_mode=='subaccount');
+}
+
+export function getIdenticonForHash(_hash){
+	var hash = _hash || 'cc65d8bb036388b414deac65a34d83e296b4c8b84f521cb059b561d0b5c0b4579495023d3dbdfb75492ff413ec0ad281f6e5263589d3a6418ba6dbce86bba6bf';
+	var data = new Identicon(hash).toString();
+	return'data:image/png;base64,'+data;
 }

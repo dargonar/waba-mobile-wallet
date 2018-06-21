@@ -77,20 +77,7 @@ class Settings extends Component {
 		const iconSwap = (<Icon name="ios-swap" style={{paddingTop:25}}  size={30} color="#ffffff" />);
 		const iconSec  = (<Icon name="ios-key" style={{paddingTop:25}} size={30} color="#ffffff" />);
 
-    /*
-    <TouchableOpacity style={styles.button} onPress={this._onRestoreAccount.bind(this)}>
-      <View style={[styles.buttonInner, {  backgroundColor	: '#044967' }]}>
-        <View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
-          <Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Restaurar una cuenta a partir de palabras</Text>
-          <Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>RESTAURAR CUENTA</Text>
-        </View>
-        <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
-          {iconSwap}
-        </View>
-      </View>
-    </TouchableOpacity>
-    */
-		return (<View style={styles.container}>
+    return (<View style={styles.container}>
 				<TouchableOpacity style={styles.button} onPress={this._onShowWords.bind(this)}>
 					<View style={[styles.buttonInner, {  backgroundColor	: '#f15d44' }]}>
 						<View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
@@ -102,7 +89,17 @@ class Settings extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-
+        <TouchableOpacity style={styles.button} onPress={this._onRestoreAccount.bind(this)}>
+          <View style={[styles.buttonInner, {  backgroundColor	: '#f15d44' }]}>
+            <View style={{ flex:4 , flexDirection:'column', justifyContent:'center'}}>
+              <Text style={{ flex:1, color:'white', fontSize:12, fontFamily : 'roboto_light', fontWeight: '100' }}>Restaurar una cuenta a partir de palabras</Text>
+              <Text style={{ flex:1, color:'white', fontSize:18, fontFamily : 'roboto_normal', }}>RESTAURAR CUENTA</Text>
+            </View>
+            <View style={{flex:1, justifyContent:'center', alignItems:'center' }}>
+              {iconSwap}
+            </View>
+          </View>
+        </TouchableOpacity>
 
 			</View>
     );

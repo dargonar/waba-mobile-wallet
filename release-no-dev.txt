@@ -8,14 +8,16 @@ react-native bundle --platform android --dev false --entry-file index.android.js
   --bundle-output android/app/src/main/assets/index.android.bundle \
   --assets-dest android/app/src/main/res/
 
-export ANDROID_HOME=/home/tuti/android-sdk
+  react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 
+export ANDROID_HOME=/home/tuti/android-sdk
 cd android && ./gradlew assembleRelease
 
 adb install -r ./app/build/outputs/apk/app-armeabi-v7a-release.apk
+adb install -r ./app/build/outputs/apk/app-armeabi-v7a-debug.apk 
 
-scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/app/discoin/discoin.apk
-
+scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.apk
+scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.v1.1.apk
 
 ssh -i discoin_alpha.pem ubuntu@54.245.222.250
 
