@@ -73,23 +73,27 @@ class Main extends Component {
 				<Icon name="md-create" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 	*/
+
 	render() {
 		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
 		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#f15d44' ;
+		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 		// {/*<Icon name="md-notifications-off" style={styles.actionButtonIcon} />*/}
 		return (
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>
         <History {...this.props} style={styles.history}/>
-				<ActionButton buttonColor={buttonColor}>
+				{ (subaccount_mode)?
+					(<ActionButton buttonColor={buttonColor}>
           <ActionButton.Item buttonColor='#1abc9c' title="RECOMPENSAR" onPress={() => {  this.rewardCustomer() }}>
-            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>
-
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="RECIBIR PAGO" onPress={() => {  this.receivePayment() }}>
-            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '135 deg'}]}]}/>
-          </ActionButton.Item>
-        </ActionButton>
+	            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>
+						</ActionButton.Item>
+	          <ActionButton.Item buttonColor='#3498db' title="RECIBIR PAGO" onPress={() => {  this.receivePayment() }}>
+	            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '135 deg'}]}]}/>
+	          </ActionButton.Item>
+        </ActionButton>)
+				: (<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />)
+			}
       </View>
 		);
 	}

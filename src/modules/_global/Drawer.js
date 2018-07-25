@@ -74,11 +74,16 @@ class Drawer extends Component {
 	}
 
 	_onSwitchMode(){
+		console.log(' --- DRAWER::_onSwitchMode()');
+		console.log(JSON.stringify(this.props.account));
+
 		if(config.isSubaccountMode(this.props.account.subaccount))
 		{
+			console.log(' ********************* LLAMO A this._onSwitchToUser();')
 			this._onSwitchToUser();
 			return;
 		}
+		console.log(' ********************* LLAMO A this._onSwitchToSubAccount();')
 		this._onSwitchToSubAccount();
 	}
 
@@ -89,8 +94,16 @@ class Drawer extends Component {
 		// }
 
 		AsyncStorage.getItem('@Store:data').then((value)=>{
+
+			console.log(' *** _onSwitchToUser()');
+			console.log(' account before deleting subaccount');
+			console.log(JSON.stringify(account));
+
 			account               = JSON.parse(value);
 			delete account.subaccount;
+
+			console.log(' about to save account');
+			console.log(JSON.stringify(account));
 
 			AsyncStorage.setItem('@Store:data', JSON.stringify(account));
 
@@ -110,6 +123,8 @@ class Drawer extends Component {
 
 	switchToSubAccountOrInitDaily(){
 
+		console.log(' *********************** switchToSubAccountOrInitDaily()');
+
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
 			title :  'Obtendiendo información...',
@@ -124,8 +139,13 @@ class Drawer extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 
+
 		// 1.- Verificamos que tenga permiso disponible
 		// 1.1.- Si tiene mas de uno que elija (AHORA NO) (ToDo)
+		console.log(' --- switchToSubAccountOrInitDaily() :: this.props.account.id')
+		console.log('this.props.account.id:', this.props.account.id)
+
+
 		walletActions.getSubAccountPermissions(this.props.account.id).then( (permissions) => {
 			console.log(' -- Traemos permisos del usuario:',  JSON.stringify(permissions));
 			let the_perm = null;
@@ -151,21 +171,21 @@ class Drawer extends Component {
 					'Subcuentas',
 					'No tiene configurado ningún permiso o ya ha expirado.',
 					[
-						{text: 'OK'},
+						{text: 'OK', onPress: () => this._onSwitchToUser()  }
 					]
-				)
-				//HACK
-				this._onSwitchToUser();
+				);
+
+				//this._onSwitchToUser();
 				return;
 			}
 
 			let business = null;
 			// 2.- Nos traemos al comercio
-			this.props.navigator.dismissModal({
-					animationType: 'slide-down'
-			});
 			walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
 				business = resp.business;
+				this.props.navigator.dismissModal({
+						animationType: 'slide-down'
+				});
 				this._toggleDrawer();
 				if( config.isSubaccountMode(this.props.account.subaccount))
 				{
@@ -268,6 +288,12 @@ class Drawer extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		console.log('DRAWER WILL RECEIVE =>', nextProps);
+		// if(nextProps.account)
+		// {
+		// 	console.log(' *** Drawer received props');
+		// 	console.log(JSON.stringify(nextProps.account));
+		// }
+
 	}
 
 	render() {

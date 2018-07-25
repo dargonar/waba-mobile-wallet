@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontFamily : 'roboto_light',
 		fontWeight : '100',
     fontSize   : 20,
-		color: 'white'
+		color: '#f15d44'
   },
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'roboto_light',

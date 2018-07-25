@@ -124,6 +124,9 @@ class SwitchConfirm extends Component {
         account['subaccount'] = subaccount;
 
         AsyncStorage.setItem('@Store:data', JSON.stringify(account));
+        console.log(' *** SwitchConfirm');
+        console.log(' saved account');
+  			console.log(JSON.stringify(account));
 
         this.props.actions.createAccountSuccessHACK(account);
 

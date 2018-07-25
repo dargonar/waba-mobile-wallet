@@ -113,7 +113,7 @@ export function getFullUTCNow(){
 	// var d = new Date();
 	var now = new Date();
 	var d = new Date( now.getTime() + (now.getTimezoneOffset() * 60000));
-	return d.toISOString().replace('Z', '');
+	return d.toISOString().replace('Z', '').split('.')[0];
 }
 
 export function dateAdd(date, interval, units) {

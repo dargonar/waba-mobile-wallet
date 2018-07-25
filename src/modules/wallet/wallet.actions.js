@@ -88,7 +88,7 @@ export function createAccount(name) {
 						.then((response) => response.json())
 						.then((responseJson) => {
 
-              console.log(' #### /account/register:', responseJson);
+              console.log(' #### /account/register:', console.log(responseJson));
               // return resolve(responseJson);
 							if(responseJson.error){
 								reject(responseJson.error);
@@ -100,7 +100,8 @@ export function createAccount(name) {
 									mnemonic : res1.mnemonic,
 									keys     : res3,
 									name     : name,
-                  identicon: responseJson.identicon
+                  identicon: responseJson.identicon,
+                  id:        responseJson.account_id
 								};
 								createAccountSuccessHACK(account);
 								return resolve(account);
@@ -208,7 +209,7 @@ export function retrieveUsers(query, search_filter) {
 export function retrieveBusinesses(skip, count, query, filter) {
     // search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
-			fetch(config.getAPIURL('/dashboard/business/list/'+skip+'/'+count), {
+			fetch(config.getAPIURL('/dashboard/business/credited/'+skip+'/'+count), {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
