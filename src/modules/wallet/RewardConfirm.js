@@ -337,8 +337,8 @@ class RewardConfirm extends Component {
           </View>
           {/*<Text style={styles.data_part}>{this.state.recipient.name}</Text>*/}
           <Text style={styles.title_part}>Info</Text>
-          <Text style={data_part2}>Total factura: ${this.state.bill_amount}</Text>
-          <Text style={data_part2}>Recompensa: {this.state.percentage}%</Text>
+          <Text style={styles.data_part}>Total factura: ${this.state.bill_amount}</Text>
+          <Text style={styles.data_part}>Recompensa: {this.state.percentage}%</Text>
 
         </View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
