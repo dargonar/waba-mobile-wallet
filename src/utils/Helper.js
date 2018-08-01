@@ -4,7 +4,7 @@ import { iconsMap } from './AppIcons';
 
 
 function launchTest(){
-	
+
 	Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
@@ -13,14 +13,15 @@ function launchTest(){
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
+       navBarTransparent : true,
+			 topBarElevationShadowEnabled: false
        //navBarHidden: true
       }
     },
     animationType : 'none',
   });
-	
-	
+
+
 }
 
 function launchWallet() {
@@ -31,17 +32,18 @@ function launchWallet() {
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
+       navBarTransparent : true,
+			 topBarElevationShadowEnabled: false
       },
 //       fab: {
 //         collapsedId: 'newTx',
 //         collapsedIcon: iconsMap['ios-add'].uri,
 //         backgroundColor: '#0B5F83'
 //       },
-			
+
 //       rightButtons: [
 // 				{
-// 					icon: iconsMap['qrcode'], 
+// 					icon: iconsMap['qrcode'],
 // 					id: 'qrCode'
 // 				}
 // 			]
@@ -64,7 +66,7 @@ function launchWallet() {
 }
 
 function launchOnboard() {
-	// 
+	//
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
@@ -72,7 +74,8 @@ function launchOnboard() {
       navigatorStyle : {
        navBarButtonColor : '#ffffff',
        drawUnderNavBar   : true,
-       navBarTransparent : true
+       navBarTransparent : true,
+			 topBarElevationShadowEnabled: false
        //navBarHidden: true
       }
     },

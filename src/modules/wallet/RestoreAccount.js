@@ -4,11 +4,11 @@ import {
   Alert,
 	Keyboard,
   ListView,
-  Text, 
+  Text,
   TextInput,
 	TouchableHighlight,
   View
-	
+
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -24,40 +24,40 @@ import UWCrypto from '../../utils/Crypto';
 import * as helperActions from '../../utils/Helper.js';
 
 class RestoreAccount extends Component {
-  
+
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
+    navBarTextColor: '#ffffff',
     navBarBackgroundColor: '#0B5F83',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin'
   }
-	
+
 // 	let keyboardWillShowSub;
 // 	let keyboardWillHideSub;
-  
+
 constructor(props) {
     super(props);
     this._onChangeText        = this._onChangeText.bind(this);
     this._onClearButtonPress  = this._onClearButtonPress.bind(this);
     this._onRestoreAccount    = this._onRestoreAccount.bind(this);
 //     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-		
+
 		this.state = {
 			words : '',
 			keyboardOpen: false
 		};
   }
-  
-//   _onNavigatorEvent(event) { 
-//     if (event.type == 'NavBarButtonPress') { 
-//       if (event.id == 'clearMemo') { 
+
+//   _onNavigatorEvent(event) {
+//     if (event.type == 'NavBarButtonPress') {
+//       if (event.id == 'clearMemo') {
 //         console.log(this.props.actions);
 // 				this.props.actions.memoSuccess('');
 // 				//this.setState({memo:''});
 //       }
 //     }
 //   }
-	
+
 	_onRestoreError(msg){
 		this.props.navigator.dismissModal({
 			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
@@ -74,7 +74,7 @@ constructor(props) {
   _onRestoreAccount() {
   	let words = this.state.words || '';
 		words = words.trim();
-		
+
 		if(!words) {
 			this._onRestoreError('Debe ingresar las palabras.');
 			console.log('No hay words');
@@ -82,7 +82,7 @@ constructor(props) {
 		}
 
 		//console.log('words =>', words);
-		
+
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
 			title :  'Restaurando cuenta...',
@@ -93,20 +93,20 @@ constructor(props) {
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
-		
+
 		let that = this;
-		
+
 		UWCrypto.mnemonicToMasterKey(words).then( res => {
-			
+
 			let p = []
-			Promise.all([ 
+			Promise.all([
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 1),
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 2),
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 3)
 			]).then(function(res2) {
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
+				// console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
+				// console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
+				// console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
 				fetch( config.getAPIURL('/find_account'), {
 // 				fetch('http://35.161.140.21:8080/api/v1/find_account', {
 					method: 'POST',
@@ -117,14 +117,14 @@ constructor(props) {
 				})
 				.then((response) => response.json()
 						 , err => { that._onRestoreError(JSON.stringify(err));	}
-				) 
+				)
 				.then((responseJson) => {
 					if(responseJson.error || !responseJson.length){
 						console.log(' -- no hay cuenta', responseJson.error, responseJson.length);
 						that._onRestoreError('No existe una cuenta relacionada con las palabras ingresadas.');
 						return;
 					} else {
-						
+
 						let account = {
 							mnemonic   : words,
 							keys       : res2,
@@ -135,14 +135,14 @@ constructor(props) {
 						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {
 							that.props.actions.createAccountSuccessHACK(account);
 							helperActions.launchWallet();
-							
+
 							setTimeout( function() {
 								that.props.actions.retrieveHistory(
-									that.props.account.name, 
+									that.props.account.name,
 									that.props.account.keys,
-									!that.props.account.id);  
+									!that.props.account.id);
 							}, 1500);
-							
+
 						}, err => {
 							that._onRestoreError(JSON.stringify(err));
 						});
@@ -156,7 +156,7 @@ constructor(props) {
 					return;
 				});
 
-				
+
 			});
 		}, err => {
 			that._onRestoreError(JSON.stringify(err));
@@ -166,11 +166,11 @@ constructor(props) {
   _onChangeText(words) {
   	this.setState({words:words});
 	}
-  
+
 	_onClearButtonPress() {
-  
+
 	}
-  
+
   _onLoadKeys(){
   // Something
   // 		this.props.navigator.pop();
@@ -201,7 +201,7 @@ constructor(props) {
     this.keyboardWillShowListener.remove();
     this.keyboardWillHideListener.remove();
   }
-  
+
   focus() {
   }
 
@@ -219,15 +219,15 @@ constructor(props) {
 		{
 			mensaje = (<View style={{flex:2, justifyContent:'center', alignItems:'center', padding:15, backgroundColor: '#1E759B'}}>
 						<Text style={styles.keywordsTitle} numberOfLines={4}>
-							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando 
-							orden y minúscula/mayúscula. 
+							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando
+							orden y minúscula/mayúscula.
 						</Text>
-					</View>);	
+					</View>);
 		}
 		return (
       <View style={styles.container}>
         	{mensaje}
-				
+
         <TextInput
           style={{flex:4, fontSize:25}}
           editable={true}
@@ -242,7 +242,7 @@ constructor(props) {
 							onPress={this._onRestoreAccount} >
 						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
 					</TouchableHighlight>
-        
+
 			 </View>
     );
   }
@@ -262,4 +262,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestoreAccount);
-

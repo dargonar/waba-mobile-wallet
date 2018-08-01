@@ -20,7 +20,7 @@ function myDecodeMemo(privkey, pubkey, memo_from, memo_to, memo_nonce, memo_mess
 			console.log('No puedo con este memo ', memo_message);
 			resolve({error:1, message:''});
 		});
-	});	
+	});
 }
 
 export function createAccountSuccess(account) {
@@ -33,24 +33,24 @@ export function createAccountSuccess(account) {
 export function createAccountSuccessHACK(account) {
 	return function (dispatch) {
 		//console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
-		dispatch(createAccountSuccess(account));	
+		dispatch(createAccountSuccess(account));
 	}
 }
 
 // export function getAccount(name) {
 // 	return new Promise((resolve, reject) => {
-		
+
 // 		fetch(config.getAPIURL('/account/'+name), {
 // 			method: 'GET',
 // 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
 // 		})
-// 		.then((response) => response.json(), err=>{ reject(err); }) 
+// 		.then((response) => response.json(), err=>{ reject(err); })
 // 		.then((responseJson) => {
 // 			resolve(responseJson);
 // 		}, err => {
 // 			reject(err);
 // 		});
-		
+
 // 	}
 // }
 
@@ -63,22 +63,18 @@ export function createAccount(name) {
 			UWCrypto.generateMnemonic('es', 128).then(function(res1) {
 				UWCrypto.mnemonicToMasterKey(res1.mnemonic).then(function(res2) {
 					let p = []
-					Promise.all([ 
+					Promise.all([
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 1),
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 2),
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
 					]).then(function(res3) {
-						console.log('==== generateMnemonic:');
-						console.log(JSON.stringify(res1));
-						console.log('==== mnemonicToMasterKey:');
-						console.log(JSON.stringify(res2));
-						console.log('==== derivatePrivate:');
-						console.log(JSON.stringify(res3));
-						
-						reject('LISTO!');
+						// console.log('==== generateMnemonic:');
+						// console.log(JSON.stringify(res1));
+						// console.log('==== mnemonicToMasterKey:');
+						// console.log(JSON.stringify(res2));
+						// console.log('==== derivatePrivate:');
+						// console.log(JSON.stringify(res3));
 
-						return;
-						
 						fetch(config.getAPIURL('/register'), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -89,7 +85,7 @@ export function createAccount(name) {
 								memo:   	res3[2].pubkey
 							})
 						})
-						.then((response) => response.json()) 
+						.then((response) => response.json())
 						.then((responseJson) => {
 							// return resolve(responseJson);
 							if(responseJson.error){
@@ -121,7 +117,7 @@ export function createAccount(name) {
 			}, function(err) {
 				reject(err);
 			});
-			
+
 		});
 }
 
@@ -143,7 +139,7 @@ export function addressSuccessHACK(address) {
 
 export function addressSuccess(address) {
 	return function (dispatch) {
-		dispatch(addressSuccessHACK(address));	
+		dispatch(addressSuccessHACK(address));
 	}
 }
 // ---------------------
@@ -157,7 +153,7 @@ export function memoSuccessHACK(memo) {
 
 export function memoSuccess(memo) {
 	return function (dispatch) {
-		dispatch(memoSuccessHACK(memo));	
+		dispatch(memoSuccessHACK(memo));
 	}
 }
 
@@ -172,7 +168,7 @@ export function endorseApply(from, endorse_type) {
 				endorse_type : endorse_type
 			})
 		})
-		.then((response) => response.json()) 
+		.then((response) => response.json())
 		.then((responseJson) => {
 			return resolve(responseJson);
 		})
@@ -190,14 +186,14 @@ export function retrieveUsers(query, search_filter) {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
-			.then((response) => response.json()) 
+			.then((response) => response.json())
 			.then((responseJson) => {
         return resolve(responseJson);
       })
       .catch((error) => {
         console.error(error);
       });
-			
+
 		});
 }
 
@@ -263,12 +259,12 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 	return function (dispatch) {
 		if (start === undefined) start=0;
 		console.log( 'retrieveHistory()', account_name, first_time, start);
-		
+
 		let memo_key_map = {};
 		for(var i=0; i<keys.length; i++) {
 			memo_key_map[keys[i].pubkey] = keys[i].privkey;
 		}
-		
+
 		//http://stackoverflow.com/questions/40837676/apolloclient-timeout-best-option
 		let x = 0;
 		let timer = setTimeout(() => {
@@ -279,7 +275,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			}
 			x = 1;
 		}, 10000);
-		
+
 		const query = apollo.query({
 			query: gql`
 				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!) {
@@ -297,7 +293,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 							asset {
 								id
 							}
-						} 
+						}
 						history(type:$type, start:$start, limit:25) {
 							id
 							__typename
@@ -359,7 +355,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 				}
 			`,
-			variables : { 
+			variables : {
 				account 				  : account_name,
 				first_time        : first_time,
 				asset   					: config.MONEDAPAR_ID,
@@ -374,7 +370,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			if (x === 1) {
 				return;
 			}
-			
+
 			const { errors, data } = graphQLResult;
 
 			if(errors ) {
@@ -382,27 +378,27 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 				console.log('got some GraphQL execution errors', errors);
 				return;
 			}
-			
+
       if (data) {
 
 				dispatch(myAccountIdSuccess(data.account.id));
 				dispatch(blockChainSuccess(data.blockchain));
-				
+
 				if(data.blockchain.fees) {
 					dispatch(feeScheduleSuccess(JSON.parse(data.blockchain.fees)));
 				}
-				
+
 				if(data.asset) {
 					dispatch(assetSuccess(JSON.parse(data.asset)));
 				}
-				
-				
+
+
 				let history = data.account.history;
 				let proms = [];
 				let inxs  = [];
-				
+
 				let real_ops = 0;
-				
+
 				for(var i=0; i<history.length; i++) {
 
 					//Meta magia
@@ -414,11 +410,11 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					} else {
 						real_ops += 1;
 					}
-					
-					//history[i].__typename == 'Transfer' && 
+
+					//history[i].__typename == 'Transfer' &&
 					if(history[i].memo){
 						//console.log(history[i].memo);
- 						
+
 						if(history[i].id in memo_cache) {
 							//noconsole.log('CACHE HIT =>', history[i].id, memo_cache[history[i].id]);
 							history[i].message = memo_cache[history[i].id];
@@ -453,7 +449,7 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 
 				}
-				
+
 				let balance = data.account.balance;
 
 				let balance_map = {};
@@ -464,18 +460,18 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 					}
 					dispatch(retrieveBalanceSuccess(balance_map));
 				}
-				
+
 				dispatch(creditReadySuccess(data.account.blacklistedBy));
-				
+
 				//Decrypt memos
 				Promise.all(proms).then(res => {
 					for(var i=0; i<res.length;i++) {
 							history[inxs[i]].message = res[i].message;
 							memo_cache[history[inxs[i]].id] = res[i].message;
 					}
-					
+
 					console.log('**** retrieveHistorySuccess', start, history.length);
-					
+
 					dispatch(retrieveHistorySuccess(history, start));
 					dispatch(readySuccess(1));
 				});
@@ -483,12 +479,12 @@ export function retrieveHistory(account_name, keys, first_time, start) {
 			} //if(data)
 
     }).catch((err)=>{
-			
+
 			clearTimeout(timer);
 			dispatch(retrieveHistoryError());
 			console.log('catch error', err);
 		}); //query.then
-	
+
 	} //dispatch
-  
+
 } //function
