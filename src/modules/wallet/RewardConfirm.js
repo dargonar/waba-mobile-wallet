@@ -37,10 +37,16 @@ class RewardConfirm extends Component {
         account_id:		props.recipient[1],
         identicon:		props.recipient[2],
       },
-      amount: 		  props.amount,
-      bill_amount:  props.bill_amount,
-      percentage:   props.percentage,
-      mode:         props.mode,
+      // amount: 		  props.amount,
+      // bill_amount:  props.bill_amount,
+      // percentage:   props.percentage,
+      // mode:         props.mode,
+
+      bill_amount:    props.bill_amount,
+      bill_id:        props.bill_id,
+      reward_rate:    props.reward_rate,
+      reward_dsc:     props.reward_dsc,
+      reward_ars:     props.reward_ars,
 
       memo :     '',
 			tx: 		   null,
@@ -145,7 +151,7 @@ class RewardConfirm extends Component {
   			this._generateUnsignedTx({
   					from   : this.props.account.id,
   					to     : this.state.recipient.account_id,
-  					amount : amount,
+  					amount : this.state.reward_dsc,
   					memo   : enc_memo,
   					asset  : this.props.asset
   			})
@@ -315,7 +321,7 @@ class RewardConfirm extends Component {
     let memo = this.state.memo;
 		let memo_style = styles.data_part;
 		let send_disabled = !this.state.can_confirm;
-		let total = this.getTotal();
+		let total = this.state.reward_dsc; //this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
     let identicon = config.getIdenticonForHash(this.state.recipient.identicon);
     let userIcon = (<Image style={{width: 50, height: 50, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: identicon}}/>)
@@ -338,7 +344,7 @@ class RewardConfirm extends Component {
           {/*<Text style={styles.data_part}>{this.state.recipient.name}</Text>*/}
           <Text style={styles.title_part}>Info</Text>
           <Text style={styles.data_part}>Total factura: ${this.state.bill_amount}</Text>
-          <Text style={styles.data_part}>Recompensa: {this.state.percentage}%</Text>
+          <Text style={styles.data_part}>Recompensa: {this.state.reward_rate}%</Text>
 
         </View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>

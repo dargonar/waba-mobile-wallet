@@ -89,6 +89,41 @@ class DiscountOrReward extends React.Component {
     console.log('**************', 'discount_rate:', discount_rate, 'reward_rate:', reward_rate);
   }
 
+  _onShowDiscountQR(){
+    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<0) {
+      ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
+      return;
+    }
+    this.props.navigator.push({
+        screen:     'wallet.DiscountShowQR',
+        title:      'Cobrar con descuento',
+        passProps:  {
+          bill_amount:    this.state.bill_amount,
+          bill_id:        this.state.bill_id,
+          discount_rate:  this.state.discount_rate,
+          discount_dsc:   this.state.discount_dsc,
+          discount_ars:   this.state.discount_ars,
+        }
+    });
+  }
+  _onSendReward(){
+    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<0) {
+      ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
+      return;
+    }
+    this.props.navigator.push({
+        // screen:     'wallet.QRScanner',
+        screen:     'wallet.RewardReceiptSelect',
+        title:      'Elegir Usuario',
+        passProps:  {
+          bill_amount:    this.state.bill_amount,
+          bill_id:        this.state.bill_id,
+          reward_rate:    this.state.reward_rate,
+          reward_dsc:     this.state.reward_dsc,
+          reward_ars:     this.state.reward_ars,
+        }
+    });
+  }
 
   showSetBillId(){
     this.setState({ promptVisible:true })
@@ -278,6 +313,7 @@ class DiscountOrReward extends React.Component {
                      onChangeText={(text) => this.updateBillAmount(text)}
                      value={this.state.bill_amount}
                      keyboardType="numeric"
+                     underlineColorAndroid ="transparent"
                    />
                    <View style={{height: 20, flexDirection: 'row'}}>
                      <Text style={styles.hint}>
@@ -362,13 +398,13 @@ class DiscountOrReward extends React.Component {
         	  <View style={{alignSelf: 'flex-end', flexDirection:'row', alignItems:'stretch', justifyContent:'flex-end' }}>
               <TouchableHighlight
                   style={[{flex:1}, styles.fullWidthButton, buttonColor]}
-                  onPress={this._onShowDiscountQR.bind(this)} >
+                  onPress={this._onShowDiscountQR} >
                 <Text style={styles.fullWidthButtonText}>ACEPTAR DESCUENTO</Text>
               </TouchableHighlight>
 
               <TouchableHighlight
                   style={[{flex:1, borderLeftColor:'#ffffff', borderLeftWidth:0.5}, styles.fullWidthButton, buttonColor]}
-                  onPress={this._onSendReward.bind(this)} >
+                  onPress={this._onSendReward} >
                 <Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
               </TouchableHighlight>
             </View>
