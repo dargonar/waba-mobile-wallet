@@ -4,6 +4,7 @@ import {
 	Image,
 	Text,
 	TouchableHighlight,
+	ToastAndroid,
 	View
 } from 'react-native';
 
@@ -24,12 +25,17 @@ class Main extends Component {
 	constructor(props) {
 		super(props);
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-		this.state 					= {account:''};
-		this.newTx 					= this.newTx.bind(this);
-		this.rewardCustomer	= this.rewardCustomer.bind(this);
-		this.receivePayment	= this.receivePayment.bind(this);
-
+		this.state 						= {account:''};
+		this.newTx 						= this.newTx.bind(this);
+		this.onPay 						= this.onPay.bind(this);
+		this.resetBalance			= this.resetBalance.bind(this);
+		this.sendExtraBalance	= this.sendExtraBalance.bind(this);
+		this.applyCredit			= this.applyCredit.bind(this);
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
+
+		this.doResetBalanceRequest 	= this.doResetBalanceRequest.bind(this);
+		this.doSendExtraBalance 		= this.doSendExtraBalance.bind(this);
+
 	}
 
 	componentWillMount() {
@@ -47,23 +53,62 @@ class Main extends Component {
 		});
 	}
 
-	rewardCustomer(){
+	resetBalance(){
 
-			this.props.navigator.push({
-	      screen: 'wallet.SelectCustomer',
-				title: 'Cliente'
-			});
+		Alert.alert(
+		  'Volver saldo a 0 D$C',
+		  'Enviar balance a cuenta comercio',
+		  [
+		    {text: 'Cancelar', style: 'cancel'},
+		    {text: 'OK', onPress: () => {this.doResetBalanceRequest()}},
+		  ],
+		  { cancelable: true }
+		)
+
 	}
 
-	receivePayment(){
+	doResetBalanceRequest(){
+		ToastAndroid.show('Simulamos que volvemos saldo a cero.', ToastAndroid.SHORT);
+	}
+
+	sendExtraBalance(){
+		Alert.alert(
+		  'Enviar excedente',
+		  'Enviar excedente en cuenta a comercio',
+		  [
+		    {text: 'Cancelar', style: 'cancel'},
+		    {text: 'OK', onPress: () => {this.doSendExtraBalance()}},
+		  ],
+		  { cancelable: true }
+		)
+	}
+
+	doSendExtraBalance(){
+		ToastAndroid.show('Simulamos que enviamos excedente a cuenta comercio.', ToastAndroid.SHORT);
+	}
+
+	applyCredit(){
+		this.props.navigator.toggleDrawer({
+			to: 'open',
+			side: 'left',
+			animated: true
+		});
 	}
 
 	newTx(){
 		this.props.navigator.push({
-      screen: 'wallet.SelectRecipient',
-			title: 'Comercio'
+      screen: 'wallet.SelectCustomer',
+			title: 'Elija usuario para enviar'
 		});
 	}
+
+	onPay(){
+		this.props.navigator.push({
+      screen: 'wallet.SelectRecipient',
+			title: 'Pagar - Seleccione Comercio'
+		});
+	}
+
   _onNavigatorEvent(event) {
 
 		if(event.id == 'qrCode') {
@@ -91,28 +136,42 @@ class Main extends Component {
 		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#f15d44' ;
 		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 		// {/*<Icon name="md-notifications-off" style={styles.actionButtonIcon} />*/}
+		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>
         <History {...this.props} style={styles.history}/>
-				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-					<TouchableHighlight
-							style={styles.fullWidthButton}
-							onPress={this._onDiscountOrReward.bind(this)} >
-						<Text style={styles.fullWidthButtonText}>COBRAR</Text>
-					</TouchableHighlight>
-				</View>
+				{ (subaccount_mode)?
+					(<View style={{height:75, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+							<TouchableHighlight
+									style={styles.fullWidthButton}
+									onPress={this._onDiscountOrReward.bind(this)} >
+								<Text style={styles.fullWidthButtonText}>COBRAR</Text>
+							</TouchableHighlight>
+						</View>) : false }
 
 				{ (subaccount_mode)?
-					(<ActionButton buttonColor={buttonColor} offsetY={120}>
-          <ActionButton.Item buttonColor='#1abc9c' title="RECOMPENSAR" onPress={() => {  this.rewardCustomer() }}>
-	            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>
+					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
+          <ActionButton.Item buttonColor='#1abc9c' title="VOLVER SALDO A 0 D$C" onPress={() => {  this.resetBalance() }}>
+	            <Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>
 						</ActionButton.Item>
-	          <ActionButton.Item buttonColor='#3498db' title="RECIBIR PAGO" onPress={() => {  this.receivePayment() }}>
-	            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '135 deg'}]}]}/>
+	          <ActionButton.Item buttonColor='#3498db' title="ENVIAR EXCEDENTE" onPress={() => {  this.sendExtraBalance() }}>
+	            <Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
 	          </ActionButton.Item>
+						<ActionButton.Item buttonColor='#3498db' title="INICIAR CAJA DIARIA" onPress={() => {  this.applyCredit() }}>
+	            <Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
+						</ActionButton.Item>
         </ActionButton>)
-				: (<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />)
+				: (
+					<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" >
+					<ActionButton.Item buttonColor={buttonColor} title="ENVIAR" onPress={() => {  this.newTx() }}>
+						<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
+					</ActionButton.Item>
+					<ActionButton.Item buttonColor={buttonColor} title="PAGAR" onPress={() => {  this.onPay() }}>
+						<Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
+					</ActionButton.Item>
+					</ActionButton>
+				)
 			}
       </View>
 		);

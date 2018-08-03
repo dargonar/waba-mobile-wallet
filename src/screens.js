@@ -49,7 +49,7 @@ import DiscountOrReward from './modules/wallet/DiscountOrReward';
 import DiscountShowQR from './modules/wallet/DiscountShowQR';
 import QRScanner from './modules/wallet/QRScanner';
 import RewardReceiptSelect from './modules/wallet/RewardReceiptSelect';
-
+import PayConfirm from './modules/wallet/PayConfirm';
 
 export function registerScreens(store, Provider) {
 
@@ -100,4 +100,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.DiscountShowQR', () => DiscountShowQR	, store, Provider);
 	Navigation.registerComponent('wallet.QRScanner', () => QRScanner	, store, Provider);
 	Navigation.registerComponent('wallet.RewardReceiptSelect', () => RewardReceiptSelect	, store, Provider);
+	Navigation.registerComponent('wallet.PayConfirm', () => PayConfirm	, store, Provider);
 }

@@ -40,6 +40,7 @@ class SelectRecipient extends Component {
       refreshing : false,
 			recipient_selected : false,
       error: false
+
     };
 
 		this.tid = undefined;
@@ -115,8 +116,8 @@ class SelectRecipient extends Component {
 		this.props.actions.memoSuccess('');
 		this.props.navigator.push({
 			screen: 'wallet.SelectAmount',
-			title: 'Monto de factura',
-			passProps: {recipient: data}
+			title: 'Pagar - Monto de factura',
+			passProps: {recipient: data, pay_or_send:'pay'}
 			// ,rightButtons: [
 			// 	{
 			// 		icon: iconsMap['ios-attach'],

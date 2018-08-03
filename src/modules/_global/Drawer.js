@@ -43,7 +43,9 @@ class Drawer extends Component {
 		this._onInitDailyBox  				= this._onInitDailyBox.bind(this);
 
 		this._onRewardCustomer 				= this._onRewardCustomer.bind(this);
-		this._onAcceptDiscount				= this._onAcceptDiscount.bind(this);
+		// this._onAcceptDiscount				= this._onAcceptDiscount.bind(this);
+		this.onSendExtraBalance 			= this.onSendExtraBalance.bind(this);
+		this.onResetBalance 					= this.onResetBalance.bind(this);
 	}
 
 	componentWillMount() {
@@ -57,17 +59,51 @@ class Drawer extends Component {
 	_onRewardCustomer(){
 		this._toggleDrawer();
 		this.props.navigator.push({
-			screen: 'wallet.SelectCustomer',
-			title: 'Cliente'
+			screen: 'wallet.DiscountOrReward',
+			title: 'Cobrar'
 		});
 	}
-	_onAcceptDiscount(){
-		this._toggleDrawer();
-		// this.props.navigator.push({
-		// 	screen: 'wallet.SelectCustomer',
-		// 	title: 'Cliente'
-		// });
+
+	onResetBalance(){
+
+		Alert.alert(
+		  'Volver saldo a 0 D$C',
+		  'Enviar balance a cuenta comercio',
+		  [
+		    {text: 'Cancelar', style: 'cancel'},
+		    {text: 'OK', onPress: () => ToastAndroid.show('Simulamos que volvemos saldo a cero.', ToastAndroid.SHORT) },
+		  ],
+		  { cancelable: true }
+		)
+
 	}
+
+	onSendExtraBalance(){
+		Alert.alert(
+		  'Enviar excedente',
+		  'Enviar excedente en cuenta a comercio',
+		  [
+		    {text: 'Cancelar', style: 'cancel'},
+		    {text: 'OK', onPress: () => ToastAndroid.show('Simulamos que enviamos excedente a cuenta comercio.', ToastAndroid.SHORT)},
+		  ],
+		  { cancelable: true }
+		)
+	}
+
+	// _onRewardCustomer(){
+	// 	this._toggleDrawer();
+	// 	this.props.navigator.push({
+	// 		screen: 'wallet.SelectCustomer',
+	// 		title: 'Cliente'
+	// 	});
+	// }
+	// _onAcceptDiscount(){
+	// 	this._toggleDrawer();
+	// 	// this.props.navigator.push({
+	// 	// 	screen: 'wallet.SelectCustomer',
+	// 	// 	title: 'Cliente'
+	// 	// });
+	// }
 
 	_onPower(){
 		this._onFnDisabled();
@@ -314,8 +350,10 @@ class Drawer extends Component {
 		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconReceive   = (<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '135 deg'}]}]}/>);
-		const iconSend			= (<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>);
+		const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
+		const iconPlus   = (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
+		const iconSend			= (<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>);
+		// const iconSend			= (<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>);
 		let userIcon = (<Icon
 			raised
 			containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
@@ -408,17 +446,25 @@ class Drawer extends Component {
 					(<View style={styles.drawerList}>
 						<TouchableOpacity onPress={this._onRewardCustomer}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
-								{iconSend}
+								{iconPlus}
 								<Text style={styles.drawerListItemText}>
-									RECOMPENSAR
+									COBRAR
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={this._onAcceptDiscount}>
+						<TouchableOpacity onPress={this.onResetBalance}>
 							<View style={styles.drawerListItem}>
 								{iconReceive}
 								<Text style={styles.drawerListItemText}>
-									RECIBIR PAGO
+									VOLVER SALDO A 0 D$C
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.onSendExtraBalance}>
+							<View style={styles.drawerListItem}>
+								{iconSend}
+								<Text style={styles.drawerListItemText}>
+									ENVIAR EXCEDENTE
 								</Text>
 							</View>
 						</TouchableOpacity>

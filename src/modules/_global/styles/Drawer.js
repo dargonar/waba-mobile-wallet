@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 	},
 
 	row_arrow : {
-    resizeMode      :'stretch',
+    resizeMode      :'contain',
     height          :10,
     width           :10,
   },

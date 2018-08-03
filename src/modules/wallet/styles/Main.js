@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
 	actionButton: {
   },
 	row_arrow : {
-    resizeMode      :'stretch',
+    resizeMode      :'contain',
     height          :20,
     width           :20,
   },
 
 	fullWidthButton: {
 		borderRadius: 0,
-    height:100,
+    height:75,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

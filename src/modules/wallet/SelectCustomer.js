@@ -20,7 +20,8 @@ class SelectCustomer extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#1abc9c',
+    // navBarBackgroundColor: '#1abc9c',
+    navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
@@ -114,9 +115,9 @@ class SelectCustomer extends Component {
     this.setState({recipient_selected:true});
 		this.props.actions.memoSuccess('');
 		this.props.navigator.push({
-			screen: 'wallet.SetDiscount',
-			title: 'Recompensa',
-			passProps: {recipient: data, mode:'reward'}
+			screen: 'wallet.SelectAmount',
+			title: 'Elija monto',
+			passProps: {recipient: data, pay_or_send:'send'}
 		});
 
 	}

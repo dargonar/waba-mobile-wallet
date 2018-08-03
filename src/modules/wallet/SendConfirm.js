@@ -24,8 +24,7 @@ class SendConfirm extends Component {
     navBarTextColor: '#ffffff',
     navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+		navBarTextFontFamily: 'roboto_thin'
   }
 
   constructor(props) {
@@ -36,14 +35,12 @@ class SendConfirm extends Component {
         name:					props.recipient[0],
         account_id:		props.recipient[1],
       },
-      discount_rate: null,
 			memo_key: props.memo_key,
-      amount :  props.amount,
-      discount :  null,
-      memo :    props.memo,
-			tx: 		   null,
-			fee:       0,
-			fee_txt:   0,
+      amount : props.amount,
+      memo :   props.memo,
+			tx: 		 null,
+			fee:     0,
+			fee_txt: 0,
 			can_confirm: false,
 			error:   ''
     }
@@ -86,7 +83,7 @@ class SendConfirm extends Component {
 		});
 	}
 
-	_generateUnsignedTx(params) {
+  _generateUnsignedTx(params) {
 		//console.log('_generateUnsignedTx', params);
 		return new Promise( (resolve, reject) => {
 			tx = {
@@ -160,67 +157,32 @@ class SendConfirm extends Component {
 		}); //Promise
 	}
 
+
 	getTotal(){
-		return (Number(this.state.discount||0) + Number(this.state.fee_txt)).toFixed(2);
+		return (Number(this.state.amount) + Number(this.state.fee_txt)).toFixed(2);
 	}
 
-  getFactura(){
-		return Number(this.state.amount).toFixed(2);
-	}
-
-  getDescuento(){
-		return Number(this.state.discount_rate).toFixed(2);
-	}
-
-  _getRecipientInfo(recipient) {
+_getRecipientInfo(recipient) {
 
 		return new Promise( (resolve, reject) => {
-			if(this.state.memo_key && this.state.discount_rate>0) {
-        console.log(' ******************** _getRecipientInfo::(this.state.memo_key && this.state.discount_rate>0) - LEAVING');
+			if(this.state.memo_key) {
 				resolve();
 				return;
 			}
 
-      fetch(config.getAPIURL('/business/by_name/')+this.state.recipient.name, {
+			fetch(config.getAPIURL('/account/')+this.state.recipient.name, {
 				method: 'GET',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
 			})
 			.then((response) => response.json()
 				, err => {
-          this._onGetTxError('#1 -- '+JSON.stringify(err));
+					this._onGetTxError(JSON.stringify(err));
 				})
 			.then((responseJson) => {
-        console.log('--------------- schedule:', JSON.stringify(responseJson));
-        if(responseJson.error)
-        {
-          this._onGetTxError('#? -- '+responseJson.error);
-          reject(responseJson.error);
-        }
-        let today = config.getToday();
-        console.log('------------Searching discount for:', today);
-        let discount_rate =0;
-        if(responseJson.discount_schedule)
-        {
-          for (var i = 0; i < responseJson.discount_schedule.length; i++){
-            let schedule = responseJson.discount_schedule[i];
-            console.log(' --- Schedules LOOP', JSON.stringify(schedule));
-            if(schedule['date']==today)
-            {
-              console.log(' ---------------------------------- DISCOUNT FOUND:', discount_rate);
-              discount_rate = schedule['discount'];
-              break;
-            }
-          }
-          console.log(' ---------------------------------- DISCOUNT >>>> ', discount_rate);
-        }
-        else {
-          console.log(' ---------------------------------- NO DISCOUNT RECEIVED ');
-        }
-				this.setState({memo_key:responseJson.account.options.memo_key, discount_rate:discount_rate});
+				this.setState({memo_key:responseJson.options.memo_key});
 				resolve();
 			}, err => {
-				this._onGetTxError('#2 -- '+JSON.stringify(err));
-        reject(err);
+				this._onGetTxError(JSON.stringify(err));
 			});
 		});
 
@@ -228,48 +190,37 @@ class SendConfirm extends Component {
 
 	_getTx() {
 
-        this._getRecipientInfo(this.state.recipient).then( () => {
-          if(isNaN(this.state.discount_rate) || this.state.discount_rate<0)
-          {
-            this._onGetTxError('No es posible recuperar la información del comercio.');
-            return;
-          }
-      		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
-      			let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
-            this.setState({discount:amount});
-      			this._generateUnsignedTx({
-      					from   : this.props.account.id,
-      					to     : this.state.recipient.account_id,
-      					amount : amount,
-      					memo   : enc_memo,
-      					asset  : this.props.asset
-      			})
-      			.then((tx) => {
-      				console.log('----------TX------------');
-      				console.log(JSON.stringify(tx));
-      				console.log('------------------------');
-      				this.setState({
-      					tx					:	tx,
-      					fee    			: tx.operations[0][1].fee.amount,
-      					fee_txt			: tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
-      					can_confirm	: true,
-      					error				:	''
-      				});
-      			}
-      			, err => {
-      				console.error('ERR1: ', err);
-      				this._onGetTxError('#3 -- '+JSON.stringify(err));
-      			})
+		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
+			let amount = Number(this.state.amount).toFixed(2);
+			this._generateUnsignedTx({
+					from   : this.props.account.id,
+					to     : this.state.recipient.account_id,
+					amount : amount,
+					memo   : enc_memo,
+					asset  : this.props.asset
+			})
+			.then((tx) => {
+				console.log('----------TX------------');
+				console.log(JSON.stringify(tx));
+				console.log('------------------------');
+				this.setState({
+					tx					:	tx,
+					fee    			: tx.operations[0][1].fee.amount,
+					fee_txt			: tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
+					can_confirm	: true,
+					error				:	''
+				});
+			}
+			, err => {
+				console.error('ERR1: ', err);
+				this._onGetTxError(JSON.stringify(err));
+			})
 
-      		}, err => {
-      			console.error('ERR2: ', err);
-      			this._onGetTxError('#4 -- '+JSON.stringify(err));
-      		})
-        } , err => {
-          this._onGetTxError('#4 -- '+JSON.stringify(err));
-        });
-  }
-
+		}, err => {
+			console.error('ERR2: ', err);
+			this._onGetTxError(JSON.stringify(err));
+		});
+	}
 	//'No se pudo calcular la comisión'
 
 	_onGetTxError(error){
@@ -292,30 +243,30 @@ class SendConfirm extends Component {
 
 	_buildMemo(message) {
 		return new Promise( (resolve, reject) => {
-      // let memo = config.PAYDISCOUNTED_PREFIX + ':' +config.getUTCNow()+':'+this.state.amount +':'+this.state.discount_rate;
-      // let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.amount +':'+this.state.discount_rate;
-      let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.amount +':NA';
-      console.log('----------------- MEMO: ', memo);
-      resolve({message:config.toHex(memo)});
 
-			// if(!message)	{
-			// 	resolve();
-			// 	return;
-			// }
-      //
-			// Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
-			// 	res = JSON.parse(res);
-			// 	//res.message = '010203';
-			// 	// console.log(' ----------- MEMO', res);
-			// 	resolve(res);
-			// }, err => {
-			// 	console.log('DA ERRORRRR');
-			// 	console.log(err);
-			// 	reject(err);
-			// });
+			if(!message)	{
+				resolve();
+				return;
+			}
 
-    });
-  }
+			this._getRecipientInfo(this.state.recipient).then( () => {
+
+				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
+					res = JSON.parse(res);
+					//res.message = '010203';
+					//console.log('Para mi para ovs', res);
+					resolve(res);
+				}, err => {
+					console.log('DA ERRORRRR');
+					console.log(err);
+					reject(err);
+				})
+
+			} , err => {
+				reject(err);
+			})
+		});
+	}
 
   _onConfirm(){
 		if(!this.state.can_confirm)
@@ -347,9 +298,9 @@ class SendConfirm extends Component {
 		}
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
-			title :  'Realizando pago...',
+			title :  'Enviando...',
 			passProps: {recipient : this.state.recipient,
-									amount :    this.state.discount,
+									amount :    this.state.amount,
 									memo :      this.state.memo,
 								  modal_type: 'sending'},
 			animationType: 'slide-up',
@@ -376,7 +327,7 @@ class SendConfirm extends Component {
 						return;
 					}
 
-          this.props.navigator.dismissModal({
+					this.props.navigator.dismissModal({
 							animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 					});
 					this.props.navigator.push({
@@ -384,7 +335,7 @@ class SendConfirm extends Component {
 							title:      'Envío exitoso',
 							passProps:  {
 									recipient : this.state.recipient,
-									amount :    this.state.discount,
+									amount :    this.state.amount,
 									memo :      this.state.memo
 							},
 							navigatorStyle: {navBarHidden:true}
@@ -453,7 +404,6 @@ class SendConfirm extends Component {
 		let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
-    let descuento = 'Pagarás ' + this.getDescuento() + '% de $' + this.getFactura();
 		/*
 		<View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
 			<Text style={styles.title_part}>Ud. va a enviar:</Text>
@@ -468,16 +418,15 @@ class SendConfirm extends Component {
 			<Text style={memo_style}>{memo}</Text>
 		</View>
 		*/
-    return (
+		return (
       <View style={styles.container}>
         <View style={{flex:5, backgroundColor:'#ffffff', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
           <Text style={styles.title_part}>Ud. va a enviar:</Text>
-          <Text style={styles.data_part}>${total} <Text style={styles.data_part_small}>(${fee} de comisión)</Text></Text>
+          <Text style={styles.data_part}>$ {total} <Text style={styles.data_part_small}>($ {fee} de comisión)</Text></Text>
           <Text style={styles.title_part}>A:</Text>
           <Text style={styles.data_part}>{this.state.recipient.name}</Text>
-          <Text style={styles.title_part}>Info</Text>
-          <Text style={memo_style}>{descuento}</Text>
-
+          <Text style={styles.title_part}>Con mensaje:</Text>
+          <Text style={memo_style}>{memo}</Text>
         </View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight

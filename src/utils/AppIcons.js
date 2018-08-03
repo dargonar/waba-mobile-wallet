@@ -25,6 +25,8 @@ const icons = {
   "ios-card-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-help": [ICON_SIZE_ANDROID, "#fff"],
   "ios-card": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-remove": [ICON_SIZE_ANDROID, "#fff"],
+  "ios-add": [ICON_SIZE_ANDROID, "#fff"],
   "ios-ribbon-outline": [ICON_SIZE_ANDROID, "#fff"],
   "ios-share-alt-outline" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-checkmark-circle-outline" : [ICON_SIZE_ANDROID, "#fff"],

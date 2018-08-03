@@ -27,7 +27,7 @@ class DiscountOrReward extends React.Component {
     super(props);
     this.state = {
       bill_amount:      '0',
-      bill_id:          '1114',
+      bill_id:          '',
       // percentage:       '10',
 
       discount_rate:    '0',
@@ -90,7 +90,7 @@ class DiscountOrReward extends React.Component {
   }
 
   _onShowDiscountQR(){
-    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<0) {
+    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<=0) {
       ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
       return;
     }
@@ -107,7 +107,7 @@ class DiscountOrReward extends React.Component {
     });
   }
   _onSendReward(){
-    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<0) {
+    if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<=0) {
       ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
       return;
     }

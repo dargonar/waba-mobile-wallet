@@ -22,7 +22,8 @@ class SelectAmount extends React.Component {
     this.state = {
       amount: 	 '',
 			recipient: props.recipient,
-			memo_key: undefined
+			memo_key: undefined,
+      pay_or_send : props.pay_or_send
     };
 
 
@@ -154,16 +155,33 @@ class SelectAmount extends React.Component {
 				)
 				return;
 			}
-      this.props.navigator.push({
-        screen: 'wallet.SendConfirm',
-        title: 'Confirmar envío',
-        passProps: {
-          recipient: 	this.state.recipient,
-					memo_key:   this.state.memo_key,
-					memo: 			this.props.memo,
-					amount: 		this.state.amount
-				}
-    	});
+      if(this.state.pay_or_send=='pay')
+      {
+        this.props.navigator.push({
+          screen: 'wallet.PayConfirm',
+          title: 'Confirmar pago',
+          passProps: {
+            recipient: 	this.state.recipient,
+            memo_key:   this.state.memo_key,
+            memo: 			this.props.memo,
+            amount: 		this.state.amount
+          }
+        });
+
+      }
+      else {
+        this.props.navigator.push({
+          screen: 'wallet.SendConfirm',
+          title: 'Confirmar envío',
+          passProps: {
+            recipient: 	this.state.recipient,
+  					memo_key:   this.state.memo_key,
+  					memo: 			this.props.memo,
+  					amount: 		this.state.amount
+  				}
+      	});
+
+      }
     }
 
 		render() {
