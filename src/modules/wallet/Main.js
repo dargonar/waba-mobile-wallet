@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import {
 	Alert,
 	Image,
+	Text,
+	TouchableHighlight,
 	View
 } from 'react-native';
 
@@ -26,6 +28,8 @@ class Main extends Component {
 		this.newTx 					= this.newTx.bind(this);
 		this.rewardCustomer	= this.rewardCustomer.bind(this);
 		this.receivePayment	= this.receivePayment.bind(this);
+
+		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 	}
 
 	componentWillMount() {
@@ -34,6 +38,13 @@ class Main extends Component {
 
 	componentWillReceiveProps(nextProps) {
   	//console.log('Main::componentWillReceiveProps', nextProps);
+	}
+
+	_onDiscountOrReward(){
+		this.props.navigator.push({
+			screen: 'wallet.DiscountOrReward',
+			title: 'Cobrar'
+		});
 	}
 
 	rewardCustomer(){
@@ -74,6 +85,7 @@ class Main extends Component {
 			</ActionButton.Item>
 	*/
 
+	// FAV Button: https://github.com/mastermoo/react-native-action-button
 	render() {
 		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
 		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#f15d44' ;
@@ -83,8 +95,16 @@ class Main extends Component {
 			<View style={styles.container}>
         <Balance {...this.props} style={styles.balance}/>
         <History {...this.props} style={styles.history}/>
+				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+					<TouchableHighlight
+							style={styles.fullWidthButton}
+							onPress={this._onDiscountOrReward.bind(this)} >
+						<Text style={styles.fullWidthButtonText}>COBRAR</Text>
+					</TouchableHighlight>
+				</View>
+
 				{ (subaccount_mode)?
-					(<ActionButton buttonColor={buttonColor}>
+					(<ActionButton buttonColor={buttonColor} offsetY={120}>
           <ActionButton.Item buttonColor='#1abc9c' title="RECOMPENSAR" onPress={() => {  this.rewardCustomer() }}>
 	            <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>
 						</ActionButton.Item>

@@ -45,6 +45,8 @@ import RewardResult from './modules/wallet/RewardResult';
 import Rewarding from './modules/wallet/Rewarding';
 import SwitchResult from './modules/wallet/SwitchResult';
 
+import DiscountOrReward from './modules/wallet/DiscountOrReward';
+
 export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('global.Drawer', () => Drawer, store, Provider);
@@ -90,4 +92,5 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.RewardResult', () => RewardResult	, store, Provider);
 	Navigation.registerComponent('wallet.Rewarding', () => Rewarding	, store, Provider);
 	Navigation.registerComponent('wallet.SwitchResult', () => SwitchResult	, store, Provider);
+	Navigation.registerComponent('wallet.DiscountOrReward', () => DiscountOrReward	, store, Provider);
 }
