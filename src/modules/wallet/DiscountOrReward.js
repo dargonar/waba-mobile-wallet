@@ -239,7 +239,7 @@ class DiscountOrReward extends React.Component {
         discount_dsc : discount_dsc,
         discount_ars : bill_amount - discount_dsc,
         reward_dsc   : reward_dsc,
-        reward_ars   : bill_amount - reward_dsc,
+        reward_ars   : bill_amount,
       })
     }
 		, 300);
@@ -317,7 +317,7 @@ class DiscountOrReward extends React.Component {
                    />
                    <View style={{height: 20, flexDirection: 'row'}}>
                      <Text style={styles.hint}>
-                       MONTO DE FACTURA
+                       MONTO TOTAL DE LA COMPRA
                      </Text>
                    </View>
                 </View>
@@ -333,7 +333,7 @@ class DiscountOrReward extends React.Component {
                    </TouchableHighlight>
                    <View style={{height: 20, flexDirection: 'row'}}>
                      <Text style={styles.hint}>
-                       TICKET / FACTURA
+                       REFERENCIA (TICKET, FACTURA, OTRO)
                      </Text>
                    </View>
                 </View>
