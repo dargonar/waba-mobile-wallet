@@ -239,7 +239,7 @@ class DiscountOrReward extends React.Component {
         discount_dsc : discount_dsc,
         discount_ars : bill_amount - discount_dsc,
         reward_dsc   : reward_dsc,
-        reward_ars   : bill_amount,
+        reward_ars   : bill_amount
       })
     }
 		, 300);
