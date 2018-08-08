@@ -184,10 +184,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     compile project(':react-native-navigation')
-    compile project(':react-native-barcodescanner')
-    compile project(':react-native-vector-icons')
-    compile project(':react-native-linear-gradient')
+    // compile project(':react-native-barcodescanner')
     compile project(':react-native-config')
+    compile project(':react-native-vector-icons')
+    // compile project(':react-native-linear-gradient')
     compile project(':react-native-onesignal')
     compile project(':react-native-spinkit')
     compile project(':RNSound')

@@ -11,7 +11,7 @@ import {
   TextInput
 } from 'react-native';
 
-import BarcodeScanner from 'react-native-barcodescanner';
+// import BarcodeScanner from 'react-native-barcodescanner';
 import { Icon } from 'react-native-elements'
 //import Icon from 'react-native-vector-icons/Ionicons';
 //'react-native-elements'
@@ -92,15 +92,17 @@ class QRScanner extends React.Component {
   render() {
 
     //<Text style={styles.title}>Envío exitoso</Text>
+    // <BarcodeScanner
+    //     onBarCodeRead={this.barcodeReceived}
+    //     style={{ flex: 1 }}
+    //     torchMode={this.state.torchMode}
+    //     cameraType={this.state.cameraType}
+    //   />
+      
     return (
 
       <View style={styles.container}>
-      <BarcodeScanner
-        onBarCodeRead={this.barcodeReceived}
-        style={{ flex: 1 }}
-        torchMode={this.state.torchMode}
-        cameraType={this.state.cameraType}
-      />
+      
 
       </View>
     );

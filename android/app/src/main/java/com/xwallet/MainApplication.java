@@ -11,10 +11,14 @@ import java.util.List;
 import com.reactnativenavigation.NavigationApplication;
 import com.xwallet.crypto.UWCryptoPackage;
 import com.diventi.bts2helper.Bts2helperPackage;
-import com.eguma.barcodescanner.BarcodeScannerPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
+
+// import com.eguma.barcodescanner.BarcodeScannerPackage;
+// import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+
+import com.oblador.vectoricons.VectorIconsPackage;
+
+
 import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
 import com.react.rnspinkit.RNSpinkitPackage;  
 import com.zmxv.RNSound.RNSoundPackage;
@@ -34,10 +38,10 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
         new Bts2helperPackage(),
         new UWCryptoPackage(),
-        new BarcodeScannerPackage(),
-        new VectorIconsPackage(),
-        new LinearGradientPackage(),
+        // new BarcodeScannerPackage(),
+        // new LinearGradientPackage(),
         new ReactNativeConfigPackage(),
+        new VectorIconsPackage(),
         new ReactNativeOneSignalPackage(),
         new RNSpinkitPackage(),
         new RNSoundPackage(),

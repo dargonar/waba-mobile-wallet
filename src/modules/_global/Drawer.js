@@ -11,7 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconBadge from 'react-native-icon-badge';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styles from './styles/Drawer';
