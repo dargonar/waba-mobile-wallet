@@ -48,14 +48,22 @@ function launchWallet() {
 // 					id: 'qrCode'
 // 				}
 // 			]
+      rightButtons : [
+        {
+          //disableIconTint: true,
+          //title: 'Memo',
+          icon: iconsMap['qrcode--active'],
+          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
 			leftButtons: [
-		{
-			icon: iconsMap['ios-menu'],
-			// icon: Platform.OS === 'ios' ? iconsMap['ios-menu'] : null,
-			title: '',
-			id: 'sideMenu'
-		}
-	]
+    		{
+    			icon: iconsMap['ios-menu'],
+    			// icon: Platform.OS === 'ios' ? iconsMap['ios-menu'] : null,
+    			title: '',
+    			id: 'sideMenu'
+    		}
+    	]
     },
     animationType : 'none',
     drawer: {

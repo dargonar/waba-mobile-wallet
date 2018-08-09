@@ -24,7 +24,11 @@ class Main extends Component {
 
 	constructor(props) {
 		super(props);
-    this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+    	
+  	
+  	this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
+		// this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+
 		this.state 						= {account:''};
 		this.newTx 						= this.newTx.bind(this);
 		this.onPay 						= this.onPay.bind(this);
@@ -46,6 +50,47 @@ class Main extends Component {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
 
+
+	/* ******************************************************* */
+	/* QR CODE *********************************************** */
+  	
+	  qrButtonPressed(){
+	  	
+  		this.props.navigator.push({
+	  		        screen:     'wallet.DiscountShowQR',
+	  		        title:      'QR',
+	  		        passProps:  {
+	  		        	amount_dsc: 100,
+	  		          type:    'name_and_amount'  //'name_only'
+	  		        }
+	  	    		});
+		}
+
+  	showQRScanner(){
+	    //showModal
+	    this.props.navigator.push({
+	      screen: "wallet.QRScanner", // unique ID registered with Navigation.registerScreen
+	      title: "Escanear Código QR", // title of the screen as appears in the nav bar (optional)
+	      navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
+	      animationType: 'slide-down', // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
+	      // rightButtons: [
+	      //   {
+	      //     icon: iconsMap['ios-trash-outline'],
+	      //     id: 'clearMemo'
+	      //   }
+	      // ]
+	    });
+  }
+
+  _onNavigatorEvent(event) {
+    if (event.type == 'NavBarButtonPress') {
+      if (event.id == 'scanQRCode') {
+        this.qrButtonPressed();
+      }
+    }
+  }
+
+
 	_onDiscountOrReward(){
 		this.props.navigator.push({
 			screen: 'wallet.DiscountOrReward',
@@ -54,7 +99,7 @@ class Main extends Component {
 	}
 
 	resetBalance(){
-
+		
 		Alert.alert(
 		  'Volver saldo a 0 D$C',
 		  'Enviar balance a cuenta comercio',
@@ -96,10 +141,16 @@ class Main extends Component {
 	}
 
 	newTx(){
+		// this.props.navigator.push({
+  //     screen: 'wallet.SelectCustomer',
+		// 	title: 'Elija usuario para enviar'
+		// });
+
 		this.props.navigator.push({
-      screen: 'wallet.SelectCustomer',
-			title: 'Elija usuario para enviar'
+			screen: 'wallet.QRScanner',
+			title: 'Escanear QR'
 		});
+
 	}
 
 	onPay(){
@@ -109,19 +160,7 @@ class Main extends Component {
 		});
 	}
 
-  _onNavigatorEvent(event) {
 
-		if(event.id == 'qrCode') {
-			Alert.alert(
-				'No disponible',
-				'Función no disponible.',
-				[
-					{text: 'OK'},
-				]
-			)
-    }
-
-  }
 
 	// 	<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 	/*

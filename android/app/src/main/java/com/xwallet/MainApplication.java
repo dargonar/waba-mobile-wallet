@@ -12,9 +12,12 @@ import com.reactnativenavigation.NavigationApplication;
 import com.xwallet.crypto.UWCryptoPackage;
 import com.diventi.bts2helper.Bts2helperPackage;
 
+
 // import com.eguma.barcodescanner.BarcodeScannerPackage;
 // import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+
+import com.ekreutz.barcodescanner.BarcodeScannerPackage;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 
@@ -38,7 +41,7 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
         new Bts2helperPackage(),
         new UWCryptoPackage(),
-        // new BarcodeScannerPackage(),
+        new BarcodeScannerPackage(),
         // new LinearGradientPackage(),
         new ReactNativeConfigPackage(),
         new VectorIconsPackage(),
@@ -64,6 +67,7 @@ public class MainApplication extends NavigationApplication {
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.ekreutz.barcodescanner.BarcodeScannerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;

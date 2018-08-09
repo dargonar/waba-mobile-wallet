@@ -124,16 +124,16 @@ class SelectCustomer extends Component {
 
   renderRow (rowData, sectionID) {
 
-		return (
+	return (
       <ListItem
-				onPress={this._onRecipientSelected.bind(this, rowData)}
-				underlayColor='#cccccc'
+		onPress={this._onRecipientSelected.bind(this, rowData)}
+		underlayColor='#cccccc'
         key={sectionID}
         title={rowData[0]}
-				titleStyle={styles.rowText}
-				fontFamily={'roboto_thin'}
-				hideChevron={true}
-				chevronColor={'transparent'}
+		titleStyle={styles.rowText}
+		fontFamily={'roboto_thin'}
+		hideChevron={true}
+		chevronColor={'transparent'}
       />
     )
   }

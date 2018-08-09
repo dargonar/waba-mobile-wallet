@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   amount:{
-    fontSize   : 25,
-    lineHeight : 25,
-    fontFamily : 'roboto_light',
+    fontSize   : 30,
+    lineHeight : 30,
+    fontFamily : 'roboto_bold',
     fontWeight : '100',
     color      : '#f15d44'
   },

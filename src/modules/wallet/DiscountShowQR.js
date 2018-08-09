@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import QRCode from 'react-native-qrcode';
-import { Icon } from 'react-native-elements'
+// import { Icon } from 'react-native-elements'
 //import Icon from 'react-native-vector-icons/Ionicons';
 //'react-native-elements'
 import styles from './styles/DiscountShowQR';
@@ -24,10 +24,13 @@ import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 import Prompt from 'react-native-prompt';
 
+import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
+
 class DiscountShowQR extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
       bill_amount:    props.bill_amount,
       bill_id:        props.bill_id,
 
@@ -35,7 +38,11 @@ class DiscountShowQR extends React.Component {
       discount_dsc:   props.discount_dsc,
       discount_ars:   props.discount_ars,
 
-      text : ''
+      amount_dsc:     props.amount_dsc || 0,
+
+      text :          '',
+
+      type :          props.type
     };
 
   }
@@ -49,15 +56,29 @@ class DiscountShowQR extends React.Component {
   }
 
   componentDidMount() {
-    let obj = {
-      bill_amount : this.state.bill_amount,
-      bill_id : this.state.bill_id,
-      discount_rate : this.state.discount_rate,
-      discount_dsc : this.state.discount_dsc,
-      discount_ars : this.state.discount_ars,
-      account_id: this.props.account.id,
-      business_id: this.props.account.subaccount.business.account_id
-    }
+    let obj = {};
+    if(this.state.type=='name_only')
+      obj = {
+        account_id:   this.props.account.id,
+        account_name: this.props.account.name,
+      }
+    else
+      if(this.state.type=='name_and_amount') 
+        obj = {
+          account_id:   this.props.account.id,
+          account_name: this.props.account.name,
+          amount_dsc:   this.state.amount_dsc
+        }
+        else
+          obj = {
+            bill_amount : this.state.bill_amount,
+            bill_id : this.state.bill_id,
+            discount_rate : this.state.discount_rate,
+            discount_dsc : this.state.discount_dsc,
+            discount_ars : this.state.discount_ars,
+            account_id: this.props.account.id,
+            business_id: this.props.account.subaccount.business.account_id
+          }
     this.setState( {text : JSON.stringify(obj)});
 
   }
@@ -81,15 +102,102 @@ class DiscountShowQR extends React.Component {
   focus() {
   }
 
-  render() {
 
-    // if(this.state.identicon!=''){
-			// var base64Icon = this.props.account.identicon;
-      let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
-			userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
-		// }
+  renderContent(userIcon){
+    if(this.state.type=='name_and_amount') 
+      return this.renderReceiveRequest(userIcon);
+    if(this.state.type=='name_only')
+      return this.renderAccount(userIcon); 
+    return this.renderBusinessBill(userIcon); 
+  }
 
-		//<Text style={styles.title}>Envío exitoso</Text>
+  renderBusinessBill(userIcon){
+    return  (
+          <View style={{height:250}}>
+            <View style={{height:100, justifyContent: 'center', backgroundColor:'transparent'}}>
+              <Text style={[styles.amount, {textAlign:'center'}]}>$ {this.state.discount_ars} + D$C {this.state.discount_dsc}</Text>
+            </View>
+
+            <View style={{height:150, backgroundColor:'transparent'}}>
+              <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+                <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                {userIcon}
+                </View>
+                <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
+                  <Text style={{fontSize:25}} >
+                    {this.props.account.name}
+                  </Text>
+                  <Text style={styles.subaccountText} >
+                      Comercio: {this.props.account.subaccount.business.name}
+                    </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+      );
+  }
+
+  renderAccount(userIcon){
+    return  (
+          <View style={{height:70, backgroundColor:'transparent', marginTop:10}}>
+            <View style={{height:70, flexDirection:'row', justifyContent: 'center'}}>
+              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+              {userIcon}
+              </View>
+              <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
+                <Text style={{fontSize:25}} >
+                  {this.props.account.name}
+                </Text>
+              </View>
+            </View>
+          </View>
+      );
+  }
+
+  renderReceiveRequest(userIcon){
+    let account = this.renderAccount(userIcon);
+    return  (
+          <View style={{height:160}}>
+            <View style={{height:50, justifyContent: 'center', backgroundColor:'transparent', marginTop:10}}>
+              <Text style={[styles.amount, {textAlign:'center'}]}>D$C {this.state.amount_dsc}</Text>
+            </View>
+
+            {account}
+
+          </View>
+      );
+  }
+
+  render(){
+
+    let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
+    let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
+    
+    let content = this.renderContent(userIcon);
+    
+    return (
+        <View style={{flex:1}}>
+          <Tabs tabBarPosition="bottom">
+            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
+              {content}
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="cash" /></TabHeading>}>
+              {content}
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
+              {content}
+            </Tab>
+          </Tabs>
+        </View>
+      );
+
+  }
+  renderX() {
+
+    let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
+		let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
+		
+		let content = this.renderContent(userIcon);
     return (
 
       <View style={styles.container}>
@@ -103,26 +211,9 @@ class DiscountShowQR extends React.Component {
               fgColor='white'/>
           </View>
 
-          <View style={{height:100, justifyContent: 'center', backgroundColor:'transparent'}}>
-            <Text style={[styles.amount, {textAlign:'center'}]}>$ {this.state.discount_ars} + D$C {this.state.discount_dsc}</Text>
-          </View>
+          {content}
 
-          <View style={{height:150, backgroundColor:'transparent'}}>
-            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-							<View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-							{userIcon}
-						  </View>
-							<View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-								<Text style={{fontSize:25}} >
-									{this.props.account.name}
-								</Text>
-                <Text style={styles.subaccountText} >
-          					Comercio: {this.props.account.subaccount.business.name}
-          				</Text>
-							</View>
-						</View>
-          </View>
-          <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
+          <View style={{height:80, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
             <Icon
               raised
               containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: 'transparent' }}
