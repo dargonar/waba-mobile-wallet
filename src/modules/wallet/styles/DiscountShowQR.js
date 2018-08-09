@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
     fontWeight : '100',
     color      : '#f15d44'
   },
+  amount_title:{
+    fontSize   : 30,
+    lineHeight : 30,
+    fontFamily : 'roboto_bold',
+    fontWeight : '100'
+  },
   margin_bottom:{marginBottom:10},
 	data_part : {
     fontFamily : 'roboto_normal',
@@ -40,6 +46,13 @@ const styles = StyleSheet.create({
   },
   spinner:{
 
+  },
+  tab_content:{
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding:20
   }
 });
 

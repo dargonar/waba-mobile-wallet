@@ -22,9 +22,10 @@ import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
-import BarcodeScanner from 'react-native-barcode-scanner-google';
 // import { BarcodeType, FocusMode, TorchMode, CameraFillMode } from 'react-native-barcode-scanner-google';
+import BarcodeScanner from 'react-native-barcode-scanner-google';
 import BarcodeType from 'react-native-barcode-scanner-google';
+
 import Prompt from 'react-native-prompt';
 
 class QRScanner extends React.Component {
@@ -94,36 +95,6 @@ class QRScanner extends React.Component {
 
   render() {
 
-    //<Text style={styles.title}>Envío exitoso</Text>
-    // <BarcodeScanner
-    //     onBarCodeRead={this.barcodeReceived}
-    //     style={{ flex: 1 }}
-    //     torchMode={this.state.torchMode}
-    //     cameraType={this.state.cameraType}
-    //   />
-    /*
-    onException={exceptionKey => {
-                        // check instructions on Github for a more detailed overview of these exceptions.
-                        switch (exceptionKey) {
-                            case Exception.NO_PLAY_SERVICES:
-                            // tell the user they need to update Google Play Services
-                              ToastAndroid.show('tell the user they need to update Google Play Services', ToastAndroid.SHORT)
-                            
-                            case Exception.LOW_STORAGE:
-                            // tell the user their device doesn't have enough storage to fit the barcode scanning magic
-                              ToastAndroid.show('tell the user their device doesnt have enough storage to fit the barcode scanning magic', ToastAndroid.SHORT)
-                            case Exception.NOT_OPERATIONAL:
-                            // Google's barcode magic is being downloaded, but is not yet operational.
-                              ToastAndroid.show('Googles barcode magic is being downloaded, but is not yet operational.', ToastAndroid.SHORT)
-                            default:
-                                break;
-                        }
-                    }}
-                    focusMode={FocusMode.AUTO }
-                    torchMode={TorchMode.ON }
-                    cameraFillMode={CameraFillMode.COVER }
-                    barcodeType={BarcodeType.QR_CODE }
-                    */
     return (
 
       <View style={{ flex: 1 }}>

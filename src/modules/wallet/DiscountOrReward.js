@@ -103,6 +103,7 @@ class DiscountOrReward extends React.Component {
           discount_rate:  this.state.discount_rate,
           discount_dsc:   this.state.discount_dsc,
           discount_ars:   this.state.discount_ars,
+          type:           config.QRSCAN_INVOICE_DISCOUNT
         }
     });
   }
@@ -131,17 +132,6 @@ class DiscountOrReward extends React.Component {
 
   _onBillSet(value){
 		this.setState({promptVisible:false, bill_id:value});
-		// if(!value || isNaN(value))
-		// {
-		// 	return;
-		// }
-    // let _endorsements = this.state.endorsements;
-		// if(_endorsements[this.state.current_idx].remaining<Number(value)){
-		// 	ToastAndroid.show('No dispone de suficiente(s) avale(s).', ToastAndroid.SHORT);
-		// 	return;
-		// }
-    // _endorsements[this.state.current_idx].quantity = parseInt(value);
-    // this.setState({endorsements:_endorsements, promptVisible:false});
   }
 
   _renderPrompt(){
@@ -168,53 +158,6 @@ class DiscountOrReward extends React.Component {
   }
 
 
-  // percentageInValue(){
-  //   console.log('percentageInValue()', 'perc:', this.state.percentage , 'min_perc:', this.default_state.min_percentage, 'max_perc:', this.default_state.max_percentage)
-  //   return !isNaN(this.state.percentage) && (parseInt(this.state.percentage)>=this.default_state.min_percentage) && (parseInt(this.state.percentage)<this.default_state.max_percentage);
-  // }
-
-  // ROJITO #F35B42
-  // azulcito #365E97
-
-  // canCalculate(){
-  //   let ret = !(isNaN(this.state.discount_rate)||isNaN(this.state.reward_rate)||isNaN(this.state.amount)||isNaN(this.state.bill_amount));
-  //   if(ret)
-  //     ret = ret &&  this.percentageInValue() && parseInt(this.state.bill_amount)>0;
-  //   if(!this.percentageInValue())
-  //   {
-  //     console.log('El porcenteaje mínimo es de '+this.default_state.min_percentage+'% y el maximo de 100%');
-  //     ToastAndroid.show('El porcenteaje mínimo es de '+this.default_state.min_percentage+'% y el maximo de 100%', ToastAndroid.SHORT);
-  //     return;
-  //   }
-  //   console.log(' -- canCalculate():', ret, ' %:', this.state.percentage, ' DSC:', this.state.amount,' $:', this.state.bill_amount );
-  //   return ret;
-  //
-  // }
-
-  // updatePercentage(value) {
-  //   let percentage = parseInt(value) || 0;
-  //   this.setState({ percentage: percentage.toString()  })
-  //
-  //   clearTimeout(this.tid);
-	// 	let that = this;
-	// 	this.tid = setTimeout( () => {
-  //     if(!that.canCalculate())
-  //     {
-  //       return;
-  //     }
-  //     if(!that.percentageInValue())
-  //     {
-  //       ToastAndroid.show('El porcenteaje mínimo es de '+that.default_state.min_percentage+'% y el maximo de 100%', ToastAndroid.SHORT);
-  //       return;
-  //     }
-  //     that.setState({
-  //       percentage: percentage.toString(),
-  //       amount: Math.round(percentage * that.state.bill_amount / 100).toString()
-  //     })
-  //   }
-	// 	, 300);
-  //
-  // }
 
   updateBillAmount(value) {
     let bill_amount = parseInt(value) || 0;
@@ -244,27 +187,8 @@ class DiscountOrReward extends React.Component {
     }
 		, 300);
   }
-  //
-  // updateAmount(value) {
-  //   let amount = parseInt(value) || 0;
-  //   this.setState({ amount: amount.toString()  })
-  //
-  //   clearTimeout(this.tid);
-	// 	let that = this;
-	// 	this.tid = setTimeout( () => {
-  //     if(!this.canCalculate())
-  //     {
-  //       return;
-  //     }
-  //     this.setState({
-  //       amount: amount.toString(),
-  //       percentage: Math.round(amount * 100 / this.state.bill_amount).toString()
-  //     })
-  //   }
-	// 	, 300);
-  //
-  // }
-
+  
+  
   _onNext(){
 		if(Number(this.props.balance)<=Number(this.state.amount))
 		{

@@ -54,17 +54,17 @@ class Main extends Component {
 	/* ******************************************************* */
 	/* QR CODE *********************************************** */
   	
-	  qrButtonPressed(){
-	  	
-  		this.props.navigator.push({
-	  		        screen:     'wallet.DiscountShowQR',
-	  		        title:      'QR',
-	  		        passProps:  {
-	  		        	amount_dsc: 100,
-	  		          type:    'name_and_amount'  //'name_only'
-	  		        }
-	  	    		});
-		}
+	qrButtonPressed(){
+		
+		this.props.navigator.push({
+			        screen:     'wallet.DiscountShowQR',
+			        title:      'QR',
+			        passProps:  {
+			        	amount_dsc: 	0,
+			          	type:    		config.QRSCAN_NAME_AND_AMOUNT  //'name_only'
+			        }
+		    		});
+	}
 
   	showQRScanner(){
 	    //showModal
