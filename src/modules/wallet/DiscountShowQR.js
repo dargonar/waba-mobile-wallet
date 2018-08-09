@@ -162,6 +162,12 @@ class DiscountShowQR extends React.Component {
               if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
               {
                 // pay_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen:     'wallet.InvoicePayConfirm',
+                  title:      'Pagar',
+                  passProps:  jsonData
+                });
               }
               
             }

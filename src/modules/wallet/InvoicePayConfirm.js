@@ -11,20 +11,20 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
-import styles from './styles/SendConfirm';
+import styles from './styles/InvoicePayConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
 
-class PayConfirm extends Component {
+class InvoicePayConfirm extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
     navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
+	navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
   }
 
@@ -33,8 +33,8 @@ class PayConfirm extends Component {
 
     this.state = {
       recipient : {
-        name:					props.recipient[0],
-        account_id:		props.recipient[1],
+        name:					'',
+        account_id:		'',
       },
       discount_rate: null,
 			memo_key: props.memo_key,
@@ -45,13 +45,24 @@ class PayConfirm extends Component {
 			fee:       0,
 			fee_txt:   0,
 			can_confirm: false,
-			error:   ''
-    }
+			error:   '',
+
+			bill_amount: 		props.bill_amount ,
+			bill_id: 				props.bill_id ,
+			discount_rate: 	props.discount_rate ,
+			discount_dsc: 	props.discount_dsc ,
+			discount_ars: 	props.discount_ars ,
+			account_id: 		props.account_id ,
+			business_id: 		props.business_id ,
+			type: 					props.type //'invoice_discount' 
+		}
 
 		this._onSendingError = this._onSendingError.bind(this);
 		this._buildMemo = this._buildMemo.bind(this);
   }
 
+
+   
 
 
 	_addSignature(tx, privkey) {
@@ -75,9 +86,9 @@ class PayConfirm extends Component {
 		//console.log('_generateUnsignedTx', params);
 		return new Promise( (resolve, reject) => {
 			tx = {
-				'expiration' : 				config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
-				'ref_block_num' : 		this.props.blockchain.refBlockNum,
-				'ref_block_prefix' : 	this.props.blockchain.refBlockPrefix,
+				'expiration': 			config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
+				'ref_block_num': 		this.props.blockchain.refBlockNum,
+				'ref_block_prefix': this.props.blockchain.refBlockPrefix,
 				'operations' : [
 					 [
 						0,
@@ -145,18 +156,8 @@ class PayConfirm extends Component {
 		}); //Promise
 	}
 
-	getTotal(){
-		return (Number(this.state.discount||0) + Number(this.state.fee_txt)).toFixed(2);
-	}
-
-  getFactura(){
-		return Number(this.state.amount).toFixed(2);
-	}
-
-  getDescuento(){
-		return Number(this.state.discount_rate).toFixed(2);
-	}
-
+	
+  
   _getRecipientInfo(recipient) {
 
 		return new Promise( (resolve, reject) => {
@@ -411,8 +412,7 @@ class PayConfirm extends Component {
 	}
 
   componentDidMount() {
-		this._getTx();
-		//this._generateUnsignedTx()
+		// this._getTx();
   }
 
   componentWillUnmount() {
@@ -422,6 +422,8 @@ class PayConfirm extends Component {
   }
 
   render() {
+
+
   	let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
 		if(!this.state.can_confirm)
@@ -429,41 +431,68 @@ class PayConfirm extends Component {
 			btn_style = styles.fullWidthButtonDisabled;
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
-    let memo = this.state.memo;
-		let memo_style = styles.data_part;
-		if(!memo || memo==''){
-			memo='-sin mensaje-';
-			memo_style = styles.data_part_empty;
-		}
-		let send_disabled = !this.state.can_confirm;
-		let total = this.getTotal();
-		let fee = this.state.fee_txt.toFixed(2);
-    let descuento = 'Pagarás ' + this.getDescuento() + '% de $' + this.getFactura();
-		/*
-		<View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
-			<Text style={styles.title_part}>Ud. va a enviar:</Text>
-			<Text style={styles.data_part}>$ {this.state.amount}</Text>
-			<Text style={styles.title_part}>Comisión:</Text>
-			<Text style={styles.data_part_small}>$ {fee}</Text>
-			<Text style={styles.title_part}>Total:</Text>
-			<Text style={styles.data_part_small}>$ {total}</Text>
-			<Text style={styles.title_part}>A:</Text>
-			<Text style={styles.data_part}>{this.state.recipient.name}</Text>
-			<Text style={styles.title_part}>Con mensaje:</Text>
-			<Text style={memo_style}>{memo}</Text>
-		</View>
-		*/
-    return (
+
+    let send_disabled = !this.state.can_confirm;
+		
+		let business_name		= 'Cerveceria Benoit';
+		let subaccount_name	= 'juanita57';
+		let total_amount		= 1000; 
+		let discount				= 50;
+		let amount_dsc			= (total_amount * discount / 100);
+		let payable_amount	= amount_dsc;
+		let balance = this.props.balance[config.ASSET_ID];
+		if(balance<payable_amount)
+				payable_amount	= balance;
+		let debt	= total_amount-payable_amount;
+		
+
+		return (
       <View style={styles.container}>
-        <View style={{flex:5, backgroundColor:'#ffffff', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
-          <Text style={styles.title_part}>Ud. va a enviar:</Text>
-          <Text style={styles.data_part}>${total} <Text style={styles.data_part_small}>(${fee} de comisión)</Text></Text>
-          <Text style={styles.title_part}>A:</Text>
-          <Text style={styles.data_part}>{this.state.recipient.name}</Text>
-          <Text style={styles.title_part}>Info</Text>
-          <Text style={memo_style}>{descuento}</Text>
+        <View style={{flex:5, flexDirection:'column', backgroundColor:'#ffffff', paddingLeft:10, paddingTop:30, paddingRight:10, paddingBottom:30}}>
+        	
+        	<Text style={[styles.business_name, styles.align_center]}>{business_name}</Text>
+        	<Text style={[styles.business_subaccount_name, styles.align_center]}>{subaccount_name}</Text>
+
+        	<View style={{height:70, marginTop:50, backgroundColor:'#ffffff'}}>
+            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              	<Text style={styles.title_part}>TOTAL:</Text>
+              </View>
+              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
+                <Text style={styles.total_bill}>$ {total_amount}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{height:70, backgroundColor:'#ffffff'}}>
+            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              	<Text style={styles.title_part}>DESCUENTO:</Text>
+              </View>
+              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
+                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>({amount_dsc}D$C)</Text></Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{height:70, backgroundColor:'#ffffff'}}>
+            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+              	<Text style={styles.title_part}>A PAGAR:</Text>
+              </View>
+              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
+                <Text style={styles.discoin_amount}>{payable_amount}D$C</Text>
+              </View>
+            </View>
+          </View>
+
+          		
+
+          <Text style={[styles.title_part, {marginTop:50}]}>Restarán pagar en pesos <Text style={styles.title_part_bold}>${debt}</Text></Text>
+        	
 
         </View>
+
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							disabled={send_disabled}
@@ -496,4 +525,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayConfirm);
+export default connect(mapStateToProps, mapDispatchToProps)(InvoicePayConfirm);
