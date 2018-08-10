@@ -51,19 +51,18 @@ class InvoicePayConfirm extends Component {
 			bill_id: 				props.bill_id ,
 			discount_rate: 	props.discount_rate ,
 			discount_dsc: 	props.discount_dsc ,
+			to_pay: 				0 ,
 			discount_ars: 	props.discount_ars ,
-			account_id: 		props.account_id ,
+			account_id: 		props.account_id || props.business_id,
 			business_id: 		props.business_id ,
+			account_name: 	props.account_name || props.business_name,
+			business_name: 	props.business_name,
 			type: 					props.type //'invoice_discount' 
 		}
 
 		this._onSendingError = this._onSendingError.bind(this);
 		this._buildMemo = this._buildMemo.bind(this);
   }
-
-
-   
-
 
 	_addSignature(tx, privkey) {
 		return new Promise( (resolve, reject) => {
@@ -212,20 +211,27 @@ class InvoicePayConfirm extends Component {
 
 	}
 
+	getAvailableBalance(){
+		return Number(this.props.balance[config.ASSET_ID])-1;
+	}
 	_getTx() {
 
-        this._getRecipientInfo(this.state.recipient).then( () => {
-          if(isNaN(this.state.discount_rate) || this.state.discount_rate<0)
-          {
-            this._onGetTxError('No es posible recuperar la información del comercio.');
-            return;
-          }
+        // this._getRecipientInfo(this.state.recipient).then( () => {
+        //   if(isNaN(this.state.discount_rate) || this.state.discount_rate<0)
+        //   {
+        //     this._onGetTxError('No es posible recuperar la información del comercio.');
+        //     return;
+        //   }
+      		
       		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
-      			let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
-            this.setState({discount:amount});
+      			// let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
+      			let available_balance = this.getAvailableBalance();
+      			let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
+      			console.log('---- discount_dsc:', this.state.discount_dsc, 'available_balance:', available_balance);
+            this.setState({to_pay:amount});
       			this._generateUnsignedTx({
       					from   : this.props.account.id,
-      					to     : this.state.recipient.account_id,
+      					to     : this.state.business_id,
       					amount : amount,
       					memo   : enc_memo,
       					asset  : this.props.asset
@@ -251,9 +257,10 @@ class InvoicePayConfirm extends Component {
       			console.error('ERR2: ', err);
       			this._onGetTxError('#4 -- '+JSON.stringify(err));
       		})
-        } , err => {
-          this._onGetTxError('#4 -- '+JSON.stringify(err));
-        });
+
+        // } , err => {
+        //   this._onGetTxError('#4 -- '+JSON.stringify(err));
+        // });
   }
 
 	//'No se pudo calcular la comisión'
@@ -278,28 +285,9 @@ class InvoicePayConfirm extends Component {
 
 	_buildMemo(message) {
 		return new Promise( (resolve, reject) => {
-      // let memo = config.PAYDISCOUNTED_PREFIX + ':' +config.getUTCNow()+':'+this.state.amount +':'+this.state.discount_rate;
-      // let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.amount +':'+this.state.discount_rate;
-      let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.amount +':NA';
+      let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.bill_amount +':'+this.state.bill_id;
       console.log('----------------- MEMO: ', memo);
       resolve({message:config.toHex(memo)});
-
-			// if(!message)	{
-			// 	resolve();
-			// 	return;
-			// }
-      //
-			// Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
-			// 	res = JSON.parse(res);
-			// 	//res.message = '010203';
-			// 	// console.log(' ----------- MEMO', res);
-			// 	resolve(res);
-			// }, err => {
-			// 	console.log('DA ERRORRRR');
-			// 	console.log(err);
-			// 	reject(err);
-			// });
-
     });
   }
 
@@ -317,9 +305,9 @@ class InvoicePayConfirm extends Component {
 		}
 
 		console.log(' ==> this.props.balance', this.props.balance);
-		let final_amount = Number(this.state.amount) + Number(this.state.fee_txt);
-		let disp = (Number(this.props.balance[0])); // - Number(this.props.balance[0])).toFixed(2);
-		console.log(disp, final_amount);
+		let final_amount = Number(this.state.to_pay) + Number(this.state.fee_txt);
+		let disp = this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
+		console.log(' --balance: ', disp, ' --amount: ',  final_amount);
 		if(Number(disp) < final_amount)
 		{
 			Alert.alert(
@@ -331,11 +319,12 @@ class InvoicePayConfirm extends Component {
 			)
 			return;
 		}
+
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
 			title :  'Realizando pago...',
-			passProps: {recipient : this.state.recipient,
-									amount :    this.state.discount,
+			passProps: {recipient : this.state.account_name,
+									amount :    this.state.to_pay,
 									memo :      this.state.memo,
 								  modal_type: 'sending'},
 			animationType: 'slide-up',
@@ -344,6 +333,8 @@ class InvoicePayConfirm extends Component {
 
 		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 
+			console.log(' ------------- TX:');
+			console.log(JSON.stringify(tx));
 			fetch(config.getAPIURL('/push_tx'), {
 					method: 'POST',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -369,9 +360,9 @@ class InvoicePayConfirm extends Component {
 							screen:     'wallet.SendResult',
 							title:      'Envío exitoso',
 							passProps:  {
-									recipient : this.state.recipient,
-									amount :    this.state.discount,
-									memo :      this.state.memo
+									recipient : this.state.account_name,
+									amount :    this.state.to_pay,
+									memo :      this.state.memo,
 							},
 							navigatorStyle: {navBarHidden:true}
 					});
@@ -412,7 +403,7 @@ class InvoicePayConfirm extends Component {
 	}
 
   componentDidMount() {
-		// this._getTx();
+		this._getTx();
   }
 
   componentWillUnmount() {
@@ -434,16 +425,16 @@ class InvoicePayConfirm extends Component {
 
     let send_disabled = !this.state.can_confirm;
 		
-		let business_name		= 'Cerveceria Benoit';
-		let subaccount_name	= 'juanita57';
+		let business_name		= this.state.business_name; //'Cerveceria Benoit';
+		let subaccount_name	= this.state.account_name; //'juanita57';
 		let total_amount		= 1000; 
 		let discount				= 50;
-		let amount_dsc			= (total_amount * discount / 100);
-		let payable_amount	= amount_dsc;
-		let balance = this.props.balance[config.ASSET_ID];
+		let discount_dsc			= (total_amount * discount / 100);
+		let payable_amount	= discount_dsc;
+		let balance 				= this.props.balance[config.ASSET_ID];
 		if(balance<payable_amount)
 				payable_amount	= balance;
-		let debt	= total_amount-payable_amount;
+		let debt					  = total_amount-payable_amount;
 		
 
 		return (
@@ -470,7 +461,7 @@ class InvoicePayConfirm extends Component {
               	<Text style={styles.title_part}>DESCUENTO:</Text>
               </View>
               <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>({amount_dsc}D$C)</Text></Text>
+                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>({discount_dsc}D$C)</Text></Text>
               </View>
             </View>
           </View>

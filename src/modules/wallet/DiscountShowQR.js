@@ -64,31 +64,6 @@ class DiscountShowQR extends React.Component {
   }
 
   componentDidMount() {
-    // let obj = {};
-    // if(this.state.type==config.QRSCAN_NAME_ONLY)
-    //   obj = {
-    //     account_id:   this.props.account.id,
-    //     account_name: this.props.account.name,
-    //   }
-    // else
-    //   if(this.state.type==config.QRSCAN_NAME_AND_AMOUNT) 
-    //     obj = {
-    //       account_id:   this.props.account.id,
-    //       account_name: this.props.account.name,
-    //       amount_dsc:   this.state.amount_dsc
-    //     }
-    //     else
-    //       obj = {
-    //         bill_amount : this.state.bill_amount,
-    //         bill_id : this.state.bill_id,
-    //         discount_rate : this.state.discount_rate,
-    //         discount_dsc : this.state.discount_dsc,
-    //         discount_ars : this.state.discount_ars,
-    //         account_id: this.props.account.id,
-    //         business_id: this.props.account.subaccount.business.account_id
-    //       }
-    // this.setState( {text : JSON.stringify(obj)});
-
   }
 
   showSetAmount(){
@@ -99,6 +74,12 @@ class DiscountShowQR extends React.Component {
     this.setState({promptVisible:false, amount_dsc:value, activeTab: 1 });
   }
 
+  onChangeTab(i){
+    if(i==2)
+    {
+      this.resumeScanner();
+    }
+  }
   _renderPrompt(){
     if (!this.state.promptVisible)
       return null;
@@ -144,6 +125,9 @@ class DiscountShowQR extends React.Component {
   }
 
   _onBarcodeScanned(data, type){
+
+    console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
+    
     if(type=='QR_CODE')
     {
       pauseScanner()
@@ -168,12 +152,20 @@ class DiscountShowQR extends React.Component {
                   title:      'Pagar',
                   passProps:  jsonData
                 });
+                // setTimeout(
+                //   this.doResumeScanner(),
+                //   1000
+                // );
+                
               }
-              
             }
         })
         .catch(e => {
           ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
+          // setTimeout(
+          //   this.doResumeScanner(),
+          //   1000
+          // );
         });
     }
   }
@@ -198,7 +190,9 @@ class DiscountShowQR extends React.Component {
         discount_dsc :  this.state.discount_dsc,
         discount_ars :  this.state.discount_ars,
         account_id:     this.props.account.id,
+        account_name:   this.props.account.name,
         business_id:    this.props.account.subaccount.business.account_id,
+        business_name:  this.props.account.subaccount.business.name,
         type:           config.QRSCAN_INVOICE_DISCOUNT
     }
     let text = JSON.stringify(obj);
@@ -354,7 +348,7 @@ class DiscountShowQR extends React.Component {
     return (
         <View style={{flex:1}}>
           {this._renderPrompt()}
-          <Tabs tabBarPosition="bottom" page={this.state.activeTab}>
+          <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom" page={this.state.activeTab}>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
               {person_content}
             </Tab>

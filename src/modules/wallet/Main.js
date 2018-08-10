@@ -141,14 +141,9 @@ class Main extends Component {
 	}
 
 	newTx(){
-		// this.props.navigator.push({
-  //     screen: 'wallet.SelectCustomer',
-		// 	title: 'Elija usuario para enviar'
-		// });
-
 		this.props.navigator.push({
-			screen: 'wallet.QRScanner',
-			title: 'Escanear QR'
+      screen: 'wallet.SelectCustomer',
+			title: 'Elija usuario para enviar'
 		});
 
 	}
