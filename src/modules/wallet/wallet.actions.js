@@ -182,6 +182,14 @@ export function endorseApply(from, endorse_type) {
 }
 
 // USERS
+/*
+	# --------------------------------------------------- #
+    # search_filter:
+    #   0 = ALL
+    #   1 = NO_CREDIT && NO_BLACK
+    #   2 = HAS_CREDIT
+    # --------------------------------------------------- #
+*/
 export function retrieveUsers(query, search_filter) {
     search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {

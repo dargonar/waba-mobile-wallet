@@ -302,7 +302,7 @@ class DiscountOrReward extends React.Component {
                       $
                       </Text>
                       <Text style={[styles.inputText2]}>
-                        {this.state.discount_ars}
+                        {this.state.bill_amount}
                       </Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>

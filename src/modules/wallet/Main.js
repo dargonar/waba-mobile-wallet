@@ -141,10 +141,19 @@ class Main extends Component {
 	}
 
 	newTx(){
+		
 		this.props.navigator.push({
-      screen: 'wallet.SelectCustomer',
-			title: 'Elija usuario para enviar'
+      screen: 'wallet.FindUser',
+			title: 'Elija usuario',
+			passProps:  {
+      	search_type: 1 
+      }
 		});
+
+		// this.props.navigator.push({
+  //     screen: 'wallet.SelectCustomer',
+		// 	title: 'Elija usuario para enviar'
+		// });
 
 	}
 
@@ -156,7 +165,17 @@ class Main extends Component {
 	}
 
 
-
+	/*
+		USER MODE
+		<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" >
+					<ActionButton.Item buttonColor={buttonColor} title="ENVIAR" onPress={() => {  this.newTx() }}>
+						<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
+					</ActionButton.Item>
+					<ActionButton.Item buttonColor={buttonColor} title="PAGAR" onPress={() => {  this.onPay() }}>
+						<Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
+					</ActionButton.Item>
+					</ActionButton>
+	*/
 	// 	<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 	/*
 			<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
@@ -197,14 +216,8 @@ class Main extends Component {
 						</ActionButton.Item>
         </ActionButton>)
 				: (
-					<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" >
-					<ActionButton.Item buttonColor={buttonColor} title="ENVIAR" onPress={() => {  this.newTx() }}>
-						<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor={buttonColor} title="PAGAR" onPress={() => {  this.onPay() }}>
-						<Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
-					</ActionButton.Item>
-					</ActionButton>
+					<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
+					
 				)
 			}
       </View>

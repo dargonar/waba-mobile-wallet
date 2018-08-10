@@ -220,7 +220,7 @@ class PayConfirm extends Component {
             return;
           }
       		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
-      			let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
+  			let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
             this.setState({discount:amount});
       			this._generateUnsignedTx({
       					from   : this.props.account.id,

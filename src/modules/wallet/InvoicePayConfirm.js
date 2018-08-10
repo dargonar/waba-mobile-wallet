@@ -47,14 +47,14 @@ class InvoicePayConfirm extends Component {
 			can_confirm: false,
 			error:   '',
 
-			bill_amount: 		props.bill_amount ,
-			bill_id: 				props.bill_id ,
+			bill_amount: 	props.bill_amount ,
+			bill_id: 		props.bill_id ,
 			discount_rate: 	props.discount_rate ,
 			discount_dsc: 	props.discount_dsc ,
-			to_pay: 				0 ,
+			to_pay: 		0 ,
 			discount_ars: 	props.discount_ars ,
-			account_id: 		props.account_id || props.business_id,
-			business_id: 		props.business_id ,
+			account_id: 	props.account_id || props.business_id,
+			business_id: 	props.business_id ,
 			account_name: 	props.account_name || props.business_name,
 			business_name: 	props.business_name,
 			type: 					props.type //'invoice_discount' 
@@ -231,7 +231,7 @@ class InvoicePayConfirm extends Component {
             this.setState({to_pay:amount});
       			this._generateUnsignedTx({
       					from   : this.props.account.id,
-      					to     : this.state.business_id,
+      					to     : this.state.account_id,
       					amount : amount,
       					memo   : enc_memo,
       					asset  : this.props.asset
@@ -426,12 +426,12 @@ class InvoicePayConfirm extends Component {
     let send_disabled = !this.state.can_confirm;
 		
 		let business_name		= this.state.business_name; //'Cerveceria Benoit';
-		let subaccount_name	= this.state.account_name; //'juanita57';
-		let total_amount		= 1000; 
-		let discount				= 50;
-		let discount_dsc			= (total_amount * discount / 100);
-		let payable_amount	= discount_dsc;
-		let balance 				= this.props.balance[config.ASSET_ID];
+		let subaccount_name		= this.state.account_name; //'juanita57';
+		let total_amount		= this.state.bill_amount; 
+		let discount			= this.state.discount_rate;
+		let discount_dsc		= (total_amount * discount / 100);
+		let payable_amount		= discount_dsc;
+		let balance 			= this.props.balance[config.ASSET_ID];
 		if(balance<payable_amount)
 				payable_amount	= balance;
 		let debt					  = total_amount-payable_amount;

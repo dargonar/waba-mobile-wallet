@@ -32,12 +32,11 @@ export const DISCOIN_CREDIT_SYMBOL = 'THEDISCOIN.OD'
 export const DISCOIN_ACCESS_SYMBOL = 'THEDISCOIN.A'
 
 
+export const QRSCAN_NAME_ONLY 			= 'name_only';
 export const QRSCAN_NAME_AND_AMOUNT 	= 'name_and_amount';
-export const QRSCAN_NAME_ONLY 				= 'name_only';
 export const QRSCAN_PAYMENT_REQUEST 	= 'payment_request';
 export const QRSCAN_INVOICE_DISCOUNT 	= 'invoice_discount';
 export const QRSCAN_INVOICE_REWARD 		= 'invoice_reward';
-
 
 export const PROPUESTAPAR_ID = '1.2.151476';
 export const MONEDAPAR_ID    = '1.3.1236';

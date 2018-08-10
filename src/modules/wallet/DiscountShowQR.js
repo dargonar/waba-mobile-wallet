@@ -256,7 +256,7 @@ class DiscountShowQR extends React.Component {
     let obj = {
         account_id:   this.props.account.id,
         account_name: this.props.account.name,
-        type:         'account_only'
+        type:         config.QRSCAN_NAME_ONLY
     }
 
     let text          = JSON.stringify(obj);
@@ -277,20 +277,13 @@ class DiscountShowQR extends React.Component {
       account_id:   this.props.account.id,
       account_name: this.props.account.name,
       amount_dsc:   this.state.amount_dsc,
-      type:         'account_amount'
+      type:         config.QRSCAN_NAME_AND_AMOUNT
     }
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     let account_name  = this._renderAccountName(userIcon);
 
-    /*
-    <View style={{height:160}}>
-            <View style={{height:50, justifyContent: 'center', backgroundColor:'#ffffff', marginTop:10}}>
-              <Text style={[styles.amount, {textAlign:'center'}]}>D$C {this.state.amount_dsc}</Text>
-            </View>
-            {account_name}
-          </View>
-    */
+    
     return  (
         <View style={[{height:460,  backgroundColor:'#ffffff'}, styles.tab_content]}>
           {qr_code}
@@ -347,12 +340,12 @@ class DiscountShowQR extends React.Component {
 
     return (
         <View style={{flex:1}}>
-          {this._renderPrompt()}
           <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom" page={this.state.activeTab}>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
               {person_content}
             </Tab>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="cash" /></TabHeading>}>
+              {this._renderPrompt()}
               {request_content}
             </Tab>
             <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>

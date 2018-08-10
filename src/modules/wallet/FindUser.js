@@ -16,6 +16,15 @@ import * as config from '../../constants/config';
 
 import styles from './styles/SelectRecipient';
 
+import Prompt from 'react-native-prompt';
+
+import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
+import { Button } from 'react-native-elements'
+import BarcodeScanner from 'react-native-barcode-scanner-google';
+import BarcodeType from 'react-native-barcode-scanner-google';
+import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
+
+
 class FindUser extends Component {
 
   static navigatorStyle = {
@@ -36,14 +45,81 @@ class FindUser extends Component {
     });
 
     this.state = {
-      dataSource : dataSource,
-      refreshing : false,
-      recipient_selected : false,
-      error: false
-
+      dataSource :          dataSource,
+      refreshing :          false,
+      recipient_selected :  false,
+      error:                false,
+      search_type:          props.search_type
     };
 
     this.tid = undefined;
+  }
+
+
+  onChangeTab(i){
+    if(i==2)
+    {
+      this.resumeScanner();
+    }
+  }
+
+  _onBarcodeScanned(data, type){
+
+    console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
+    
+    if(type=='QR_CODE')
+    {
+      pauseScanner()
+        .then(() => {
+            // ToastAndroid.show(type + ' :: ' + JSON.stringify(data), ToastAndroid.SHORT);
+            // console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
+            // BARCODE: "{\"account_id\":\"1.2.97\",\"account_name\":\"user1\",\"type\":\"account_only\"}" 
+            // TYPE:QR_CODE
+            if(type=='QR_CODE')
+            {
+              let jsonData = JSON.parse(data);
+              if (jsonData.type==config.QRSCAN_NAME_ONLY)
+              {
+                // send_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen: 'wallet.SelectAmount',
+                  title: 'Elija monto',
+                  passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
+                });
+              }
+              if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
+              {
+                // pay_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen:     'wallet.InvoicePayConfirm',
+                  title:      'Pagar',
+                  passProps:  jsonData
+                });
+              }
+            }
+        })
+        .catch(e => {
+          ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
+          // setTimeout(
+          //   this.doResumeScanner(),
+          //   1000
+          // );
+        });
+    }
+  }
+
+  doResumeScanner(){
+    resumeScanner()
+    .then(() => {
+        // do something after the scanner (camera) stream was resumed.
+    })
+    .catch(e => {
+        // Print error if scanner stream could not be resumed.
+        ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);
+        console.log(e);
+    });
   }
 
   _onChangeText(text) {
@@ -80,7 +156,7 @@ class FindUser extends Component {
   pedir(search) {
     console.log('Pedimos');
     this.setState({refreshing:true});
-    walletActions.retrieveUsers(search, '2').then( (users) => {
+    walletActions.retrieveUsers(search, this.state.search_type.toString()).then( (users) => {
       console.log('Traemos');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(users['res']),
@@ -144,7 +220,20 @@ class FindUser extends Component {
     )
   }
 
-  //renderRow={this.renderRow}
+  renderQRScanner(){
+
+    return (<BarcodeScanner
+              style={{ flex: 1 }}
+              onBarcodeRead={({ data, type }) => {
+                  this._onBarcodeScanned(data, type);
+                  // console.log(
+                  //     `##### '${type}' - '${data}'`
+                  // );
+              }}
+              barcodeType={BarcodeType.QR_CODE }
+            />);
+  }
+
   render() {
     // console.log(this.state.dataSource);
     console.log(' -- SelectRecipient::render()');
@@ -171,7 +260,7 @@ class FindUser extends Component {
         </List>
       )
 
-    return (
+    let finduser_content =  (
 
       <View style={styles.container}>
         <SearchBar
@@ -188,6 +277,21 @@ class FindUser extends Component {
         {content}
       </View>
     );
+
+    let qr_scanner_content  = this.renderQRScanner();
+
+    return (
+        <View style={{flex:1}}>
+          <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom">
+            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
+              {finduser_content}
+            </Tab>
+            <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
+              {qr_scanner_content}
+            </Tab>
+          </Tabs>
+        </View>
+      );
   }
 }
 
