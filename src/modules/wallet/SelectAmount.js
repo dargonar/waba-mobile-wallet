@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import {
   Alert,
 	View,
+  Image,
   Text,
   StyleSheet,
   TouchableHighlight
@@ -23,7 +24,8 @@ class SelectAmount extends React.Component {
       amount: 	 '',
 			recipient: props.recipient,
 			memo_key: undefined,
-      pay_or_send : props.pay_or_send
+      pay_or_send : props.pay_or_send,
+
     };
 
 
@@ -88,12 +90,10 @@ class SelectAmount extends React.Component {
 				});
 			}
 
-
-
-			//         model.onChange((model) => {
-//             this.setState({text: model.getKeys().join('')});
-//         });
-    }
+    let identicon = config.getIdenticon(this.state.recipient[0]);
+    console.log(' --------------- identicon', identicon);
+    this.setState({ identicon : identicon });
+  }
 
     _handleClear(){
       this.setState({
@@ -185,11 +185,32 @@ class SelectAmount extends React.Component {
     }
 
 		render() {
+        const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
         const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
 
-              <View style={{flex: 1, flexDirection: 'row'}}>
+              <View style={{height:80, padding:10, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+                <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
+                  <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
+                    <Text style={{fontSize:15, lineHeight:20}} >
+                      Destinatario
+                    </Text>
+                  </View>  
+                  <View style={{ alignSelf: 'stretch', flexDirection:'row'}}>
+                    <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                    {userIcon}
+                    </View>
+                    <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
+                      <Text style={{fontSize:20, lineHeight:30}} >
+                        {this.state.recipient[0]}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              <View style={{height:70, flexDirection: 'row'}}>
                 <View style={{flex: 7, flexDirection: 'column'}}>
                   <Text style={styles.inputText}>
                     {this.state.amount}

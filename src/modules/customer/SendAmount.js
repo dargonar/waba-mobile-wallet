@@ -78,17 +78,6 @@ class SendAmount extends React.Component {
 
   componentDidMount() {
 
-		// if(!this.state.memo_key) {
-		// 	fetch(config.getAPIURL('/account/')+this.props.recipient[0], {
-		// 		method: 'GET',
-		// 		headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-		// 	})
-		// 	.then((response) => response.json(), err => {})
-		// 	.then((responseJson) => {
-		// 		this.setState({memo_key:responseJson.options.memo_key});
-		// 	}, err => {
-		// 	});
-		// }
 
     let identicon = config.getIdenticon(this.state.recipient[0]);
     console.log(' --------------- identicon', identicon);

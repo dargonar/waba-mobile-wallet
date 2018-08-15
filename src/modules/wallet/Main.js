@@ -31,14 +31,12 @@ class Main extends Component {
 
 		this.state 						= {account:''};
 		this.newTx 						= this.newTx.bind(this);
-		this.onPay 						= this.onPay.bind(this);
+		// this.onPay 						= this.onPay.bind(this);
 		this.resetBalance			= this.resetBalance.bind(this);
 		this.sendExtraBalance	= this.sendExtraBalance.bind(this);
 		this.applyCredit			= this.applyCredit.bind(this);
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 
-		this.doResetBalanceRequest 	= this.doResetBalanceRequest.bind(this);
-		this.doSendExtraBalance 		= this.doSendExtraBalance.bind(this);
 
 	}
 
@@ -98,38 +96,71 @@ class Main extends Component {
 		});
 	}
 
-	resetBalance(){
+	doSendExtraOrResetBalance(reset){
 		
-		Alert.alert(
-		  'Volver saldo a 0 D$C',
-		  'Enviar balance a cuenta comercio',
-		  [
-		    {text: 'Cancelar', style: 'cancel'},
-		    {text: 'OK', onPress: () => {this.doResetBalanceRequest()}},
-		  ],
-		  { cancelable: true }
-		)
+		let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
+		
+		let balance = this.props.balance[config.ASSET_ID];
+		
+		if(balance<1)
+		{
+			Alert.alert(
+				title,
+		  	'No cuenta con saldo disponible',
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}
 
-	}
+		if(!this.props.account.subaccount.business || !this.props.account.subaccount.business.account)
+		{
+			Alert.alert(
+				title,
+		  	'Es imposible encontrar la cuenta del Comercio',
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}
+		let biz_account 		= this.props.account.subaccount.business.account;
+		let biz_account_id 	= this.props.account.subaccount.business.account_id;
+		let biz_name 				= this.props.account.subaccount.business.name;
+		
+		let withdrawal_limit = this.props.account.subaccount.permission.withdrawal_limit.amount/config.ASSET_DIVIDER;
+		if(!reset && (Number(balance)<Number(withdrawal_limit) ) )
+		{
+			Alert.alert(
+				title,
+		  	'Operación imposible de realizar. Su balance de D$C'+balance.toString()+' es menor que el límite dario de D$C'+withdrawal_limit.toString(),
+				[
+					{text: 'OK'},
+				]
+			)
+			return;
+		}
 
-	doResetBalanceRequest(){
-		ToastAndroid.show('Simulamos que volvemos saldo a cero.', ToastAndroid.SHORT);
+		this.props.navigator.push({
+      screen: 'wallet.ResetBalanceConfirm',
+			title: title,
+			passProps:  {
+        	type: 				reset?config.SA_RESET_BALANCE:config.SA_SEND_EXTRA_BALANCE,
+        	recipient: 		[biz_account, biz_account_id],
+        	biz_name: 		biz_name,
+        	amount: 			reset?(balance-1):withdrawal_limit,
+        	memo: 				reset?config.SA_RESET_BALANCE_PREFIX:config.SA_SEND_EXTRA_BALANCE_PREFIX
+        }
+		});
 	}
 
 	sendExtraBalance(){
-		Alert.alert(
-		  'Enviar excedente',
-		  'Enviar excedente en cuenta a comercio',
-		  [
-		    {text: 'Cancelar', style: 'cancel'},
-		    {text: 'OK', onPress: () => {this.doSendExtraBalance()}},
-		  ],
-		  { cancelable: true }
-		)
+		this.doSendExtraOrResetBalance(false);	
 	}
 
-	doSendExtraBalance(){
-		ToastAndroid.show('Simulamos que enviamos excedente a cuenta comercio.', ToastAndroid.SHORT);
+	resetBalance(){
+		this.doSendExtraOrResetBalance(true);	
 	}
 
 	applyCredit(){
@@ -154,12 +185,12 @@ class Main extends Component {
 
 	}
 
-	onPay(){
-		this.props.navigator.push({
-      screen: 'wallet.SelectRecipient',
-			title: 'Pagar - Seleccione Comercio'
-		});
-	}
+	// onPay(){
+	// 	this.props.navigator.push({
+ //      screen: 'wallet.SelectRecipient',
+	// 		title: 'Pagar - Seleccione Comercio'
+	// 	});
+	// }
 
 
 	/*

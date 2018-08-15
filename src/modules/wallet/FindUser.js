@@ -82,7 +82,7 @@ class FindUser extends Component {
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
                   screen: 'wallet.SelectAmount',
-                  title: 'Elija monto',
+                  title: 'Elija monto a enviar',
                   passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
                 });
               }
@@ -190,8 +190,8 @@ class FindUser extends Component {
     this.props.actions.memoSuccess('');
     this.props.navigator.push({
       screen: 'wallet.SelectAmount',
-      title: 'Pagar - Monto de factura',
-      passProps: {recipient: data, pay_or_send:'pay'}
+      title: 'Elija monto a enviar',
+      passProps: {recipient: data, pay_or_send:'send'}
       // ,rightButtons: [
       //  {
       //    icon: iconsMap['ios-attach'],
@@ -281,10 +281,10 @@ class FindUser extends Component {
     return (
         <View style={{flex:1}}>
           <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom">
-            <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
+            <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#f15d44'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
               {qr_scanner_content}
             </Tab>
-            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
+            <Tab heading={ <TabHeading style={{backgroundColor:'#f15d44'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
               {finduser_content}
             </Tab>
             

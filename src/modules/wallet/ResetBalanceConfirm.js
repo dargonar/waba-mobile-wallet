@@ -18,7 +18,7 @@ import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
 
-class SendConfirm extends Component {
+class ResetBalanceConfirm extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
@@ -35,12 +35,13 @@ class SendConfirm extends Component {
         name:					props.recipient[0],
         account_id:		props.recipient[1],
       },
-			memo_key: props.memo_key,
-      amount : props.amount,
-      memo :   props.memo,
-			tx: 		 null,
-			fee:     0,
-			fee_txt: 0,
+			amount : 	props.amount,
+      memo :    props.memo,
+			biz_name: props.biz_name,
+			type: 		props.type,
+			tx: 		 	null,
+			fee:     	0,
+			fee_txt: 	0,
 			can_confirm: false,
 			error:   ''
     }
@@ -174,7 +175,7 @@ class SendConfirm extends Component {
 
 	_getTx() {
 
-		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
+		this._buildMemo(this.state.memo, '').then( enc_memo => {
 			let amount = Number(this.state.amount).toFixed(2);
 			this._generateUnsignedTx({
 					from   : this.props.account.id,
@@ -227,28 +228,7 @@ class SendConfirm extends Component {
 
 	_buildMemo(message) {
 		return new Promise( (resolve, reject) => {
-
-			if(!message)	{
-				resolve();
-				return;
-			}
-
-			this._getRecipientInfo(this.state.recipient).then( () => {
-
-				Bts2helper.encodeMemo(this.props.account.keys[2].privkey, this.state.memo_key, message).then(res => {
-					res = JSON.parse(res);
-					//res.message = '010203';
-					//console.log('Para mi para ovs', res);
-					resolve(res);
-				}, err => {
-					console.log('DA ERRORRRR');
-					console.log(err);
-					reject(err);
-				})
-
-			} , err => {
-				reject(err);
-			})
+			resolve({message:config.toHex(message)});
 		});
 	}
 
@@ -357,7 +337,7 @@ class SendConfirm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-  	console.log('SendConfirm => componentWillReceiveProps');
+  	console.log('ResetBalanceConfirm => componentWillReceiveProps');
 	}
 
   componentDidMount() {
@@ -379,38 +359,17 @@ class SendConfirm extends Component {
 			btn_style = styles.fullWidthButtonDisabled;
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
-    let memo = this.state.memo;
-		let memo_style = styles.data_part;
-		if(!memo || memo==''){
-			memo='-sin mensaje-';
-			memo_style = styles.data_part_empty;
-		}
-		let send_disabled = !this.state.can_confirm;
+    let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
-		/*
-		<View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
-			<Text style={styles.title_part}>Ud. va a enviar:</Text>
-			<Text style={styles.data_part}>$ {this.state.amount}</Text>
-			<Text style={styles.title_part}>Comisión:</Text>
-			<Text style={styles.data_part_small}>$ {fee}</Text>
-			<Text style={styles.title_part}>Total:</Text>
-			<Text style={styles.data_part_small}>$ {total}</Text>
-			<Text style={styles.title_part}>A:</Text>
-			<Text style={styles.data_part}>{this.state.recipient.name}</Text>
-			<Text style={styles.title_part}>Con mensaje:</Text>
-			<Text style={memo_style}>{memo}</Text>
-		</View>
-		*/
+		
 		return (
       <View style={styles.container}>
         <View style={{flex:5, backgroundColor:'#ffffff', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
           <Text style={styles.title_part}>Ud. va a enviar:</Text>
           <Text style={styles.data_part}>$ {total} <Text style={styles.data_part_small}>($ {fee} de comisión)</Text></Text>
           <Text style={styles.title_part}>A:</Text>
-          <Text style={styles.data_part}>{this.state.recipient.name}</Text>
-          <Text style={styles.title_part}>Con mensaje:</Text>
-          <Text style={memo_style}>{memo}</Text>
+          <Text style={styles.data_part}>{this.state.biz_name} ({this.state.recipient.name})</Text>
         </View>
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
@@ -444,4 +403,4 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SendConfirm);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetBalanceConfirm);

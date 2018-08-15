@@ -38,6 +38,11 @@ export const QRSCAN_PAYMENT_REQUEST 	= 'payment_request';
 export const QRSCAN_INVOICE_DISCOUNT 	= 'invoice_discount';
 export const QRSCAN_INVOICE_REWARD 		= 'invoice_reward';
 
+export const SA_RESET_BALANCE 						= 'reset_balance';
+export const SA_RESET_BALANCE_PREFIX 			= '~rb';
+export const SA_SEND_EXTRA_BALANCE 				= 'send_extra_balance';
+export const SA_SEND_EXTRA_BALANCE_PREFIX = '~se';
+
 export const PROPUESTAPAR_ID = '1.2.151476';
 export const MONEDAPAR_ID    = '1.3.1236';
 export const DESCUBIERTO_ID  = '1.3.1237';
