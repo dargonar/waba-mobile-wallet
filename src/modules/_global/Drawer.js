@@ -145,7 +145,7 @@ class Drawer extends Component {
 
 			this.props.actions.createAccountSuccessHACK(account);
 
-			helperActions.launchWallet();
+			helperActions.launchWallet(account);
 		});
 	}
 

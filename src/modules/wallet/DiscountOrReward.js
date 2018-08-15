@@ -28,15 +28,14 @@ class DiscountOrReward extends React.Component {
     this.state = {
       bill_amount:      '0',
       bill_id:          '',
-      // percentage:       '10',
 
       discount_rate:    '0',
-      discount_dsc:    '0',
-      discount_ars:    '0',
+      discount_dsc:     '0',
+      discount_ars:     '0',
 
       reward_rate:      '0',
-      reward_dsc:    '0',
-      reward_ars:    '0',
+      reward_dsc:       '0',
+      reward_ars:       '0',
 
       mode:             props.mode,
       percentage_error: '',
@@ -56,7 +55,7 @@ class DiscountOrReward extends React.Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#1abc9c',
+    navBarBackgroundColor: '#0A566B', //'#1abc9c',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
@@ -94,6 +93,7 @@ class DiscountOrReward extends React.Component {
       ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
       return;
     }
+
     this.props.navigator.push({
         screen:     'wallet.DiscountShowQR',
         title:      'Cobrar con descuento',
@@ -112,10 +112,10 @@ class DiscountOrReward extends React.Component {
       ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);
       return;
     }
+
     this.props.navigator.push({
-        // screen:     'wallet.QRScanner',
         screen:     'wallet.RewardReceiptSelect',
-        title:      'Elegir Usuario',
+        title:      'Elegir Cliente',
         passProps:  {
           bill_amount:    this.state.bill_amount,
           bill_id:        this.state.bill_id,
@@ -267,7 +267,7 @@ class DiscountOrReward extends React.Component {
 
                 <View style={{flex: 1, flexDirection: 'column'}}>
                     <Text style={[styles.inputText, styles.textInputCenter]}>
-                      {this.state.reward_rate} %
+                      {this.state.discount_rate} %
                     </Text>
                     <Text style={styles.hintInside}>
                       DESCUENTO
@@ -277,7 +277,7 @@ class DiscountOrReward extends React.Component {
                       $
                       </Text>
                       <Text style={[styles.inputText2]}>
-                        {this.state.reward_ars}
+                        {this.state.discount_ars}
                       </Text>
                     </View>
                     <View style={{flexDirection: 'row'}}>
@@ -285,14 +285,14 @@ class DiscountOrReward extends React.Component {
                       D$C
                       </Text>
                       <Text style={[styles.inputText2]}>
-                        {this.state.reward_dsc}
+                        {this.state.discount_dsc}
                       </Text>
                     </View>
                 </View>
 
                 <View style={{flex: 1, flexDirection: 'column', borderLeftColor: '#c0c0c0', borderLeftWidth: 0.75}}>
                     <Text style={[styles.inputText, styles.textInputCenter]}>
-                      {this.state.discount_rate} %
+                      {this.state.reward_rate} %
                     </Text>
                     <Text style={styles.hintInside}>
                       RECOMPENSA
@@ -310,7 +310,7 @@ class DiscountOrReward extends React.Component {
                       D$C
                       </Text>
                       <Text style={[styles.inputText2]}>
-                        {this.state.discount_dsc}
+                        {this.state.reward_dsc}
                       </Text>
                     </View>
                 </View>

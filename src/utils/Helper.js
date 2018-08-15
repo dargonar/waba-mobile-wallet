@@ -23,7 +23,19 @@ function launchTest(){
 
 }
 
-function launchWallet() {
+function launchWallet(account) {
+
+  let _rightButtons = [];
+  if(!account || !account.subaccount || account.subaccount.wallet_mode!='subaccount')
+  {
+    _rightButtons = [
+        {
+          icon: iconsMap['qrcode--active'],
+          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ];
+  }
+
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
@@ -48,18 +60,10 @@ function launchWallet() {
 // 					id: 'qrCode'
 // 				}
 // 			]
-      rightButtons : [
-        {
-          //disableIconTint: true,
-          //title: 'Memo',
-          icon: iconsMap['qrcode--active'],
-          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-        }
-      ],
+      rightButtons : _rightButtons,
 			leftButtons: [
     		{
     			icon: iconsMap['ios-menu'],
-    			// icon: Platform.OS === 'ios' ? iconsMap['ios-menu'] : null,
     			title: '',
     			id: 'sideMenu'
     		}

@@ -6,6 +6,49 @@ const styles = StyleSheet.create({
 		backgroundColor: '#ffffff'
 
 	},
+
+  align_center:{
+    alignSelf: 'center'
+  },
+  business_name : {
+    fontFamily : 'roboto_normal',
+    color      : '#f15d44',
+    fontSize   : 32,
+
+  },
+
+  business_subaccount_name: {
+    fontFamily : 'roboto_normal',
+    color      : '#f15d44',
+    fontSize   : 24,
+    lineHeight : 32
+  },
+
+  total_bill : {
+    fontFamily : 'roboto_normal',
+    color      : '#f15d44',
+    fontSize   : 38
+  },
+  discoin_amount : {
+    fontFamily : 'roboto_normal',
+    color      : '#f15d44',
+    fontSize   : 32
+  },
+  discoin_amount_w: {
+    fontFamily : 'roboto_bold',
+    color      : '#ffffff',
+    fontSize   : 32, 
+    backgroundColor:'#f15d44',
+    paddingLeft:10,
+    paddingRight:10
+  },
+  discoin_amount_small : {
+    fontFamily : 'roboto_normal',
+    color      : '#f15d44',
+    fontSize   : 20,
+    lineHeight : 32
+  },
+
 	data_part : {
     fontFamily : 'roboto_normal',
     color      : '#f15d44',
@@ -35,14 +78,19 @@ const styles = StyleSheet.create({
     lineHeight  : 35,
     fontSize    : 16
   },
-
+  title_part_bold : {
+    fontFamily  : 'roboto_bold',
+    color       : '#a9a9a9',
+    lineHeight  : 35,
+    fontSize    : 24
+  },
 	rewardButton: {
 		borderRadius: 0,
     height:100,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#0A566B' //'#1abc9c'
+		backgroundColor: '#1abc9c'
   },
 
 

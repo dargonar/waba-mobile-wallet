@@ -32,8 +32,8 @@ export const DISCOIN_CREDIT_SYMBOL = 'THEDISCOIN.OD'
 export const DISCOIN_ACCESS_SYMBOL = 'THEDISCOIN.A'
 
 
-export const QRSCAN_NAME_ONLY 			= 'name_only';
-export const QRSCAN_NAME_AND_AMOUNT 	= 'name_and_amount';
+export const QRSCAN_ACCOUNT_ONLY 			= 'account_only';
+export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'account_n_amount';
 export const QRSCAN_PAYMENT_REQUEST 	= 'payment_request';
 export const QRSCAN_INVOICE_DISCOUNT 	= 'invoice_discount';
 export const QRSCAN_INVOICE_REWARD 		= 'invoice_reward';
@@ -140,6 +140,15 @@ export function dateAdd(date, interval, units) {
 
 export function isSubaccountMode(subaccount){
 	return (subaccount && subaccount.wallet_mode=='subaccount');
+}
+
+var sha512 = require('js-sha512').sha512;
+
+export function getIdenticon(data){
+	var hash = sha512.create();
+	hash.update(data);
+	console.log(' --------------- hash.hex()', hash.hex());
+	return getIdenticonForHash(hash.hex());
 }
 
 export function getIdenticonForHash(_hash){

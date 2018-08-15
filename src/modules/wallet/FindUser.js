@@ -49,7 +49,9 @@ class FindUser extends Component {
       refreshing :          false,
       recipient_selected :  false,
       error:                false,
+
       search_type:          props.search_type
+
     };
 
     this.tid = undefined;
@@ -71,14 +73,10 @@ class FindUser extends Component {
     {
       pauseScanner()
         .then(() => {
-            // ToastAndroid.show(type + ' :: ' + JSON.stringify(data), ToastAndroid.SHORT);
-            // console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
-            // BARCODE: "{\"account_id\":\"1.2.97\",\"account_name\":\"user1\",\"type\":\"account_only\"}" 
-            // TYPE:QR_CODE
             if(type=='QR_CODE')
             {
               let jsonData = JSON.parse(data);
-              if (jsonData.type==config.QRSCAN_NAME_ONLY)
+              if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
               {
                 // send_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)
@@ -156,7 +154,7 @@ class FindUser extends Component {
   pedir(search) {
     console.log('Pedimos');
     this.setState({refreshing:true});
-    walletActions.retrieveUsers(search, this.state.search_type.toString()).then( (users) => {
+    walletActions.retrieveUsers(search, '1').then( (users) => {
       console.log('Traemos');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(users['res']),
@@ -283,12 +281,13 @@ class FindUser extends Component {
     return (
         <View style={{flex:1}}>
           <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom">
-            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
-              {finduser_content}
-            </Tab>
             <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
               {qr_scanner_content}
             </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
+              {finduser_content}
+            </Tab>
+            
           </Tabs>
         </View>
       );

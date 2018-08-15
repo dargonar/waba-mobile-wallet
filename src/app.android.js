@@ -45,7 +45,7 @@ try {
 					console.log('READY =>', s.wallet.ready);
 					if(s.wallet.ready) {
 						unsubscribe();
-						launchWallet();
+						launchWallet(account);
 
 					} else if(s.wallet.errors > 0) {
             if(!(s.wallet.errors % 10)) {

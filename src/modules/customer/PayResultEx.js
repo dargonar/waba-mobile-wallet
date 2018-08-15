@@ -8,12 +8,12 @@ import {
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as walletActions from './wallet.actions';
-import styles from './styles/SendResult';
+import * as walletActions from '../wallet/wallet.actions';
+import styles from './styles/SendResultEx';
 import { Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
-class RewardResult extends Component {
+class SendResultEx extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
@@ -28,17 +28,31 @@ class RewardResult extends Component {
     super(props);
 
     this.state = {
-      recipient :   props.recipient,
-      amount :      props.amount,
-      refreshing :  false,
+      recipient : props.recipient,
+      amount : props.amount,
+      memo : props.memo,
+
+      refreshing : false,
       types: ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle',
               '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'],
       size: 100,
       color: "#B7F072",
-      isVisible: true
+      isVisible: true,
 
+
+      bill_amount:    props.data.bill_amount,
+      bill_id:        props.data.bill_id ,
+      discount_rate:  props.data.discount_rate ,
+      discount_dsc:   props.data.discount_dsc ,
+      to_pay:         props.data.to_pay ,
+      discount_ars:   props.data.discount_ars ,
+      account_id:     props.data.account_id,
+      business_id:    props.data.business_id ,
+      account_name:   props.data.account_name,
+      business_name:  props.data.business_name
+      
     };
-    console.log(' --- RewardResult:', JSON.stringify(props.recipient));
+
 		let that = this;
     setTimeout( function() {
       that.props.actions.retrieveHistory(
@@ -75,22 +89,29 @@ class RewardResult extends Component {
 
   render() {
 
-		return (
+		let debt    = this.state.bill_amount - this.state.to_pay;
+
+    return (
 
       <View style={styles.container}>
         <View style={{flex:3, justifyContent: 'center', backgroundColor:'transparent'}}>
-          <Text style={styles.title}>Recompensa exitosa</Text>
-          <Text style={[styles.amount]}>$ {this.state.amount}</Text>
+          <Text style={styles.title}>Pago exitoso</Text>
+          <Text style={[styles.amount]}>D$C {this.state.amount}</Text>
         </View>
         <View style={{flex:4, backgroundColor:'transparent'}}>
 
           <Text style={styles.title_part}>DESTINATARIO</Text>
-          <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.recipient.name}</Text>
+          <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.account_name}</Text>
+          
+          <Text style={styles.title_part}>RESTAN PAGAR EN PESOS</Text>
+          <Text style={[styles.data_part,styles.margin_bottom]}>${debt}</Text>
+
+
         </View>
         <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
           <Icon
             raised
-            containerStyle={{backgroundColor:'#0A566B', borderWidth: 0.5, borderColor: 'transparent' }}
+            containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: 'transparent' }}
             name='md-checkmark'
             type='ionicon'
             color='#ffffff'
@@ -114,4 +135,5 @@ function mapDispatchToProps(dispatch) {
 		actions: bindActionCreators(walletActions, dispatch)
 	};
 }
-export default connect(mapStateToProps, mapDispatchToProps)(RewardResult);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendResultEx);

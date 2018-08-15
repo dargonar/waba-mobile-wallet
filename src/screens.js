@@ -40,18 +40,26 @@ import SwitchConfirm from './modules/_global/SwitchConfirm';
 import FindUser from './modules/wallet/FindUser';
 import SelectCustomer from './modules/wallet/SelectCustomer';
 import SetDiscount from './modules/wallet/SetDiscount';
-import RewardConfirm from './modules/wallet/RewardConfirm';
-import RewardResult from './modules/wallet/RewardResult';
-import Rewarding from './modules/wallet/Rewarding';
 import SwitchResult from './modules/wallet/SwitchResult';
 
 import DiscountOrReward from './modules/wallet/DiscountOrReward';
 import DiscountShowQR from './modules/wallet/DiscountShowQR';
 import QRScanner from './modules/wallet/QRScanner';
-import RewardReceiptSelect from './modules/wallet/RewardReceiptSelect';
 import PayConfirm from './modules/wallet/PayConfirm';
 import InvoicePayConfirm from './modules/wallet/InvoicePayConfirm';
 
+import RewardReceiptSelect from './modules/wallet/RewardReceiptSelect';
+import RewardConfirm from './modules/wallet/RewardConfirm';
+import RewardResult from './modules/wallet/RewardResult';
+import Rewarding from './modules/wallet/Rewarding';
+
+import QRShowNScan from './modules/customer/QRShowNScan';
+import SendAmount from './modules/customer/SendAmount';
+import SendConfirmEx from './modules/customer/SendConfirmEx';
+import SendingEx from './modules/customer/SendingEx';
+import SendResultEx from './modules/customer/SendResultEx';
+import InvoiceConfirm from './modules/customer/InvoiceConfirm';
+import PayResultEx from './modules/customer/PayResultEx';
 
 export function registerScreens(store, Provider) {
 
@@ -103,5 +111,15 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.QRScanner', () => QRScanner	, store, Provider);
 	Navigation.registerComponent('wallet.RewardReceiptSelect', () => RewardReceiptSelect	, store, Provider);
 	Navigation.registerComponent('wallet.PayConfirm', () => PayConfirm	, store, Provider);
-	Navigation.registerComponent('wallet.InvoicePayConfirm', () => InvoicePayConfirm	, store, Provider);
+	Navigation.registerComponent('wallet.InvoicePayConfirm', () => InvoicePayConfirm, store, Provider);
+
+	Navigation.registerComponent('customer.QRShowNScan', () => QRShowNScan, store, Provider);
+	Navigation.registerComponent('customer.SendAmount', () => SendAmount, store, Provider);
+	Navigation.registerComponent('customer.SendConfirmEx', () => SendConfirmEx	, store, Provider);
+	Navigation.registerComponent('customer.SendingEx', () => SendingEx	, store, Provider);
+	Navigation.registerComponent('customer.SendResultEx', () => SendResultEx	, store, Provider);
+	Navigation.registerComponent('customer.InvoiceConfirm', () => InvoiceConfirm	, store, Provider);
+	Navigation.registerComponent('customer.PayResultEx', () => PayResultEx	, store, Provider);
+	
+	
 }

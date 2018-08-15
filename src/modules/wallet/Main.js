@@ -57,16 +57,16 @@ class Main extends Component {
 	qrButtonPressed(){
 		
 		this.props.navigator.push({
-			        screen:     'wallet.DiscountShowQR',
-			        title:      'QR',
-			        passProps:  {
-			        	amount_dsc: 	0,
-			          	type:    		config.QRSCAN_NAME_AND_AMOUNT  //'name_only'
-			        }
-		    		});
+        screen:     'customer.QRShowNScan',
+        title:      'QR',
+        // passProps:  {
+        // 	amount_dsc: 	0,
+        //   type: config.QRSCAN_ACCOUNT_N_AMOUNT  
+        // }
+  		});
 	}
 
-  	showQRScanner(){
+	showQRScanner(){
 	    //showModal
 	    this.props.navigator.push({
 	      screen: "wallet.QRScanner", // unique ID registered with Navigation.registerScreen
@@ -144,10 +144,7 @@ class Main extends Component {
 		
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
-			title: 'Elija usuario',
-			passProps:  {
-      	search_type: 1 
-      }
+			title: 'Elija usuario'
 		});
 
 		// this.props.navigator.push({

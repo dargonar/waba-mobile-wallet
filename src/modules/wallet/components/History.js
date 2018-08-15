@@ -391,7 +391,7 @@ class History extends Component {
 		if(rowData.__typename == 'Transfer' && config.ASSET_ID == rowData.amount.asset.id) {
 
        let mapa   = {received:'recibidos', sent: 'enviados', refunded:'recompensados', discounted:'pagados con descuento'};
-       let rotato = {received:'135 deg', sent : '-45 deg', refunded:'135 deg'     , discounted:'-45 deg'};
+       let rotato = {received:'135 deg', sent : '-45 deg', refunded_subacc:'-45 deg'     , discounted_subacc:'135 deg', refunded:'135 deg'     , discounted:'-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
 			 //let bg     = {received:'#A2EA4A', sent:'#FF7251'};
 			 let bg     = {received:'#3498db', sent:'#1abc9c', refunded:'#3498db', discounted:'#1abc9c'};
@@ -402,6 +402,7 @@ class History extends Component {
 			 let hora   = this._getHora(rowData.block.timestamp);
 			 let asset_symbol = config.ASSET_SYMBOL;
        let message = undefined;
+       let _rotato = _type;
        if(rowData.message)
          message = (<Text style={styles.row_message}>{rowData.message}</Text>);
        else
@@ -413,11 +414,13 @@ class History extends Component {
           {
             _dea  = !this.state.is_subaccount?'refunded':'discounted';
             _type = 'refunded';
+            _rotato = _type + (this.state.is_subaccount?'_subacc':'');
           }
           if(prefix==config.PAYDISCOUNTED_PREFIX)
           {
             _dea  = !this.state.is_subaccount?'discounted':'refunded';
             _type = 'discounted';
+            _rotato = _type + (this.state.is_subaccount?'_subacc':'');
           }
 					// let memo_account = msg.substring(4);
           message = (<Text style={styles.row_message}>{msg}</Text>);
@@ -427,7 +430,7 @@ class History extends Component {
         <TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
             <View style={[styles.row_avatar, {backgroundColor:bg[_type]}]}>
-              <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_type]}]}]}/>
+              <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_rotato]}]}]}/>
             </View>
             <View style={styles.row_content}>
               <View style={styles.row_line1}>

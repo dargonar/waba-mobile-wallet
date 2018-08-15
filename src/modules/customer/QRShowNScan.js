@@ -15,9 +15,8 @@ import QRCode from 'react-native-qrcode';
 // import { Icon } from 'react-native-elements'
 //import Icon from 'react-native-vector-icons/Ionicons';
 //'react-native-elements'
-import styles from './styles/DiscountShowQR';
+import styles from './styles/QRShowNScan';
 import { connect } from 'react-redux';
-import Keyboard from './components/Keyboard';
 import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
@@ -32,32 +31,32 @@ import BarcodeScanner from 'react-native-barcode-scanner-google';
 import BarcodeType from 'react-native-barcode-scanner-google';
 import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
 
-class DiscountShowQR extends React.Component {
+class QRShowNScan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
 
-      bill_amount:    props.bill_amount,
-      bill_id:        props.bill_id,
+      bill_amount:      props.bill_amount,
+      bill_id:          props.bill_id,
 
-      discount_rate:  props.discount_rate,
-      discount_dsc:   props.discount_dsc,
-      discount_ars:   props.discount_ars,
+      discount_rate:    props.discount_rate,
+      discount_dsc:     props.discount_dsc,
+      discount_ars:     props.discount_ars,
 
-      amount_dsc:     props.amount_dsc || 0,
+      amount_required:  props.amount_required || 0,
 
-      text :          '',
+      text :            '',
 
-      type :          props.type,
-      promptVisible : false,
-      activeTab:0
+      type :            props.type,
+      promptVisible :   false,
+      activeTab:        0
     };
 
   }
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#0A566B',
+    navBarBackgroundColor: '#1abc9c',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
@@ -71,13 +70,14 @@ class DiscountShowQR extends React.Component {
   }
 
   _onAmountSet(value){
-    this.setState({promptVisible:false, amount_dsc:value, activeTab: 1 });
+    this.setState({promptVisible:false, amount_required:value, activeTab: 1 });
   }
 
-  onChangeTab(i){
-    if(i==2)
+  onChangeTab(obj, that){
+    console.log(' ------------- onChangeTab(i)', obj.i);
+    if(obj.i==2)
     {
-      this.resumeScanner();
+      this.doResumeScanner();
     }
   }
   _renderPrompt(){
@@ -86,7 +86,7 @@ class DiscountShowQR extends React.Component {
     let that = this;
     // let inputProps = {textInputProps :{keyboardType:'default'}};
     let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
-    let value = this.state.amount_dsc || 0;
+    let value = this.state.amount_required || 0;
     return (
       <Prompt
         title="Ingrese monto a solicitar"
@@ -139,25 +139,43 @@ class DiscountShowQR extends React.Component {
             if(type=='QR_CODE')
             {
               let jsonData = JSON.parse(data);
+              if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
+              {
+                // send_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen: 'customer.SendAmount',
+                  title: 'Elija monto',
+                  passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
+                });
+                return;
+              }
               if (jsonData.type==config.QRSCAN_ACCOUNT_N_AMOUNT)
               {
                 // send_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen: 'customer.SendConfirmEx',
+                  title: 'Elija monto',
+                  passProps: {recipient: [jsonData.account_name, jsonData.account_id], amount:jsonData.amount_required, memo:''}
+                });
+                return;
               }
               if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
               {
                 // pay_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
-                  screen:     'wallet.InvoicePayConfirm',
+                  screen:     'customer.InvoiceConfirm',
                   title:      'Pagar',
                   passProps:  jsonData
                 });
-                // setTimeout(
-                //   this.doResumeScanner(),
-                //   1000
-                // );
-                
+                return;
               }
+              setTimeout(
+                this.doResumeScanner(),
+                100
+              );
             }
         })
         .catch(e => {
@@ -195,8 +213,6 @@ class DiscountShowQR extends React.Component {
         business_name:  this.props.account.subaccount.business.name,
         type:           config.QRSCAN_INVOICE_DISCOUNT
     }
-    console.log(' -------- INVOICE or REWARD', JSON.stringify(obj));
-
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     return  (
@@ -278,7 +294,7 @@ class DiscountShowQR extends React.Component {
     let obj = {
       account_id:   this.props.account.id,
       account_name: this.props.account.name,
-      amount_dsc:   this.state.amount_dsc,
+      amount:       this.state.amount_required,
       type:         config.QRSCAN_ACCOUNT_N_AMOUNT
     }
     let text = JSON.stringify(obj);
@@ -295,7 +311,7 @@ class DiscountShowQR extends React.Component {
               <Text style={[styles.amount_title, {textAlign:'center'}]}>D$C</Text>
             </View>
             <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-              <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_dsc}</Text>
+              <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
             </View>
             <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
               <Button
@@ -342,7 +358,7 @@ class DiscountShowQR extends React.Component {
 
     return (
         <View style={{flex:1}}>
-          <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom" page={this.state.activeTab}>
+          <Tabs onChangeTab={(i, ref, from)=> this.onChangeTab(i, this)} tabBarPosition="bottom" page={this.state.activeTab}>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
               {person_content}
             </Tab>
@@ -397,4 +413,4 @@ function mapStateToProps(state, ownProps) {
 	};
 }
 
-export default connect(mapStateToProps, null)(DiscountShowQR);
+export default connect(mapStateToProps, null)(QRShowNScan);
