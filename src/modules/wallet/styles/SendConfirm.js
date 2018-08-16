@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 		backgroundColor: '#f15d44'
   },
+  fullWidthButton_SubAcc: {
+    backgroundColor: '#0A566B'
+  },
+  
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },

@@ -4,6 +4,12 @@ http://stackoverflow.com/questions/35935060/how-can-i-generate-an-apk-that-can-r
 (((13245768)))
 keytool -genkey -v -keystore my-app-key.keystore -alias my-app-alias -keyalg RSA -keysize 2048 -validity 10000
 
+
+https://facebook.github.io/react-native/docs/signed-apk-android.html
+https://medium.com/@abhaytalreja/react-native-android-update-version-6966c21ccf50
+keytool -genkey -v -keystore android/app/my-app-key_dsc_.keystore -alias keydscalias  -keyalg RSA -keysize 2048 -validity 10000
+
+
 react-native bundle --platform android --dev false --entry-file index.android.js \
   --bundle-output android/app/src/main/assets/index.android.bundle \
   --assets-dest android/app/src/main/res/
@@ -19,7 +25,7 @@ adb install -r ./app/build/outputs/apk/app-armeabi-v7a-debug.apk
 scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.apk
 scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.v1.1.apk
 
-scp -i ~/aws/discoin_alpha.pem ~/waba_mobile_wallet_upgd_1/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/merged/public/discoin.v1.4.apk
+scp -i ~/aws/discoin_alpha.pem ~/waba_mobile_wallet_upgd_1/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/merged/public/discoin.v1.5.apk
 
 ssh -i discoin_alpha.pem ubuntu@54.245.222.250
 

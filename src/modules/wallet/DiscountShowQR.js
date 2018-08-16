@@ -276,10 +276,10 @@ class DiscountShowQR extends React.Component {
   renderReceiveRequest(userIcon){
 
     let obj = {
-      account_id:   this.props.account.id,
-      account_name: this.props.account.name,
-      amount_dsc:   this.state.amount_dsc,
-      type:         config.QRSCAN_ACCOUNT_N_AMOUNT
+      account_id:       this.props.account.id,
+      account_name:     this.props.account.name,
+      amount_required:  this.state.amount_dsc,
+      type:             config.QRSCAN_ACCOUNT_N_AMOUNT
     }
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);

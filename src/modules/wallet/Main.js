@@ -17,6 +17,7 @@ import Balance from './components/Balance';
 import History from './components/History';
 import ActionButton from 'react-native-action-button';
 import { iconsMap } from '../../utils/AppIcons';
+// import * as subaccount_helper from '../../utils/SubAccountHelper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as config from '../../constants/config';
 
@@ -32,8 +33,8 @@ class Main extends Component {
 		this.state 						= {account:''};
 		this.newTx 						= this.newTx.bind(this);
 		// this.onPay 						= this.onPay.bind(this);
-		this.resetBalance			= this.resetBalance.bind(this);
-		this.sendExtraBalance	= this.sendExtraBalance.bind(this);
+		// this.resetBalance			= this.resetBalance.bind(this);
+		// this.sendExtraBalance	= this.sendExtraBalance.bind(this);
 		this.applyCredit			= this.applyCredit.bind(this);
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 
@@ -96,72 +97,47 @@ class Main extends Component {
 		});
 	}
 
-	doSendExtraOrResetBalance(reset){
+	// doSendExtraOrResetBalance(reset){
 		
-		let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
+	// 	let tx_data = {};
+	// 	let balance = this.props.balance[config.ASSET_ID];
+	// 	let account = this.props.account;
+	// 	let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
+	// 	try {
+
+	// 		tx_data = subaccount_helper.prepareResetBalance(reset, account, balance);
+
+	// 	} catch (error) {
+			
+	// 		console.log('Error!!!!');
+			
+	// 		Alert.alert(
+	// 			title,
+	// 	  	error,
+	// 			[
+	// 				{text: 'OK'},
+	// 			]
+	// 		)
+	// 		return;
 		
-		let balance = this.props.balance[config.ASSET_ID];
-		
-		if(balance<1)
-		{
-			Alert.alert(
-				title,
-		  	'No cuenta con saldo disponible',
-				[
-					{text: 'OK'},
-				]
-			)
-			return;
-		}
+	// 	}
 
-		if(!this.props.account.subaccount.business || !this.props.account.subaccount.business.account)
-		{
-			Alert.alert(
-				title,
-		  	'Es imposible encontrar la cuenta del Comercio',
-				[
-					{text: 'OK'},
-				]
-			)
-			return;
-		}
-		let biz_account 		= this.props.account.subaccount.business.account;
-		let biz_account_id 	= this.props.account.subaccount.business.account_id;
-		let biz_name 				= this.props.account.subaccount.business.name;
-		
-		let withdrawal_limit = this.props.account.subaccount.permission.withdrawal_limit.amount/config.ASSET_DIVIDER;
-		if(!reset && (Number(balance)<Number(withdrawal_limit) ) )
-		{
-			Alert.alert(
-				title,
-		  	'Operación imposible de realizar. Su balance de D$C'+balance.toString()+' es menor que el límite dario de D$C'+withdrawal_limit.toString(),
-				[
-					{text: 'OK'},
-				]
-			)
-			return;
-		}
+	// 	this.props.navigator.push({
+ //      screen: 'wallet.ResetBalanceConfirm',
+	// 		title: title,
+	// 		passProps:  {
+ //        ...tx_data	
+ //    	}
+	// 	});
+	// }
 
-		this.props.navigator.push({
-      screen: 'wallet.ResetBalanceConfirm',
-			title: title,
-			passProps:  {
-        	type: 				reset?config.SA_RESET_BALANCE:config.SA_SEND_EXTRA_BALANCE,
-        	recipient: 		[biz_account, biz_account_id],
-        	biz_name: 		biz_name,
-        	amount: 			reset?(balance-1):withdrawal_limit,
-        	memo: 				reset?config.SA_RESET_BALANCE_PREFIX:config.SA_SEND_EXTRA_BALANCE_PREFIX
-        }
-		});
-	}
+	// sendExtraBalance(){
+	// 	this.doSendExtraOrResetBalance(false);	
+	// }
 
-	sendExtraBalance(){
-		this.doSendExtraOrResetBalance(false);	
-	}
-
-	resetBalance(){
-		this.doSendExtraOrResetBalance(true);	
-	}
+	// resetBalance(){
+	// 	this.doSendExtraOrResetBalance(true);	
+	// }
 
 	applyCredit(){
 		this.props.navigator.toggleDrawer({
@@ -231,8 +207,8 @@ class Main extends Component {
 							</TouchableHighlight>
 						</View>) : false }
 
-				{ (subaccount_mode)?
-					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
+				{ (subaccount_mode)?false
+					/*(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
           <ActionButton.Item buttonColor='#1abc9c' title="VOLVER SALDO A 0 D$C" onPress={() => {  this.resetBalance() }}>
 	            <Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>
 						</ActionButton.Item>
@@ -242,7 +218,7 @@ class Main extends Component {
 						<ActionButton.Item buttonColor='#3498db' title="INICIAR CAJA DIARIA" onPress={() => {  this.applyCredit() }}>
 	            <Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
 						</ActionButton.Item>
-        </ActionButton>)
+        </ActionButton>)*/
 				: (
 					<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 					

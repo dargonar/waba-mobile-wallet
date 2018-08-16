@@ -22,7 +22,7 @@ class ResetBalanceConfirm extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
+    navBarBackgroundColor: '#0A566B',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin'
   }
@@ -141,7 +141,6 @@ class ResetBalanceConfirm extends Component {
 
 		}); //Promise
 	}
-
 
 	getTotal(){
 		return (Number(this.state.amount) + Number(this.state.fee_txt)).toFixed(2);
@@ -374,7 +373,7 @@ class ResetBalanceConfirm extends Component {
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							disabled={send_disabled}
-							style={[styles.fullWidthButton, btn_style]}
+							style={[styles.fullWidthButton, styles.fullWidthButton_SubAcc, btn_style]}
 							onPress={this._onConfirm.bind(this)}  >
 						<Text style={txt_style}>ENVIAR</Text>
 					</TouchableHighlight>

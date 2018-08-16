@@ -22,6 +22,7 @@ import { AsyncStorage } from 'react-native'
 import * as walletActions from '../wallet/wallet.actions';
 import * as helperActions from '../../utils/Helper.js';
 import * as config from '../../constants/config';
+import * as subaccount_helper from '../../utils/SubAccountHelper';
 
 class Drawer extends Component {
 	constructor(props) {
@@ -46,6 +47,7 @@ class Drawer extends Component {
 		// this._onAcceptDiscount				= this._onAcceptDiscount.bind(this);
 		this.onSendExtraBalance 			= this.onSendExtraBalance.bind(this);
 		this.onResetBalance 					= this.onResetBalance.bind(this);
+		this.onRefreshSubAccountPermissions 					= this.onRefreshSubAccountPermissions.bind(this);
 	}
 
 	componentWillMount() {
@@ -65,46 +67,47 @@ class Drawer extends Component {
 	}
 
 	onResetBalance(){
-
-		Alert.alert(
-		  'Volver saldo a 0 D$C',
-		  'Enviar balance a cuenta comercio',
-		  [
-		    {text: 'Cancelar', style: 'cancel'},
-		    {text: 'OK', onPress: () => ToastAndroid.show('Simulamos que volvemos saldo a cero.', ToastAndroid.SHORT) },
-		  ],
-		  { cancelable: true }
-		)
-
+		this.doSendExtraOrResetBalance(true);	
 	}
 
 	onSendExtraBalance(){
-		Alert.alert(
-		  'Enviar excedente',
-		  'Enviar excedente en cuenta a comercio',
-		  [
-		    {text: 'Cancelar', style: 'cancel'},
-		    {text: 'OK', onPress: () => ToastAndroid.show('Simulamos que enviamos excedente a cuenta comercio.', ToastAndroid.SHORT)},
-		  ],
-		  { cancelable: true }
-		)
+		this.doSendExtraOrResetBalance(false);	
 	}
 
-	// _onRewardCustomer(){
-	// 	this._toggleDrawer();
-	// 	this.props.navigator.push({
-	// 		screen: 'wallet.SelectCustomer',
-	// 		title: 'Cliente'
-	// 	});
-	// }
-	// _onAcceptDiscount(){
-	// 	this._toggleDrawer();
-	// 	// this.props.navigator.push({
-	// 	// 	screen: 'wallet.SelectCustomer',
-	// 	// 	title: 'Cliente'
-	// 	// });
-	// }
+	doSendExtraOrResetBalance(reset){
+		
+		let tx_data = {};
+		let balance = this.props.balance[config.ASSET_ID];
+		let account = this.props.account;
+		let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
+		try {
+			tx_data = subaccount_helper.prepareResetBalance(reset, account, balance);
+		} catch (error) {
+			console.log('Error!!!!', error);
+			Alert.alert(
+				title,
+		  	error.toString(),
+				[
+					{text: 'OK'},
+				]
+			);
+			return;
+		
+		}
 
+		this._toggleDrawer();
+		this.props.navigator.push({
+      screen: 'wallet.ResetBalanceConfirm',
+			title: title,
+			passProps:  {
+        ...tx_data	
+    	}
+		});
+	}
+
+	onRefreshSubAccountPermissions(){
+
+	}
 	_onPower(){
 		this._onFnDisabled();
 	}
@@ -165,10 +168,7 @@ class Drawer extends Component {
 			screen : 'wallet.Sending',
 			title :  'Obtendiendo información...',
 			passProps: {
-                  // recipient : this.state.recipient,
-									// amount :    this.state.discount,
-									// memo :      this.state.memo,
-								  modal_type: 'claiming',
+                  modal_type: 'claiming',
                   message:    'Modo subcuenta'
                 },
 			animationType: 'slide-up',
@@ -348,6 +348,7 @@ class Drawer extends Component {
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconSwitch 		= (<Icon name="ios-switch" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconCard 		  = (<Icon name="id-card" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
@@ -461,10 +462,18 @@ class Drawer extends Component {
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity onPress={this.onSendExtraBalance}>
-							<View style={styles.drawerListItem}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconSend}
 								<Text style={styles.drawerListItemText}>
 									ENVIAR EXCEDENTE
+								</Text>
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this.onRefreshSubAccountPermissions}>
+							<View style={styles.drawerListItem}>
+								{iconCard}
+								<Text style={styles.drawerListItemText}>
+									REFRESCAR PERMISOS
 								</Text>
 							</View>
 						</TouchableOpacity>
