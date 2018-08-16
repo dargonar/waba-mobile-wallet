@@ -372,7 +372,7 @@ class History extends Component {
 					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[_tipo]}]}>
-                <Image source={iconsMap['handshake-o']} style={[styles.row_hand]}/>
+                <Image source={iconsMap['ios-thumbs-up']} style={[styles.row_hand]}/>
 							</View>
 							<View style={styles.row_content}>
 								<View style={styles.row_line1}>

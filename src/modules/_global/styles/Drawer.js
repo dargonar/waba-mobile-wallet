@@ -110,6 +110,9 @@ const styles = StyleSheet.create({
     fontSize   : 10,
     lineHeight : 10,
 		color 		 : '#ffffff'
+  },
+  subaccountTextBold:{
+    fontFamily : 'roboto_bold'
   }
 });
 

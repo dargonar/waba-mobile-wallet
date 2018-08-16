@@ -106,8 +106,61 @@ class Drawer extends Component {
 	}
 
 	onRefreshSubAccountPermissions(){
+		
+		this.props.navigator.showModal({
+			screen : 'wallet.Sending',
+			title :  'Modo subcuenta',
+			passProps: {
+        modal_type: 'claiming',
+        message:    'Obtendiendo información de subcuenta...'
+      },
+			animationType: 'slide-up',
+			navigatorStyle: {navBarHidden:true}
+		});
 
+		subaccount_helper.getAccountWithdrawPermission(account).then( (the_perm) => {
+			if(!the_perm)
+			{
+				Alert.alert(
+					'Subcuentas',
+					'No se pudo obtener el permiso del comercio.',
+					[
+						{text: 'OK'}
+					]
+				);	
+			}
+
+			AsyncStorage.getItem('@Store:data').then((value)=>{
+        account               							= JSON.parse(value);
+        account['subaccount']['permission'] = the_perm;
+
+        AsyncStorage.setItem('@Store:data', JSON.stringify(account));
+        
+        // this.props.actions.createAccountSuccessHACK(account);
+  			// helperActions.launchWallet(account);
+
+  			ToastAndroid.show('Permisos actualizados correctamente!', ToastAndroid.SHORT);
+
+  			this.props.navigator.dismissModal({
+						animationType: 'slide-down'
+				});	
+      });
+
+		}, (err) => {
+			this.props.navigator.dismissModal({
+					animationType: 'slide-down'
+			});
+			Alert.alert(
+				'Subcuentas',
+				JSON.stringify(err),
+				[
+					{text: 'OK'}
+				]
+			);
+
+		});
 	}
+
 	_onPower(){
 		this._onFnDisabled();
 	}
@@ -166,11 +219,11 @@ class Drawer extends Component {
 
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
-			title :  'Obtendiendo información...',
+			title :  'Modo subcuenta',
 			passProps: {
-                  modal_type: 'claiming',
-                  message:    'Modo subcuenta'
-                },
+        modal_type: 'claiming',
+        message:    'Obtendiendo información de subcuenta...'
+      },
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
@@ -181,41 +234,10 @@ class Drawer extends Component {
 		console.log(' --- switchToSubAccountOrInitDaily() :: this.props.account.id')
 		console.log('this.props.account.id:', this.props.account.id)
 
-
-		walletActions.getSubAccountPermissions(this.props.account.id).then( (permissions) => {
-			console.log(' -- Traemos permisos del usuario:',  JSON.stringify(permissions));
-			let the_perm = null;
-			if(permissions && 'subaccounts' in permissions)
-			{
-				for(var i=0; i<permissions.subaccounts.length; i++) {
-					let perm = permissions.subaccounts[i];
-					console.log(' -------- perm.expiration>config.getFullUTCNow()', perm.expiration, config.getFullUTCNow());
-					if (perm.expiration>config.getFullUTCNow())
-					{
-						the_perm = perm;
-						break;
-					}
-				}
-			}
-
-			if(!the_perm)
-			{
-				this.props.navigator.dismissModal({
-						animationType: 'slide-down'
-				});
-				Alert.alert(
-					'Subcuentas',
-					'No tiene configurado ningún permiso o ya ha expirado.',
-					[
-						{text: 'OK', onPress: () => this._onSwitchToUser()  }
-					]
-				);
-
-				//this._onSwitchToUser();
-				return;
-			}
-
+		subaccount_helper.getAccountWithdrawPermission(account).then( (the_perm) => {
+			
 			let business = null;
+			
 			// 2.- Nos traemos al comercio
 			walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
 				business = resp.business;
@@ -249,13 +271,107 @@ class Drawer extends Component {
 
 				return;
 			}, (err) => {
+				this.props.navigator.dismissModal({
+						animationType: 'slide-down'
+				});
+				Alert.alert(
+					'Subcuentas',
+					JSON.stringify(err),
+					[
+						{text: 'OK', onPress: () => this._onSwitchToUser()  }
+					]
+				);
 				console.log('Error', JSON.stringify(err));
 			})
-
 		}, (err) => {
-			// this.setState({refreshing:true});
-			console.log('Error', JSON.stringify(err));
-		})
+
+				this.props.navigator.dismissModal({
+						animationType: 'slide-down'
+				});
+				Alert.alert(
+					'Subcuentas',
+					err.toString(),
+					[
+						{text: 'OK', onPress: () => this._onSwitchToUser()  }
+					]
+				);
+		} );
+
+
+		// walletActions.getSubAccountPermissions(this.props.account.id).then( (permissions) => {
+		// 	console.log(' -- Traemos permisos del usuario:',  JSON.stringify(permissions));
+		// 	let the_perm = null;
+		// 	if(permissions && 'subaccounts' in permissions)
+		// 	{
+		// 		for(var i=0; i<permissions.subaccounts.length; i++) {
+		// 			let perm = permissions.subaccounts[i];
+		// 			console.log(' -------- perm.expiration>config.getFullUTCNow()', perm.expiration, config.getFullUTCNow());
+		// 			if (perm.expiration>config.getFullUTCNow())
+		// 			{
+		// 				the_perm = perm;
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+
+		// 	if(!the_perm)
+		// 	{
+		// 		this.props.navigator.dismissModal({
+		// 				animationType: 'slide-down'
+		// 		});
+		// 		Alert.alert(
+		// 			'Subcuentas',
+		// 			'No tiene configurado ningún permiso o ya ha expirado.',
+		// 			[
+		// 				{text: 'OK', onPress: () => this._onSwitchToUser()  }
+		// 			]
+		// 		);
+
+		// 		//this._onSwitchToUser();
+		// 		return;
+		// 	}
+
+		// 	let business = null;
+		// 	// 2.- Nos traemos al comercio
+		// 	walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
+		// 		business = resp.business;
+		// 		this.props.navigator.dismissModal({
+		// 				animationType: 'slide-down'
+		// 		});
+		// 		this._toggleDrawer();
+		// 		if( config.isSubaccountMode(this.props.account.subaccount))
+		// 		{
+		// 				this.props.navigator.push({
+		// 				screen: 'discoin.SwitchConfirm',
+		// 				title: 'INICIAR CAJA DIARIA',
+		// 				passProps: {
+		// 					permission 					: the_perm,
+		// 					business 						: business,
+		// 					is_daily_request 		: true
+		// 				}
+		// 			});
+		// 		}
+		// 		else {
+		// 			this.props.navigator.push({
+		//         screen: 'discoin.SwitchConfirm',
+		//         title: 'CONFIRMAR MODO',
+		//         passProps: {
+		// 					permission 					: the_perm,
+		// 					business 						: business,
+		// 					is_daily_request 		: false
+		// 				}
+		//     	});
+		// 		}
+
+		// 		return;
+		// 	}, (err) => {
+		// 		console.log('Error', JSON.stringify(err));
+		// 	})
+
+		// }, (err) => {
+		// 	// this.setState({refreshing:true});
+		// 	console.log('Error', JSON.stringify(err));
+		// })
 	}
 
 	_openEndorsement(){
@@ -348,11 +464,13 @@ class Drawer extends Component {
 		const info 					= (<Icon name="ios-information-circle" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconSwitch 		= (<Icon name="ios-switch" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconCard 		  = (<Icon name="id-card" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		
+		// const iconCard 		  = (<Image source={iconsMap['ios-thumbs-up']} style={[styles.row_arrow]}/>);
+		const iconCard 		  = (<Icon name="ios-thumbs-up" size={15} color="#ffffff"  />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
-		const iconPlus   = (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
+		const iconPlus   		= (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
 		const iconSend			= (<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>);
 		// const iconSend			= (<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>);
 		let userIcon = (<Icon
@@ -379,9 +497,11 @@ class Drawer extends Component {
 		{
 			container_style 		= styles.container_subaccount;
 			subaccount_text  		= 'PASAR A MODO USUARIO';
+			withdrawl_limit 		= subaccount_helper.getPermissionWithdrawlLimit(this.props.account.subaccount.permission);
 			is_subaccount_text 	= (<Text style={styles.subaccountText} >
-					MODO SUBCUENTA ON {"\n"}
-					COMERCIO: {this.props.account.subaccount.business.name}
+					MODO SUBCUENTA <Text style={[styles.subaccountText, styles.subaccountTextBold]}>ENCENDIDO</Text> {"\n"}
+					COMERCIO: {this.props.account.subaccount.business.name} {"\n"}
+					LIMITE DIARIO: D$C {withdrawl_limit}
 				</Text>);
 
 			daily_withdraw = (<TouchableOpacity onPress={this._onInitDailyBox}>
@@ -473,7 +593,7 @@ class Drawer extends Component {
 							<View style={styles.drawerListItem}>
 								{iconCard}
 								<Text style={styles.drawerListItemText}>
-									REFRESCAR PERMISOS
+									REFRESCAR LIMITES DIARIOS
 								</Text>
 							</View>
 						</TouchableOpacity>
