@@ -162,10 +162,16 @@ class History extends Component {
 
 			},
 			onNotificationOpened: function(message, data, isActive) {
+				console.log('*************************** ONE SIGNAL ');
 				console.log('MESSAGE: ', message);
 				console.log('DATA: ', data);
 				console.log('ISACTIVE: ', isActive);
 
+				/*
+				'MESSAGE: ', 'vaku te ha enviado 10 DSC'
+				'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }
+				'ISACTIVE: ', true
+				*/
 				that.refreshHistory();
 			}
 		});
@@ -390,19 +396,22 @@ class History extends Component {
 
 		if(rowData.__typename == 'Transfer' && config.ASSET_ID == rowData.amount.asset.id) {
 
-       let mapa   = {received:'recibidos', sent: 'enviados', refunded:'recompensados', discounted:'pagados con descuento'};
+       let mapa   = {received:'recibidos', sent: 'enviados', discounted_subacc:'recibidos como pago con descuento', refunded_subacc:'recompensados', refunded:'recompensados', discounted:'pagados con descuento'};
        let rotato = {received:'135 deg', sent : '-45 deg', refunded_subacc:'-45 deg'     , discounted_subacc:'135 deg', refunded:'135 deg'     , discounted:'-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
 			 //let bg     = {received:'#A2EA4A', sent:'#FF7251'};
-			 let bg     = {received:'#3498db', sent:'#1abc9c', refunded:'#3498db', discounted:'#1abc9c'};
-       let dea    = {received:'De:', sent:'A:', refunded:'De:', discounted:'A:'};
+			 let bg     = {received:'#3498db', sent:'#1abc9c', refunded_subacc:'#1abc9c', discounted_subacc:'#3498db', refunded:'#3498db', discounted:'#1abc9c'};
+       let dea    = {received:'De:', sent:'A:', refunded_subacc:'A:', discounted_subacc:'De:', refunded:'De:', discounted:'A:'};
        let _type  = rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
        let _dea   = _type;
        let fecha  = this._getFecha(rowData.block.timestamp);
 			 let hora   = this._getHora(rowData.block.timestamp);
 			 let asset_symbol = config.ASSET_SYMBOL;
-       let message = undefined;
-       let _rotato = _type;
+       let message 	= undefined;
+       let _rotato 	= _type;
+       let _bg 		 	= _type;
+       let _mapa   	= _type;
+       let post_fix	= this.state.is_subaccount?'_subacc':'' 
        if(rowData.message)
          message = (<Text style={styles.row_message}>{rowData.message}</Text>);
        else
@@ -412,15 +421,20 @@ class History extends Component {
 					let prefix 	      = msg.substring(0,3);
           if(prefix==config.REFUND_PREFIX)
           {
-            _dea  = !this.state.is_subaccount?'refunded':'discounted';
+            // _dea  = ;
+            _dea  = 'refunded'+post_fix;
             _type = 'refunded';
             _rotato = _type + (this.state.is_subaccount?'_subacc':'');
+            _bg 		= _rotato;
+            _mapa   = _rotato;
           }
           if(prefix==config.PAYDISCOUNTED_PREFIX)
           {
-            _dea  = !this.state.is_subaccount?'discounted':'refunded';
+          	_dea  = 'discounted'+post_fix;
             _type = 'discounted';
             _rotato = _type + (this.state.is_subaccount?'_subacc':'');
+            _bg 		= _rotato;
+            _mapa   = _rotato;
           }
 					// let memo_account = msg.substring(4);
           message = (<Text style={styles.row_message}>{msg}</Text>);
@@ -429,16 +443,16 @@ class History extends Component {
        return (
         <TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
-            <View style={[styles.row_avatar, {backgroundColor:bg[_type]}]}>
+            <View style={[styles.row_avatar, {backgroundColor:bg[_bg]}]}>
               <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_rotato]}]}]}/>
             </View>
             <View style={styles.row_content}>
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_type]}</Text>
+                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_mapa]}</Text>
               </View>
               <View style={styles.row_line2}>
                 <Text style={styles.row_dea}>{dea[_dea]} </Text>
-                <Text>{((_type == 'received' || _type == 'refunded') && !this.state.is_subaccount) ? rowData.from.name : rowData.to.name}</Text>
+                <Text>{((_type == 'received' || _type == 'discounted' || _type == 'refunded_subacc')) ? rowData.from.name : rowData.to.name}</Text>
               </View>
               {message}
             </View>

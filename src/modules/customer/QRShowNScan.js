@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
   TextInput
 } from 'react-native';
 
@@ -26,10 +27,22 @@ import Prompt from 'react-native-prompt';
 import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
 import { Button } from 'react-native-elements'
 
-// import { BarcodeType, FocusMode, TorchMode, CameraFillMode } from 'react-native-barcode-scanner-google';
-import BarcodeScanner from 'react-native-barcode-scanner-google';
-import BarcodeType from 'react-native-barcode-scanner-google';
-import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
+// import BarcodeScanner from 'react-native-barcode-scanner-google';
+// import BarcodeType from 'react-native-barcode-scanner-google';
+import BarcodeScanner, {
+    Exception,
+    FocusMode,
+    TorchMode,
+    CameraFillMode,
+    BarcodeType,
+    pauseScanner,
+    resumeScanner
+} from 'react-native-barcode-scanner-google';
+// import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
+
+import FacebookTabBar from './FacebookTabBar';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+
 
 class QRShowNScan extends React.Component {
   constructor(props) {
@@ -56,13 +69,14 @@ class QRShowNScan extends React.Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#1abc9c',
+    navBarBackgroundColor: '#f15d44',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
   }
 
   componentDidMount() {
+    // setTimeout(this._tabs.goToPage.bind(this._tabs,1))
   }
 
   showSetAmount(){
@@ -70,7 +84,8 @@ class QRShowNScan extends React.Component {
   }
 
   _onAmountSet(value){
-    this.setState({promptVisible:false, amount_required:value, activeTab: 1 });
+    this.setState({promptVisible:false, amount_required:value }); //, activeTab: 1
+    // this._tabs.goToPage.bind(this._tabs,1)
   }
 
   onChangeTab(obj, that){
@@ -81,12 +96,13 @@ class QRShowNScan extends React.Component {
     }
   }
   _renderPrompt(){
-    if (!this.state.promptVisible)
-      return null;
+    
     let that = this;
     // let inputProps = {textInputProps :{keyboardType:'default'}};
     let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
-    let value = this.state.amount_required || 0;
+    let value = 0;
+    if(!isNaN(this.state.amount_required))
+      value = Number(this.state.amount_required);
     return (
       <Prompt
         title="Ingrese monto a solicitar"
@@ -94,9 +110,11 @@ class QRShowNScan extends React.Component {
         defaultValue={value.toString()}
         visible={ this.state.promptVisible }
         {...inputProps}
-        onCancel={ () => this.setState({
-          promptVisible: false
-        }) }
+        onCancel={ () => {
+            this.setState({promptVisible: false});
+            // this._tabs.goToPage.bind(this._tabs,1)
+          } 
+        }
         onSubmit={ (value) => that._onAmountSet(value) }
 
       />
@@ -244,10 +262,10 @@ class QRShowNScan extends React.Component {
   _renderQRCode(qr_text){
 
     return (
-        <View style={{height: 300, justifyContent: 'center', backgroundColor:'#ffffff'}}>
+        <View style={{height: 300, alignSelf:justifyContent: 'center', backgroundColor:'#ffffff'}}>
           <QRCode
             value={qr_text}
-            size={300}
+            size={config.QRIMAGE_SIZE}
             bgColor='black'
             fgColor='white'/>
         </View>
@@ -282,7 +300,7 @@ class QRShowNScan extends React.Component {
     let account_name  = this._renderAccountName(userIcon);
 
     return (
-      <View style={[{height:370,  backgroundColor:'#ffffff'}, styles.tab_content]}>
+      <View style={[{height:390,  backgroundColor:'#ffffff'}, styles.tab_content]}>
         {qr_code}
         {account_name}
       </View>
@@ -306,7 +324,7 @@ class QRShowNScan extends React.Component {
         <View style={[{height:460,  backgroundColor:'#ffffff'}, styles.tab_content]}>
           {qr_code}
           {account_name}  
-          <View style={{marginTop:10, width:300, height:40, flexDirection:'row', justifyContent: 'center'}}>
+          <TouchableOpacity style={{marginTop:10, width:300, height:40, flexDirection:'row', justifyContent: 'center'}} onPress={() => { this.showSetAmount() }}>
             <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
               <Text style={[styles.amount_title, {textAlign:'center'}]}>D$C</Text>
             </View>
@@ -314,14 +332,14 @@ class QRShowNScan extends React.Component {
               <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
             </View>
             <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-              <Button
-                title='...'
-                borderRadius={4}
-                backgroundColor={'#1abc9c'}
-                onPress={() => { this.showSetAmount() }}
-                 />
+              <Icon
+                  name='create'
+                  color='#517fa4'
+                  containerStyle={{backgroundColor:'#f15d44'}}
+                />
+                
             </View>
-          </View>
+          </TouchableOpacity>
 
           
         </View>
@@ -339,11 +357,51 @@ class QRShowNScan extends React.Component {
                   // );
               }}
               barcodeType={BarcodeType.QR_CODE }
+              cameraFillMode={
+                  CameraFillMode.COVER /* could also be FIT */
+              }
             />);
   }
 
   render(){
 
+    let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
+    let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
+    
+    let person_content      = this.renderAccount(userIcon); 
+    let request_content     = this.renderReceiveRequest(userIcon);
+    let qr_scanner_content  = this.renderQRScanner();
+
+    if (this.state.promptVisible)
+      request_content = (<View style={{flex:1, backgroundColor:'#ffffff'}}>{this._renderPrompt()}</View>);
+
+    return <ScrollableTabView
+        style={{backgroundColor:'#ffffff'}}
+        initialPage={0}
+        tabBarPosition="bottom"
+        tabBarBackgroundColor="#1abc9c"
+        tabBarActiveTextColor="#ffffff"
+        renderTabBar={() => <FacebookTabBar />}
+      >
+        <ScrollView tabLabel="ios-person" style={styles.tabView}>
+          <View style={styles.card}>
+            {person_content}
+          </View>
+        </ScrollView>
+        <ScrollView tabLabel="ios-cash" style={styles.tabView}>
+          <View style={styles.card}>
+            {request_content}
+          </View>
+        </ScrollView>
+        <ScrollView tabLabel="ios-camera" style={styles.tabView} contentContainerStyle={{ flex:1}}>
+          <View style={styles.card}>
+            {qr_scanner_content}
+          </View>
+        </ScrollView>
+      </ScrollableTabView>;
+  }
+  
+  renderXXXX(){
     let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
     let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
     
@@ -356,14 +414,17 @@ class QRShowNScan extends React.Component {
     let person_content      = this.renderAccount(userIcon); 
     let qr_scanner_content  = this.renderQRScanner();
 
+    if (this.state.promptVisible)
+      return (<View style={{flex:1, backgroundColor:'#ffffff'}}>{this._renderPrompt()}</View>);
+
     return (
         <View style={{flex:1}}>
-          <Tabs onChangeTab={(i, ref, from)=> this.onChangeTab(i, this)} tabBarPosition="bottom" page={this.state.activeTab}>
+          <Tabs ref={ t=>this._tabs = t }  onChangeTab={(i, ref, from)=> this.onChangeTab(i, this)} tabBarPosition="bottom" page={this.state.activeTab}>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
               {person_content}
             </Tab>
             <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="cash" /></TabHeading>}>
-              {this._renderPrompt()}
+              
               {request_content}
             </Tab>
             <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>

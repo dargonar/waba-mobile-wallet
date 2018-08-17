@@ -228,10 +228,10 @@ class DiscountShowQR extends React.Component {
   _renderQRCode(qr_text){
 
     return (
-        <View style={{height: 300, justifyContent: 'center', backgroundColor:'#ffffff'}}>
+        <View style={{height: 300, justifyContent: 'center', alignSelf:'center',  backgroundColor:'#ffffff'}}>
           <QRCode
             value={qr_text}
-            size={300}
+            size={config.QRIMAGE_SIZE}
             bgColor='black'
             fgColor='white'/>
         </View>
@@ -378,7 +378,7 @@ class DiscountShowQR extends React.Component {
     return (
 
       <View style={styles.container}>
-        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
+        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ padding:20, flexDirection:'column'}}>
 
           {content}
 

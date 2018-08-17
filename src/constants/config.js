@@ -37,6 +37,7 @@ export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'account_n_amount';
 export const QRSCAN_PAYMENT_REQUEST 	= 'payment_request';
 export const QRSCAN_INVOICE_DISCOUNT 	= 'invoice_discount';
 export const QRSCAN_INVOICE_REWARD 		= 'invoice_reward';
+export const QRIMAGE_SIZE 						= 250;
 
 export const SA_RESET_BALANCE 						= 'reset_balance';
 export const SA_RESET_BALANCE_PREFIX 			= '~rb';
