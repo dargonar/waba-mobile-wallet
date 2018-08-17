@@ -262,7 +262,7 @@ class QRShowNScan extends React.Component {
   _renderQRCode(qr_text){
 
     return (
-        <View style={{height: 300, alignSelf:justifyContent: 'center', backgroundColor:'#ffffff'}}>
+        <View style={{height: 300, justifyContent: 'center', backgroundColor:'#ffffff'}}>
           <QRCode
             value={qr_text}
             size={config.QRIMAGE_SIZE}
