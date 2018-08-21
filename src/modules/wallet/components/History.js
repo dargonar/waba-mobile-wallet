@@ -163,10 +163,16 @@ class History extends Component {
 			},
 			onNotificationOpened: function(message, data, isActive) {
 				console.log('*************************** ONE SIGNAL ');
-				console.log('MESSAGE: ', message);
-				console.log('DATA: ', data);
+				console.log('MESSAGE: ', 	message);
+				console.log('DATA: ', 		data);
 				console.log('ISACTIVE: ', isActive);
 
+				let tx_info = {
+					message 	: message,
+					data 			: data,
+					isActive 	: isActive
+				}
+				that.props.actions.newTxHACK(tx_info);
 				/*
 				'MESSAGE: ', 'vaku te ha enviado 10 DSC'
 				'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }

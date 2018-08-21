@@ -12,7 +12,8 @@ import {
   TextInput
 } from 'react-native';
 
-import QRCode from 'react-native-qrcode';
+//import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode-svg';
 // import { Icon } from 'react-native-elements'
 //import Icon from 'react-native-vector-icons/Ionicons';
 //'react-native-elements'
@@ -20,6 +21,7 @@ import styles from './styles/QRShowNScan';
 import { connect } from 'react-redux';
 import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
+import * as qr_helper from '../../utils/QRHelper';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 import Prompt from 'react-native-prompt';
@@ -156,7 +158,8 @@ class QRShowNScan extends React.Component {
             // TYPE:QR_CODE
             if(type=='QR_CODE')
             {
-              let jsonData = JSON.parse(data);
+              let jsonData = qr_helper.expandJSONForQR(data);
+
               if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
               {
                 // send_confirm
@@ -190,6 +193,7 @@ class QRShowNScan extends React.Component {
                 });
                 return;
               }
+
               setTimeout(
                 this.doResumeScanner(),
                 100
@@ -219,18 +223,20 @@ class QRShowNScan extends React.Component {
   }
   
   renderBusinessBill(userIcon){
-    let obj = {
-        bill_amount :   this.state.bill_amount,
-        bill_id :       this.state.bill_id,
-        discount_rate : this.state.discount_rate,
-        discount_dsc :  this.state.discount_dsc,
-        discount_ars :  this.state.discount_ars,
-        account_id:     this.props.account.id,
-        account_name:   this.props.account.name,
-        business_id:    this.props.account.subaccount.business.account_id,
-        business_name:  this.props.account.subaccount.business.name,
-        type:           config.QRSCAN_INVOICE_DISCOUNT
-    }
+    // let obj = {
+    //     bill_amount :   this.state.bill_amount,
+    //     bill_id :       this.state.bill_id,
+    //     discount_rate : this.state.discount_rate,
+    //     discount_dsc :  this.state.discount_dsc,
+    //     discount_ars :  this.state.discount_ars,
+    //     account_id:     this.props.account.id,
+    //     account_name:   this.props.account.name,
+    //     business_id:    this.props.account.subaccount.business.account_id,
+    //     business_name:  this.props.account.subaccount.business.name,
+    //     type:           config.QRSCAN_INVOICE_DISCOUNT
+    // }
+
+    let obj = qr_helper.jsonForInvoice(this.state.bill_amount, this.state.bill_id, this.state.discount_rate, this.state.discount_dsc, this.state.discount_ars, this.props.account.id, this.props.account.name, this.props.account.subaccount.business.account_id, this.props.account.subaccount.business.name)
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     return  (
@@ -260,14 +266,16 @@ class QRShowNScan extends React.Component {
   }
 
   _renderQRCode(qr_text){
-
+    /*
+    bgColor='black'
+    fgColor='white'
+    */
     return (
         <View style={{height: 300, justifyContent: 'center', backgroundColor:'#ffffff'}}>
           <QRCode
             value={qr_text}
             size={config.QRIMAGE_SIZE}
-            bgColor='black'
-            fgColor='white'/>
+            />
         </View>
       );
   }
@@ -289,11 +297,12 @@ class QRShowNScan extends React.Component {
 
   renderAccount(userIcon){
     
-    let obj = {
-        account_id:   this.props.account.id,
-        account_name: this.props.account.name,
-        type:         config.QRSCAN_ACCOUNT_ONLY
-    }
+    // let obj = {
+    //     account_id:   this.props.account.id,
+    //     account_name: this.props.account.name,
+    //     type:         config.QRSCAN_ACCOUNT_ONLY
+    // }
+    let obj = qr_helper.jsonForAccountOnly(this.props.account.id, this.props.account.name);
 
     let text          = JSON.stringify(obj);
     let qr_code       = this._renderQRCode(text);
@@ -309,12 +318,14 @@ class QRShowNScan extends React.Component {
 
   renderReceiveRequest(userIcon){
 
-    let obj = {
-      account_id:   this.props.account.id,
-      account_name: this.props.account.name,
-      amount:       this.state.amount_required,
-      type:         config.QRSCAN_ACCOUNT_N_AMOUNT
-    }
+    // let obj = {
+    //   account_id:   this.props.account.id,
+    //   account_name: this.props.account.name,
+    //   amount:       this.state.amount_required,
+    //   type:         config.QRSCAN_ACCOUNT_N_AMOUNT
+    // }
+    let obj = qr_helper.jsonForAccountNAmount(this.props.account.id, this.props.account.name, this.state.amount_required);
+
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     let account_name  = this._renderAccountName(userIcon);
@@ -407,7 +418,6 @@ class QRShowNScan extends React.Component {
     
     if(this.state.type==config.QRSCAN_INVOICE_DISCOUNT){
       return this.renderX(userIcon);
-      
     }
 
     let request_content     = this.renderReceiveRequest(userIcon);

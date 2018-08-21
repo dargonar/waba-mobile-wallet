@@ -21,12 +21,13 @@ import com.ekreutz.barcodescanner.BarcodeScannerPackage;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 
-
 import com.geektime.reactnativeonesignal.ReactNativeOneSignalPackage;
 import com.react.rnspinkit.RNSpinkitPackage;  
 import com.zmxv.RNSound.RNSoundPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+
+import com.horcrux.svg.SvgPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -49,7 +50,8 @@ public class MainApplication extends NavigationApplication {
         new RNSpinkitPackage(),
         new RNSoundPackage(),
         new RNGeocoderPackage(),
-        new MapsPackage()
+        new MapsPackage(),
+        new SvgPackage()
     );
 
     //return null;
@@ -67,6 +69,7 @@ public class MainApplication extends NavigationApplication {
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
 import com.ekreutz.barcodescanner.BarcodeScannerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

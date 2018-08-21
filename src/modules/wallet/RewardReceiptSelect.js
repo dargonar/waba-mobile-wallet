@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
+import * as qr_helper from '../../utils/QRHelper';
 
 import styles from './styles/SelectRecipient';
 
@@ -81,7 +82,8 @@ class RewardReceiptSelect extends Component {
 
             if(type=='QR_CODE')
             {
-              let jsonData = JSON.parse(data);
+              // let jsonData = JSON.parse(data);
+              let jsonData = qr_helper.expandJSONForQR(data);
               if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
               {
                 this.props.actions.memoSuccess('');

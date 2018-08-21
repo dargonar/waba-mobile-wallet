@@ -37,6 +37,20 @@ export function createAccountSuccessHACK(account) {
 	}
 }
 
+export function newTx(tx_info) {
+	return {
+		type      : types.NEW_TX_ACTION,
+		new_tx 		: tx_info
+	};
+}
+
+export function newTxHACK(tx_info) {
+	return function (dispatch) {
+		//console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+		dispatch(newTx(tx_info));
+	}
+}
+
 // export function getAccount(name) {
 // 	return new Promise((resolve, reject) => {
 

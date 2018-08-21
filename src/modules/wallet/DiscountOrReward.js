@@ -106,7 +106,9 @@ class DiscountOrReward extends React.Component {
           type:           config.QRSCAN_INVOICE_DISCOUNT
         }
     });
+    
   }
+  
   _onSendReward(){
     if(isNaN(this.state.bill_amount) || parseInt(this.state.bill_amount)<=0) {
       ToastAndroid.show('Debe ingresar un monto total.', ToastAndroid.SHORT);

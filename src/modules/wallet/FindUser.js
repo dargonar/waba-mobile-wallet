@@ -23,7 +23,7 @@ import { Button } from 'react-native-elements'
 import BarcodeScanner from 'react-native-barcode-scanner-google';
 import BarcodeType from 'react-native-barcode-scanner-google';
 import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
-
+import * as qr_helper from '../../utils/QRHelper';
 
 class FindUser extends Component {
 
@@ -75,7 +75,8 @@ class FindUser extends Component {
         .then(() => {
             if(type=='QR_CODE')
             {
-              let jsonData = JSON.parse(data);
+              // let jsonData = JSON.parse(data);
+              let jsonData = qr_helper.expandJSONForQR(data)
               if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
               {
                 // send_confirm

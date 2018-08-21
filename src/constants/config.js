@@ -32,11 +32,11 @@ export const DISCOIN_CREDIT_SYMBOL = 'THEDISCOIN.OD'
 export const DISCOIN_ACCESS_SYMBOL = 'THEDISCOIN.A'
 
 
-export const QRSCAN_ACCOUNT_ONLY 			= 'account_only';
-export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'account_n_amount';
-export const QRSCAN_PAYMENT_REQUEST 	= 'payment_request';
-export const QRSCAN_INVOICE_DISCOUNT 	= 'invoice_discount';
-export const QRSCAN_INVOICE_REWARD 		= 'invoice_reward';
+export const QRSCAN_ACCOUNT_ONLY 			= 'ao'; //'account_only';
+export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'aa'; //'account_n_amount';
+export const QRSCAN_PAYMENT_REQUEST 	= 'pr'; //'payment_request';
+export const QRSCAN_INVOICE_DISCOUNT 	= 'id'; //'invoice_discount';
+export const QRSCAN_INVOICE_REWARD 		= 'ir'; //'invoice_reward';
 export const QRIMAGE_SIZE 						= 250;
 
 export const SA_RESET_BALANCE 						= 'reset_balance';

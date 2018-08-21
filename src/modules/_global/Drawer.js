@@ -612,7 +612,7 @@ class Drawer extends Component {
 					<TouchableOpacity onPress={this._onGoToWABA}>
 						<View style={styles.drawerListItemVersion}>
 							<Text style={styles._version}>
-								DISCOIN ALPHA VERSION 1.1{"\n"}POWERED BY WABA.NETWORK
+								DISCOIN BETA VERSION 1.5{"\n"}POWERED BY WABA.NETWORK
 							</Text>
 						</View>
 					</TouchableOpacity>

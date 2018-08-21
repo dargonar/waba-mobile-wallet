@@ -11,46 +11,47 @@ import {
   TextInput
 } from 'react-native';
 
-import QRCode from 'react-native-qrcode';
-// import { Icon } from 'react-native-elements'
-//import Icon from 'react-native-vector-icons/Ionicons';
-//'react-native-elements'
+// import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode-svg';
+
+import { Icon } from 'react-native-elements'
 import styles from './styles/DiscountShowQR';
 import { connect } from 'react-redux';
 import Keyboard from './components/Keyboard';
 import * as config from '../../constants/config';
+import * as qr_helper from '../../utils/QRHelper';
 import { iconsMap } from '../../utils/AppIcons';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
+
 import Prompt from 'react-native-prompt';
 
-import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
-import { Button } from 'react-native-elements'
+// import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
+// import { Button } from 'react-native-elements'
 
-// import { BarcodeType, FocusMode, TorchMode, CameraFillMode } from 'react-native-barcode-scanner-google';
-import BarcodeScanner from 'react-native-barcode-scanner-google';
-import BarcodeType from 'react-native-barcode-scanner-google';
-import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
+// import BarcodeScanner from 'react-native-barcode-scanner-google';
+// import BarcodeType from 'react-native-barcode-scanner-google';
+// import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
 
 class DiscountShowQR extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
 
-      bill_amount:    props.bill_amount,
-      bill_id:        props.bill_id,
+      bill_amount     : props.bill_amount,
+      bill_id         : props.bill_id,
 
-      discount_rate:  props.discount_rate,
-      discount_dsc:   props.discount_dsc,
-      discount_ars:   props.discount_ars,
+      discount_rate   : props.discount_rate,
+      discount_dsc    : props.discount_dsc,
+      discount_ars    : props.discount_ars,
 
-      amount_dsc:     props.amount_dsc || 0,
+      amount_dsc      : props.amount_dsc || 0,
 
-      text :          '',
-
-      type :          props.type,
-      promptVisible : false,
-      activeTab:0
+      text            : '',
+      type            : props.type,
+      promptVisible   : false,
+      activeTab       :0,
+      can_pop_to_root : false
     };
 
   }
@@ -66,45 +67,6 @@ class DiscountShowQR extends React.Component {
   componentDidMount() {
   }
 
-  showSetAmount(){
-    this.setState({ promptVisible:true })
-  }
-
-  _onAmountSet(value){
-    this.setState({promptVisible:false, amount_dsc:value, activeTab: 1 });
-  }
-
-  onChangeTab(i){
-    if(i==2)
-    {
-      this.resumeScanner();
-    }
-  }
-  _renderPrompt(){
-    if (!this.state.promptVisible)
-      return null;
-    let that = this;
-    // let inputProps = {textInputProps :{keyboardType:'default'}};
-    let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
-    let value = this.state.amount_dsc || 0;
-    return (
-      <Prompt
-        title="Ingrese monto a solicitar"
-        placeholder=""
-        defaultValue={value.toString()}
-        visible={ this.state.promptVisible }
-        {...inputProps}
-        onCancel={ () => this.setState({
-          promptVisible: false
-        }) }
-        onSubmit={ (value) => that._onAmountSet(value) }
-
-      />
-    );
-  }
-
-
-
   _onOkPress(){
     this.props.navigator.popToRoot({
       animated: true
@@ -116,7 +78,21 @@ class DiscountShowQR extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(this.state.type==!config.QRSCAN_INVOICE_DISCOUNT){
+      return;
+    }
+
+    let new_state = {};
+    if (nextProps.new_tx !== this.props.new_tx) {
+      console.log('componentWillReceiveProps: new new_tx =>', JSON.stringify(nextProps.new_tx));
+      ToastAndroid.show(nextProps.new_tx.message, ToastAndroid.LONG);
+      this.setState({can_pop_to_root:true});
+      // let that = this;
+      // setTimeout( that.props.navigator.popToRoot({animated: true }) , 1000); 
+    }
   }
+
+
 
   componentWillUnmount() {
   }
@@ -124,89 +100,47 @@ class DiscountShowQR extends React.Component {
   focus() {
   }
 
-  _onBarcodeScanned(data, type){
-
-    console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
-    
-    if(type=='QR_CODE')
-    {
-      pauseScanner()
-        .then(() => {
-            // ToastAndroid.show(type + ' :: ' + JSON.stringify(data), ToastAndroid.SHORT);
-            // console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
-            // BARCODE: "{\"account_id\":\"1.2.97\",\"account_name\":\"user1\",\"type\":\"account_only\"}" 
-            // TYPE:QR_CODE
-            if(type=='QR_CODE')
-            {
-              let jsonData = JSON.parse(data);
-              if (jsonData.type==config.QRSCAN_ACCOUNT_N_AMOUNT)
-              {
-                // send_confirm
-              }
-              if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
-              {
-                // pay_confirm
-                console.log(' ------------------------------- QRCode' , jsonData)
-                this.props.navigator.push({
-                  screen:     'wallet.InvoicePayConfirm',
-                  title:      'Pagar',
-                  passProps:  jsonData
-                });
-                // setTimeout(
-                //   this.doResumeScanner(),
-                //   1000
-                // );
-                
-              }
-            }
-        })
-        .catch(e => {
-          ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
-          // setTimeout(
-          //   this.doResumeScanner(),
-          //   1000
-          // );
-        });
-    }
-  }
-
-  doResumeScanner(){
-    resumeScanner()
-    .then(() => {
-        // do something after the scanner (camera) stream was resumed.
-    })
-    .catch(e => {
-        // Print error if scanner stream could not be resumed.
-        ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);
-        console.log(e);
-    });
-  }
-  
   renderBusinessBill(userIcon){
-    let obj = {
-        bill_amount :   this.state.bill_amount,
-        bill_id :       this.state.bill_id,
-        discount_rate : this.state.discount_rate,
-        discount_dsc :  this.state.discount_dsc,
-        discount_ars :  this.state.discount_ars,
-        account_id:     this.props.account.id,
-        account_name:   this.props.account.name,
-        business_id:    this.props.account.subaccount.business.account_id,
-        business_name:  this.props.account.subaccount.business.name,
-        type:           config.QRSCAN_INVOICE_DISCOUNT
-    }
+    // let obj = {
+    //     bill_amount :   this.state.bill_amount,
+    //     bill_id :       this.state.bill_id,
+    //     discount_rate : this.state.discount_rate,
+    //     discount_dsc :  this.state.discount_dsc,
+    //     discount_ars :  this.state.discount_ars,
+    //     account_id:     this.props.account.id,
+    //     account_name:   this.props.account.name,
+    //     business_id:    this.props.account.subaccount.business.account_id,
+    //     business_name:  this.props.account.subaccount.business.name,
+    //     type:           config.QRSCAN_INVOICE_DISCOUNT
+    // }
+    let obj = qr_helper.jsonForInvoice(this.state.bill_amount, this.state.bill_id, this.state.discount_rate, this.state.discount_dsc, this.state.discount_ars, this.props.account.id, this.props.account.name, this.props.account.subaccount.business.account_id, this.props.account.subaccount.business.name)
+    
     console.log(' -------- INVOICE or REWARD', JSON.stringify(obj));
 
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     return  (
-          <View style={{height:550}}>
+          <View style={{height:440}}>
             {qr_code}
-            <View style={{height:100, justifyContent: 'center', backgroundColor:'#ffffff'}}>
-              <Text style={[styles.amount, {textAlign:'center'}]}>$ {this.state.discount_ars} + D$C {this.state.discount_dsc}</Text>
+            
+            {/*<View style={{height:100, justifyContent: 'center', backgroundColor:'#ffffff'}}>
+                          <Text style={[styles.amount, {textAlign:'center'}]}>$ {this.state.discount_ars} + D$C {this.state.discount_dsc}</Text>
+                        </View>*/}
+            
+            <View style={{height:70, backgroundColor:'#ffff'}}>
+              <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+                <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end'}}>
+                  <Text style={styles.discoin_amount_w}>D$C {this.state.discount_dsc}</Text>
+                </View>
+
+                <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+                  <Text style={styles.discoin_amount_g}>+ $ {this.state.discount_ars}</Text>
+                </View>
+              </View>
             </View>
 
-            <View style={{height:70, backgroundColor:'#ffffff'}}>
+
+            <View style={{height:60, backgroundColor:'#ffffff'}}>
               <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
                 <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
                 {userIcon}
@@ -227,173 +161,63 @@ class DiscountShowQR extends React.Component {
 
   _renderQRCode(qr_text){
 
+    /*
+      bgColor='black'
+      fgColor='white'
+    */
     return (
         <View style={{height: 300, justifyContent: 'center', alignSelf:'center',  backgroundColor:'#ffffff'}}>
           <QRCode
             value={qr_text}
             size={config.QRIMAGE_SIZE}
-            bgColor='black'
-            fgColor='white'/>
+            
+            />
         </View>
       );
-  }
-
-  _renderAccountName(userIcon){
-    return (
-      <View style={{marginTop:10, backgroundColor:'#ffffff', width:300, height:70, flexDirection:'row', justifyContent: 'center'}}>
-        <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-        {userIcon}
-        </View>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-          <Text style={{fontSize:25}} >
-            {this.props.account.name}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
-  renderAccount(userIcon){
-    
-    let obj = {
-        account_id:   this.props.account.id,
-        account_name: this.props.account.name,
-        type:         config.QRSCAN_ACCOUNT_ONLY
-    }
-
-    let text          = JSON.stringify(obj);
-    let qr_code       = this._renderQRCode(text);
-    let account_name  = this._renderAccountName(userIcon);
-
-    return (
-      <View style={[{height:370,  backgroundColor:'#ffffff'}, styles.tab_content]}>
-        {qr_code}
-        {account_name}
-      </View>
-    );
-  }
-
-  renderReceiveRequest(userIcon){
-
-    let obj = {
-      account_id:       this.props.account.id,
-      account_name:     this.props.account.name,
-      amount_required:  this.state.amount_dsc,
-      type:             config.QRSCAN_ACCOUNT_N_AMOUNT
-    }
-    let text = JSON.stringify(obj);
-    let qr_code = this._renderQRCode(text);
-    let account_name  = this._renderAccountName(userIcon);
-
-    
-    return  (
-        <View style={[{height:460,  backgroundColor:'#ffffff'}, styles.tab_content]}>
-          {qr_code}
-          {account_name}  
-          <View style={{marginTop:10, width:300, height:40, flexDirection:'row', justifyContent: 'center'}}>
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
-              <Text style={[styles.amount_title, {textAlign:'center'}]}>D$C</Text>
-            </View>
-            <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-              <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_dsc}</Text>
-            </View>
-            <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-              <Button
-                title='...'
-                borderRadius={4}
-                backgroundColor={'#1abc9c'}
-                onPress={() => { this.showSetAmount() }}
-                 />
-            </View>
-          </View>
-
-          
-        </View>
-      );
-  }
-
-  renderQRScanner(){
-
-    return (<BarcodeScanner
-              style={{ flex: 1 }}
-              onBarcodeRead={({ data, type }) => {
-                  this._onBarcodeScanned(data, type);
-                  // console.log(
-                  //     `##### '${type}' - '${data}'`
-                  // );
-              }}
-              barcodeType={BarcodeType.QR_CODE }
-            />);
   }
 
   render(){
 
     let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
     let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
-    
-    if(this.state.type==config.QRSCAN_INVOICE_DISCOUNT){
-      return this.renderX(userIcon);
-      
+    let content = this.renderBusinessBill(userIcon);
+    let button = false;
+    if(this.state.can_pop_to_root){
+      button = (
+        <View style={{height:90, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#ffffff'}}>
+          <Icon
+            raised
+            containerStyle={{backgroundColor:'#0A566B' }}
+            name='md-checkmark'
+            type='ionicon'
+            color='#ffffff'
+            underlayColor='#415261'
+            onPress={this._onOkPress.bind(this)}
+            size={30} />
+        </View>);
     }
 
-    let request_content     = this.renderReceiveRequest(userIcon);
-    let person_content      = this.renderAccount(userIcon); 
-    let qr_scanner_content  = this.renderQRScanner();
-
-    return (
-        <View style={{flex:1}}>
-          <Tabs onChangeTab={(i, ref)=> this.onChangeTab(i)} tabBarPosition="bottom" page={this.state.activeTab}>
-            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="person" /></TabHeading>}>
-              {person_content}
-            </Tab>
-            <Tab heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="cash" /></TabHeading>}>
-              {this._renderPrompt()}
-              {request_content}
-            </Tab>
-            <Tab style={{backgroundColor:'#ffffff'}} heading={ <TabHeading style={{backgroundColor:'#1abc9c'}}><Icon style={{color:'#ffffff'}} name="camera" /></TabHeading>}>
-              {qr_scanner_content}
-            </Tab>
-          </Tabs>
-        </View>
-      );
-  }
-  
-
-  renderX(userIcon) {
-
-    let content = this.renderBusinessBill(userIcon);
-    /*
-    <View style={{height:80, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#ffffff'}}>
-            <Icon
-              raised
-              containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: '#ffffff' }}
-              name='md-checkmark'
-              type='ionicon'
-              color='#ffffff'
-              underlayColor='#415261'
-              onPress={this._onOkPress.bind(this)}
-              size={30} />
-          </View>
-          */    
     return (
 
       <View style={styles.container}>
-        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ padding:20, flexDirection:'column'}}>
+        <ScrollView  contentContainerStyle={{ paddingTop:20, paddingLeft:20, paddingRight:20, flexDirection:'column'}}>
 
           {content}
+          {button}
 
         </ScrollView>
 
       </View>
     );
-    //<KeyboardSpacer />
+    
   }
 }
 
 function mapStateToProps(state, ownProps) {
 	return {
 		account: state.wallet.account,
-    balance: state.wallet.balance
+    balance: state.wallet.balance,
+    new_tx : state.wallet.new_tx
 	};
 }
 

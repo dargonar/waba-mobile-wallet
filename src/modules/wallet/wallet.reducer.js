@@ -4,6 +4,14 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
+		
+		case types.NEW_TX_ACTION:
+			return {
+				...state,
+				new_tx: action.new_tx
+			};
+
+
 		case types.CREDIT_READY_SUCCESS:
 			return {
 				...state,
@@ -48,6 +56,7 @@ export default function (state = initialState.wallet, action) {
 				...state,
 				errors : state.errors + 1
 			}
+
 		case types.RETRIEVE_HISTORY_SUCCESS:
 
 			if( action.start == 0 ) {
@@ -65,7 +74,6 @@ export default function (state = initialState.wallet, action) {
 					errors    : 0
 				};
 			}
-
 
 		case types.CREATE_KEYS_SUCCESS:
 			return {

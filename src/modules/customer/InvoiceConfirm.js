@@ -475,7 +475,7 @@ class InvoiceConfirm extends Component {
 	              	<Text style={styles.title_part}>DESCUENTO:</Text>
 	              </View>
 	              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-	                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>({discount_dsc}D$C)</Text></Text>
+	                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>(D$C {discount_dsc})</Text></Text>
 	              </View>
 	            </View>
 	          </View>
@@ -486,7 +486,7 @@ class InvoiceConfirm extends Component {
 	              	<Text style={styles.title_part}>A PAGAR:</Text>
 	              </View>
 	              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start'}}>
-	                <Text style={styles.discoin_amount_w}>{payable_amount}D$C</Text>
+	                <Text style={styles.discoin_amount_w}>D$C {payable_amount}</Text>
 	              </View>
 	            </View>
 	          </View>
