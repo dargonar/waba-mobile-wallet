@@ -13,9 +13,8 @@ import * as config from '../../constants/config';
 
 import { ToastAndroid, Dimensions, Alert,Platform, Image, ListView, TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
-const item_width     = (Dimensions.get('window').width/2)-6;
-const item_img_width = item_width - 40;
-const xx = item_width-18;
+const item_width     = (Dimensions.get('window').width/2)-10;
+const xx = item_width-20;
 const styles = StyleSheet.create({
   container:{flex:1, marginTop:3, backgroundColor:'#ffffff'},
   list: {
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   },
   row: {
-    margin: 3,
+    margin: 5,
     width: item_width,
     height: item_width,
     backgroundColor: '#F6F6F6',
