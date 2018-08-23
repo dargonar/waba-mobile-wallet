@@ -32,7 +32,7 @@ import LocationSearch from './modules/endorsement/LocationSearch';
 import LocationMap from './modules/endorsement/LocationMap';
 import LocationFull from './modules/endorsement/LocationFull';
 
-// import DscMain from './modules/discoin/DscMain';
+import DscMain from './modules/discoin/DscMain';
 import Business from './modules/discoin/Business';
 
 import SwitchConfirm from './modules/_global/SwitchConfirm';
@@ -98,7 +98,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('endorsement.LocationMap', () => LocationMap	, store, Provider);
 	Navigation.registerComponent('endorsement.LocationFull', () => LocationFull	, store, Provider);
 
-	// Navigation.registerComponent('discoin.Main', () => DscMain	, store, Provider);
+	Navigation.registerComponent('discoin.Main', () => DscMain	, store, Provider);
 	Navigation.registerComponent('discoin.Business', () => Business	, store, Provider);
 	Navigation.registerComponent('discoin.SwitchConfirm', () => SwitchConfirm	, store, Provider);
 	Navigation.registerComponent('wallet.FindUser', () => FindUser	, store, Provider);

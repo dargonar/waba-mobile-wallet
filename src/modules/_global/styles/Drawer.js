@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
 	},
 	drawerListItemText2: {
 		color: 'white',
-		fontSize: 15,
 		paddingLeft: 15,
 		flex: 1,
 		fontFamily : 'roboto_light',
-		fontWeight: '100'
+		fontWeight: '100',
+		fontSize: 15,
 	},
 	drawerListItemText: {
 		color: 'white',

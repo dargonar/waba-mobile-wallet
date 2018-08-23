@@ -4,6 +4,7 @@
 import Identicon from 'identicon.js';
 
 export const API_URL          = 'http://35.163.59.126:8088';
+export const FILES_URL        = 'http://35.163.59.126:8088/files/';
 export const API_URL_V1       = API_URL+'/api/v3';
 export const MERCADOPAR_URL   = 'http://mercado.monedapar.com?category=productos-y-servicios';
 export const EMPLEOSPAR_URL   = 'http://mercado.monedapar.com?category=empleos-solicitados';
