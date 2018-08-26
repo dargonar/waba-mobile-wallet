@@ -92,8 +92,8 @@ android {
         applicationId "com.test.waba.discoin"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.5"
+        versionCode 6
+        versionName "1.6"
         ndk {
             abiFilters "armeabi-v7a", "x86"
             moduleName "bts2helper"

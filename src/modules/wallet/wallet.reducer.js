@@ -4,7 +4,12 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
-		
+		case types.BUSINESS_FILTER_SUCCESS:
+			return {
+				...state,
+				business_filter: action.business_filter
+			};
+
 		case types.NEW_TX_ACTION:
 			return {
 				...state,

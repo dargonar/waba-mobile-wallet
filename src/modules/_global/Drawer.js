@@ -420,8 +420,14 @@ class Drawer extends Component {
 		// Linking.openURL(config.MERCADOPAR_URL).catch(err => console.error('An error occurred', err));
 		this._toggleDrawer();
 		this.props.navigator.push({
-			screen: 'discoin.Business',
-			title: 'Buscar comercios'
+			screen: 			'discoin.Business',
+			title: 				'Comercios',
+			rightButtons : [
+        {
+          icon: iconsMap['ios-options'],
+          id: 'filterBusinesses' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ]
 		});
 	}
 

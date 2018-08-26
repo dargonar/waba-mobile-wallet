@@ -58,28 +58,15 @@ class Main extends Component {
 		this.props.navigator.push({
         screen:     'customer.QRShowNScan',
         title:      'QR',
-        // passProps:  {
-        // 	amount_dsc: 	0,
-        //   type: config.QRSCAN_ACCOUNT_N_AMOUNT  
-        // }
-  		});
-	}
+  	});
 
-	showQRScanner(){
-	    //showModal
-	    this.props.navigator.push({
-	      screen: "wallet.QRScanner", // unique ID registered with Navigation.registerScreen
-	      title: "Escanear Código QR", // title of the screen as appears in the nav bar (optional)
-	      navigatorStyle: {}, // override the navigator style for the screen, see "Styling the navigator" below (optional)
-	      animationType: 'slide-down', // 'none' / 'slide-up' , appear animation for the modal (optional, default 'slide-up')
-	      // rightButtons: [
-	      //   {
-	      //     icon: iconsMap['ios-trash-outline'],
-	      //     id: 'clearMemo'
-	      //   }
-	      // ]
-	    });
-  }
+  	// this.props.navigator.toggleDrawer({
+   //    to: 'open',
+   //    side: 'right',
+   //    animated: true
+   //  });
+
+	}
 
   _onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {

@@ -34,6 +34,8 @@ import LocationFull from './modules/endorsement/LocationFull';
 
 import DscMain from './modules/discoin/DscMain';
 import Business from './modules/discoin/Business';
+import BusinessProfile from './modules/discoin/BusinessProfile';
+import BusinessFilter from './modules/discoin/BusinessFilter';
 
 import SwitchConfirm from './modules/_global/SwitchConfirm';
 
@@ -100,7 +102,10 @@ export function registerScreens(store, Provider) {
 
 	Navigation.registerComponent('discoin.Main', () => DscMain	, store, Provider);
 	Navigation.registerComponent('discoin.Business', () => Business	, store, Provider);
+	Navigation.registerComponent('discoin.BusinessProfile', () => BusinessProfile	, store, Provider);
+	Navigation.registerComponent('discoin.BusinessFilter', () => BusinessFilter	, store, Provider);
 	Navigation.registerComponent('discoin.SwitchConfirm', () => SwitchConfirm	, store, Provider);
+	
 	Navigation.registerComponent('wallet.FindUser', () => FindUser	, store, Provider);
 	Navigation.registerComponent('wallet.SelectCustomer', () => SelectCustomer	, store, Provider);
 	Navigation.registerComponent('wallet.SetDiscount', () => SetDiscount	, store, Provider);

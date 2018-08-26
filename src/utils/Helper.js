@@ -74,6 +74,9 @@ function launchWallet(account) {
       left: {
         screen: 'global.Drawer'
       },
+      right: {
+        screen: 'discoin.BusinessFilter'
+      },
     }
   });
 }

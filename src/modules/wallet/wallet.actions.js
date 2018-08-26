@@ -51,6 +51,21 @@ export function newTxHACK(tx_info) {
 	}
 }
 
+
+export function businessFilterSuccess(biz_filter) {
+	return {
+		type      			: types.BUSINESS_FILTER_SUCCESS,
+		business_filter : biz_filter
+	};
+}
+
+export function businessFilterSuccessHACK(biz_filter) {
+	return function (dispatch) {
+		//console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+		dispatch(businessFilterSuccess(biz_filter));
+	}
+}
+
 // export function getAccount(name) {
 // 	return new Promise((resolve, reject) => {
 
@@ -232,8 +247,11 @@ export function retrieveBusinesses(skip, count, query, filter) {
     // search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
 			fetch(config.getAPIURL('/dashboard/business/credited/'+skip+'/'+count), {
-				method: 'GET',
-				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+				method: 'POST',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+				body: JSON.stringify({
+								filter :   	filter 
+				})
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
@@ -252,6 +270,28 @@ export function retrieveBusinesses(skip, count, query, filter) {
 		});
 }
 
+export function retrieveCategories() {
+		return new Promise((resolve, reject) => {
+			fetch(config.getAPIURL('/business/category/list'), {
+				method: 'GET',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+        console.log(' -- retrieveCategories:')
+        console.log(JSON.stringify(responseJson));
+
+        resolve(responseJson);
+        return;
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+        return;
+      });
+
+		});
+}
 
 export function myAccountIdSuccess(id) {
 	return {

@@ -15,6 +15,7 @@ export default {
 		credit_ready  : false,
 		endorsements  : {},
 		endorsed 			: null,
-		new_tx 				: null 
+		new_tx 				: null,
+		business_filter: {selected_categories:[]} 
 	}
 };
