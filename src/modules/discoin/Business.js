@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 
+import { Icon } from 'native-base';
 
+import LinearGradient from 'react-native-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from '../wallet/wallet.actions';
@@ -14,7 +16,7 @@ import * as config from '../../constants/config';
 import { ToastAndroid, Dimensions, Alert,Platform, Image, ListView, TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 
-const item_width     = (Dimensions.get('window').width)-20;
+const item_width     = (Dimensions.get('window').width)-40;
 const xx = item_width-40;
 const styles = StyleSheet.create({
   container:{flex:1, paddingTop:3, backgroundColor:'#ffffff'},
@@ -26,12 +28,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   },
   businessCard: {
-    borderRadius: 4,
-    marginTop:10,
+    borderRadius: 7,
+    marginTop: 22,
     width: item_width,
-    height: 120,
-    elevation: 6,
+    height: 110,
+    elevation: 10,
     backgroundColor: '#FFF',
+    borderColor: 'transparent'
   },
 
   businessCardInfo: {
@@ -39,22 +42,27 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   businesseCardTitle:{
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontFamily : 'Montserrat-Medium',
     color: '#58595b',
-    marginBottom: 6,
+    marginBottom: 3,
+    marginTop: 3,
   },
   businessCardInfoContainer:{
     padding: 10,
     paddingTop: 5,
+    paddingLeft: 8,
     flex: 1
   },
   businessCategorie:{
-    fontSize: 8,
-    fontWeight: 'bold',
-    margin: 0,
+    fontSize: 7,
+    fontFamily : 'Montserrat-Bold',
+    letterSpacing: 10,
+    margin: 1,
     padding: 0,
-    lineHeight: 10,
+    lineHeight: 6,
+    color: '#000',
+    opacity: 0.25,
   },
   row: {
     margin: 5,
@@ -62,21 +70,13 @@ const styles = StyleSheet.create({
     height: item_width,
     backgroundColor: '#F6F6F6',
   },
-  row2: {
-    margin: 5,
-    width: item_width,
-    height: 120,
-    backgroundColor: 'red',
-    elevation: 6,
-    borderRadius: 10,
-  },
   thumb: {
     flex:1,
-    width: null,
+    width: 105,
     height: null,
     resizeMode: 'cover',
-    borderBottomLeftRadius: 4,
-    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
   },
 
   name_container:{
@@ -99,53 +99,91 @@ const styles = StyleSheet.create({
     padding: 4,
     fontWeight: 'bold',
     opacity: 1,
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Medium',
     fontWeight: '100',
     fontSize: 15,
     lineHeight:15
   },
   discount: {
     color: '#fff',
-    backgroundColor:'#6b91f8',
-    alignSelf:'flex-end',
-    padding: 13,
-    paddingTop: 15,
+    backgroundColor:'transparent',
     fontWeight: '100',
     borderRadius: 4,
-    fontFamily : 'roboto_bold',
+    fontFamily : 'Montserrat-Regular',
     fontSize: 26,
-    lineHeight:15,
-    flex: 1,
-    marginRight: 2.5,
-    marginTop: 8,
+    flex: 0,
     textAlign: 'right', 
-    justifyContent: 'flex-start'
   },
   reward: {
     color: '#fff',
-    backgroundColor:'#ff7233',
-    alignSelf:'flex-end',
-    padding: 13,
-    paddingTop: 15,
+    backgroundColor:'transparent',
     fontWeight: '100',
     borderRadius: 4,
-    fontFamily : 'roboto_bold',
+    fontFamily : 'Montserrat-Regular',
     fontSize: 26,
-    lineHeight:15,
-    flex: 1,
-    marginTop: 8,
-    marginLeft: 2.5,
+    flex: 0,
     textAlign: 'right', 
   },
+  rewardGradient: {
+    flex: 1,
+    borderRadius: 5,
+    padding: 4,
+    marginLeft: 4,
+    marginTop: 6,
+    paddingRight: 10,
+    fontSize: 34
+  },
+  rewardIcon: {
+    position: 'absolute',  
+    color: '#FFF',
+    opacity: 0.5,
+  },
+  discountGradient: {
+    flex: 1,
+    borderRadius: 5,
+    padding: 4,
+    marginRight: 4,
+    marginTop: 6,
+    paddingRight: 10
+  },
   promoLabel:{
-    fontSize: 12,
-    fontWeight: '100',
-    alignItems: 'flex-start',
-    margin: 20,
-    alignSelf: 'flex-start',
-    height: 1,
+    flex: 1,
+    textAlign: 'right',
+    alignSelf: 'center',
+    marginTop: -9,
+    marginRight: 4,
+    fontSize: 14,
+    color: '#FFF',
+    fontFamily : 'Montserrat-Light',
+  },
+  sectionTitle:{
+    fontSize: 18,
+    padding: 8,
+    marginTop: 5,
+    marginBottom: 4,
+    paddingLeft: 0,
+    color: '#a7a8aa',
+    fontFamily : 'Montserrat-SemiBold',
+  }, 
+  discoinCount:{
+    width: item_width,    
+    alignItems: 'center',
+    padding: 0,
+    paddingRight: 20,
+    flexDirection: 'row', 
+    justifyContent: 'flex-end',
+  },
+  discoinCountValue:{
+    fontSize: 45,
+    fontFamily : 'Montserrat-Light', 
+    color: '#FFF',
+  },
+  discoinCountGradient:{
+    borderRadius: 35,
+    height: 60,
   },
 });
+
 
 class Business extends Component {
 
@@ -153,7 +191,7 @@ class Business extends Component {
     navBarTextColor: '#000000', 
     navBarBackgroundColor: '#ffffff',
     navBarButtonColor: '#000000',
-    navBarTextFontFamily: 'roboto_normal'
+    navBarTextFontFamily: 'Montserrat-Medium'
   }
   
   constructor(props) {
@@ -238,20 +276,33 @@ class Business extends Component {
     if ( this.state.refreshing )
       content = (
         <View style={{ flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator size="large" color="#0B5F83" />
-        </View>
-      )
+        <ActivityIndicator size="large" color="#0B5F83" /></View>
+        )
 
     else
       content = (
-        <ListView
-          contentContainerStyle={styles.list}
-          dataSource={this.state.dataSource}
-          initialListSize={21}
-          pageSize={1} // should be a multiple of the no. of visible cells per row
-          scrollRenderAheadDistance={500}
-          renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
-        />
+
+        <View style={{}}>
+          <View style={{height: 130, width: item_width, alignSelf:'center'}}>
+            <Text style={styles.sectionTitle}>Tus Discoins</Text>
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
+              <View style={styles.discoinCount}>
+                <Text style={styles.discoinCountValue}>650</Text>
+                <Icon name="md-arrow-dropright" style={{color: '#FFF', opacity: 0.4, fontSize: 35, marginLeft: 20}}/>
+              </View>
+            </LinearGradient>
+          </View>
+          <View style={{}}>
+            <ListView
+              contentContainerStyle={styles.list}
+              dataSource={this.state.dataSource}
+              initialListSize={21}
+              pageSize={1} // should be a multiple of the no. of visible cells per row
+              scrollRenderAheadDistance={500}
+              renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
+            />
+          </View>
+        </View>
     );
 
     return (
@@ -265,6 +316,9 @@ class Business extends Component {
   removePercent(value){
     return parseInt(value).toString();
   }
+
+
+
 
 
   _renderRow(rowData, sectionID, rowID) {
@@ -290,16 +344,36 @@ class Business extends Component {
           <View style={styles.businessCardInfoContainer}>
             <View style={styles.businessInfo}>
               <Text style={styles.businesseCardTitle}>{rowData['name']} </Text>
-              <View>
-                <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
-                <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Icon name='food' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
+                <View>
+                  <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
+                  <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>
+                </View>
+
               </View>
             </View>
             <View style={{flexDirection: 'row', flex: 1}}>
-              <Text style={styles.discount}><Text style={styles.promoLabel}>%</Text>{_discount}</Text>
-              
-              <Text style={styles.reward}><Text style={styles.promoLabel}>%</Text>{_reward}</Text>
-              
+
+              <LinearGradient start={{x: 0, y: 1}} end={{x: 0.75, y: 0}} colors={['#76eafa', '#6b91f8']} style={styles.discountGradient}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                  <Icon name="remove" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>                  
+                  <Text style={styles.promoLabel}>%</Text>
+                  <Text style={styles.discount}>{_discount}</Text>
+                </View>
+              </LinearGradient>
+
+              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.rewardGradient}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                  <Icon name="add" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>
+                  <Text style={styles.promoLabel}>%</Text>
+                  <Text style={styles.reward}>{_reward}</Text>
+                </View>
+              </LinearGradient>
+
+
+
+
             </View>
           </View>
 
@@ -335,3 +409,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Business);
+
+
