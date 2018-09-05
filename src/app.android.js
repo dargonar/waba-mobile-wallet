@@ -51,11 +51,16 @@ try {
             if(!(s.wallet.errors % 10)) {
 							ToastAndroid.show('Está tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
 						}
+						// AHORA TRAEMOS COMERCIOS
 						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
+						// store.dispatch(walletActions.retrieveBusinesses(0, '', initialState.business_filter) );
+						
 					}
 				});
 
-				store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
+				// AHORA TRAEMOS COMERCIOS
+				// store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
+				store.dispatch(walletActions.retrieveBusinesses(0, '', initialState.business_filter) );
  			}
 		});
 

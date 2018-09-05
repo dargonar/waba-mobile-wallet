@@ -14,7 +14,7 @@ import com.diventi.bts2helper.Bts2helperPackage;
 
 
 // import com.eguma.barcodescanner.BarcodeScannerPackage;
-// import com.BV.LinearGradient.LinearGradientPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
 import com.ekreutz.barcodescanner.BarcodeScannerPackage;
@@ -43,7 +43,7 @@ public class MainApplication extends NavigationApplication {
         new Bts2helperPackage(),
         new UWCryptoPackage(),
         new BarcodeScannerPackage(),
-        // new LinearGradientPackage(),
+        new LinearGradientPackage(),
         new ReactNativeConfigPackage(),
         new VectorIconsPackage(),
         new ReactNativeOneSignalPackage(),

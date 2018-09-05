@@ -62,6 +62,8 @@ export function businessFilterSuccess(biz_filter) {
 export function businessFilterSuccessHACK(biz_filter) {
 	return function (dispatch) {
 		//console.log(' -- REDUCER -> CREATE_ACCOUNT_SUCCESS');
+		if(biz_filter.order.date == '')
+			biz_filter.order.date = config.getToday()
 		dispatch(businessFilterSuccess(biz_filter));
 	}
 }
@@ -243,7 +245,8 @@ export function retrieveUsers(query, search_filter) {
 		});
 }
 
-export function retrieveBusinesses(skip, count, query, filter) {
+
+export function filterBusinesses(skip, count, query, filter) {
     // search_filter = search_filter || '0';
 		return new Promise((resolve, reject) => {
 			fetch(config.getAPIURL('/dashboard/business/credited/'+skip+'/'+count), {
@@ -255,7 +258,7 @@ export function retrieveBusinesses(skip, count, query, filter) {
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
-        console.log(' -- retrieveBusinesses:')
+        console.log(' -- filterBusinesses:')
         console.log(JSON.stringify(responseJson));
 
         resolve(responseJson);
@@ -268,6 +271,61 @@ export function retrieveBusinesses(skip, count, query, filter) {
       });
 
 		});
+}
+
+
+// HISTORY
+export function retrieveBusinessesError() {
+	return {
+		type         : types.RETRIEVE_BUSINESS_LIST_ERROR,
+	};
+}
+
+export function retrieveBusinessesSuccess(data, start) {
+	return {
+		type          : types.RETRIEVE_BUSINESS_LIST_SUCCESS,
+		business_list : data,
+		start         : start
+	};
+}
+
+export function retrieveBusinesses(skip, query, filter) {
+    
+    return function (dispatch) {
+  		let x = 0;
+			let timer = setTimeout(() => {
+				if (x === 0) {
+					console.log('error TOTAL');
+					dispatch(retrieveBusinessesError());
+					return;
+				}
+				x = 1;
+			}, 10000);
+
+			fetch(config.getAPIURL('/dashboard/business/credited/'+skip+'/20'), {
+				method: 'POST',
+				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+				body: JSON.stringify({
+								filter :   	filter 
+				})
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+	      console.log(' -- retrieveBusinesses:')
+	      console.log(JSON.stringify(responseJson));
+	      clearTimeout(timer);
+	      dispatch(retrieveBusinessesSuccess(responseJson['businesses'], skip));
+				dispatch(readySuccess(1));
+        
+	      return;
+	    })
+	    .catch((error) => {
+	      console.error(error);
+	      dispatch(retrieveBusinessesError());
+	      return;
+	    });
+    }
+
 }
 
 export function retrieveCategories() {

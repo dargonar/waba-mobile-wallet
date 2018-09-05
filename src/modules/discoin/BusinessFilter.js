@@ -10,7 +10,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import { ToastAndroid
       , Dimensions
       , Alert
@@ -25,7 +25,7 @@ import { ToastAndroid
       , View 
       , ActivityIndicator } from 'react-native';
 
-import {Button} from 'native-base';
+import {Button, Icon} from 'native-base';
 
 // f35b42
 const styles = StyleSheet.create({
@@ -85,7 +85,7 @@ class BusinessFilter extends Component {
     this.state = {
       searchText: 'Buscar...',
       categories: [],
-      selected_categories: [],
+      selected_categories: props.business_filter.selected_categories,
       refreshing: false,
       error:      false
 
@@ -126,11 +126,10 @@ class BusinessFilter extends Component {
     })
   }
 
-  fetchSubCategories (cat_id) {
-  }
+  // fetchSubCategories (cat_id) {
+  // }
 
   componentDidMount() {
-    //     AppState.addEventListener('change', this.handleAppStateChange);
     this.fetchCategories();
   }
 
@@ -144,7 +143,10 @@ class BusinessFilter extends Component {
 
   applyFilter(){
     let selected_categories = this.state.selected_categories;
-    let filter = {selected_categories:selected_categories}
+    let filter = {
+        ...this.props.business_filter,
+        selected_categories:selected_categories
+      }
     console.log('BusinessFilter::filtro aplicado!', JSON.stringify(filter));
     this.props.actions.businessFilterSuccessHACK(filter);
     this._toggleDrawer();
@@ -174,7 +176,7 @@ class BusinessFilter extends Component {
           <View style={{height:70, padding:20, backgroundColor:'#f35b42', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
               <Text style={{color:'#ffffff', flex:1, alignSelf:'center', fontSize:18, fontFamily: 'roboto_bold'}}>Filtros</Text>
               <View style={{flex:1, alignSelf:'center', flexDirection:'row', justifyContent: 'flex-end'}}>  
-                <Icon name="ios-options" size={18}  color="#ffffff"  />
+                <Icon name='funnel' size={18}  style={{color:'#ffffff'}}  />
               </View>
             </View>
             
@@ -182,7 +184,7 @@ class BusinessFilter extends Component {
             
             <View style={{height:60, paddingLeft:10, paddingRight:10, backgroundColor:'#ffbe1d', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
               <View style={{width:20, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
-                <Icon name="ios-search" size={18}  color="#ffffff"  />
+                <Icon name="ios-search" size={18}  style={{color:'#ffffff'}}  />
               </View>
               <TextInput
                 autoCapitalize="words"
@@ -223,11 +225,12 @@ BusinessFilter.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    account    : state.wallet.account,
-    balance    : state.wallet.balance,
-    fees       : state.wallet.fees,
-    asset      : state.wallet.asset,
-    blockchain : state.wallet.blockchain
+    account           : state.wallet.account,
+    balance           : state.wallet.balance,
+    fees              : state.wallet.fees,
+    asset             : state.wallet.asset,
+    blockchain        : state.wallet.blockchain,
+    business_filter   : state.wallet.business_filter
   };
 }
 

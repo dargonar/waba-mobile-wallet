@@ -4,6 +4,30 @@ import initialState from '../../reducers/initialState';
 export default function (state = initialState.wallet, action) {
 	switch (action.type) {
 
+
+		case types.RETRIEVE_BUSINESS_LIST_SUCCESS:
+			if( action.start == 0 ) {
+				return {
+					...state,
+					business_list 				: action.business_list,
+					business_list_at_end  : false
+				};
+			} else {
+				return {
+					...state,
+					business_list   			: state.business_list.concat(action.business_list),
+					business_list_at_end  : (action.business_list.length == 0),
+				};
+			}
+
+		case types.RETRIEVE_BUSINESS_LIST_ERROR:
+			console.log('RETRIEVE_BUSINESS_LIST_ERROR ==> ', state.errors+1);
+			return {
+				...state,
+				// errors : state.errors + 1
+			}
+
+
 		case types.BUSINESS_FILTER_SUCCESS:
 			return {
 				...state,

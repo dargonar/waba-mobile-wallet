@@ -16,6 +16,27 @@ export default {
 		endorsements  : {},
 		endorsed 			: null,
 		new_tx 				: null,
-		business_filter: {selected_categories:[]} 
+		business_list : [],
+		business_list_at_end : false,
+		business_list_filter: {
+			order: 
+				{
+					field: 'discount', 							//'discount', 'reward', 'proximity' 
+					date : ''
+				}
+		},
+
+		business_filter: 
+			{
+				selected_categories:[], 
+				order: 
+				{
+					field: 'discount',//'discount', 'reward', 'proximity' 
+					date : ''
+				},
+				// filter: { 
+				// 	payment_methods: ['cash', 'debit_card', 'credit_card']
+				// }
+			} 
 	}
 };

@@ -25,6 +25,46 @@ function launchTest(){
 
 function launchWallet(account) {
 
+  Navigation.startSingleScreenApp({
+    appStyle : { orientation : 'portrait' },
+    screen: {
+      screen         : 'wallet.Main',
+      // screen        : 'discoin.Main',
+      navigatorStyle : {
+       navBarButtonColor : '#000',
+       drawUnderNavBar   : true,
+       navBarTransparent : true,
+       navBarNoBorder    : true,
+       topBarElevationShadowEnabled: false
+      },
+      rightButtons : [
+        {
+          icon: iconsMap['ios-search'],
+          id: 'searchBusiness' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
+      leftButtons: [
+        {
+          icon: iconsMap['ios-menu'],
+          title: '',
+          id: 'sideMenu'
+        }
+      ]
+    },
+    animationType : 'none',
+    drawer: {
+      left: {
+        screen: 'global.Drawer'
+      },
+      right: {
+        screen: 'discoin.BusinessFilter'
+      },
+    }
+  });
+}
+
+function launchSubaccountWallet(account) {
+
   let _rightButtons = [];
   if(!account || !account.subaccount || account.subaccount.wallet_mode!='subaccount')
   {
@@ -42,24 +82,12 @@ function launchWallet(account) {
  			screen				 : 'wallet.Main',
 			// screen				 : 'discoin.Main',
       navigatorStyle : {
-       navBarButtonColor : '#ffffff',
+       navBarButtonColor : '#000',
        drawUnderNavBar   : true,
        navBarTransparent : true,
 			 navBarNoBorder 	 : true,
 			 topBarElevationShadowEnabled: false
       },
-//       fab: {
-//         collapsedId: 'newTx',
-//         collapsedIcon: iconsMap['ios-add'].uri,
-//         backgroundColor: '#0B5F83'
-//       },
-
-//       rightButtons: [
-// 				{
-// 					icon: iconsMap['qrcode'],
-// 					id: 'qrCode'
-// 				}
-// 			]
       rightButtons : _rightButtons,
 			leftButtons: [
     		{
@@ -79,6 +107,8 @@ function launchWallet(account) {
       },
     }
   });
+
+  
 }
 
 function launchOnboard() {
