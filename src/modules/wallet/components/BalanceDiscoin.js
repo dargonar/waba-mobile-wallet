@@ -18,6 +18,7 @@ import { avales }  from '../../endorsement/components/static/endorsements_const'
 import { avales_colors }  from '../../endorsement/components/static/endorsements_const';
 import * as fn_avales  from '../../endorsement/components/static/endorsements_const'
 import LinearGradient from 'react-native-linear-gradient';
+//import Svg, {Path} from 'react-native-svg';
 
 class BalanceDiscoin extends Component {
 
@@ -64,17 +65,21 @@ class BalanceDiscoin extends Component {
 		if(parts[1] != '00')
 			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
 
+
+		let data = config.getDiscoinIcon()
+		
+
 		return (
 			<View style={styles.container_discoin}>
-        <Text style={styles.sectionTitle}>Tus Discoins</Text>
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
-          <View style={styles.discoinCount}>
-            <Text style={styles.discoinCountValue}>{parts[0]}{p}</Text>
-
-            <Icon name="md-arrow-dropright" style={{color: '#FFF', opacity: 0.4, fontSize: 35, marginLeft: 20}}/>
-          </View>
-        </LinearGradient>
-      </View>
+		        <Text style={styles.sectionTitle}>Tus Discoins</Text>
+		        <LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
+		          <View style={styles.discoinCount}>
+					<Image style={{width: 15, height: 15, marginRight:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: data}}/>
+		            <Text style={styles.discoinCountValue}>{parts[0]}{p}</Text>
+		            <Icon name="md-arrow-dropright" style={{color: '#FFF', opacity: 0.4, fontSize: 35, marginLeft: 20}}/>
+		          </View>
+		        </LinearGradient>
+	      </View>
 		);		
 	}
 }

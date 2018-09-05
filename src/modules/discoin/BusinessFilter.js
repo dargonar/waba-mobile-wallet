@@ -41,40 +41,60 @@ const styles = StyleSheet.create({
     lineHeight          : 18
   },
   applyButton:{
-    backgroundColor:'#f35b42',
+    width: '90%',
     borderColor:'#f35b42',
-    borderRadius:4
+    borderRadius:25,
+    padding: 10,
+
   },
   applyButtonText:{
-    color: '#ffffff',
-    fontFamily: 'roboto_bold',
-    fontSize:     17,  
+    // color: '#ffffff',
+    // fontFamily: 'Montserrat-Medium',
+    // fontSize:     17,  
+    // textAlign: 'center',
+    fontSize: 12,
+    fontFamily : 'Montserrat-Bold',
+    color: '#58595b',
+    paddingLeft:10,
+    paddingRight:10,
+    marginBottom: 1,
+    opacity: 0.5,
   },
   categoryButton:{
-    marginRight: 10,
-    marginTop: 10,
-    padding:10,
-    borderColor:'#f35b42',
-    borderRadius:4
+    width: '45%',
+    marginBottom: 4,
+    marginRight: 4,
+    color: '#f35b42',
+    borderRadius: 20,
+    backgroundColor:'transparent',
+    padding: 8,
+    textAlign: 'center', 
+    alignItems: 'center',
+    borderColor: '#dcdcdc',
+    borderWidth: 1,
   },
   categoryButtonSelected:{
-    backgroundColor:'#f35b42',
-    marginRight: 10,
-    marginTop: 10,
-    padding:10,
-    borderColor:'#f35b42',
-    borderRadius:4
+    width: '45%',
+    marginBottom: 4,
+    marginRight: 4,
+    color: '#FFF',
+    borderRadius: 20,
+    backgroundColor:'#ff9e5d',
+    borderColor: '#f58b44',
+    borderWidth: 1,
+    padding: 8,
+    textAlign: 'center',
+    alignItems: 'center' 
   },
   
   categoryButtonText:{
-    color: '#f35b42',
-    fontFamily: 'roboto_thin',
-    fontSize:     15,
+    fontSize:     11,
+    fontFamily: 'Montserrat-Medium',
   },
   categoryButtonTextSelected:{
-    color: '#ffffff',
-    fontFamily: 'roboto_thin',
-    fontSize:     15,  
+    fontSize:     11,
+    fontFamily: 'Montserrat-Medium',
+    color: '#FFF',
   }
 });
 
@@ -157,9 +177,9 @@ class BusinessFilter extends Component {
       return (false);
     let selected_categories = this.state.selected_categories;
     let buttons = this.state.categories.map((category, i) => (
-      <Button bordered style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } onPress={ () => this._categorySelected(category['id']) } >
+      <TouchableHighlight style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } onPress={ () => this._categorySelected(category['id']) } >
         <Text style={[(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonTextSelected : styles.categoryButtonText ]}>{category['name']}</Text>
-      </Button>
+      </TouchableHighlight>
     ));
 
     return (
@@ -173,32 +193,16 @@ class BusinessFilter extends Component {
 
     return (
         <View style={styles.container}>
-          <View style={{height:70, padding:20, backgroundColor:'#f35b42', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{color:'#ffffff', flex:1, alignSelf:'center', fontSize:18, fontFamily: 'roboto_bold'}}>Filtros</Text>
-              <View style={{flex:1, alignSelf:'center', flexDirection:'row', justifyContent: 'flex-end'}}>  
-                <Icon name='funnel' size={18}  style={{color:'#ffffff'}}  />
-              </View>
+          <View style={{height:70, padding:20, paddingBottom: 0, backgroundColor:'#FFF', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{color:'#a7a8aa', flex:1, alignSelf:'center', fontSize:18, fontFamily: 'Montserrat-Medium'}}>Filtros</Text>
             </View>
             
-          <ScrollView style={{paddingBottom:0}} contentContainerStyle={{ flexDirection:'column', padding:20}}>
+          <ScrollView style={{paddingBottom:0}} contentContainerStyle={{ flexDirection:'column', padding:20, paddingTop: 0}}>
             
-            <View style={{height:60, paddingLeft:10, paddingRight:10, backgroundColor:'#ffbe1d', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
-              <View style={{width:20, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
-                <Icon name="ios-search" size={18}  style={{color:'#ffffff'}}  />
-              </View>
-              <TextInput
-                autoCapitalize="words"
-                style={[styles.textInputPlaceholder, {flex:1}]}
-                onChangeText={(text) => this.setState( { searchText:text } ) }
-                value={this.state.searchText}
-                underlineColorAndroid ="transparent"
-                placeholder=""
-              />
-            </View>
 
-            <View style={{flex:1, marginTop:20, paddingRight:10, flexDirection:'column', justifyContent: 'flex-start'}}>
-              <View style={{height:40, alignSelf:'stretch', paddingRight:10, flexDirection:'column', justifyContent: 'center'}}>
-                <Text style={{fontSize:18, fontFamily: 'roboto_bold'}}>Categorías</Text>
+            <View style={{flex:1, marginTop:0, paddingRight:10, flexDirection:'column', justifyContent: 'flex-start'}}>
+              <View style={{height:40, alignSelf:'stretch', paddingRight:10, marginBottom: 10, flexDirection:'column', justifyContent: 'center'}}>
+                <Text style={{fontSize:18, fontFamily: 'Montserrat-Medium'}}>Categorías</Text>
               </View>  
 
               {this.renderCategoryButtons()}
@@ -206,9 +210,9 @@ class BusinessFilter extends Component {
             </View>
             
             <View style={{flex:1, marginTop:20, flexDirection:'column', paddingTop:10,justifyContent: 'center', borderTopWidth:1, borderTopColor:'#cecece'}}> 
-              <Button block style={styles.applyButton} onPress={ () => this.applyFilter() } >
+              <TouchableHighlight block style={styles.applyButton} onPress={ () => this.applyFilter() } >
                 <Text style={styles.applyButtonText}>Aplicar</Text>
-              </Button> 
+              </TouchableHighlight> 
             </View>
 
           </ScrollView>

@@ -10,8 +10,18 @@ const styles = StyleSheet.create({
     color: '#a7a8aa',
     fontFamily : 'Montserrat-SemiBold',
   }, 
+  container_discoin: {
+  	padding: 20,
+  	paddingBottom: 0,
+    width           : undefined,
+    height          : undefined,
+    backgroundColor : '#fff' ,//'transparent',
+    justifyContent  : 'center',
+    alignItems      : 'center',
+	flex            : 3
+  },
   discoinCount:{
-    width: 300,    
+    width: '100%',
     alignItems: 'center',
     padding: 0,
     paddingRight: 20,
@@ -28,14 +38,7 @@ const styles = StyleSheet.create({
     height: 60,
    	elevation: 5, 
   },
-  container_discoin: {
-    width           : undefined,
-    height          : undefined,
-    backgroundColor : '#fff' ,//'transparent',
-    justifyContent  : 'center',
-    alignItems      : 'center',
-		flex            : 3
-	},
+
 
 
 
