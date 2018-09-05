@@ -4,7 +4,12 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor:'#FFF'
+
 	},
+  wallet_container: {
+    flex: 1,
+    backgroundColor:'#FFF'
+  },
 	actionButtonIcon: {
     fontSize: 30,
     height: 30,

@@ -182,7 +182,7 @@ class Wallet extends Component {
 		// {/*<Icon name="md-notifications-off" style={styles.actionButtonIcon} />*/}
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
-			<View style={styles.container}>
+			<View style={styles.wallet_container}>
         <Balance {...this.props} style={styles.balance}/>
         <History {...this.props} style={styles.history}/>
 				{ (subaccount_mode)?

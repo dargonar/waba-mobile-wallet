@@ -5,6 +5,7 @@ import Drawer from './modules/_global/Drawer';
 import CreateAccount from './modules/wallet/CreateAccount';
 import NewAccount from './modules/wallet/NewAccount';
 import Main from './modules/wallet/Main';
+import Wallet from './modules/wallet/Wallet';
 import SelectRecipient from './modules/wallet/SelectRecipient';
 import SelectAmount from './modules/wallet/SelectAmount';
 import Memo from './modules/wallet/Memo';
@@ -74,6 +75,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.CreateAccount', () => CreateAccount);
 	Navigation.registerComponent('wallet.NewAccount', () => NewAccount, store, Provider);
 	Navigation.registerComponent('wallet.Main', () => Main, store, Provider);
+	Navigation.registerComponent('wallet.Wallet', () => Wallet, store, Provider);
 	Navigation.registerComponent('wallet.SelectRecipient', () => SelectRecipient, store, Provider);
 	Navigation.registerComponent('wallet.SelectAmount', () => SelectAmount, store, Provider);
 	Navigation.registerComponent('wallet.Memo', () => Memo, store, Provider);

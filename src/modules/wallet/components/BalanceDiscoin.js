@@ -48,6 +48,32 @@ class BalanceDiscoin extends Component {
 		}
   }
 
+  onPressed(){
+  	this.props.navigator.push({
+      screen: 'wallet.Wallet',
+      navigatorStyle : {
+       navBarButtonColor : '#fff',
+       drawUnderNavBar   : true,
+       navBarTransparent : true,
+			 navBarNoBorder 	 : true,
+			 topBarElevationShadowEnabled: false
+      },
+      rightButtons : [
+        {
+          icon: iconsMap['qrcode--active'],
+          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
+			leftButtons: [
+    		{
+    			icon: iconsMap['ios-menu'],
+    			title: '',
+    			id: 'sideMenu'
+    		}
+    	]
+    });
+  }
+
 	render() {
 
 		let r = 0;
@@ -65,15 +91,18 @@ class BalanceDiscoin extends Component {
 			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
 
 		return (
-			<View style={styles.container_discoin}>
-        <Text style={styles.sectionTitle}>Tus Discoins</Text>
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
-          <View style={styles.discoinCount}>
-            <Text style={styles.discoinCountValue}>{parts[0]}{p}</Text>
+			<View style={[styles.container_discoin, styles.container_discoin_wrapper]}>
+				<Text style={styles.sectionTitle}>Tus Discoins</Text>
+				<TouchableHighlight style={[styles.container_discoin_wrapper, {activeOpacity:0, underlayColor:'#fff', backgroundColor:'#fff' }]} onPress={this.onPressed.bind(this)}>
+	          <LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
+		          <View style={styles.discoinCount}>
+		            <Text style={styles.discoinCountValue}>{parts[0]}{p}</Text>
 
-            <Icon name="md-arrow-dropright" style={{color: '#FFF', opacity: 0.4, fontSize: 35, marginLeft: 20}}/>
-          </View>
-        </LinearGradient>
+		            <Icon name="md-arrow-dropright" style={{color: '#FFF', opacity: 0.4, fontSize: 35, marginLeft: 20}}/>
+		          </View>
+		        </LinearGradient>
+	        
+        </TouchableHighlight>
       </View>
 		);		
 	}

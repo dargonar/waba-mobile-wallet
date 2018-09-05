@@ -28,12 +28,14 @@ const styles = StyleSheet.create({
     height: 60,
    	elevation: 5, 
   },
-  container_discoin: {
+  container_discoin_wrapper: {
     width           : undefined,
     height          : undefined,
     backgroundColor : '#fff' ,//'transparent',
     justifyContent  : 'center',
     alignItems      : 'center',
+	},
+	container_discoin: {
 		flex            : 3
 	},
 
