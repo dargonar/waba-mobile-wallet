@@ -1,6 +1,52 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+	sectionTitle:{
+    fontSize: 18,
+    padding: 8,
+    marginTop: 5,
+    marginBottom: 4,
+    paddingLeft: 0,
+    color: '#a7a8aa',
+    fontFamily : 'Montserrat-SemiBold',
+  }, 
+  discoinCount:{
+    width: 300,    
+    alignItems: 'center',
+    padding: 0,
+    paddingRight: 20,
+    flexDirection: 'row', 
+    justifyContent: 'flex-end',
+  },
+  discoinCountValue:{
+    fontSize: 45,
+    fontFamily : 'Montserrat-Light', 
+    color: '#FFF',
+  },
+  discoinCountGradient:{
+    borderRadius: 35,
+    height: 60,
+   	elevation: 5, 
+  },
+  container_discoin: {
+    width           : undefined,
+    height          : undefined,
+    backgroundColor : '#fff' ,//'transparent',
+    justifyContent  : 'center',
+    alignItems      : 'center',
+		flex            : 3
+	},
+
+
+
+
+
+
+
+
+
+
+
 	container: {
     width           : undefined,
     height          : undefined,
@@ -46,8 +92,7 @@ const styles = StyleSheet.create({
 
   balance : {
     flexDirection : 'row',
-		justifyContent: 'center',
-
+		justifyContent: 'center'
   },
 
 	symbol_part:{
@@ -65,7 +110,7 @@ const styles = StyleSheet.create({
 	int_part : {
 		flex:0,
   //  fontFamily : 'roboto_regular',
-    fontFamily  : 'roboto_light',
+    fontFamily  : 'Montserrat-Medium',
 // 		fontWeight : '400',
     fontSize   : 45,
 		lineHeight : 45,
@@ -222,6 +267,7 @@ const styles = StyleSheet.create({
     height          :15,
     width           :15
   },
+
 });
 
 export default styles;

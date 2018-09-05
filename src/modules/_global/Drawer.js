@@ -17,7 +17,10 @@ import { connect } from 'react-redux';
 import styles from './styles/Drawer';
 import { avales }  from '../endorsement/components/static/endorsements_const'
 import { iconsMap } from '../../utils/AppIcons';
+
+import UWCrypto from '../../utils/Crypto';
 import Bts2helper from '../../utils/Bts2helper';
+
 import { AsyncStorage } from 'react-native'
 import * as walletActions from '../wallet/wallet.actions';
 import * as helperActions from '../../utils/Helper.js';
@@ -161,6 +164,7 @@ class Drawer extends Component {
 		});
 	}
 
+	
 	_onPower(){
 		this._onFnDisabled();
 	}
@@ -385,7 +389,8 @@ class Drawer extends Component {
 	}
 
 	_onSettings(){
-
+		// this._onPower();
+		// return;
 		this._toggleDrawer();
 		this.props.navigator.push({
 			screen: 'wallet.Settings',

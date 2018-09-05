@@ -64,6 +64,9 @@ export const TX_TYPE_RECEIVED 		= 2;
 export const TX_TYPE_CREDIT_UP 		= 4;
 export const TX_TYPE_CREDIT_DOWN 	= 8;
 
+
+import UWCrypto from '../utils/Crypto';
+
 export function getAPIURL(path) {
 	return API_URL_V1+path;
 }
@@ -162,4 +165,73 @@ export function getIdenticonForHash(_hash){
 	var hash = _hash || 'cc65d8bb036388b414deac65a34d83e296b4c8b84f521cb059b561d0b5c0b4579495023d3dbdfb75492ff413ec0ad281f6e5263589d3a6418ba6dbce86bba6bf';
 	var data = new Identicon(hash).toString();
 	return'data:image/png;base64,'+data;
+}
+
+
+export function cleanMnemonics(mnemonics){
+	let m = mnemonics; //'reforma ligero chacal buceo fase esquí taza oca aleta cima intuir bloque'
+	let words = m.split(' ');
+	// let original_words = words;
+	let i;
+	let replace_indexes = [];
+	let vowels = ['á', 'é', 'í', 'ó', 'ú'];
+	  //['á', 'é', 'í', 'ó', 'ú']
+	  //['á', 'é', 'í', 'ó', 'u']
+	
+	for (i = 0; i < words.length; i++)
+	  for (j = 0; j < vowels.length; j++)
+	  	if(words[i].toLowerCase().indexOf(vowels[j])!==-1 )
+			{
+				// console.log('--------------------')
+				// console.log('-- added word:')
+				// console.log(words[i])
+				// console.log('+++idx: ')
+				// console.log(i)
+				// console.log('+++vowel:')
+				// console.log(vowels[j]);
+				replace_indexes.push(i);
+				break;
+			}
+	  
+	// console.log('-- replace_indexes: ')
+	// console.log(replace_indexes)
+
+	for (i = 0; i < replace_indexes.length; i++)
+		words[replace_indexes[i]] = 'reforma';
+
+	return words.join(' ');
+}
+
+export function logNewAccountKeys(){
+	
+	UWCrypto.generateMnemonic('es', 128).then(function(res1) {
+
+			// console.log(' --------------- menmonics', res1.mnemonic);
+			// ToastAndroid.show(res1.mnemonic, ToastAndroid.LONG);
+			let mnemonics = config.cleanMnemonics(res1.mnemonic);
+			// ToastAndroid.show(res1.mnemonic + ' ++++' + mnemonics, ToastAndroid.LONG);
+			// return;
+			UWCrypto.mnemonicToMasterKey(mnemonics).then(function(res2) {
+					let p = []
+					Promise.all([
+						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 1),
+						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 2),
+						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
+					]).then(function(res3) {
+						console.log('==== generateMnemonic:');
+						console.log(JSON.stringify(mnemonics));
+						console.log('==== mnemonicToMasterKey:');
+						console.log(JSON.stringify(res2));
+						console.log('==== derivatePrivate:');
+						console.log(JSON.stringify(res3));
+
+				}, function(err) {
+					console.log('*********** ERR#1: ' + str(err));
+				});
+			}, function(err) {
+				console.log('*********** ERR#2: ' + str(err));
+			});
+		}, function(err) {
+			console.log('*********** ERR#3: ' + str(err));
+		});
 }

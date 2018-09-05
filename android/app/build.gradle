@@ -2,6 +2,8 @@ apply plugin: "com.android.application"
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 import com.android.build.OutputFile
 
 /**
@@ -189,7 +191,7 @@ dependencies {
     // compile project(':react-native-barcodescanner')
     compile project(':react-native-config')
     compile project(':react-native-vector-icons')
-    // compile project(':react-native-linear-gradient')
+    compile project(':react-native-linear-gradient')
     compile project(':react-native-onesignal')
     compile project(':react-native-spinkit')
     compile project(':RNSound')

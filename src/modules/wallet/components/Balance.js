@@ -17,6 +17,8 @@ import { iconsMap } from '../../../utils/AppIcons';
 import { avales }  from '../../endorsement/components/static/endorsements_const';
 import { avales_colors }  from '../../endorsement/components/static/endorsements_const';
 import * as fn_avales  from '../../endorsement/components/static/endorsements_const'
+import LinearGradient from 'react-native-linear-gradient';
+
 class Balance extends Component {
 
 	constructor(props) {
@@ -119,23 +121,28 @@ class Balance extends Component {
 		{
 			container_style = styles.container_subaccount;
 		}
+		
+		//<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} style={styles.linearGradient}>
+
 		return (
       <View style={[container_style]}>
-        <View style={styles.wrapper}>
-					<View style={balanceStyle}>
-						<View style={styles.balance}>
-								<Text style={[styles.bold_color, styles.symbol_part]}>{asset_symbol} </Text>
-								<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}</Text>
+      	<LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={{flex:1, alignSelf: 'stretch'}}>
+	        <View style={styles.wrapper}>
+						<View style={balanceStyle}>
+							<View style={styles.balance}>
+									<Text style={[styles.bold_color, styles.symbol_part]}>{asset_symbol} </Text>
+									<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}</Text>
 
-								<View style={styles.balanceAmountWrapper}>
-									{p}
-									<Text style={[styles.gray_color, styles.par_part]}> DSC</Text>
-								</View>
+									<View style={styles.balanceAmountWrapper}>
+										{p}
+										<Text style={[styles.gray_color, styles.par_part]}> DSC</Text>
+									</View>
+							</View>
+
 						</View>
-
-					</View>
-					{j}
-      	</View>
+						{j}
+	      	</View>
+      	</LinearGradient>
 			</View>
     );
 		// return (

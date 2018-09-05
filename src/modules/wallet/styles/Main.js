@@ -31,7 +31,22 @@ const styles = StyleSheet.create({
 		fontWeight : '100',
     fontSize   : 20,
 		color: 'white'
-  }
+  },
+
+  actionsButton:{
+      backgroundColor:'#fff', 
+      borderColor: '#ff7233',
+      marginLeft:10,
+      elevation: 4
+  },
+  actionsButtonText:{
+    fontSize: 15,
+    fontFamily : 'Montserrat-Medium',
+    color: '#58595b',
+    paddingLeft:10,
+    paddingRight:10,
+
+  },
 });
 
 export default styles;
