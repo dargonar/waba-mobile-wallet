@@ -184,8 +184,8 @@ class Main extends Component {
         					  	<Icon name='apps' />
         					    <Text style={styles.actionsButtonText}>CATEGORIAS</Text>
         					  </Button>*/}
-				  <Button iconLeft rounded bordered style={styles.actionsButton} onPress={() => {  this.filterBusinesses() }}>
-				  	<Icon name='funnel' />
+				  <Button iconLeft rounded light style={styles.actionsButton} onPress={() => {  this.filterBusinesses() }}>
+				  	<Icon style={{opacity:0.3, color:'#000000'}} name='funnel' />
 				    <Text style={styles.actionsButtonText}>FILTROS</Text>
 				  </Button>  
 				</View>	

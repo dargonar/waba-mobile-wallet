@@ -38,19 +38,18 @@ const styles = StyleSheet.create({
 		color: 'white'
   },
 
-  actionsButton:{
-      backgroundColor:'#fff', 
-      borderColor: '#ff7233',
+  actionsButton:{ 
       marginLeft:10,
       elevation: 4
   },
-  actionsButtonText:{
-    fontSize: 15,
-    fontFamily : 'Montserrat-Medium',
+  actionsButtonText:{ 
+    fontSize: 12,
+    fontFamily : 'Montserrat-Bold',
     color: '#58595b',
     paddingLeft:10,
     paddingRight:10,
-
+    marginBottom: 1,
+    opacity: 0.5,
   },
 });
 
