@@ -86,6 +86,7 @@ class FindUser extends Component {
                   title: 'Elija monto a enviar',
                   passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
                 });
+                return;
               }
               if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
               {
@@ -96,8 +97,10 @@ class FindUser extends Component {
                   title:      'Pagar',
                   passProps:  jsonData
                 });
+                return;
               }
             }
+            this.doResumeScanner();
         })
         .catch(e => {
           ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
