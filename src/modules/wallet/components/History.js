@@ -195,14 +195,15 @@ class History extends Component {
   }
 
   _onPressButton(rowID, rowData) {
-    console.log('History::_onPressButton');
+    console.log(' ----------------------- History::_onPressButton');
+		console.log(JSON.stringify(rowData));
 
-// 		let data = this._getRowData(rowData);
-// 		this.props.navigator.push({
-// 			screen: 'wallet.TxDetails',
-// 			title: 'Detalles',
-// 			passProps: data
-// 		});
+		// let data = this._getRowData(rowData);
+		this.props.navigator.push({
+			screen: 'wallet.TxDetails',
+			title: 'Detalles',
+			passProps: rowData
+		});
 
   }
 

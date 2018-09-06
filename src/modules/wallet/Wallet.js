@@ -198,18 +198,8 @@ class Wallet extends Component {
 						</View>) : false }
 
 				{ (subaccount_mode)?
-					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
-          <ActionButton.Item buttonColor='#1abc9c' title="VOLVER SALDO A 0 D$C" onPress={() => {  this.resetBalance() }}>
-	            <Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>
-						</ActionButton.Item>
-	          <ActionButton.Item buttonColor='#3498db' title="ENVIAR EXCEDENTE" onPress={() => {  this.sendExtraBalance() }}>
-	            <Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
-	          </ActionButton.Item>
-						<ActionButton.Item buttonColor='#3498db' title="INICIAR CAJA DIARIA" onPress={() => {  this.applyCredit() }}>
-	            <Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
-						</ActionButton.Item>
-        </ActionButton>):
-					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
+					false:
+					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={30}>
           <ActionButton.Item buttonColor='#1abc9c' title="ENVIAR DISCOINS" onPress={() => {  this.newTx() }}>
 	            <Icon name='send-secure' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#fff'}}/>
 	         	</ActionButton.Item>
