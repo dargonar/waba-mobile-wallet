@@ -332,6 +332,7 @@ class InvoiceConfirm extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 
+		
 		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 
 			console.log(' ------------- TX:');
@@ -441,8 +442,8 @@ class InvoiceConfirm extends Component {
 		let business_name			= this.state.business_name; 
 		let subaccount_name		= this.state.account_name;
 		let total_amount			= this.state.bill_amount; 
-		let discount					= this.state.discount_rate;
-		let discount_dsc			= (total_amount * discount / 100);
+		let discount					= (this.state.discount_dsc/this.state.bill_amount)*100 ;
+		let discount_dsc			= this.state.discount_dsc; //(total_amount * discount / 100);
 		let payable_amount		= discount_dsc;
 		let balance 					= this.props.balance[config.ASSET_ID];
 		if(balance<payable_amount)

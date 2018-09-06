@@ -63,7 +63,11 @@ class BusinessSearch extends Component {
 
 
 	searchBusinessPressed(){
-		
+		this.props.navigator.push({
+      screen: 'wallet.BusinessProfile',
+      title: rowData['name'],
+      passProps: { business_data: rowData}
+    });
 
 	}
 

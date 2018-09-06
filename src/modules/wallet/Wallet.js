@@ -194,8 +194,8 @@ class Wallet extends Component {
 							</TouchableHighlight>
 						</View>) : false }
 
-				{ (subaccount_mode)?false
-					/*(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
+				{ (subaccount_mode)?
+					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={95}>
           <ActionButton.Item buttonColor='#1abc9c' title="VOLVER SALDO A 0 D$C" onPress={() => {  this.resetBalance() }}>
 	            <Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>
 						</ActionButton.Item>
@@ -205,12 +205,11 @@ class Wallet extends Component {
 						<ActionButton.Item buttonColor='#3498db' title="INICIAR CAJA DIARIA" onPress={() => {  this.applyCredit() }}>
 	            <Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
 						</ActionButton.Item>
-        </ActionButton>)*/
-				: (
-					<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
-					
-				)
-			}
+        </ActionButton>):
+					(
+									<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
+									
+								)}
       </View>
 		);
 	}
