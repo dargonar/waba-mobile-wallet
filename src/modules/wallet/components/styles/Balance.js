@@ -4,8 +4,8 @@ const styles = StyleSheet.create({
 	sectionTitle:{
     fontSize: 18,
     padding: 8,
-    marginTop: 5,
-    marginBottom: 4,
+    marginTop: 10,
+    paddingBottom: 0,
     paddingLeft: 0,
     color: '#a7a8aa',
     fontFamily : 'Montserrat-SemiBold',
@@ -39,7 +39,9 @@ const styles = StyleSheet.create({
    	elevation: 5, 
   },
   container_discoin_wrapper: {
-    width           : undefined,
+    width           : '100%',
+    padding: 10,
+    paddingBottom: 0,
     height          : undefined,
     backgroundColor : '#fff' ,//'transparent',
     justifyContent  : 'center',

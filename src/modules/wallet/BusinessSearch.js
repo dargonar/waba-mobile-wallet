@@ -79,11 +79,11 @@ class BusinessSearch extends Component {
 		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 
 		return (
-			<View style={styles.container}>
+		<View style={styles.container}>
       	
-      	<View style={{height:60, paddingLeft:10, paddingRight:10, backgroundColor:'#ffbe1d', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{width:20, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
-            <Icon name="ios-search" size={18}  style={{color:'#ffffff'}}  />
+      	<View style={{height:60, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{width:20, marginRight:10, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
+            <Icon name="ios-search" size={18}  style={{color:'#cccccc'}}  />
           </View>
           <TextInput
             autoCapitalize="words"
@@ -91,7 +91,7 @@ class BusinessSearch extends Component {
             onChangeText={(text) => this.setState( { searchText:text } ) }
             value={this.state.searchText}
             underlineColorAndroid ="transparent"
-            placeholder=""
+            placeholder="Buscar..."
           />
         </View>
         <BusinessListWidget {...this.props} mode="search" style={styles.history}/>

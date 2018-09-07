@@ -9,7 +9,8 @@ import {
 	View
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+//import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'native-base';
 import IconBadge from 'react-native-icon-badge';
 // import LinearGradient from 'react-native-linear-gradient';
 import { bindActionCreators } from 'redux';
@@ -468,16 +469,16 @@ class Drawer extends Component {
 // 								</Text>
 // 							</View>
 // 						</TouchableOpacity>
-		const iconRecipient = (<Icon name="ios-send" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconMap 			= (<Icon name="md-pin" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconJob 			= (<Icon name="md-construct" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const info 					= (<Icon name="ios-information-circle" size={26} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconSwitch 		= (<Icon name="ios-switch" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconRecipient = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#FF0000', fontSize: 25}} />);
+		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconMap 			= (<Icon name="md-pin" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconJob 			= (<Icon name="md-construct" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const info 					= (<Icon name="ios-information-circle" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconSwitch 		= (<Icon name="ios-switch" size={20} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		
 		// const iconCard 		  = (<Image source={iconsMap['ios-thumbs-up']} style={[styles.row_arrow]}/>);
-		const iconCard 		  = (<Icon name="ios-thumbs-up" size={15} color="#ffffff"  />);
+		const iconCard 		  = (<Icon name="ios-thumbs-up" size={15} color="#FF0000"  />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
@@ -496,7 +497,7 @@ class Drawer extends Component {
 
 		if(this.state.identicon!=''){
 			var base64Icon = this.state.identicon;
-			userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
+			userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0, borderRadius: 2}} source={{uri: base64Icon}}/>)
 		}
 
 		let container_style 		= styles.container;
@@ -528,24 +529,12 @@ class Drawer extends Component {
 		return (
 
 				<View style={[container_style]}>
-					<View style={{flex:3, padding:5, flexDirection:'column', justifyContent: 'center' }}>
+					
+					<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
 						<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-							<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end', paddingRight:10, paddingTop:10}}>
-								<Icon
-									raised
-									containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
-									name='ios-settings'
-									type='ionicon'
-									color='#d9d9d9'
-									underlayColor='#415261'
-									onPress={this._onSettings.bind(this)}
-									size={25} />
-							</View>
-						</View>
-						<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-							<View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+							<View style={{flex:1, justifyContent: 'center', alignItems: 'center', paddingLeft: 20}}>
 							{userIcon}
-						  </View>
+						  	</View>
 							<View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
 								<Text style={styles.usernameText} >
 									{this.props.account.name}
@@ -553,7 +542,15 @@ class Drawer extends Component {
 								{is_subaccount_text}
 							</View>
 						</View>
-
+						<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end', paddingRight:20, paddingTop:0}}>
+							<Icon
+								name='ios-key'
+								type='ionicon'
+								style={{ color:'#cccccc', fontSize: 25, width: 22}} 
+								underlayColor='#415261'
+								onPress={this._onSettings.bind(this)}
+								/>
+						</View>
 					</View>
 					{ !subaccount_mode ?
 					(<View style={styles.drawerList}>
@@ -561,7 +558,7 @@ class Drawer extends Component {
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconRecipient}
 								<Text style={styles.drawerListItemText}>
-									Pagar con descuento
+									Pagar con Discoin
 								</Text>
 							</View>
 						</TouchableOpacity>

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		backgroundColor : '#f15d44'
+		backgroundColor : '#FFF'
 	},
 	container_subaccount: {
 		flex: 1,
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
 	drawerList: {
 		flex:6,
 		justifyContent: 'flex-start',
-		paddingLeft: 25,
+		paddingLeft: 22,
 		paddingRight: 25
 	},
 	drawerListIcon: {
-		width: 27
+		width: 27,
 	},
 	drawerListItem: {
 		flexDirection: 'row',
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
 		paddingBottom: 23,
 		paddingTop: 23,
 		paddingLeft: 25,
-		borderTopColor: '#ffffff',
+		borderTopColor: 'black',
 		borderTopWidth: 0.25,
-		borderBottomColor: '#ffffff',
+		borderBottomColor: 'black',
 		borderBottomWidth: 0.25,
 		backgroundColor: '#000000'
 	},
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 0.25
 	},
 	drawerListItemText2: {
-		color: 'white',
+		color: 'black',
 		paddingLeft: 15,
 		flex: 1,
 		fontFamily : 'roboto_light',
@@ -66,11 +66,11 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 	},
 	drawerListItemText: {
-		color: 'white',
+		color: 'black',
 		fontSize: 15,
 		paddingLeft: 15,
 		flex: 1,
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-Light',
 		fontWeight: '100'
 	},
 	linearGradient: {
@@ -91,28 +91,29 @@ const styles = StyleSheet.create({
 	},
 
 	usernameTitle:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
     fontSize   : 15,
     lineHeight : 25,
-		color: 'white'
+		color: 'black'
   },
 	usernameText:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
     fontSize   : 18,
     lineHeight : 25,
-		color: 'white'
+	color: 'black',
+	marginLeft: 20,
   },
 	subaccountText:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
     fontSize   : 10,
     lineHeight : 10,
 		color 		 : '#ffffff'
   },
   subaccountTextBold:{
-    fontFamily : 'roboto_bold'
+    fontFamily : 'Montserrat-Medium',
   }
 });
 

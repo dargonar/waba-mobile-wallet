@@ -293,7 +293,7 @@ _getRecipientInfo(recipient) {
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
-
+		//HACK aca tengo que poner return; para fixear la ventana sendingEX y editarla
 		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 
 			fetch(config.getAPIURL('/push_tx'), {

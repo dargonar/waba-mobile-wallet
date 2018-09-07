@@ -18,6 +18,7 @@ import { ToastAndroid
       , Image
       , ListView
       , TouchableHighlight
+      , TouchableNativeFeedback
       , StyleSheet
       , ScrollView
       , Text
@@ -42,16 +43,9 @@ const styles = StyleSheet.create({
   },
   applyButton:{
     width: '90%',
-    borderColor:'#f35b42',
-    borderRadius:25,
-    padding: 10,
-
+    elevation: 4,
   },
   applyButtonText:{
-    // color: '#ffffff',
-    // fontFamily: 'Montserrat-Medium',
-    // fontSize:     17,  
-    // textAlign: 'center',
     fontSize: 12,
     fontFamily : 'Montserrat-Bold',
     color: '#58595b',
@@ -61,9 +55,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   categoryButton:{
-    width: '45%',
-    marginBottom: 4,
-    marginRight: 4,
+    width: '100%',
     color: '#f35b42',
     borderRadius: 20,
     backgroundColor:'transparent',
@@ -72,14 +64,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#dcdcdc',
     borderWidth: 1,
+    overflow: 'visible'
   },
   categoryButtonSelected:{
-    width: '45%',
-    marginBottom: 4,
-    marginRight: 4,
-    color: '#FFF',
+    width: '100%',
     borderRadius: 20,
-    backgroundColor:'#ff9e5d',
+    backgroundColor:'rgba(245,139,68,0.2)',
     borderColor: '#f58b44',
     borderWidth: 1,
     padding: 8,
@@ -94,7 +84,7 @@ const styles = StyleSheet.create({
   categoryButtonTextSelected:{
     fontSize:     11,
     fontFamily: 'Montserrat-Medium',
-    color: '#FFF',
+    color: '#000',
   }
 });
 
@@ -177,13 +167,17 @@ class BusinessFilter extends Component {
       return (false);
     let selected_categories = this.state.selected_categories;
     let buttons = this.state.categories.map((category, i) => (
-      <TouchableHighlight style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } onPress={ () => this._categorySelected(category['id']) } >
-        <Text style={[(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonTextSelected : styles.categoryButtonText ]}>{category['name']}</Text>
-      </TouchableHighlight>
+      <View style={{borderRadius: 20, width:'45%', flexDirection: 'column', margin: 2, marginLeft:0, marginRight: 5}}> 
+        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#f58b44', true)} onPress={ () => this._categorySelected(category['id'])} >
+          <View style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } >
+            <Text style={[(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonTextSelected : styles.categoryButtonText ]}>{category['name']}</Text>
+          </View>
+        </TouchableNativeFeedback>
+      </View>
     ));
 
     return (
-        <View style={{flex:1, paddingRight:10, flexDirection:'row', justifyContent: 'flex-start', flexWrap: 'wrap'}}>
+        <View style={{flex:1, paddingRight:0, marginBottom: 20, flexDirection:'row', justifyContent: 'flex-start', flexWrap: 'wrap'}}>
           {buttons}
         </View> ); 
 
@@ -209,11 +203,10 @@ class BusinessFilter extends Component {
               
             </View>
             
-            <View style={{flex:1, marginTop:20, flexDirection:'column', paddingTop:10,justifyContent: 'center', borderTopWidth:1, borderTopColor:'#cecece'}}> 
-              <TouchableHighlight block style={styles.applyButton} onPress={ () => this.applyFilter() } >
-                <Text style={styles.applyButtonText}>Aplicar</Text>
-              </TouchableHighlight> 
-            </View>
+
+            <Button rounded light style={styles.applyButton} onPress={ () => this.applyFilter() }>
+              <Text style={styles.applyButtonText}>APLICAR</Text>
+            </Button>  
 
           </ScrollView>
     

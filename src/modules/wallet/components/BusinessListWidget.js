@@ -69,9 +69,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#8E8E8E',
   },
-
-
-
 	list: {
     justifyContent: 'space-around',
     flexDirection: 'row',
