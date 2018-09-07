@@ -49,15 +49,12 @@ const styles = StyleSheet.create({
       flexDirection      : 'column',
       justifyContent     : 'center',
       alignItems         : 'flex-start',
-      borderBottomColor  : '#85858544',
-      borderBottomWidth  : 1,
-      borderTopColor     : '#85858544',
-      borderTopWidth     : 1
   },
   
   section_text : {
-    color              : '#858585',
-    paddingLeft        : 13,
+    color              : '#cccccc',
+    paddingLeft        : 15,
+    fontFamily : 'Montserrat-Medium',
   },
   
   separator : {

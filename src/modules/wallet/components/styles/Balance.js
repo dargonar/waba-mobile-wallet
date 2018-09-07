@@ -2,9 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	sectionTitle:{
-    fontSize: 18,
-    padding: 8,
-    marginTop: 10,
+    fontSize: 13,
+    padding: 0,
+    marginBottom: 0,
+    marginTop: 30,
     paddingBottom: 0,
     paddingLeft: 0,
     color: '#a7a8aa',
@@ -37,12 +38,14 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     height: 60,
    	elevation: 5, 
+   	marginTop: -10,
   },
   container_discoin_wrapper: {
     width           : '100%',
     padding: 10,
     paddingBottom: 0,
-    height          : undefined,
+    paddingTop: 0,
+    height          : 90,
     backgroundColor : '#fff' ,//'transparent',
     justifyContent  : 'center',
     alignItems      : 'center',
@@ -61,14 +64,16 @@ const styles = StyleSheet.create({
 
 
 	container: {
-    width           : undefined,
-    height          : undefined,
-    backgroundColor : '#f15d44' ,//'transparent',
-    justifyContent  : 'center',
-    alignItems      : 'center',
-		flex            : 3
+		width           : undefined,
+		height          : undefined,
+		backgroundColor : '#f15d44' ,//'transparent',
+		justifyContent  : 'center',
+		alignItems      : 'center',
+		flex            : 3,
+		borderBottomLeftRadius: 15, 
+		borderBottomRightRadius: 15,
+		marginBottom: 20
 	},
-
 	container_subaccount: {
     width           : undefined,
     height          : undefined,
@@ -81,8 +86,8 @@ const styles = StyleSheet.create({
 	wrapper:{
 		flex:1,
 		flexDirection:'column',
-		justifyContent  : 'center',
-    alignItems      : 'center',
+		justifyContent  : 'flex-end',
+    	alignItems      : 'flex-end',
 // 		backgroundColor: '#0B5F83'
 // 		backgroundColor: '#044967'
 	},
@@ -90,65 +95,64 @@ const styles = StyleSheet.create({
 	balance_wrapper:{
 		flex:2,
 		flexDirection:'column',
-		justifyContent  : 'center',
-    alignItems      : 'center',
-		paddingTop: 30
+		justifyContent  : 'flex-end',
+   	 	alignItems      : 'flex-end',
+   	 	paddingBottom: 40,
 	},
 	balance_wrapperNoCredit:{
 		flex:2,
 		flexDirection:'column',
-		justifyContent  : 'center',
-    alignItems      : 'center',
-
+		justifyContent  : 'flex-end',
+    	alignItems      : 'flex-end',
+    	paddingBottom: 30,
 	},
 
 
   balance : {
     flexDirection : 'row',
-		justifyContent: 'center'
+		justifyContent  : 'center',
+    	alignItems      : 'center',
   },
 
 	symbol_part:{
 		flex:1,
-// 		fontFamily : 'roboto_light',
+		// 		fontFamily : 'roboto_light',
 		fontFamily  : 'roboto_thin',
-    fontWeight : '100',
-    fontSize   : 40,
+		fontWeight : '100',
+		fontSize   : 40,
 		lineHeight : 40,
-// 		marginVertical: 6,
+		// 		marginVertical: 6,
 		textAlign  : 'right',
 		alignSelf  : 'center'
 	},
 
 	int_part : {
 		flex:0,
-  //  fontFamily : 'roboto_regular',
-    fontFamily  : 'Montserrat-Medium',
-// 		fontWeight : '400',
-    fontSize   : 45,
-		lineHeight : 45,
+		//  fontFamily : 'roboto_regular',
+		fontFamily  : 'Montserrat-ExtraLight',
+		// 		fontWeight : '400',
+		fontSize   : 75,
+		lineHeight : 75,
 		alignSelf : 'flex-end',
-
   },
 
 	balanceAmountWrapper:{
 		flex:1,
 		flexDirection : 'row',
 		justifyContent: 'flex-start',
-    alignItems: 'stretch',
+		alignItems: 'stretch',
 		//backgroundColor: '#f00'
 	},
 	dec_part : {
 		flex:0,
- 	  fontFamily  : 'roboto_thin',
-// 		fontFamily : 'roboto_regular',
-//     fontWeight : '100',
+		fontFamily  : 'roboto_thin',
+		// 		fontFamily : 'roboto_regular',
+		//     fontWeight : '100',
 		lineHeight  : 20,
-    fontSize    : 20,
+		fontSize    : 20,
 		marginVertical: 6,
-// 		alignSelf : 'flex-start',
+		// 		alignSelf : 'flex-start',
 		paddingLeft: 0,
-
   },
 
 	par_part:{

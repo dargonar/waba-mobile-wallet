@@ -179,15 +179,15 @@ class Wallet extends Component {
 	// FAV Button: https://github.com/mastermoo/react-native-action-button
 	render() {
 		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
-		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#f15d44' ;
+		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#ff7233' ;
 		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 		
 
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
 			<View style={styles.wallet_container}>
-        <Balance {...this.props} style={styles.balance}/>
-        <History {...this.props} style={styles.history}/>
+		        <Balance {...this.props} style={styles.balance}/>
+		        <History {...this.props} style={styles.history}/>
 				{ (subaccount_mode)?
 					(<View style={{height:75, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 							<TouchableHighlight
@@ -196,21 +196,20 @@ class Wallet extends Component {
 								<Text style={styles.fullWidthButtonText}>COBRAR</Text>
 							</TouchableHighlight>
 						</View>) : false }
-
 				{ (subaccount_mode)?
-					false:
-					(<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" offsetY={30}>
-          <ActionButton.Item buttonColor='#1abc9c' title="ENVIAR DISCOINS" onPress={() => {  this.newTx() }}>
-	            <Icon name='send-secure' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#fff'}}/>
-	         	</ActionButton.Item>
-	          <ActionButton.Item buttonColor='#3498db' title="RECIBIR DISCOINS" onPress={() => {  this.sendExtraBalance() }}>
-	            <Icon name='call-received' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#fff'}}/>
-	          </ActionButton.Item>
-						<ActionButton.Item buttonColor='#3498db' title="PAGAR CON DISCOINS" onPress={() => {  this.applyCredit() }}>
-	            <Icon name='receipt' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#fff'}}/>
-						</ActionButton.Item>
-        </ActionButton>)}
-      </View>
+				false:
+				(<ActionButton buttonColor={buttonColor} bgColor="rgba(252, 252, 252, 0)" offsetY={30}>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Enviar Discoins" onPress={() => {  this.newTx() }}>
+						<Icon name='ios-trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					</ActionButton.Item>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Recibir Discoins" onPress={() => {  this.sendExtraBalance() }}>
+						<Icon name='ios-trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					</ActionButton.Item>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Pagar con Discoins" textContainerStyle={{background:'red'}} titleColor='#FF0000' onPress={() => {  this.applyCredit() }}>
+						<Icon name='ios-trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					</ActionButton.Item>
+				</ActionButton>)}
+			</View>
 		);
 	}
 }

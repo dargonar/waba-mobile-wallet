@@ -187,9 +187,9 @@ class BusinessFilter extends Component {
 
     return (
         <View style={styles.container}>
-          <View style={{height:70, padding:20, paddingBottom: 0, backgroundColor:'#FFF', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{height:35, padding:20, paddingBottom: 0, backgroundColor:'#FFF', flexDirection:'row', justifyContent: 'center', alignItems: 'center', marginBottom:10}}>
               <Text style={{color:'#a7a8aa', flex:1, alignSelf:'center', fontSize:18, fontFamily: 'Montserrat-Medium'}}>Filtros</Text>
-            </View>
+          </View>
             
           <ScrollView style={{paddingBottom:0}} contentContainerStyle={{ flexDirection:'column', padding:20, paddingTop: 0}}>
             

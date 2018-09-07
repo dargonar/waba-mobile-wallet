@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 		flex:6,
 		justifyContent: 'flex-start',
 		paddingLeft: 22,
-		paddingRight: 25
+		paddingRight: 25,
+		marginTop: 30,
 	},
 	drawerListIcon: {
 		width: 27,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 0.25
 	},
 	drawerListItemText2: {
-		color: 'black',
+		color: 'red',
 		paddingLeft: 15,
 		flex: 1,
 		fontFamily : 'roboto_light',
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 	},
 	drawerListItemText: {
-		color: 'black',
-		fontSize: 15,
+		color: '#666666',
+		fontSize: 13,
 		paddingLeft: 15,
 		flex: 1,
-		fontFamily : 'Montserrat-Light',
+		fontFamily : 'Montserrat-Regular',
 		fontWeight: '100'
 	},
 	linearGradient: {
@@ -100,10 +101,12 @@ const styles = StyleSheet.create({
 	usernameText:{
     fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
-    fontSize   : 18,
+    fontSize   : 15,
     lineHeight : 25,
 	color: 'black',
-	marginLeft: 20,
+	marginLeft: 5,
+	marginBottom: 5,
+	color: '#666666',
   },
 	subaccountText:{
     fontFamily : 'Montserrat-Medium',

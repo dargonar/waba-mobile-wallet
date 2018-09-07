@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     marginTop: 6,
     paddingRight: 10,
-    fontSize: 34
   },
   rewardIcon: {
     position: 'absolute',  

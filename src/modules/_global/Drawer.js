@@ -469,13 +469,15 @@ class Drawer extends Component {
 // 								</Text>
 // 							</View>
 // 						</TouchableOpacity>
-		const iconRecipient = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#FF0000', fontSize: 25}} />);
-		const iconPriceTag 	= (<Icon name="md-pricetag" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconMap 			= (<Icon name="md-pin" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconJob 			= (<Icon name="md-construct" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const info 					= (<Icon name="ios-information-circle" size={26} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconSwitch 		= (<Icon name="ios-switch" size={20} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconCash 		  = (<Icon name="ios-cash" size={20} color="#FF0000" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconSearch = (<Icon name="ios-search" style={{ paddingLeft: 2, color:'#cccccc', fontSize: 25, width: 25}} />);
+
+		const iconRecipient = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#cccccc', fontSize: 25, width: 25}} />);
+		const iconPriceTag 	= (<Icon name="md-pricetag"   style={styles.drawerListIcon} />);
+		const iconMap 			= (<Icon name="md-pin"   style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconJob 			= (<Icon name="md-construct"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const info 					= (<Icon name="ios-information-circle"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconSwitch 		= (<Icon name="ios-switch"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconCash 		  = (<Icon name="ios-cash"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		
 		// const iconCard 		  = (<Image source={iconsMap['ios-thumbs-up']} style={[styles.row_arrow]}/>);
 		const iconCard 		  = (<Icon name="ios-thumbs-up" size={15} color="#FF0000"  />);
@@ -531,8 +533,8 @@ class Drawer extends Component {
 				<View style={[container_style]}>
 					
 					<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-						<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-							<View style={{flex:1, justifyContent: 'center', alignItems: 'center', paddingLeft: 20}}>
+						<View style={{flex:5, flexDirection:'row', justifyContent: 'flex-start'}}>
+							<View style={{flex:1, justifyContent: 'center', alignItems: 'center', paddingLeft: 5}}>
 							{userIcon}
 						  	</View>
 							<View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
@@ -546,7 +548,7 @@ class Drawer extends Component {
 							<Icon
 								name='ios-key'
 								type='ionicon'
-								style={{ color:'#cccccc', fontSize: 25, width: 22}} 
+								style={{ color:'#cccccc', fontSize: 25, width: 22, marginRight:5}} 
 								underlayColor='#415261'
 								onPress={this._onSettings.bind(this)}
 								/>
@@ -554,19 +556,19 @@ class Drawer extends Component {
 					</View>
 					{ !subaccount_mode ?
 					(<View style={styles.drawerList}>
+						<TouchableOpacity onPress={this._onGoToBusinesses}>
+							<View style={styles.drawerListItem}>
+								{iconSearch}
+								<Text style={styles.drawerListItemText}>
+									Buscar comercios
+								</Text>
+							</View>
+						</TouchableOpacity>
 						<TouchableOpacity onPress={this._openRecipient}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconRecipient}
 								<Text style={styles.drawerListItemText}>
 									Pagar con Discoin
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={this._onGoToBusinesses}>
-							<View style={styles.drawerListItem}>
-								{iconMap}
-								<Text style={styles.drawerListItemText}>
-									Buscar comercios
 								</Text>
 							</View>
 						</TouchableOpacity>
