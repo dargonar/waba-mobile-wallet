@@ -15,7 +15,7 @@ export const GRAPHQL_URL     = API_GRAPHQL_URL+'/graphql/v3';
 
 export const ASSET_PRECISION = 2;
 export const ASSET_DIVIDER   = 100;
-export const CHAIN_ID        = '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
+
 
 export const I_ENDORSE_PREFIX    = '~ie';
 export const ENDORSED_BY_PREFIX  = '~eb';
@@ -24,13 +24,23 @@ export const ENDORSED_TX_PREFIX  = '~et';
 export const REFUND_PREFIX  			= '~re';
 export const PAYDISCOUNTED_PREFIX = '~di';
 
-export const ASSET_ID            	= '1.3.9'
-export const DISCOIN_ID          	= ASSET_ID
-export const DISCOIN_CREDIT_ID   	= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
-export const DISCOIN_ACCESS_ID   	= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
-export const DISCOIN_SYMBOL        = 'THEDISCOIN.M'
-export const DISCOIN_CREDIT_SYMBOL = 'THEDISCOIN.OD'
-export const DISCOIN_ACCESS_SYMBOL = 'THEDISCOIN.A'
+// SERVER
+// export const CHAIN_ID        = '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
+// export const ASSET_ID            		= '1.3.9';
+// export const DISCOIN_ID          		= ASSET_ID;
+// export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+
+// LOCAL
+export const CHAIN_ID        				= 'a560e17af5bd34388f57486bbf7e2c0b2521ea8da23b755d4fe3724154b283da';
+export const ASSET_ID            		= '1.3.2';
+export const DISCOIN_ID          		= ASSET_ID;
+export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
+export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+
+export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
+export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
+export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
 
 
 export const QRSCAN_ACCOUNT_ONLY 			= 'ao'; //'account_only';

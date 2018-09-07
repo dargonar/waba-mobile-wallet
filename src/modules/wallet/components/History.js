@@ -195,14 +195,15 @@ class History extends Component {
   }
 
   _onPressButton(rowID, rowData) {
-    console.log('History::_onPressButton');
+    console.log(' ----------------------- History::_onPressButton');
+		console.log(JSON.stringify(rowData));
 
-// 		let data = this._getRowData(rowData);
-// 		this.props.navigator.push({
-// 			screen: 'wallet.TxDetails',
-// 			title: 'Detalles',
-// 			passProps: data
-// 		});
+		// let data = this._getRowData(rowData);
+		this.props.navigator.push({
+			screen: 'wallet.TxDetails',
+			title: 'Detalles',
+			passProps: rowData
+		});
 
   }
 
@@ -287,7 +288,7 @@ class History extends Component {
 
       const _icon = (<Icon name={icon} size={18} color={bg['credit_request']} />);
       return(
-        <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+        <TouchableHighlight style={styles.txRow} underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
             <View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg['credit_request']}]}>
               {_icon}
@@ -316,7 +317,7 @@ class History extends Component {
 
       const _icon = (<Icon name={icon} size={18} color={bg['credit_request']} />);
       return(
-        <TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+        <TouchableHighlight style={styles.txRow} underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
             <View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg['credit_request']}]}>
               {_icon}
@@ -346,7 +347,7 @@ class History extends Component {
 				// <Image source={iconsMap[icon]} style={[styles.row_hand]}/>
 				const _icon = (<Icon name={icon} size={18} color={bg[aval_type]} />);
 				return(
-					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+					<TouchableHighlight style={styles.txRow} underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[aval_type]}]}>
 								{_icon}
@@ -381,7 +382,7 @@ class History extends Component {
 			  let hora   = this._getHora(rowData.block.timestamp);
 
 				return(
-					<TouchableHighlight underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+					<TouchableHighlight style={styles.txRow} underlayColor={'#0f0'} onPress={() => { this._onPressButton(rowID, rowData)}}>
 						<View style={styles.row_container}>
 							<View style={[styles.row_avatar, {borderWidth: 0.5, borderColor:bg[_tipo]}]}>
                 <Image source={iconsMap['ios-thumbs-up']} style={[styles.row_hand]}/>
@@ -402,7 +403,7 @@ class History extends Component {
 
 		if(rowData.__typename == 'Transfer' && config.ASSET_ID == rowData.amount.asset.id) {
 
-       let mapa   = {received:'recibidos', sent: 'enviados', discounted_subacc:'recibidos como pago con descuento', refunded_subacc:'recompensados', refunded:'recompensados', discounted:'pagados con descuento'};
+       let mapa   = {received:'RECIBISTE DE', sent: 'ENVIADOS A', discounted_subacc:'PAGO RECIBIDO DE', refunded_subacc:'RECOMPENSASTE A', refunded:'FUISTE RECOMPENSADO DE', discounted:'PAGASTE A'};
        let rotato = {received:'135 deg', sent : '-45 deg', refunded_subacc:'-45 deg'     , discounted_subacc:'135 deg', refunded:'135 deg'     , discounted:'-45 deg'};
        //let bg     = {received:'#8ec919', sent:'#fcc4cb'};
 			 //let bg     = {received:'#A2EA4A', sent:'#FF7251'};
@@ -446,25 +447,36 @@ class History extends Component {
           message = (<Text style={styles.row_message}>{msg}</Text>);
         }
 
+        // <View style={[styles.row_avatar]}>
+        // 	<View style={{flex:1, backgroundColor:bg[_bg]}}>
+        //   	<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_rotato]}]}]}/>
+        // 	</View>
+        // </View>
+
        return (
-        <TouchableHighlight underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
+        <TouchableHighlight style={styles.txRow} underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
-            <View style={[styles.row_avatar, {backgroundColor:bg[_bg]}]}>
-              <Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_rotato]}]}]}/>
+            <View style={{width:90, backgroundColor:bg[_bg], borderBottomLeftRadius: 7,borderTopLeftRadius: 7}}>
+            	<View style={styles.row_avatar}>
+            		<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: rotato[_rotato]}]}]}/>
+            	</View>
             </View>
             <View style={styles.row_content}>
+              
               <View style={styles.row_line1}>
-                <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity} {mapa[_mapa]}</Text>
+                <Text style={styles.row_action}>{mapa[_mapa]}</Text>
+              </View>
+              
+              <View style={styles.row_line2}>
+                <Text style={styles.row_dea}>{((_type == 'received' || _type == 'discounted' || _type == 'refunded_subacc')) ? rowData.from.name : rowData.to.name}</Text>
               </View>
               <View style={styles.row_line2}>
-                <Text style={styles.row_dea}>{dea[_dea]} </Text>
-                <Text>{((_type == 'received' || _type == 'discounted' || _type == 'refunded_subacc')) ? rowData.from.name : rowData.to.name}</Text>
-              </View>
+              	<Text style={styles.row_hour_item}>{hora}{" - "}{fecha}</Text>
+							</View>
               {message}
             </View>
             <View style={styles.row_hour}>
-              <Text style={styles.row_hour_item}>{hora}</Text>
-							<Text style={styles.row_hour_item}>{fecha}</Text>
+              <Text style={styles.row_amount}>{asset_symbol}{rowData.amount.quantity}</Text>
             </View>
           </View>
         </TouchableHighlight>
@@ -518,7 +530,7 @@ class History extends Component {
             />}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}
-            renderSeparator={this._renderSeparator.bind(this)}
+            
             renderSectionHeader={this._renderSectionHeader.bind(this)}
 						onEndReached={this._onEndReached.bind(this)}
 						onEndReachedThreshold={10}

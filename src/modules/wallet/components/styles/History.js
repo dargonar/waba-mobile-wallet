@@ -7,6 +7,19 @@ const styles = StyleSheet.create({
     backgroundColor  : '#FFFFFF',
   },
   
+  txRow:{
+
+    borderRadius: 7,
+    marginTop: 22,
+    width: undefined,
+    marginLeft:22,
+    marginRight:22,
+    height: 110,
+    elevation: 10,
+    backgroundColor: '#FFF',
+    borderColor: 'transparent'
+  },  
+  
   containerEmpty : {
     flex             : 7,
     alignItems       : 'center',
@@ -56,24 +69,24 @@ const styles = StyleSheet.create({
     flexDirection   : 'row',
     justifyContent  : 'flex-start',
     alignItems      : 'center',
-    padding         : 10,
-    backgroundColor : '#fff',
+    flex:1
+    //padding         : 10,
+    // backgroundColor : '#fff',
   },
 
   row_avatar : {
-    width           : 30,
-    height          : 30,
-    
-    flexDirection   : 'column',
-    alignItems      : 'center',
+    flex:1,
+    borderBottomLeftRadius: 7,
+    borderTopLeftRadius: 7,
+    flexDirection   : 'row',
     justifyContent  : 'center',
-    borderRadius    : 50
+    alignItems      : 'center',
   },
     
   row_arrow : {
     resizeMode      :'stretch', 
-    height          :10, 
-    width           :10,
+    height          :30, 
+    width           :30,
   },
   
   row_arrowXX : {
@@ -90,7 +103,7 @@ const styles = StyleSheet.create({
     
   row_content : {
     marginLeft      : 15,
-    flex            : 5      
+    flex            : 1      
   },
     
   row_line1 : {
@@ -121,7 +134,11 @@ const styles = StyleSheet.create({
     fontSize        : 15, 
     color           : '#1f475b'
   },
-    
+  row_action: {
+    fontFamily      : 'Montserrat-Medium',
+    fontSize        : 10,
+    color           : '#ccc',
+  },    
   row_amount: {
     fontFamily      : 'roboto_regular',
     fontSize        : 16,
