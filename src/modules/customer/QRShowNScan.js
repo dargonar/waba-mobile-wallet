@@ -240,6 +240,7 @@ class QRShowNScan extends React.Component {
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
     return  (
+
           <View style={{height:550}}>
             {qr_code}
             <View style={{height:100, justifyContent: 'center', backgroundColor:'#ffffff'}}>
@@ -264,36 +265,39 @@ class QRShowNScan extends React.Component {
           </View>
       );
   }
-
-  _renderQRCode(qr_text){
-    /*
-    bgColor='black'
-    fgColor='white'
-    */
-    return (
-        <View style={{justifyContent: 'center', backgroundColor:'transparent'}}>
-          <QRCode
-            value={qr_text}
-            size={config.QRIMAGE_SIZE}
-            />
-        </View>
-      );
-  }
-
   _renderAccountName(userIcon){
     return (
-      <View style={{marginTop:10, backgroundColor:'#ffffff', height:70, flexDirection:'row', justifyContent: 'center'}}>
+      <View style={{marginTop:10, backgroundColor:'#ffffff', height:70, flexDirection:'row', justifyContent: 'flex-end', alignItems:'center'}}>
         <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
         {userIcon}
         </View>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-          <Text style={{fontSize:25}} >
+        <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start'}}>
+          <Text style={{fontSize:20, fontFamily : 'Montserrat-SemiBold'}} >
             {this.props.account.name}
           </Text>
         </View>
       </View>
     );
   }
+  _renderQRCode(qr_text){
+    /*
+    bgColor='black'
+    fgColor='white'
+    */
+    return (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <QRCode
+            value={qr_text}
+            size={config.QRIMAGE_SIZE}
+            />
+          <Text style={{fontSize:18, color:'#ff9e5d', marginTop: 20, fontFamily : 'Montserrat-SemiBold', textAlign:'center'}} >
+            Mostra tu QR {"\n"}para recibir Discoins
+          </Text>
+        </View>
+      );
+  }
+
+
 
   renderAccount(userIcon){
     

@@ -43,6 +43,11 @@ const icons = {
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
 
+  "md-arrow-up" : [ICON_SIZE_ANDROID, "#fff"],
+  "md-arrow-down" : [ICON_SIZE_ANDROID, "#fff"],
+  "md-trending-up" : [ICON_SIZE_ANDROID, "#fff"],
+  "md-trending-down" : [ICON_SIZE_ANDROID, "#fff"],
+
   "ios-add-circle-outline": [ICON_SIZE_ANDROID_BIG, "#fff"],
   "ios-add" : [ICON_SIZE_ANDROID, "#fff"],
 
