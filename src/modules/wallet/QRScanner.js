@@ -47,10 +47,10 @@ class QRScanner extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#1abc9c',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
+    navBarTextColor: '#000',
+    navBarBackgroundColor: '#FFF',
+    navBarButtonColor: '#666',
+		navBarTextFontFamily: 'Montserrat-Bold',
     topBarElevationShadowEnabled: false
   }
 

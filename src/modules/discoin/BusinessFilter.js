@@ -204,7 +204,7 @@ class BusinessFilter extends Component {
             </View>
             
 
-            <Button rounded light style={styles.applyButton} onPress={ () => this.applyFilter() }>
+            <Button rounded light onPress={ () => this.applyFilter() }>
               <Text style={styles.applyButtonText}>APLICAR</Text>
             </Button>  
 

@@ -70,10 +70,10 @@ class QRShowNScan extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
+    navBarTextColor: '#000',
+    navBarBackgroundColor: '#FFFFFF',
+    navBarButtonColor: '#666',
+		navBarTextFontFamily: 'Montserrat-Regular',
     topBarElevationShadowEnabled: false
   }
 
@@ -271,7 +271,7 @@ class QRShowNScan extends React.Component {
     fgColor='white'
     */
     return (
-        <View style={{height: 300, justifyContent: 'center', backgroundColor:'#ffffff'}}>
+        <View style={{justifyContent: 'center', backgroundColor:'transparent'}}>
           <QRCode
             value={qr_text}
             size={config.QRIMAGE_SIZE}
@@ -282,7 +282,7 @@ class QRShowNScan extends React.Component {
 
   _renderAccountName(userIcon){
     return (
-      <View style={{marginTop:10, backgroundColor:'#ffffff', width:300, height:70, flexDirection:'row', justifyContent: 'center'}}>
+      <View style={{marginTop:10, backgroundColor:'#ffffff', height:70, flexDirection:'row', justifyContent: 'center'}}>
         <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
         {userIcon}
         </View>

@@ -57,11 +57,10 @@ class DiscountShowQR extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#0A566B',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#000',
+    navBarBackgroundColor: '#FFFFFF',
+    navBarButtonColor: '#666',
+    navBarTextFontFamily: 'Montserrat-Regular',
   }
 
   componentDidMount() {

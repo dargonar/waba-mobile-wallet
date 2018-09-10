@@ -181,8 +181,7 @@ const styles = StyleSheet.create({
     padding: 4,
     marginLeft: 4,
     marginTop: 6,
-    paddingRight: 10,
-    fontSize: 34
+    paddingRight: 10
   },
   rewardIcon: {
     position: 'absolute',  
@@ -480,7 +479,7 @@ class BusinessListWidget extends Component {
             <View style={styles.businessInfo}>
               <Text style={styles.businesseCardTitle}>{rowData['name']} </Text>
               <View style={{flexDirection: 'row'}}>
-                <Icon name='food' type='MaterialCommunityIcons' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
+                <Icon name='send' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
                 <View>
                   <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
                   <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>

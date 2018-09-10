@@ -4,12 +4,12 @@ const styles = StyleSheet.create({
  tabView: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.01)',
+    backgroundColor: 'rgba(0,0,0,0.0)',
   },
   card: {
     borderWidth: 1,
     backgroundColor: '#fff',
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: 'transparent',
     margin: 5,
     flex: 1,
     padding: 15,

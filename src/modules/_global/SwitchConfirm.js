@@ -23,7 +23,7 @@ class SwitchConfirm extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
+    navBarBackgroundColor: 'red',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false

@@ -23,7 +23,7 @@ class InvoiceConfirm extends Component {
 
   static navigatorStyle = {
     navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
+    navBarBackgroundColor: 'blue',
     navBarButtonColor: '#ffffff',
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false

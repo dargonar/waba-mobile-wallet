@@ -29,10 +29,10 @@ import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google
 class RewardReceiptSelect extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#0A566B', //'#f15d44',
-    navBarButtonColor: '#ffffff',
-    navBarTextFontFamily: 'roboto_thin',
+    navBarTextColor: '#000',
+    navBarBackgroundColor: '#FFFFFF', //'#f15d44',
+    navBarButtonColor: '#666',
+    navBarTextFontFamily: 'Montserrat-Regular',
     topBarElevationShadowEnabled: false
   }
 
