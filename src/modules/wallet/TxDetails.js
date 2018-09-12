@@ -14,10 +14,12 @@ import * as config from '../../constants/config';
 class TxDetails extends Component {
   
   static navigatorStyle = {
-    navBarTextColor: '#ffffff', 
-    navBarBackgroundColor: '#0B5F83',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+    navBarTextColor: '#666', 
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
   
   constructor(props) {

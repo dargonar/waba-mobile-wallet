@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-	sectionTitle:{
+  sectionTitle:{
     fontSize: 13,
     padding: 0,
     marginBottom: 0,
@@ -53,16 +53,6 @@ const styles = StyleSheet.create({
 	container_discoin: {
 		flex            : 3
 	},
-
-
-
-
-
-
-
-
-
-
 	container: {
 		width           : undefined,
 		height          : undefined,
@@ -72,7 +62,7 @@ const styles = StyleSheet.create({
 		flex            : 3,
 		borderBottomLeftRadius: 15, 
 		borderBottomRightRadius: 15,
-		marginBottom: 20
+		marginBottom: 0
 	},
 	container_subaccount: {
     width           : undefined,
