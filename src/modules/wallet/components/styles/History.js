@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
   txRow:{
 
     borderRadius: 7,
-    marginTop: 22,
+    marginTop: 20,
     width: undefined,
-    marginLeft:22,
-    marginRight:22,
-    height: 110,
+    marginLeft:13,
+    marginRight:15,
+    height: 80,
     elevation: 10,
     backgroundColor: '#FFF',
     borderColor: 'transparent'
@@ -66,9 +66,7 @@ const styles = StyleSheet.create({
     flexDirection   : 'row',
     justifyContent  : 'flex-start',
     alignItems      : 'center',
-    flex:1
-    //padding         : 10,
-    // backgroundColor : '#fff',
+    flex:1,
   },
 
   row_avatar : {
@@ -82,8 +80,8 @@ const styles = StyleSheet.create({
     
   row_arrow : {
     resizeMode      :'stretch', 
-    height          :30, 
-    width           :30,
+    height          :25, 
+    width           :25,
   },
   
   row_arrowXX : {
@@ -100,19 +98,23 @@ const styles = StyleSheet.create({
     
   row_content : {
     marginLeft      : 15,
-    flex            : 1      
+    flex            : 1,
+    justifyContent: 'center',
+    padding: 4,      
+    paddingTop: 10,
+    paddingBottom: 3,
   },
     
   row_line1 : {
     flexDirection   : 'row',
     justifyContent  : 'flex-start',
-    flex            : 1 
+    flex            : 1,
   },
 
   row_line2 : {
     flexDirection   : 'row',
     justifyContent  : 'flex-start',
-    flex            : 1
+    flex            : 1,
   },
     
   row_line3 : {
@@ -120,25 +122,31 @@ const styles = StyleSheet.create({
     justifyContent  : 'flex-start',
     flex            : 1
   },
-  
+  col_amount : {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingRight: 15,
+  },
   row_simple : {
     fontWeight      : '100', 
     fontSize        : 15, 
     color           : '#1f475b'
   },
   row_dea : {
-    fontWeight      : '500', 
-    fontSize        : 15, 
-    color           : '#1f475b'
+    fontSize        : 14, 
+    marginTop: -3,
+    color           : '#383838',
+    fontFamily      : 'Montserrat-Regular',
   },
   row_action: {
-    fontFamily      : 'Montserrat-Medium',
-    fontSize        : 10,
-    color           : '#ccc',
+    fontFamily      : 'Montserrat-Bold',
+    fontSize        : 8,
+    color           : '#afafaf',
   },    
   row_amount: {
-    fontFamily      : 'roboto_regular',
-    fontSize        : 16,
+    fontFamily      : 'Montserrat-Light',
+    fontSize        : 35,
     color           : '#1f475b',
   },  
   row_unknown_op: {
@@ -164,13 +172,16 @@ const styles = StyleSheet.create({
     justifyContent  : 'center',
   },
   row_hour_item : {
-    textAlign: 'center',
-    fontSize: 11
+    color: '#afafaf',
+    fontSize: 11,
+    fontFamily      : 'Montserrat-Regular'
   },
     
   row_message : { 
-    fontFamily      : 'roboto_light_italic', 
-    color           : '#1f475b99'
+    fontFamily      : 'Montserrat-Regular', 
+    color           : '#1f475b99',
+    fontSize: 8,
+
   },
   
   button: {

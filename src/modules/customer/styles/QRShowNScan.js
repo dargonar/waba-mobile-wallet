@@ -3,16 +3,16 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
  tabView: {
     flex: 1,
-    padding: 10,
+    padding: 0,
     backgroundColor: 'rgba(0,0,0,0.0)',
   },
   card: {
     borderWidth: 1,
     backgroundColor: '#fff',
     borderColor: 'transparent',
-    margin: 5,
+    margin: 15,
     flex: 1,
-    padding: 15,
+    padding: 0,
     shadowColor: '#ccc',
     shadowOffset: { width: 2, height: 2, },
     shadowOpacity: 0.5,
@@ -67,9 +67,7 @@ const styles = StyleSheet.create({
   tab_content:{
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding:20
   }
 });
 
