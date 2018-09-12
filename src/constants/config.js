@@ -25,18 +25,18 @@ export const REFUND_PREFIX  			= '~re';
 export const PAYDISCOUNTED_PREFIX = '~di';
 
 // SERVER
-export const CHAIN_ID        = '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
-export const ASSET_ID            		= '1.3.9';
-export const DISCOIN_ID          		= ASSET_ID;
-export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
-export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+// export const CHAIN_ID        				= '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
+// export const ASSET_ID            		= '1.3.9';
+// export const DISCOIN_ID          		= ASSET_ID;
+// export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
 
 // LOCAL
-// export const CHAIN_ID        				= 'a560e17af5bd34388f57486bbf7e2c0b2521ea8da23b755d4fe3724154b283da';
-// export const ASSET_ID            		= '1.3.2';
-// export const DISCOIN_ID          		= ASSET_ID;
-// export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
-// export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+export const CHAIN_ID        				= 'f5a42a1c16cf678773313f5f94ef7ebb69257c5f33a147aa8c4ac0fa5e451805';
+export const ASSET_ID            		= '1.3.2';
+export const DISCOIN_ID          		= ASSET_ID;
+export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
+export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
 
 export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
 export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'

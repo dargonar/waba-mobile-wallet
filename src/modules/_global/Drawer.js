@@ -167,6 +167,7 @@ class Drawer extends Component {
 
 	
 	_onPower(){
+		config.logNewAccountKeys();
 		this._onFnDisabled();
 	}
 
