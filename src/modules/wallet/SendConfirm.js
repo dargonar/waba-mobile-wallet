@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
 import {
+  Image,
   Alert,
 	Text,
 	TouchableHighlight,
@@ -13,7 +14,7 @@ import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/SendConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import { Icon} from 'native-base';
 import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
@@ -21,10 +22,12 @@ import * as config from '../../constants/config';
 class SendConfirm extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
+    navBarTextColor: '#666',
+    navBarBackgroundColor: '#f0f0f0',
+    navBarButtonColor: '#666',
+		navBarTextFontFamily: 'Montserrat-Medium',
+    navBarTextFontSize: 16,
+    topBarElevationShadowEnabled: false
   }
 
   constructor(props) {
@@ -33,16 +36,18 @@ class SendConfirm extends Component {
     this.state = {
       recipient : {
         name:					props.recipient[0],
-        account_id:		props.recipient[1],
+        account_id:		props.recipient[1]
       },
-			memo_key: props.memo_key,
-      amount : props.amount,
-      memo :   props.memo,
-			tx: 		 null,
-			fee:     0,
-			fee_txt: 0,
-			can_confirm: false,
-			error:   ''
+      identicon 	: '',
+			memo_key 		: props.memo_key,
+      amount 			: props.amount,
+      memo 				:   props.memo,
+			tx 					: 		 null,
+			fee 				:     0,
+			fee_txt 		: 0,
+			can_confirm : false,
+			error 			:   ''
+
     }
 
 		this._onSendingError = this._onSendingError.bind(this);
@@ -364,6 +369,8 @@ class SendConfirm extends Component {
 	}
 
   componentDidMount() {
+  	let identicon = config.getIdenticon(this.state.recipient.name);
+    this.setState({ identicon : identicon });
 		this._getTx();
 		//this._generateUnsignedTx()
   }
@@ -383,47 +390,93 @@ class SendConfirm extends Component {
 			txt_style = styles.fullWidthButtonTextDisabled;
 		}
     let memo = this.state.memo;
-		let memo_style = styles.data_part;
+		let memo_style = null;
 		if(!memo || memo==''){
 			memo='-sin mensaje-';
-			memo_style = styles.data_part_empty;
+			memo_style = styles.memo_empty;
 		}
 		let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
-		/*
-		<View style={{flex:5, backgroundColor:'#0B5F83', padding:30}}>
-			<Text style={styles.title_part}>Ud. va a enviar:</Text>
-			<Text style={styles.data_part}>$ {this.state.amount}</Text>
-			<Text style={styles.title_part}>Comisión:</Text>
-			<Text style={styles.data_part_small}>$ {fee}</Text>
-			<Text style={styles.title_part}>Total:</Text>
-			<Text style={styles.data_part_small}>$ {total}</Text>
-			<Text style={styles.title_part}>A:</Text>
-			<Text style={styles.data_part}>{this.state.recipient.name}</Text>
-			<Text style={styles.title_part}>Con mensaje:</Text>
-			<Text style={memo_style}>{memo}</Text>
-		</View>
-		*/
+
+		let imgData = config.getRedDiscoinIcon();
+		const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
+		const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
+    const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
+    let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+    // HACK
+    let icon = iconUser;
+    if(Math.random()>0.5)
+      icon = iconBiz;
+    
+
 		return (
       <View style={styles.container}>
-        <View style={{flex:5, backgroundColor:'#ffffff', paddingLeft:30, paddingTop:30, paddingRight:0, paddingBottom:30}}>
-          <Text style={styles.title_part}>Ud. va a enviar:</Text>
-          <Text style={styles.data_part}>$ {total} <Text style={styles.data_part_small}>($ {fee} de comisión)</Text></Text>
-          <Text style={styles.title_part}>A:</Text>
-          <Text style={styles.data_part}>{this.state.recipient.name}</Text>
-          <Text style={styles.title_part}>Con mensaje:</Text>
-          <Text style={memo_style}>{memo}</Text>
+      	
+      	<View style={{width:'100%', marginTop:20}}>
+      		<View style={styles.discoinCount}>
+						<Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+						<Text style={styles.discoinCountValue}>{total}</Text>
+					</View>
+      	</View>
+
+      	<View style={{width:'100%', marginTop:20}}>
+      		<View style={[styles.discoinFee, {alignSelf:'center', backgroundColor:'#d0d0d0' }]}>
+						<Image style={{width: 10, height: 10, marginRight:5 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+						<Text style={styles.discoinFeeValue}>{fee}</Text>
+						<Text style={styles.discoinFeeText}>{"de comisión"}</Text>
+					</View>
+      	</View>
+
+    		<View style={{height:80, marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
+            <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
+              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+                DESTINATARIO
+              </Text>
+            </View>  
+            
+            <View style={{ borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'center'}}>
+              <View style={{flex:1, justifyContent:'center', alignItems: 'flex-start'}}>
+                {userIcon}
+              </View>
+              <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
+                <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
+                  {this.state.recipient.name}
+                </Text>
+              </View>
+              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+                {icon}
+              </View>
+            </View>
+          </View>
         </View>
-				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+
+        <View style={{marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
+            <View style={{ alignSelf: 'flex-start', alignItems:'flex-start', justifyContent: 'flex-start'}}>
+              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+                MENSAJE
+              </Text>
+            </View>  
+            
+            <View style={{ minHeight: 160, borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'flex-start'}}>
+            	<Text style={[styles.memo_style, memo_style]}>{memo}</Text>
+            </View>
+          </View>
+        </View>
+
+				<View style={{flex:1, flexDirection:'column', alignSelf:'stretch', alignItems:'flex-end', paddingRight:20, justifyContent:'flex-end', paddingBottom:20 }}>
 					<TouchableHighlight
-							disabled={send_disabled}
-							style={[styles.fullWidthButton, btn_style]}
-							onPress={this._onConfirm.bind(this)}  >
-						<Text style={txt_style}>ENVIAR</Text>
+							style={styles.fullWidthButton}
+							onPress={this._onConfirm.bind(this)} >
+            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
+						<Text style={styles.fullWidthButtonText}>CONTINUAR</Text>
+            {iconNext}
+            </View>
 					</TouchableHighlight>
 				</View>
-				<KeyboardSpacer />
+				
 
         </View>
     );

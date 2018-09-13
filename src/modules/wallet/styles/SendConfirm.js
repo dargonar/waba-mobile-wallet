@@ -1,9 +1,82 @@
 import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  discoinCount:{
+    width: '100%',
+    alignItems: 'center',
+    padding: 0,
+    paddingRight: 20,
+    flexDirection: 'row', 
+    justifyContent: 'center'
+  },
+
+discoinCountValue:{
+    fontSize: 45,
+    lineHeight: 45,
+    fontFamily : 'Montserrat-Regular', 
+    color: '#000',
+  },
+
+  discoinFee:{
+    alignItems: 'center',
+    padding: 0,
+    paddingRight: 20,
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    borderRadius:8,
+    padding:8
+
+  },
+  discoinFeeValue:{
+    fontSize: 20,
+    lineHeight: 20,
+    fontFamily : 'Montserrat-Regular', 
+    color: '#888',
+  },
+  discoinFeeText:{
+    fontSize: 10,
+    lineHeight: 10,
+    fontFamily : 'Montserrat-Medium', 
+    color: '#888',
+    marginLeft:5
+  },
+
+  memo_style:{
+    lineHeight: 20,
+    fontSize: 20,
+    fontFamily : 'Montserrat-Medium', 
+    color: '#000'
+  },
+
+  memo_empty:{
+    fontFamily : 'Montserrat-Thin', 
+    color      : '#000'
+  },
+fullWidthButton: {
+    borderRadius: 4,
+    height:50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ff7233'
+  },
+  
+  fullWidthButtonText: {
+    fontFamily : 'Montserrat-Medium',
+    fontSize   : 15,
+    color: '#fff',
+    marginRight:50
+  },
+
+
+
+
+
 	container: {
 		flex: 1,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#f0f0f0',
+    flexDirection: 'column',
+
 
 	},
 	data_part : {
@@ -45,15 +118,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#0A566B' //'#1abc9c'
   },
 
-
-	fullWidthButton: {
-		borderRadius: 0,
-    height:100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-		backgroundColor: '#f15d44'
-  },
+ 
   fullWidthButton_SubAcc: {
     backgroundColor: '#0A566B'
   },
@@ -61,12 +126,7 @@ const styles = StyleSheet.create({
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },
-	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-		color: 'white',
-		fontSize   : 20
-  },
+	 
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'roboto_light',
 		fontWeight : '100',

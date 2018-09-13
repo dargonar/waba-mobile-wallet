@@ -174,7 +174,7 @@ class SelectAmount extends React.Component {
       else {
         this.props.navigator.push({
           screen: 'wallet.SendConfirm',
-          title: 'Confirmar envío',
+          title: 'Vas a enviar',
           passProps: {
             recipient: 	this.state.recipient,
   					memo_key:   this.state.memo_key,
@@ -192,12 +192,13 @@ class SelectAmount extends React.Component {
 
         const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
         const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
+        let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
 
+        // HACK
         let icon = iconUser;
         if(Math.random()>0.5)
           icon = iconBiz;
 
-        let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
 
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
@@ -212,7 +213,7 @@ class SelectAmount extends React.Component {
                   
                   <View style={{ borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'center'}}>
                     <View style={{flex:1, justifyContent:'center', alignItems: 'flex-start'}}>
-                    {userIcon}
+                      {userIcon}
                     </View>
                     <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
                       <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
