@@ -50,7 +50,8 @@ class BusinessSearch extends Component {
 	static navigatorStyle = {
     navBarButtonColor: '#000',
     navBarBackgroundColor: '#ffffff',
-		topBarElevationShadowEnabled: false
+		topBarElevationShadowEnabled: false,
+		navBarTextFontFamily: 'Montserrat-Regular'
   }
 
 	componentWillMount() {

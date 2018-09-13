@@ -22,9 +22,10 @@ import * as config from '../../constants/config';
 import { iconsMap } from '../../utils/AppIcons';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
-// import { BarcodeType, FocusMode, TorchMode, CameraFillMode } from 'react-native-barcode-scanner-google';
 import BarcodeScanner from 'react-native-barcode-scanner-google';
 import BarcodeType from 'react-native-barcode-scanner-google';
+import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
+import * as qr_helper from '../../utils/QRHelper';
 
 import Prompt from 'react-native-prompt';
 
@@ -32,25 +33,17 @@ class QRScanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bill_amount:    props.bill_amount,
-      bill_id:        props.bill_id,
-
-      discount_rate:  props.discount_rate,
-      discount_dsc:   props.discount_dsc,
-      discount_ars:   props.discount_ars,
-
-      torchMode: 'off',
-      cameraType: 'back',
-
     };
 
   }
 
   static navigatorStyle = {
     navBarTextColor: '#000',
-    navBarBackgroundColor: '#FFF',
-    navBarButtonColor: '#666',
+    navBarBackgroundColor: 'transparent',
+    navBarButtonColor: '#000',
 		navBarTextFontFamily: 'Montserrat-Bold',
+    drawUnderNavBar   : true,
+    navBarTransparent : true,
     topBarElevationShadowEnabled: false
   }
 
@@ -68,28 +61,64 @@ class QRScanner extends React.Component {
 
   }
 
-  _onOkPress(){
-    this.props.navigator.popToRoot({
-      animated: true
+
+  _onBarcodeScanned(data, type){
+
+    console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
+    
+    if(type=='QR_CODE')
+    {
+      pauseScanner()
+        .then(() => {
+            if(type=='QR_CODE')
+            {
+              // let jsonData = JSON.parse(data);
+              let jsonData = qr_helper.expandJSONForQR(data)
+              if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
+              {
+                // send_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen: 'wallet.SelectAmount',
+                  title: 'Elija monto a enviar',
+                  passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
+                });
+                return;
+              }
+              if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
+              {
+                // pay_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen:     'wallet.InvoicePayConfirm',
+                  title:      'Pagar',
+                  passProps:  jsonData
+                });
+                return;
+              }
+            }
+            this.doResumeScanner();
+        })
+        .catch(e => {
+          ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
+          // setTimeout(
+          //   this.doResumeScanner(),
+          //   1000
+          // );
+        });
+    }
+  }
+
+  doResumeScanner(){
+    resumeScanner()
+    .then(() => {
+        // do something after the scanner (camera) stream was resumed.
+    })
+    .catch(e => {
+        // Print error if scanner stream could not be resumed.
+        ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);
+        console.log(e);
     });
-  }
-
-
-  componentWillMount() {
-  }
-
-  componentWillReceiveProps(nextProps) {
-  }
-
-  componentWillUnmount() {
-  }
-
-  focus() {
-  }
-
-  barcodeReceived(e) {
-    console.log('Barcode: ' + e.data);
-    console.log('Type: ' + e.type);
   }
 
 
@@ -99,16 +128,15 @@ class QRScanner extends React.Component {
 
       <View style={{ flex: 1 }}>
         <BarcodeScanner
-                    style={{ flex: 1 }}
-                    onBarcodeRead={({ data, type }) => {
-                        // handle your scanned barcodes here!
-                        // as an example, we show an alert:
-                        console.log(
-                            `Barcode '${data}' of type '${type}' was scanned.`
-                        );
-                    }}
-                    barcodeType={BarcodeType.QR_CODE }
-                />
+              style={{ flex: 1 }}
+              onBarcodeRead={({ data, type }) => {
+                  this._onBarcodeScanned(data, type);
+                  // console.log(
+                  //     `##### '${type}' - '${data}'`
+                  // );
+              }}
+              barcodeType={BarcodeType.QR_CODE }
+            />
 
       </View>
     );

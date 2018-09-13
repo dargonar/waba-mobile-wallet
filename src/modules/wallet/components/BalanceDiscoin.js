@@ -64,14 +64,14 @@ class BalanceDiscoin extends Component {
           icon: iconsMap['qrcode--active'],
           id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
         }
-      ],
-			leftButtons: [
-    		{
-    			icon: iconsMap['ios-menu'],
-    			title: '',
-    			id: 'sideMenu'
-    		}
-    	]
+      ]
+     //  ,leftButtons: [
+    	// 	{
+    	// 		icon: iconsMap['ios-menu'],
+    	// 		title: '',
+    	// 		id: 'sideMenu'
+    	// 	}
+    	// ]
     });
   }
 

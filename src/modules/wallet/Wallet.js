@@ -198,15 +198,15 @@ class Wallet extends Component {
 						</View>) : false }
 				{ (subaccount_mode)?
 				false:
-				(<ActionButton buttonColor={buttonColor} bgColor="rgba(252, 252, 252, 0)" activeOpacity={0.85} offsetY={20} offsetX={20}>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Enviar Discoins" onPress={() => {  this.newTx() }}>
-						<Icon name='ios-trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+				(<ActionButton buttonColor={buttonColor} bgColor="rgba(0, 0, 0, 0.5)"  offsetY={20} offsetX={20}>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="ENVIAR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.newTx() }}>
+						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Recibir Discoins" onPress={() => {  this.sendExtraBalance() }}>
-						<Icon name='ios-trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="RECIBIR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.sendExtraBalance() }}>
+						<Icon name='trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Pagar con Discoins" textContainerStyle={{background:'red'}} titleColor='#FF0000' onPress={() => {  this.applyCredit() }}>
-						<Icon name='ios-trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="PAGAR CON DISCOINS" textStyle={styles.actionButtonText} textContainerStyle={{background:'red'}} titleColor='#FF0000' onPress={() => {  this.applyCredit() }}>
+						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
 				</ActionButton>)}
 			</View>

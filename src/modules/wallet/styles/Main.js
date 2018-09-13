@@ -15,7 +15,14 @@ const styles = StyleSheet.create({
     height: 30,
     color: 'white',
   },
-	actionButton: {
+	actionButtonText: {
+    color: '#666666',
+    fontSize: 13,
+    paddingLeft: 15,
+    flex: 1,
+    fontFamily : 'Montserrat-Regular',
+    fontWeight: '100'
+  
   },
 	row_arrow : {
     resizeMode      :'contain',

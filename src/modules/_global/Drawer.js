@@ -9,7 +9,6 @@ import {
 	View
 } from 'react-native';
 
-//import Icon from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'native-base';
 import IconBadge from 'react-native-icon-badge';
 // import LinearGradient from 'react-native-linear-gradient';
