@@ -166,7 +166,7 @@ class QRShowNScan extends React.Component {
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
                   screen: 'customer.SendAmount',
-                  title: 'Elija monto',
+                  title: 'Cuánto quieres enviar?',
                   passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
                 });
                 return;
@@ -177,7 +177,7 @@ class QRShowNScan extends React.Component {
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
                   screen: 'customer.SendConfirmEx',
-                  title: 'Elija monto',
+                  title: 'Confirmar envío',
                   passProps: {recipient: [jsonData.account_name, jsonData.account_id], amount:jsonData.amount_required, memo:''}
                 });
                 return;

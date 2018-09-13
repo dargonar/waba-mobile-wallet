@@ -39,7 +39,7 @@ export let keyStyle = StyleSheet.create({
         borderColor: '#a5a5a5'
     },
     mainText: {
-        fontFamily : 'roboto_light',
+        fontFamily : 'Montserrat-Regular',
         fontWeight: '100',
         fontSize: 20,
         color: '#0B5F83'

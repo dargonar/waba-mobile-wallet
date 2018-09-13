@@ -9,16 +9,17 @@ const styles = StyleSheet.create({
 		textAlign:'right',
 		textAlignVertical:'center',
 		/* backgroundColor: '#ff00ff' */
+		fontFamily : 'Montserrat-Medium',
 		flex:1,
 		fontSize: 25
 	},
 	fullWidthButton: {
-		borderRadius: 0,
-    height:100,
+		borderRadius: 4,
+    height:50,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
-		// backgroundColor: '#f15d44'
+    alignItems: 'center',
+		backgroundColor: '#ff7233'
   },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
@@ -30,10 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498db'
   },
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 20,
-		color: '#f15d44'
+    fontFamily : 'Montserrat-Medium',
+		fontSize   : 15,
+		color: '#fff',
+		marginRight:50
   },
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'roboto_light',

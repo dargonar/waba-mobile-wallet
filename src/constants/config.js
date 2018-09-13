@@ -173,7 +173,7 @@ export function getIdenticon(data){
 
 export function getIdenticonForHash(_hash){
 	var hash = _hash || 'cc65d8bb036388b414deac65a34d83e296b4c8b84f521cb059b561d0b5c0b4579495023d3dbdfb75492ff413ec0ad281f6e5263589d3a6418ba6dbce86bba6bf';
-	var data = new Identicon(hash).toString();
+	var data = new Identicon(hash, {background:[255,255,255,255] }).toString();
 	return'data:image/png;base64,'+data;
 }
 

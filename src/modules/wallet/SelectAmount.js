@@ -8,7 +8,8 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon} from 'native-base';
 import styles from './styles/SelectAmount';
 import { connect } from 'react-redux';
 import Keyboard from './components/Keyboard';
@@ -34,10 +35,11 @@ class SelectAmount extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
+    navBarTextColor: '#666',
+    navBarBackgroundColor: '#f0f0f0',
+    navBarButtonColor: '#666',
+		navBarTextFontFamily: 'Montserrat-Regular',
+    navBarTextFontSize: 16,
     topBarElevationShadowEnabled: false
   }
 
@@ -186,25 +188,39 @@ class SelectAmount extends React.Component {
 
 		render() {
         const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
-        const iconMoney = (<Icon name="logo-usd" size={26} color="#9F9F9F" style={{textAlign:'center', textAlignVertical:'center', flex:1 }} />);
+        const iconMoney = (<Icon name="logo-usd" style={{color:'#c0c0c0', fontSize: 24, textAlign:'center', textAlignVertical:'center', flex:1 }} />);
+
+        const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
+        const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
+
+        let icon = iconUser;
+        if(Math.random()>0.5)
+          icon = iconBiz;
+
+        let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+
         return (
             <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
 
-              <View style={{height:80, padding:10, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+              <View style={{height:80, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
                 <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
                   <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
-                    <Text style={{fontSize:15, lineHeight:20}} >
-                      Destinatario
+                    <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+                      DESTINATARIO
                     </Text>
                   </View>  
-                  <View style={{ alignSelf: 'stretch', flexDirection:'row'}}>
-                    <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                  
+                  <View style={{ borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'center'}}>
+                    <View style={{flex:1, justifyContent:'center', alignItems: 'flex-start'}}>
                     {userIcon}
                     </View>
                     <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-                      <Text style={{fontSize:20, lineHeight:30}} >
+                      <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
                         {this.state.recipient[0]}
                       </Text>
+                    </View>
+                    <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+                      {icon}
                     </View>
                   </View>
                 </View>
@@ -226,11 +242,14 @@ class SelectAmount extends React.Component {
                   onDelete={this._handleDelete.bind(this)}
                   onKeyPress={this._handleKeyPress.bind(this)}
               />
-							<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+							<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
 								<TouchableHighlight
 										style={styles.fullWidthButton}
 										onPress={this._onNext.bind(this)} >
-									<Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
+                  <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
+									<Text style={styles.fullWidthButtonText}>CONTINUAR</Text>
+                  {iconNext}
+                  </View>
 								</TouchableHighlight>
 							</View>
             </View>

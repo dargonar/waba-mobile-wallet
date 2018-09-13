@@ -82,7 +82,7 @@ const styles_x = StyleSheet.create({
     marginLeft:11,
     marginRight:11,
     height: 60,
-    elevation: 10,
+    elevation: 5,
     backgroundColor: '#FFF',
     borderColor: 'transparent'
   },
@@ -322,7 +322,7 @@ class FindUser extends Component {
     this.props.actions.memoSuccess('');
     this.props.navigator.push({
       screen: 'wallet.SelectAmount',
-      title: 'Elija monto a enviar',
+      title: 'Cuánto quieres enviar?',
       passProps: {recipient: data, pay_or_send:'send'}
       // ,rightButtons: [
       //  {

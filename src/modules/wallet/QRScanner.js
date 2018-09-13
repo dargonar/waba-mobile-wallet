@@ -80,8 +80,19 @@ class QRScanner extends React.Component {
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
                   screen: 'wallet.SelectAmount',
-                  title: 'Elija monto a enviar',
+                  title: 'Cuánto quieres enviar?',
                   passProps: {recipient: [jsonData.account_name, jsonData.account_id] , pay_or_send:'send'}
+                });
+                return;
+              }
+              if (jsonData.type==config.QRSCAN_ACCOUNT_N_AMOUNT)
+              {
+                // send_confirm
+                console.log(' ------------------------------- QRCode' , jsonData)
+                this.props.navigator.push({
+                  screen: 'customer.SendConfirmEx',
+                  title: 'Confirmar envío',
+                  passProps: {recipient: [jsonData.account_name, jsonData.account_id], amount:jsonData.amount_required, memo:''}
                 });
                 return;
               }
@@ -101,6 +112,7 @@ class QRScanner extends React.Component {
         })
         .catch(e => {
           ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
+          this.doResumeScanner();
           // setTimeout(
           //   this.doResumeScanner(),
           //   1000

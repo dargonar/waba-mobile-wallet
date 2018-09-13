@@ -174,6 +174,9 @@ class SendConfirm extends Component {
 
 	_getTx() {
 
+		console.log(' ---- SendConfirm._getTx()')
+		console.log(this.props.account.id, this.state.recipient.account_id, this.state.amount);
+		return;
 		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
 			let amount = Number(this.state.amount).toFixed(2);
 			this._generateUnsignedTx({
