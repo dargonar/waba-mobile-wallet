@@ -25,6 +25,13 @@ function launchTest(){
 
 function launchWallet(account) {
 
+  if(account && account.subaccount && account.subaccount.wallet_mode=='subaccount')
+  {
+    
+    launchSubaccountWallet(account);
+    return;
+  }
+
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
     screen: {
@@ -65,31 +72,20 @@ function launchWallet(account) {
 
 function launchSubaccountWallet(account) {
 
-  let _rightButtons = [];
-  if(!account || !account.subaccount || account.subaccount.wallet_mode!='subaccount')
-  {
-    _rightButtons = [
-        {
-          icon: iconsMap['qrcode--active'],
-          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-        }
-      ];
-  }
-
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
 		screen: {
- 			screen				 : 'wallet.Main',
+ 			screen				 : 'wallet.Wallet',
+      // screen         : 'wallet.Main',
 			// screen				 : 'discoin.Main',
       navigatorStyle : {
-       navBarButtonColor : '#000',
+       navBarButtonColor : '#fff',
        drawUnderNavBar   : true,
        navBarTransparent : true,
 			 navBarNoBorder 	 : true,
 			 topBarElevationShadowEnabled: false
       },
-      rightButtons : _rightButtons,
-			leftButtons: [
+      leftButtons: [
     		{
     			icon: iconsMap['ios-menu'],
     			title: '',

@@ -254,7 +254,7 @@ class BusinessListWidget extends Component {
     };
 
     // ToastAndroid.show(props.mode, ToastAndroid.SHORT);
-		this._onPressButton   = this._onPressButton.bind(this);
+		// this._onPressButton   = this._onPressButton.bind(this);
 	}
 
 	refreshBusinessList(start_offset) {
@@ -268,7 +268,7 @@ class BusinessListWidget extends Component {
 	}
 
   componentWillReceiveProps(nextProps){
-		console.log('BusinessListWidget::componentWillReceiveProps=>', nextProps.errors);
+		console.log('BusinessListWidget::componentWillReceiveProps errors=>', nextProps.errors);
 
 		let new_state = {};
 		if (nextProps.business_list !== this.props.business_list) {
@@ -301,8 +301,6 @@ class BusinessListWidget extends Component {
 
   componentDidMount() {
      
-    return;
-
     AppState.addEventListener('change', this.handleAppStateChange);
 		let that = this;
 		OneSignal.configure({
@@ -363,17 +361,17 @@ class BusinessListWidget extends Component {
     }
   }
 
-  _onPressButton(rowID, rowData) {
-    console.log('History::_onPressButton');
+//   _onPressButton(rowID, rowData) {
+//     console.log('History::_onPressButton');
 
-// 		let data = this._getRowData(rowData);
-// 		this.props.navigator.push({
-// 			screen: 'wallet.TxDetails',
-// 			title: 'Detalles',
-// 			passProps: data
-// 		});
+// // 		let data = this._getRowData(rowData);
+// // 		this.props.navigator.push({
+// // 			screen: 'wallet.TxDetails',
+// // 			title: 'Detalles',
+// // 			passProps: data
+// // 		});
 
-  }
+//   }
 
   _onRefresh() {
     this.setState({refreshing: true});

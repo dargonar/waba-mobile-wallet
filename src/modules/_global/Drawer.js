@@ -167,8 +167,8 @@ class Drawer extends Component {
 
 	
 	_onPower(){
-		config.logNewAccountKeys();
-		this._onFnDisabled();
+		// config.logNewAccountKeys();
+		// this._onFnDisabled();
 	}
 
 	_onSwitchMode(){
@@ -391,7 +391,9 @@ class Drawer extends Component {
 	}
 
 	_onSettings(){
-		// this._onPower();
+		// config.logNewAccountKeys();
+		// this._onFnDisabled();
+
 		// return;
 		this._toggleDrawer();
 		this.props.navigator.push({
@@ -481,13 +483,18 @@ class Drawer extends Component {
 		const iconCash 		  = (<Icon name="ios-cash"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		
 		// const iconCard 		  = (<Image source={iconsMap['ios-thumbs-up']} style={[styles.row_arrow]}/>);
-		const iconCard 		  = (<Icon name="ios-thumbs-up" size={15} color="#FF0000"  />);
+		const iconCard 		  = (<Icon name="ios-thumbs-up" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
-		const iconPlus   		= (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
-		const iconSend			= (<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>);
-		// const iconSend			= (<Image source={iconsMap['ios-arrow-round-up']} style={[styles.row_arrow, {transform : [{rotate: '-45 deg'}]}]}/>);
+
+		const iconReceive   = (<Icon name="ios-remove" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
+		const iconPlus 		  = (<Icon name="ios-add" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
+		const iconSend 		  = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
+
+		// const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
+		// const iconPlus   		= (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
+		// const iconSend			= (<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>);
+		
 		let userIcon = (<Icon
 			raised
 			containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}

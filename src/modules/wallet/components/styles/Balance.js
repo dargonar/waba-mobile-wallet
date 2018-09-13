@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 	container_subaccount: {
     width           : undefined,
     height          : undefined,
-    backgroundColor : '#0A566B' ,//'transparent',
+    backgroundColor : '#fff' ,//'transparent',
     justifyContent  : 'center',
     alignItems      : 'center',
 		flex            : 2

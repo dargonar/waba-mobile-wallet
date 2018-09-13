@@ -198,7 +198,7 @@ class Wallet extends Component {
 						</View>) : false }
 				{ (subaccount_mode)?
 				false:
-				(<ActionButton buttonColor={buttonColor} bgColor="rgba(252, 252, 252, 0)" offsetY={20} offsetX={20}>
+				(<ActionButton buttonColor={buttonColor} bgColor="rgba(252, 252, 252, 0)" activeOpacity={0.85} offsetY={20} offsetX={20}>
 					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="Enviar Discoins" onPress={() => {  this.newTx() }}>
 						<Icon name='ios-trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>

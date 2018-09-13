@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
 	container_subaccount: {
 		flex: 1,
 		justifyContent: 'center',
-		backgroundColor : '#0A566B'
+		backgroundColor : '#13a9d3'
+		//0A566B
 	},
 
 	row_arrow : {
