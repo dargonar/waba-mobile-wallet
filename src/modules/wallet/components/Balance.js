@@ -116,10 +116,14 @@ class Balance extends Component {
 				);
 		}
 
+		let grdcolor1 = '#ff7233'; 
+		let grdcolor2 = '#ffa66b';
 		let container_style = styles.container;
 		if(config.isSubaccountMode(this.props.account.subaccount))
 		{
 			container_style = styles.container_subaccount;
+			grdcolor1 = '#7029eb';
+			grdcolor2 = '#1e3695';
 		}
 		
 		//<LinearGradient colors={['rgba(31, 71, 91, 1)', 'rgba(44, 63, 80, 1)', 'rgba(84, 105, 121, 1)']} style={styles.linearGradient}>
@@ -128,7 +132,7 @@ class Balance extends Component {
 		
 		return (
 			<View style={[container_style]}>
-				<LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ffa66b']} style={{flex:1, alignSelf: 'stretch', justifyContent:'center', alignItems:'center', borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}>
+				<LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={[grdcolor1, grdcolor2]} style={{flex:1, alignSelf: 'stretch', justifyContent:'center', alignItems:'center', borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}>
 					<View style={styles.wrapper}>
 						<View style={balanceStyle}>
 							<View style={styles.balance}>

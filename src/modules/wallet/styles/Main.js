@@ -29,20 +29,34 @@ const styles = StyleSheet.create({
     height          :20,
     width           :20,
   },
-
+  subaccountButtonContainer: { 
+    height:75, 
+    position: 'absolute', 
+    bottom: 0,
+    left: 0,
+    padding:20,
+    width: '100%',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 	fullWidthButton: {
 		borderRadius: 0,
-    height:75,
+    padding: 15,
+    borderRadius: 5,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#0A566B'
+		backgroundColor: '#1e3695',
+    width: '100%',
+    position: 'absolute',
+    elevation: 10
 	},
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
-    fontSize   : 20,
-		color: 'white'
+    fontSize   : 15,
+		color: 'white',
   },
 
   actionsButton:{ 

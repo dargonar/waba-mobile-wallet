@@ -65,12 +65,15 @@ const styles = StyleSheet.create({
 		marginBottom: 0
 	},
 	container_subaccount: {
-    width           : undefined,
-    height          : undefined,
-    backgroundColor : '#fff' ,//'transparent',
-    justifyContent  : 'center',
-    alignItems      : 'center',
-		flex            : 2
+		width           : undefined,
+		height          : undefined,
+		backgroundColor : '#7029eb' ,//'transparent',
+		justifyContent  : 'center',
+		alignItems      : 'center',
+		flex            : 3,
+		borderBottomLeftRadius: 15, 
+		borderBottomRightRadius: 15,
+		marginBottom: 0
 	},
 
 	wrapper:{
