@@ -189,12 +189,12 @@ class Wallet extends Component {
 		        <Balance {...this.props} style={styles.balance}/>
 		        <History {...this.props} style={styles.history}/>
 				{ (subaccount_mode)?
-					(<View style={{height:75, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-							<TouchableHighlight
-									style={styles.fullWidthButton}
-									onPress={this._onDiscountOrReward.bind(this)} >
-								<Text style={styles.fullWidthButtonText}>COBRAR</Text>
-							</TouchableHighlight>
+					(<View style={styles.subaccountButtonContainer}>
+						<TouchableHighlight
+								style={styles.fullWidthButton}
+								onPress={this._onDiscountOrReward.bind(this)} >
+							<Text style={styles.fullWidthButtonText}>COBRAR</Text>
+						</TouchableHighlight>
 						</View>) : false }
 				{ (subaccount_mode)?
 				false:

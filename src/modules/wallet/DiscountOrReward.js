@@ -54,11 +54,12 @@ class DiscountOrReward extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#0A566B', //'#1abc9c',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#666', 
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
 
   componentDidMount() {
@@ -220,7 +221,7 @@ class DiscountOrReward extends React.Component {
 
 	render() {
       const buttonColor = (this.state.mode=='reward')? styles.buttonReward: styles.buttonDiscount;
-      const iconMoney = (<Icon name="logo-usd" type='ionicon' size={26} color="#9F9F9F" style={{alignSelf:'center'}} />);
+      const iconMoney = (<Icon name="logo-usd" type='ionicon' size={20} color="#9F9F9F" style={{alignSelf:'center', width:20}} />);
       const iconReceipt = (<Icon name="receipt" size={26} color="#9F9F9F" style={{alignSelf:'center'}} />);
       return (
           <View style={{flex: 1, backgroundColor:'#fff', flexDirection: 'column'}}>
@@ -230,51 +231,53 @@ class DiscountOrReward extends React.Component {
             <View style={{flex: 7, backgroundColor:'#fff', flexDirection: 'column'}}>
 
               <View style={{height: 100, flexDirection: 'row'}}>
-                <View style={{flex: 1, alignItems:'center', justifyContent: 'center', flexDirection: 'column', backgroundColor:'#d0d0d0'}}>
-                  {iconMoney}
-                </View>
+
                 <View style={{flex: 6, flexDirection: 'column'}}>
-                  <TextInput
-                     style={[styles.textInput, styles.textInputCenter]}
-                     onChangeText={(text) => this.updateBillAmount(text)}
-                     value={this.state.bill_amount}
-                     keyboardType="numeric"
-                     underlineColorAndroid ="transparent"
-                   />
                    <View style={{height: 20, flexDirection: 'row'}}>
                      <Text style={styles.hint}>
-                       MONTO TOTAL DE LA COMPRA
+                       MONTO DE FACTURA
                      </Text>
                    </View>
+
+                   <View style={styles.bill_amount}>
+                      <TextInput
+                         style={[styles.textInput, styles.textInputCenter]}
+                         onChangeText={(text) => this.updateBillAmount(text)}
+                         value={this.state.bill_amount}
+                         keyboardType="numeric"
+                         underlineColorAndroid ="transparent"
+                       />
+                   </View> 
+
+
+
                 </View>
               </View>
 
-              <View style={[{height: 75, flexDirection: 'row'}, styles.top_bordered]}>
-                <View style={{flex: 1, flexDirection: 'column', backgroundColor:'#d0d0d0', justifyContent: 'center'}}>
-                  {iconReceipt}
-                </View>
-                <View style={{flex: 6, flexDirection: 'column'}}>
+              <View style={{height: 75, flexDirection: 'row'}}>
+                <View style={{flex: 6, flexDirection: 'column', marginTop: 5}}>
+                 <View style={{height: 20, flexDirection: 'row'}}>
+                   <Text style={styles.hint}>
+                     REFERENCIA (TICKET, FACTURA, OTRO)
+                   </Text>
+                 </View>
                   <TouchableHighlight style={styles.button_row} underlayColor={'#909090'} onPress={() => { this.showSetBillId() }}>
                     <Text style={[styles.textSimple2]}>{this.state.bill_id}</Text>
                    </TouchableHighlight>
-                   <View style={{height: 20, flexDirection: 'row'}}>
-                     <Text style={styles.hint}>
-                       REFERENCIA (TICKET, FACTURA, OTRO)
-                     </Text>
-                   </View>
                 </View>
               </View>
 
-              <View style={[{height:200, display:'flex', flexDirection: 'row', paddingTop:50}, styles.top_bordered]}>
+              <View style={[{display:'flex', flexDirection: 'row', flex: 25}, styles.top_bordered]}>
 
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                    <Text style={[styles.inputText, styles.textInputCenter]}>
-                      {this.state.discount_rate} %
-                    </Text>
+                <View style={{flex: 1, flexDirection: 'column', paddingTop: 20}}>
                     <Text style={styles.hintInside}>
                       DESCUENTO
                     </Text>
-                    <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.inputText, styles.textInputCenter, styles.discountRate]}>
+                      {this.state.discount_rate} %
+                    </Text>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingRight: 30, paddingLeft: 10}}>
                       <Text style={[styles.inputTextLeft]}>
                       $
                       </Text>
@@ -282,7 +285,10 @@ class DiscountOrReward extends React.Component {
                         {this.state.discount_ars}
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.plusIcon}>
+                      +
+                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingRight: 30, paddingLeft: 10}}>
                       <Text style={[styles.inputTextLeft]}>
                       D$C
                       </Text>
@@ -292,14 +298,15 @@ class DiscountOrReward extends React.Component {
                     </View>
                 </View>
 
-                <View style={{flex: 1, flexDirection: 'column', borderLeftColor: '#c0c0c0', borderLeftWidth: 0.75}}>
-                    <Text style={[styles.inputText, styles.textInputCenter]}>
-                      {this.state.reward_rate} %
-                    </Text>
+                <View style={{flex: 1, flexDirection: 'column', borderLeftColor: '#c0c0c0', borderLeftWidth: 0.75, paddingTop: 20}}>
                     <Text style={styles.hintInside}>
                       RECOMPENSA
                     </Text>
-                    <View style={{flexDirection: 'row'}}>
+                    <Text style={[styles.inputText, styles.textInputCenter, styles.rewardRate]}>
+                      {this.state.reward_rate} %
+                    </Text>
+
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingRight: 30, paddingLeft: 10}}>
                       <Text style={[styles.inputTextLeft]}>
                       $
                       </Text>
@@ -307,7 +314,10 @@ class DiscountOrReward extends React.Component {
                         {this.state.bill_amount}
                       </Text>
                     </View>
-                    <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.plusIcon}>
+                      +
+                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingRight: 30, paddingLeft: 10}}>
                       <Text style={[styles.inputTextLeft]}>
                       D$C
                       </Text>
@@ -321,17 +331,17 @@ class DiscountOrReward extends React.Component {
             </View>
 
             <HideWithKeyboard>
-        	  <View style={{alignSelf: 'flex-end', flexDirection:'row', alignItems:'stretch', justifyContent:'flex-end' }}>
+        	  <View style={{alignSelf: 'flex-end', flexDirection:'row', alignItems:'stretch', justifyContent:'flex-end', height:70, backgroundColor: 'transparent'}}>
               <TouchableHighlight
-                  style={[{flex:1}, styles.fullWidthButton, buttonColor]}
-                  onPress={this._onShowDiscountQR} >
-                <Text style={styles.fullWidthButtonText}>ACEPTAR DESCUENTO</Text>
+                  style={[{flex:1, backgroundColor:'#3498db', elevation:10}, styles.buttonDiscount]}
+                  onPress={this._onShowDiscountQR}>
+                <Text style={styles.buttonDiscountText}>ACEPTAR DESCUENTO</Text>
               </TouchableHighlight>
 
               <TouchableHighlight
-                  style={[{flex:1, borderLeftColor:'#ffffff', borderLeftWidth:0.5}, styles.fullWidthButton, buttonColor]}
+                  style={[{flex:1, backgroundColor:'#ff7233', elevation:10}, styles.buttonDiscount]}
                   onPress={this._onSendReward} >
-                <Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
+                <Text style={styles.buttonDiscountText}>RECOMPENSAR</Text>
               </TouchableHighlight>
             </View>
             </HideWithKeyboard>
