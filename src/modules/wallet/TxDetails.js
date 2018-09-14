@@ -141,14 +141,43 @@ class TxDetails extends Component {
             </View>
           </View>
         </View>
-        
 
-        <Text>Memo:   {this.state.message}</Text>
-        <Text>Fecha:   {this.state.block.timestamp}</Text>
-			  <Text>discount:   {this.state.discount}</Text>
-        <Text>bill_amount (total de la factura):   {this.state.bill_amount}</Text>
-        <Text>NroFactura/recibo/referencia:   {this.state.bill_id}</Text>     
+        <View style={styles.detailsView}>
+          <View style={styles.billAmount}>
+            <View>
+              <Text style={styles.labelTitle}>TOTAL</Text>
+              <Text style={styles.label}>FACTURADO</Text>
+            </View>
+            <Text style={styles.labelTitle}>{this.state.bill_amount}</Text>
+          </View>
+  
+          <View flexDirection='column' style={{marginBottom:10}}>
+            <Text style={styles.label}>Fecha:</Text>
+            <Text style={styles.text}>{this.state.block.timestamp}</Text>
+          </View>
+
+          <View flexDirection='column' style={{marginBottom:10}}>
+            <Text style={styles.label}>NroFactura/recibo/referencia:</Text>
+            <Text style={styles.text}>{this.state.bill_id}</Text>
+          </View>
+
+          <View flexDirection='column' style={{marginBottom:10}}>
+            <Text style={styles.label}>Memo:</Text>
+            <Text style={styles.text}>{this.state.message}</Text>
+          </View>
+
+          <View flexDirection='column' style={{marginBottom:10}}>
+            <Text style={styles.label}>Descuento:</Text>
+            <Text style={styles.text}>{this.state.discount}</Text>
+          </View>
         </View>
+
+
+
+
+      </View>
+
+
     );
   }
 }
