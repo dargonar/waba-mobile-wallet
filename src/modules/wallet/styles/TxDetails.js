@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
 	},
 	amountQuantityCard:{
 		flexDirection: 'row',
-		borderWidth: 2,
+		borderBottomWidth: 1,
 		borderColor: '#ff7233', 
 		padding: 0,
 		minWidth: 100,
 		paddingRight: 25,
 		justifyContent: 'center',
 		paddingLeft: 25,
+		paddingBottom: 10,
 		margin: 5,
-		borderRadius: 10,
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF',
 	},
@@ -113,7 +113,29 @@ const styles = StyleSheet.create({
 		fontFamily : 'Montserrat-Bold',
 		fontSize: 12,
 		color: '#CCC',
-
+	},
+	labelTitle:{
+		fontFamily : 'Montserrat-Medium',
+		fontSize: 21,
+		color: '#999',
+	},
+	billAmount:{
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		fontSize: 21,
+		color: '#666',
+		paddingTop: 10,
+		paddingBottom: 10,
+		borderBottomWidth: 0.5,
+		borderBottomColor: '#CCC',
+		marginBottom: 10,
+	},
+	detailsView:{
+		flex: 1,
+		paddingLeft: 20,
+		paddingRight: 20,
+		backgroundColor: '#ededed',
 	}
 });
 
