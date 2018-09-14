@@ -173,6 +173,7 @@ class TxDetails extends Component {
               <Text style={styles.text}>{this.state.discount}</Text>
             </View>
           </View>
+
         </ScrollView>
       </View>
 
