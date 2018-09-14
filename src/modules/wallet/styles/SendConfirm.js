@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-discoinCountValue:{
+  discoinCountValue:{
     fontSize: 45,
     lineHeight: 45,
     fontFamily : 'Montserrat-Regular', 

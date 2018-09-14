@@ -34,10 +34,8 @@ class Wallet extends Component {
 
 		this.state 						= {account:''};
 		this.newTx 						= this.newTx.bind(this);
-		// this.onPay 						= this.onPay.bind(this);
-		// this.resetBalance			= this.resetBalance.bind(this);
-		// this.sendExtraBalance	= this.sendExtraBalance.bind(this);
-		this.applyCredit			= this.applyCredit.bind(this);
+		this.requestPayment		= this.requestPayment.bind(this);
+		this.doPay						= this.doPay.bind(this);
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 
 
@@ -86,95 +84,30 @@ class Wallet extends Component {
 		});
 	}
 
-	// doSendExtraOrResetBalance(reset){
-		
-	// 	let tx_data = {};
-	// 	let balance = this.props.balance[config.ASSET_ID];
-	// 	let account = this.props.account;
-	// 	let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
-	// 	try {
-
-	// 		tx_data = subaccount_helper.prepareResetBalance(reset, account, balance);
-
-	// 	} catch (error) {
-			
-	// 		console.log('Error!!!!');
-			
-	// 		Alert.alert(
-	// 			title,
-	// 	  	error,
-	// 			[
-	// 				{text: 'OK'},
-	// 			]
-	// 		)
-	// 		return;
-		
-	// 	}
-
-	// 	this.props.navigator.push({
- //      screen: 'wallet.ResetBalanceConfirm',
-	// 		title: title,
-	// 		passProps:  {
- //        ...tx_data	
- //    	}
-	// 	});
-	// }
-
-	// sendExtraBalance(){
-	// 	this.doSendExtraOrResetBalance(false);	
-	// }
-
-	// resetBalance(){
-	// 	this.doSendExtraOrResetBalance(true);	
-	// }
-
-	applyCredit(){
-		this.props.navigator.toggleDrawer({
-			to: 'open',
-			side: 'left',
-			animated: true
-		});
+	doPay(){
+		this.props.navigator.push({
+      screen: 'wallet.QRScanner',
+      title: 'Escanear factura',
+      passProps: {mode:config.QRSCAN_INVOICE_DISCOUNT}
+    });
 	}
 
+	requestPayment(){
+		this.props.navigator.push({
+		  screen: 'wallet.RequestPayment',
+			title: 'Recibir discoins'
+		});
+	}
+	
 	newTx(){
 		
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
 			title: 'Elija usuario'
 		});
-
-		// this.props.navigator.push({
-  //     screen: 'wallet.SelectCustomer',
-		// 	title: 'Elija usuario para enviar'
-		// });
-
 	}
 
-	// onPay(){
-	// 	this.props.navigator.push({
- //      screen: 'wallet.SelectRecipient',
-	// 		title: 'Pagar - Seleccione Comercio'
-	// 	});
-	// }
 
-
-	/*
-		USER MODE
-		<ActionButton buttonColor={buttonColor} bgColor="rgba(52, 52, 52, 0.40)" >
-					<ActionButton.Item buttonColor={buttonColor} title="ENVIAR" onPress={() => {  this.newTx() }}>
-						<Image source={iconsMap['ios-send']} style={[styles.row_arrow]}/>
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor={buttonColor} title="PAGAR" onPress={() => {  this.onPay() }}>
-						<Image source={iconsMap['ios-cash']} style={[styles.row_arrow]}/>
-					</ActionButton.Item>
-					</ActionButton>
-	*/
-	// 	<ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
-	/*
-			<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-				<Icon name="md-create" style={styles.actionButtonIcon} />
-			</ActionButton.Item>
-	*/
 
 	// FAV Button: https://github.com/mastermoo/react-native-action-button
 	render() {
@@ -202,10 +135,10 @@ class Wallet extends Component {
 					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="ENVIAR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.newTx() }}>
 						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="RECIBIR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.sendExtraBalance() }}>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="RECIBIR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.requestPayment() }}>
 						<Icon name='trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="PAGAR CON DISCOINS" textStyle={styles.actionButtonText} textContainerStyle={{background:'red'}} titleColor='#FF0000' onPress={() => {  this.applyCredit() }}>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="PAGAR CON DISCOINS" textStyle={styles.actionButtonText} titleColor='#FF0000' onPress={() => {  this.doPay() }}>
 						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
 				</ActionButton>)}

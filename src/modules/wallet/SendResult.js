@@ -1,17 +1,18 @@
 import React, { PropTypes, Component } from 'react';
 
 import {
-  View,
+  Image, View,
   Text
 } from 'react-native';
 
-
+import * as config from '../../constants/config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 import styles from './styles/SendResult';
-import { Icon } from 'react-native-elements';
+import { Icon } from 'native-base';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import ActionButton from 'react-native-action-button';
 
 class SendResult extends Component {
 
@@ -81,40 +82,39 @@ class SendResult extends Component {
 		let mensaje_ui2 = undefined;
 		if(mensaje)
 		{
-			mensaje_ui1 = (<Text style={styles.title_part}>MENSAJE</Text>)
-			mensaje_ui2 = (<Text style={styles.data_part}>{mensaje}</Text>)
-		}
+			mensaje_ui1 = (<Text style={styles.title_part}>MENSAJE</Text>);
+			mensaje_ui2 = (<Text style={styles.data_part}>{mensaje}</Text>);
 
+		}
+    
+    let imgData = config.getRedDiscoinIcon();
+    
+    let icon = (<Icon name="md-checkmark" style={{ fontSize: 30, height: 30, color: '#fff'}} />);
+    
     return (
 
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', backgroundColor:'transparent'}}>
+        <View style={{flex:1, justifyContent: 'flex-start', backgroundColor:'transparent', padding:30, paddingTop:50, paddingBottom:50}}>
           <Text style={styles.title}>Envío exitoso</Text>
-          <Text style={[styles.amount]}>$ {this.state.amount}</Text>
+          <View style={styles.discoinCount}>
+            <Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+            <Text style={styles.discoinCountValue}>{this.state.amount}</Text>
+          </View>
         </View>
-        <View style={{flex:4, backgroundColor:'transparent'}}>
-
+        <View style={{flex:3, backgroundColor:'#e7f5f6', padding:30}}>
           <Text style={styles.title_part}>DESTINATARIO</Text>
           <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.recipient.name}</Text>
           {mensaje_ui1}
 					{mensaje_ui2}
+        </View>
 
-        </View>
-        <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
-          <Icon
-            raised
-            containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: 'transparent' }}
-            name='md-checkmark'
-            type='ionicon'
-            color='#ffffff'
-            underlayColor='#415261'
-            onPress={this._onOkPress.bind(this)}
-            size={30} />
-        </View>
+        <ActionButton buttonColor={'#0bbbe4'} onPress={this._onOkPress.bind(this)} icon={ icon } />
+
       </View>
     );
   }
 }
+
 
 function mapStateToProps(state, ownProps) {
 	return {

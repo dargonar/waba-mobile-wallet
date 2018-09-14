@@ -4,14 +4,38 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: '#ffffff',
-		padding: 30
+		
 	},
+
+
+  discoinCount:{
+    width: '100%',
+    alignItems: 'flex-start',
+    padding: 0,
+    flexDirection: 'row', 
+    justifyContent: 'flex-start'
+  },
+
+  discoinCountValue:{
+    fontSize: 45,
+    lineHeight: 45,
+    fontFamily : 'Montserrat-Regular', 
+    color: '#f15d44',
+  },
+
+  actionButtonIcon: {
+    fontSize: 50,
+    height: 40,
+    color: '#fff',
+  },
+
+
   title: {
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Light',
     fontWeight : '100',
-    color      : '#a9a9a9',
-    fontSize   : 40,
-    lineHeight : 45,
+    color      : '#000',
+    fontSize   : 20,
+    lineHeight : 20,
     marginBottom:20
   },
   amount:{
@@ -23,15 +47,17 @@ const styles = StyleSheet.create({
   },
   margin_bottom:{marginBottom:10},
 	data_part : {
-    fontFamily : 'roboto_normal',
-    color      : '#f15d44',
-    fontSize   : 18
+    fontSize:25, 
+    lineHeight:35, 
+    fontFamily : 'Montserrat-Medium',
+    color      : '#f15d44'
   },
   title_part : {
-    fontFamily  : 'roboto_regular',
     color       : '#a9a9a9',
-    lineHeight  : 25,
-    fontSize    : 12
+    fontSize:12, 
+    lineHeight:17, 
+    paddingBottom:3, 
+    fontFamily : 'Montserrat-Regular'
   },
 	title_part_2 : {
     fontFamily  : 'roboto_regular',

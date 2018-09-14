@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
 import {
+  Image, 
   View,
   Text,
 	Alert
@@ -14,6 +15,7 @@ import * as walletActions from './wallet.actions';
 import styles from './styles/Sending';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Spinner from 'react-native-spinkit';
+import * as config from '../../constants/config';
 
 class Sending extends Component {
 
@@ -83,22 +85,36 @@ class Sending extends Component {
 			let mensaje_ui2 = undefined;
 			if(mensaje)
 			{
-				mensaje_ui1 = (<Text style={styles.title_part}>con mensaje:</Text>)
-				mensaje_ui2 = (<Text style={styles.data_part}>{mensaje}</Text>)
+				mensaje_ui1 = (<Text style={styles.title_part}>con mensaje</Text>);
+				mensaje_ui2 = (<Text style={styles.data_part}>{mensaje}</Text>);
 			}
+
+			let imgData = config.getRedDiscoinIcon();
+
 			return (
 				<View style={styles.container}>
 					<View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'transparent'}}>
 						<Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#f15d44"/>
 					</View>
-					<View style={{flex:4, backgroundColor:'transparent', paddingLeft:30, paddingRight:30}}>
-						<Text style={styles.title_part}>Pagando:</Text>
-						<Text style={styles.data_part}>$ {this.state.amount}</Text>
-						<Text style={styles.title_part}>A:</Text>
-						<Text style={styles.data_part}>{this.state.recipient.name}</Text>
-						{mensaje_ui1}
-						{mensaje_ui2}
+
+					<View style={{flex:2, backgroundColor:'transparent', flexDirection:'column', justifyContent:'flex-start', alignItems:'center' }}>
+						<View style={styles.row}>
+							<Text style={styles.title_part}>enviando</Text>
+							<Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:2 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+							<Text style={styles.money_part}>{this.state.amount}</Text>	
+						</View>
+						
+						<View style={{flexDirection:'row', alignItems:'flex-end'}}>
+							<Text style={styles.title_part}>a</Text>
+							<Text style={styles.data_part}>{this.state.recipient.name}</Text>
+						</View>
+						<View style={{flexDirection:'row', alignItems:'flex-end'}}>
+							{mensaje_ui1}
+							{mensaje_ui2}
+						</View>
 					</View>
+						
+					
 				</View>
 			);
 		}

@@ -190,9 +190,12 @@ class SelectAmount extends React.Component {
         const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
         const iconMoney = (<Icon name="logo-usd" style={{color:'#c0c0c0', fontSize: 24, textAlign:'center', textAlignVertical:'center', flex:1 }} />);
 
-        const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
-        const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
-        let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+        // const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
+        // const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
+        const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+        // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
+        const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+        let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
 
         // HACK
         let icon = iconUser;

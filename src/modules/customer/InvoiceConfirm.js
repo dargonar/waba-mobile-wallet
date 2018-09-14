@@ -5,8 +5,8 @@ import {
 	ScrollView, 
 	Text,
 	TouchableHighlight,
-	View
-
+	View,
+	Image
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -14,20 +14,20 @@ import { connect } from 'react-redux';
 import * as walletActions from '../wallet/wallet.actions';
 import styles from './styles/InvoiceConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-
+import { Icon} from 'native-base';
+import { iconsMap } from '../../utils/AppIcons';
 import Bts2helper from '../../utils/Bts2helper';
-
 import * as config from '../../constants/config';
 
 class InvoiceConfirm extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: 'blue',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarButtonColor: '#000',
+    navBarBackgroundColor: '#fff',
+    topBarElevationShadowEnabled: false,
+    navBarTextFontFamily: 'Montserrat-Regular'
   }
+
 
   constructor(props) {
     super(props);
@@ -58,7 +58,9 @@ class InvoiceConfirm extends Component {
 			business_id: 		props.business_id ,
 			account_name: 	props.account_name || props.business_name,
 			business_name: 	props.business_name,
-			type: 					props.type //'invoice_discount' 
+			type: 					props.type,
+
+			identicon 	: ''
 		}
 
 		this._onSendingError = this._onSendingError.bind(this);
@@ -104,20 +106,7 @@ class InvoiceConfirm extends Component {
 					]
 				]
 			}
-      // console.log(' -- generateTX:', JSON.stringify(tx));
-      // console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
-      // console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
-      // console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
-
-      // get_fees_for_tx
-      // {
-      //     "fees": [
-      //         {
-      //             "amount": 20,
-      //             "asset_id": "1.3.9"
-      //         }
-      //     ]
-      // }
+    
 			fetch(config.getAPIURL('/get_fees_for_tx'), {
 				method: 'POST',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -215,6 +204,7 @@ class InvoiceConfirm extends Component {
 	getAvailableBalance(){
 		return Number(this.props.balance[config.ASSET_ID])-1;
 	}
+
 	_getTx() {
 
         // this._getRecipientInfo(this.state.recipient).then( () => {
@@ -417,6 +407,8 @@ class InvoiceConfirm extends Component {
 	}
 
   componentDidMount() {
+  	let identicon = config.getIdenticon(this.state.recipient.name);
+    this.setState({ identicon : identicon });
 		this._getTx();
   }
 
@@ -450,10 +442,45 @@ class InvoiceConfirm extends Component {
 				payable_amount	= balance;
 		let debt					  = total_amount-payable_amount;
 		
+		const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+    // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
+    const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+		// let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+		let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+    // HACK
+    let icon = iconUser;
+    if(Math.random()>0.5)
+      icon = iconBiz;
+    const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 
 		return (
       <View style={styles.container}>
       	<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
+
+      		<View style={{height:80, marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+	          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
+	            <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
+	              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+	                DESTINATARIO
+	              </Text>
+	            </View>  
+	            
+	            <View style={{ borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'center'}}>
+	              <View style={{flex:1, justifyContent:'center', alignItems: 'flex-start'}}>
+	                {userIcon}
+	              </View>
+	              <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
+	                <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
+	                  {this.state.recipient.name}
+	                </Text>
+	              </View>
+	              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+	                {icon}
+	              </View>
+	            </View>
+	          </View>
+	        </View>
+
 	        <View style={{flex:5, flexDirection:'column', backgroundColor:'#ffffff', paddingLeft:10, paddingTop:30, paddingRight:10, paddingBottom:30}}>
 	        	
 	        	<Text style={[styles.business_name, styles.align_center]}>{business_name}</Text>

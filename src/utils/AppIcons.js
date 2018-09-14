@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {
   PixelRatio
@@ -94,10 +95,11 @@ const icons = {
   "qrcode--active": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
 
   "receipt": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
-
+  "store": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome5],
 //   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
+
 
 }
 

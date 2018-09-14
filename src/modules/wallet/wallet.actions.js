@@ -674,7 +674,12 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 				}
 
 				if(data.asset) {
+					console.log(' *********************** SI HAY data.asset:',data.asset)
 					dispatch(assetSuccess(JSON.parse(data.asset)));
+				}
+				else
+				{
+					console.log(' *********************** NO HAY data.asset')
 				}
 
 

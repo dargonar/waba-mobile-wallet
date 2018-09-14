@@ -16,6 +16,7 @@ export function jsonForInvoice(bill_amount, bill_id, discount_rate, discount_dsc
 	// return {ba:bill_amount, bi:bill_id, dr:discount_rate, dd:discount_dsc, da:discount_ars,ai:account_id, an:account_name, bi:business_id, bn:business_name , t:config.QRSCAN_INVOICE_DISCOUNT}
 	
 	let obj = {ba:bill_amount, dd:discount_dsc, da:discount_ars, ai:account_id, an:account_name, t:config.QRSCAN_INVOICE_DISCOUNT};
+	//{"ba":350, "dd":50, "da":300, "ai":"1.2.85", "an":"pepe", "t":"id"}
 	console.log(' ------------------------ jsonForInvoice:', JSON.stringify(obj))
 	return obj;
 

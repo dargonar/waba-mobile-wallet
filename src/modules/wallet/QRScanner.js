@@ -37,28 +37,25 @@ class QRScanner extends React.Component {
 
   }
 
+  // static navigatorStyle = {
+  //   navBarTextColor: '#000',
+  //   navBarBackgroundColor: 'transparent',
+  //   navBarButtonColor: '#000',
+		// navBarTextFontFamily: 'Montserrat-Bold',
+  //   drawUnderNavBar   : true,
+  //   navBarTransparent : true,
+  //   topBarElevationShadowEnabled: false
+  // }
+
   static navigatorStyle = {
-    navBarTextColor: '#000',
-    navBarBackgroundColor: 'transparent',
     navBarButtonColor: '#000',
-		navBarTextFontFamily: 'Montserrat-Bold',
-    drawUnderNavBar   : true,
-    navBarTransparent : true,
-    topBarElevationShadowEnabled: false
+    navBarBackgroundColor: '#fff',
+    topBarElevationShadowEnabled: false,
+    navBarTextFontFamily: 'Montserrat-Regular'
   }
 
   componentDidMount() {
-    // let obj = {
-    //   bill_amount : this.state.bill_amount,
-    //   bill_id : this.state.bill_id,
-    //   reward_rate : this.state.reward_rate,
-    //   reward_dsc : this.state.reward_dsc,
-    //   reward_ars : this.state.reward_ars,
-    //   account_id: this.props.account.id,
-    //   business_id: this.props.account.subaccount.business.account_id
-    // }
-    // this.setState( {text : JSON.stringify(obj)});
-
+    
   }
 
 
@@ -70,10 +67,14 @@ class QRScanner extends React.Component {
     {
       pauseScanner()
         .then(() => {
+            // ToastAndroid.show(type + ' :: ' + JSON.stringify(data), ToastAndroid.SHORT);
+            // console.log(' **************************** BARCODE: ' + JSON.stringify(data) + ' ####### TYPE:'+ type);
+            // BARCODE: "{\"account_id\":\"1.2.97\",\"account_name\":\"user1\",\"type\":\"account_only\"}" 
+            // TYPE:QR_CODE
             if(type=='QR_CODE')
             {
-              // let jsonData = JSON.parse(data);
-              let jsonData = qr_helper.expandJSONForQR(data)
+              let jsonData = qr_helper.expandJSONForQR(data);
+
               if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
               {
                 // send_confirm
@@ -101,18 +102,21 @@ class QRScanner extends React.Component {
                 // pay_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)
                 this.props.navigator.push({
-                  screen:     'wallet.InvoicePayConfirm',
+                  screen:     'customer.InvoiceConfirm',
                   title:      'Pagar',
                   passProps:  jsonData
                 });
                 return;
               }
+
+              setTimeout(
+                this.doResumeScanner(),
+                100
+              );
             }
-            this.doResumeScanner();
         })
         .catch(e => {
           ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
-          this.doResumeScanner();
           // setTimeout(
           //   this.doResumeScanner(),
           //   1000

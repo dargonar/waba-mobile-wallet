@@ -53,13 +53,13 @@ try {
 						}
 						// AHORA TRAEMOS COMERCIOS
 						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
-						// store.dispatch(walletActions.retrieveBusinesses(0, '', initialState.business_filter) );
+						store.dispatch(walletActions.retrieveBusinesses(0, '', initialState.business_filter) );
 						
 					}
 				});
 
 				// AHORA TRAEMOS COMERCIOS
-				// store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
+				store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );
 				store.dispatch(walletActions.retrieveBusinesses(0, '', initialState.business_filter) );
  			}
 		});

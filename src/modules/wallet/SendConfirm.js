@@ -16,7 +16,7 @@ import styles from './styles/SendConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Icon} from 'native-base';
 import Bts2helper from '../../utils/Bts2helper';
-
+import { iconsMap } from '../../utils/AppIcons';
 import * as config from '../../constants/config';
 
 class SendConfirm extends Component {
@@ -41,15 +41,16 @@ class SendConfirm extends Component {
       identicon 	: '',
 			memo_key 		: props.memo_key,
       amount 			: props.amount,
-      memo 				:   props.memo,
-			tx 					: 		 null,
-			fee 				:     0,
+      memo 				: props.memo,
+			tx 					: null,
+			fee 				: 0,
 			fee_txt 		: 0,
 			can_confirm : false,
 			error 			:   ''
 
     }
-
+    console.log(' --- SendConfirm::');
+    console.log(props.amount);
 		this._onSendingError = this._onSendingError.bind(this);
 		this._buildMemo = this._buildMemo.bind(this);
   }
@@ -73,7 +74,8 @@ class SendConfirm extends Component {
 	}
 
   _generateUnsignedTx(params) {
-		//console.log('_generateUnsignedTx', params);
+		// console.log(' ---------------- _generateUnsignedTx', params);
+		// console.log((Number(params.amount)*Math.pow(10,params.asset.precision))>>0);
 		return new Promise( (resolve, reject) => {
 			tx = {
 				'expiration' : config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
@@ -95,9 +97,9 @@ class SendConfirm extends Component {
 				]
 			}
       console.log(' -- generateTX:', JSON.stringify(tx));
-      console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
-      console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
-      console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
+      // console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
+      // console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
+      // console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
 
       // get_fees_for_tx
       // {
@@ -121,6 +123,7 @@ class SendConfirm extends Component {
           reject(err);
 				})
 			.then((responseJson) => {
+					console.log('## get_fees_for_tx -- '+JSON.stringify(responseJson));
         	tx.operations[0][1].fee = {
   					asset_id  : responseJson['fees'][0]['asset_id'], //params.asset.id,
   					amount    : responseJson['fees'][0]['amount']
@@ -179,9 +182,10 @@ class SendConfirm extends Component {
 
 	_getTx() {
 
+		// console.log(' ---- SendConfirm._getTx()')
+		// console.log(this.props.account.id, this.state.recipient.account_id, this.state.amount);
+		// return;
 		console.log(' ---- SendConfirm._getTx()')
-		console.log(this.props.account.id, this.state.recipient.account_id, this.state.amount);
-		return;
 		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
 			let amount = Number(this.state.amount).toFixed(2);
 			this._generateUnsignedTx({
@@ -288,11 +292,13 @@ class SendConfirm extends Component {
 			)
 			return;
 		}
+
+		let total_amount = this.getTotal();
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
 			title :  'Enviando...',
 			passProps: {recipient : this.state.recipient,
-									amount :    this.state.amount,
+									amount :    total_amount,
 									memo :      this.state.memo,
 								  modal_type: 'sending'},
 			animationType: 'slide-up',
@@ -327,7 +333,7 @@ class SendConfirm extends Component {
 							title:      'Envío exitoso',
 							passProps:  {
 									recipient : this.state.recipient,
-									amount :    this.state.amount,
+									amount :    total_amount,
 									memo :      this.state.memo
 							},
 							navigatorStyle: {navBarHidden:true}
@@ -401,9 +407,13 @@ class SendConfirm extends Component {
 
 		let imgData = config.getRedDiscoinIcon();
 		const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
-		const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
-    const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
-    let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+		// const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
+    // const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
+    const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+    // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
+    const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+		// let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+		let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
     // HACK
     let icon = iconUser;
     if(Math.random()>0.5)
