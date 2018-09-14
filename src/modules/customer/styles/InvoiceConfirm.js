@@ -3,34 +3,80 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#f7f7f7'
 
 	},
+
+
+
 
   align_center:{
     alignSelf: 'center'
   },
   business_name : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
     fontSize   : 32,
 
   },
 
   business_subaccount_name: {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
     fontSize   : 24,
     lineHeight : 32
   },
 
-  total_bill : {
-    fontFamily : 'roboto_normal',
+  total_bill_sign:{
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
-    fontSize   : 38
+    fontSize   : 17,
+    lineHeight : 17,
+    marginRight: 4,
+    alignSelf : 'flex-start'
+  },
+   total_bill_sign_light:{
+    fontFamily : 'Montserrat-Medium',
+    color      : '#f39b8c',
+    fontSize   : 17,
+    lineHeight : 17,
+    marginRight: 4,
+    alignSelf : 'flex-start'
+  },
+  total_bill_sign_gray:{
+    fontFamily : 'Montserrat-Medium',
+    color      : '#acacac',
+    fontSize   : 17,
+    lineHeight : 17,
+    marginRight: 4,
+    alignSelf : 'flex-start'
+  },
+  total_bill : {
+    fontFamily : 'Montserrat-Medium',
+    color      : '#000',
+    fontSize   : 35,
+    lineHeight   : 35
+  },
+  total_bill_gray : {
+    fontFamily : 'Montserrat-Medium',
+    color      : '#acacac',
+    fontSize   : 35,
+    lineHeight   : 35
+  },
+  total_bill_red : {
+    fontFamily : 'Montserrat-Medium',
+    color      : '#f15d44',
+    fontSize   : 35,
+    lineHeight   : 35
+  },
+  total_bill_red_light : {
+    fontFamily : 'Montserrat-Medium',
+    color      : '#f39b8c',
+    fontSize   : 35,
+    lineHeight   : 35
   },
   discoin_amount : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
     fontSize   : 32
   },
@@ -43,24 +89,24 @@ const styles = StyleSheet.create({
     paddingRight:10
   },
   discoin_amount_small : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
     fontSize   : 20,
     lineHeight : 32
   },
 
 	data_part : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
     fontSize   : 32
   },
 	data_part2 : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#a9a9a9',
     fontSize   : 26
   },
 	data_part_small : {
-    fontFamily : 'roboto_normal',
+    fontFamily : 'Montserrat-Medium',
     color      : '#f15d44',
 		fontSize   : 24,
 		lineHeight : 32
@@ -73,13 +119,19 @@ const styles = StyleSheet.create({
 		lineHeight : 32
   },
   title_part : {
-    fontFamily  : 'roboto_regular',
-    color       : '#a9a9a9',
-    lineHeight  : 35,
-    fontSize    : 16
+    fontFamily  : 'Montserrat-Regular',
+    color       : '#999999',
+    lineHeight  : 17,
+    fontSize    : 17
+  },
+  title_part_red:{
+    fontFamily  : 'Montserrat-Regular',
+    lineHeight  : 17,
+    fontSize    : 17,
+    color       : '#f15d44',
   },
   title_part_bold : {
-    fontFamily  : 'roboto_bold',
+    fontFamily  : 'Montserrat-Bold',
     color       : '#a9a9a9',
     lineHeight  : 35,
     fontSize    : 24
@@ -95,24 +147,29 @@ const styles = StyleSheet.create({
 
 
 	fullWidthButton: {
-		borderRadius: 0,
-    height:100,
+    borderRadius: 4,
+    height:50,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-		backgroundColor: '#f15d44'
+    backgroundColor: '#ff7233'
   },
+  fullWidthButtonText: {
+    fontFamily : 'Montserrat-Medium',
+    fontSize   : 15,
+    color: '#fff',
+    marginRight:50
+  },
+
+
+
+
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },
-	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-		color: 'white',
-		fontSize   : 20
-  },
+	
 	fullWidthButtonTextDisabled:{
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-Light',
 		fontWeight : '100',
     fontSize   : 20,
 		color			 : '#cccccc'

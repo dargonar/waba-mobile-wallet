@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  ScrollView
 } from 'react-native';
 import { Icon } from 'native-base';
 import { bindActionCreators } from 'redux';
@@ -107,74 +108,72 @@ class TxDetails extends Component {
 
 		return (
       
-        // <Text>{this.state.typeText}</Text>
       <View style={styles.container}>
-        <View justifyContent="center" alignItems='center' flexDirection='column'>
-          <View style={styles.amountQuantityView}>
-            <View style={styles.amountQuantityCard}>
-              <Image style={{width: 13, height: 13, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
-              <Text style={styles.amountQuantity}>{this.state.amount.quantity}</Text>
+        <ScrollView contentContainerStyle={{ flexDirection:'column', paddingBottom:20}}>
+      
+          <View justifyContent="center" alignItems='center' flexDirection='column'>
+            <View style={styles.amountQuantityView}>
+              <View style={styles.amountQuantityCard}>
+                <Image style={{width: 13, height: 13, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
+                <Text style={styles.amountQuantity}>{this.state.amount.quantity}</Text>
+              </View>
+            </View>
+            <View style={styles.feeView}>
+              <View style={styles.feeCard}>
+                <Text style={styles.label}>Comisión</Text>
+                <Text>{this.state.fee.quantity}</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.feeView}>
-            <View style={styles.feeCard}>
-              <Text style={styles.label}>Comisión</Text>
-              <Text>{this.state.fee.quantity}</Text>
+
+          <View flexDirection='row' justifyContent='center' alignItems='center'>  
+            <View style={styles.fromToView}>
+              <Text style={styles.label}>DE</Text>
+              <View style={styles.fromToCard}>
+                <View style={styles.fromToThumb}></View>
+                <Text style={styles.text}>{this.state.from.name}</Text>
+              </View>
+            </View>
+            <Icon name='md-arrow-round-forward' style={{color:'#CCC'}}/>
+            <View style={styles.fromToView}>
+              <Text style={styles.label}>A</Text>
+              <View style={styles.fromToCard}>
+                <View style={styles.fromToThumb}></View>
+                <Text style={styles.text}>{this.state.to.name}</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View flexDirection='row' justifyContent='center' alignItems='center'>  
-          <View style={styles.fromToView}>
-            <Text style={styles.label}>DE</Text>
-            <View style={styles.fromToCard}>
-              <View style={styles.fromToThumb}></View>
-              <Text style={styles.text}>{this.state.from.name}</Text>
+          <View style={styles.detailsView}>
+            <View style={styles.billAmount}>
+              <View>
+                <Text style={styles.labelTitle}>TOTAL</Text>
+                <Text style={styles.label}>FACTURADO</Text>
+              </View>
+              <Text style={styles.labelTitle}>{this.state.bill_amount}</Text>
+            </View>
+    
+            <View flexDirection='column' style={{marginBottom:10}}>
+              <Text style={styles.label}>Fecha:</Text>
+              <Text style={styles.text}>{this.state.block.timestamp}</Text>
+            </View>
+
+            <View flexDirection='column' style={{marginBottom:10}}>
+              <Text style={styles.label}>NroFactura/recibo/referencia:</Text>
+              <Text style={styles.text}>{this.state.bill_id}</Text>
+            </View>
+
+            <View flexDirection='column' style={{marginBottom:10}}>
+              <Text style={styles.label}>Memo:</Text>
+              <Text style={styles.text}>{this.state.message}</Text>
+            </View>
+
+            <View flexDirection='column' style={{marginBottom:10}}>
+              <Text style={styles.label}>Descuento:</Text>
+              <Text style={styles.text}>{this.state.discount}</Text>
             </View>
           </View>
-          <Icon name='md-arrow-round-forward' style={{color:'#CCC'}}/>
-          <View style={styles.fromToView}>
-            <Text style={styles.label}>A</Text>
-            <View style={styles.fromToCard}>
-              <View style={styles.fromToThumb}></View>
-              <Text style={styles.text}>{this.state.to.name}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.detailsView}>
-          <View style={styles.billAmount}>
-            <View>
-              <Text style={styles.labelTitle}>TOTAL</Text>
-              <Text style={styles.label}>FACTURADO</Text>
-            </View>
-            <Text style={styles.labelTitle}>{this.state.bill_amount}</Text>
-          </View>
-  
-          <View flexDirection='column' style={{marginBottom:10}}>
-            <Text style={styles.label}>Fecha:</Text>
-            <Text style={styles.text}>{this.state.block.timestamp}</Text>
-          </View>
-
-          <View flexDirection='column' style={{marginBottom:10}}>
-            <Text style={styles.label}>NroFactura/recibo/referencia:</Text>
-            <Text style={styles.text}>{this.state.bill_id}</Text>
-          </View>
-
-          <View flexDirection='column' style={{marginBottom:10}}>
-            <Text style={styles.label}>Memo:</Text>
-            <Text style={styles.text}>{this.state.message}</Text>
-          </View>
-
-          <View flexDirection='column' style={{marginBottom:10}}>
-            <Text style={styles.label}>Descuento:</Text>
-            <Text style={styles.text}>{this.state.discount}</Text>
-          </View>
-        </View>
-
-
-
-
+        </ScrollView>
       </View>
 
 

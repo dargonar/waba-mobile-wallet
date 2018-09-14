@@ -23,6 +23,7 @@ import styles from './styles/Main';
 import * as config from '../../constants/config';
 
 import { Fab, Icon, Button } from 'native-base';
+import { iconsMap } from '../../utils/AppIcons';
 
 const alignItemsMap = {
   center: "center",

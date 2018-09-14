@@ -84,6 +84,7 @@ const icons = {
 
   "ios-add": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-add--active": [ICON_SIZE_ANDROID, "#fff"],
+  "md-arrow-back" : [ICON_SIZE_ANDROID_25, "#fff"],
 
   "ios-information-circle": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-information-circle--active": [ICON_SIZE_ANDROID, "#ffffff"],

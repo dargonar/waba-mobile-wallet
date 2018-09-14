@@ -73,6 +73,12 @@ class Wallet extends Component {
       if (event.id == 'scanQRCode') {
         this.qrButtonPressed();
       }
+      else
+      	if (event.id == 'popToRoot') {
+        this.props.navigator.popToRoot({
+  				animated: true
+  			});
+      }
     }
   }
 

@@ -2,11 +2,11 @@ import React, { PropTypes, Component } from 'react';
 
 import {
   Alert,
-	ScrollView, 
 	Text,
 	TouchableHighlight,
 	View,
-	Image
+	Image,
+	ScrollView
 } from 'react-native';
 
 import { bindActionCreators } from 'redux';
@@ -434,7 +434,7 @@ class InvoiceConfirm extends Component {
 		let business_name			= this.state.business_name; 
 		let subaccount_name		= this.state.account_name;
 		let total_amount			= this.state.bill_amount; 
-		let discount					= (this.state.discount_dsc/this.state.bill_amount)*100 ;
+		let discount					= Number((this.state.discount_dsc/this.state.bill_amount)*100).toFixed(2); ;
 		let discount_dsc			= this.state.discount_dsc; //(total_amount * discount / 100);
 		let payable_amount		= discount_dsc;
 		let balance 					= this.props.balance[config.ASSET_ID];
@@ -453,11 +453,13 @@ class InvoiceConfirm extends Component {
       icon = iconBiz;
     const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 
+    let imgData = config.getRedDiscoinIcon();
+
 		return (
       <View style={styles.container}>
       	<ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
 
-      		<View style={{height:80, marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+      		<View style={{height:100, paddingTop:20, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
 	          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
 	            <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
 	              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
@@ -481,58 +483,82 @@ class InvoiceConfirm extends Component {
 	          </View>
 	        </View>
 
-	        <View style={{flex:5, flexDirection:'column', backgroundColor:'#ffffff', paddingLeft:10, paddingTop:30, paddingRight:10, paddingBottom:30}}>
+	        <View style={{flex:5, flexDirection:'column', backgroundColor:'#f7f7f7', paddingLeft:20, paddingTop:0, paddingRight:20, paddingBottom:30}}>
 	        	
-	        	<Text style={[styles.business_name, styles.align_center]}>{business_name}</Text>
-	        	<Text style={[styles.business_subaccount_name, styles.align_center]}>{subaccount_name}</Text>
-
-	        	<View style={{height:70, marginTop:50, backgroundColor:'#ffffff'}}>
+	        	<View style={{height:60, marginTop:50, paddingLeft:20, paddingRight:20, paddingBottom:25, borderBottomColor: 'black', borderBottomWidth: 0.25,}}>
 	            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-	              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-	              	<Text style={styles.title_part}>TOTAL:</Text>
+	              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+	              	<Text style={styles.title_part}>TOTAL A PAGAR</Text>
 	              </View>
-	              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-	                <Text style={styles.total_bill}>$ {total_amount}</Text>
+	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
+	                <Text style={styles.total_bill_sign}>$</Text>
+	                <Text style={styles.total_bill}>{total_amount}</Text>
 	              </View>
 	            </View>
 	          </View>
 
-	          <View style={{height:70, backgroundColor:'#ffffff'}}>
+	          <View style={{height:35, marginTop:20, paddingLeft:20, paddingRight:20}}>
 	            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-	              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-	              	<Text style={styles.title_part}>DESCUENTO:</Text>
+	              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+	              	<Text style={styles.title_part}>DESCUENTO</Text>
+	              	<Text style={styles.title_part_red}>DISCOINS</Text>
 	              </View>
-	              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-	                <Text style={styles.discoin_amount}>{discount}% <Text style={styles.discoin_amount_small}>(D$C {discount_dsc})</Text></Text>
+	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
+	                <Text style={styles.total_bill_sign_light}>%</Text>
+	                <Text style={styles.total_bill_red_light}>{discount}</Text>
 	              </View>
 	            </View>
 	          </View>
 
-	          <View style={{height:70, backgroundColor:'#ffffff'}}>
-	            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
-	              <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-	              	<Text style={styles.title_part}>A PAGAR:</Text>
+	          <View style={{height:60, marginTop:20, paddingLeft:20, paddingRight:20, paddingBottom:25, borderBottomColor: 'black', borderBottomWidth: 0.25,}}>
+	          	<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+	              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+	              	<Text style={styles.title_part}>TOTAL</Text>
+	              	<Text style={styles.title_part_red}>DISCOINS</Text>
 	              </View>
-	              <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start'}}>
-	                <Text style={styles.discoin_amount_w}>D$C {payable_amount}</Text>
+	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
+	                <Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+	                <Text style={styles.total_bill_red}>{payable_amount}</Text>
 	              </View>
 	            </View>
 	          </View>
 
-	          <Text style={[styles.title_part, {marginTop:50}]}>Restarán pagar en pesos <Text style={styles.title_part_bold}>${debt}</Text></Text>
+	          <View style={{height:35, marginTop:20, paddingLeft:20, paddingRight:20}}>
+	            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+	              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
+	              	<Text style={styles.title_part}>RESTO A PAGAR</Text>
+	              	<Text style={styles.title_part}>EN PESOS</Text>
+	              </View>
+	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
+	                <Text style={styles.total_bill_sign_gray}>$</Text>
+	                <Text style={styles.total_bill_gray}>{debt}</Text>
+	              </View>
+	            </View>
+	          </View>
 
-	        </View>
+					</View>
+					<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
+						<TouchableHighlight
+								style={styles.fullWidthButton}
+								onPress={this._onConfirm.bind(this)} >
+	            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
+							<Text style={styles.fullWidthButtonText}>PAGAR</Text>
+	            {iconNext}
+	            </View>
+						</TouchableHighlight>
+					</View>
+							          
         </ScrollView>
-				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-					<TouchableHighlight
-							disabled={send_disabled}
-							style={[styles.fullWidthButton, btn_style]}
-							onPress={this._onConfirm.bind(this)}  >
-						<Text style={txt_style}>ENVIAR</Text>
-					</TouchableHighlight>
-				</View>
+				{/*<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
+									<TouchableHighlight
+											disabled={send_disabled}
+											style={[styles.fullWidthButton, btn_style]}
+											onPress={this._onConfirm.bind(this)}  >
+										<Text style={txt_style}>ENVIAR</Text>
+									</TouchableHighlight>
+								</View>*/}
 
-				<KeyboardSpacer />
+				
 
       </View>
     );
