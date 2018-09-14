@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 		backgroundColor: '#ededed',
+		marginBottom: 30,
 	}
 });
 

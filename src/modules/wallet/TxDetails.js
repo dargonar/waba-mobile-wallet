@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  ScrollView
 } from 'react-native';
 import { Icon } from 'native-base';
 import { bindActionCreators } from 'redux';
@@ -108,7 +109,7 @@ class TxDetails extends Component {
 		return (
       
         // <Text>{this.state.typeText}</Text>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View justifyContent="center" alignItems='center' flexDirection='column'>
           <View style={styles.amountQuantityView}>
             <View style={styles.amountQuantityCard}>
@@ -175,7 +176,7 @@ class TxDetails extends Component {
 
 
 
-      </View>
+      </ScrollView>
 
 
     );
