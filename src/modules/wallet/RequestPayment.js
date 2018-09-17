@@ -137,6 +137,7 @@ class RequestPayment extends React.Component {
       </View>
     );
   }
+
   _renderQRCode(qr_text){
     /*
     bgColor='black'
@@ -154,37 +155,11 @@ class RequestPayment extends React.Component {
   }
 
 
-
-  renderAccount(userIcon){
-    
-    // let obj = {
-    //     account_id:   this.props.account.id,
-    //     account_name: this.props.account.name,
-    //     type:         config.QRSCAN_ACCOUNT_ONLY
-    // }
-    let obj = qr_helper.jsonForAccountOnly(this.props.account.id, this.props.account.name);
-
-    let text          = JSON.stringify(obj);
-    let qr_code       = this._renderQRCode(text);
-    let account_name  = this._renderAccountName(userIcon);
-
-    return (
-      <View style={[{height:390,  backgroundColor:'#ffffff'}, styles.tab_content]}>
-        {qr_code}
-        {account_name}
-      </View>
-    );
-  }
-
   renderReceiveRequest(userIcon){
 
-    // let obj = {
-    //   account_id:   this.props.account.id,
-    //   account_name: this.props.account.name,
-    //   amount:       this.state.amount_required,
-    //   type:         config.QRSCAN_ACCOUNT_N_AMOUNT
-    // }
-    let obj = qr_helper.jsonForAccountNAmount(this.props.account.id, this.props.account.name, this.state.amount_required);
+    let obj = qr_helper.jsonForAccountOnly(this.props.account.id, this.props.account.name);
+    if(!isNaN(this.state.amount_required) && parseInt(this.state.amount_required)>0)
+      obj = qr_helper.jsonForAccountNAmount(this.props.account.id, this.props.account.name, this.state.amount_required);
 
     let text = JSON.stringify(obj);
     let qr_code = this._renderQRCode(text);
@@ -217,52 +192,6 @@ class RequestPayment extends React.Component {
       );
   }
 
-  renderQRScanner(){
-
-    return (<BarcodeScanner
-              style={{ flex: 1 }}
-              onBarcodeRead={({ data, type }) => {
-                  this._onBarcodeScanned(data, type);
-                  // console.log(
-                  //     `##### '${type}' - '${data}'`
-                  // );
-              }}
-              barcodeType={BarcodeType.QR_CODE }
-              cameraFillMode={
-                  CameraFillMode.COVER /* could also be FIT */
-              }
-            />);
-  }
-  
-  renderX(userIcon) {
-
-    let content = this.renderBusinessBill(userIcon);
-    /*
-    <View style={{height:80, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'#ffffff'}}>
-            <Icon
-              raised
-              containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: '#ffffff' }}
-              name='md-checkmark'
-              type='ionicon'
-              color='#ffffff'
-              underlayColor='#415261'
-              onPress={this._onOkPress.bind(this)}
-              size={30} />
-          </View>
-          */    
-    return (
-
-      <View style={styles.container}>
-        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
-
-          {content}
-
-        </ScrollView>
-
-      </View>
-    );
-    //<KeyboardSpacer />
-  }
   render(){
 
     let base64Icon = config.getIdenticonForHash(this.props.account.identicon);

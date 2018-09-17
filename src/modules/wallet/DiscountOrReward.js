@@ -53,13 +53,21 @@ class DiscountOrReward extends React.Component {
 
   }
 
+  // static navigatorStyle = {
+  //   navBarTextColor: '#666', 
+  //   navBarComponentAlignment: 'center',
+  //   navBarBackgroundColor: '#ffffff',
+  //   navBarButtonColor: '#000000',
+  //   navBarTextFontFamily: 'Montserrat-Medium',
+  //   topBarElevationShadowEnabled: false,
+  // }
+
   static navigatorStyle = {
-    navBarTextColor: '#666', 
-    navBarComponentAlignment: 'center',
-    navBarBackgroundColor: '#ffffff',
-    navBarButtonColor: '#000000',
-    navBarTextFontFamily: 'Montserrat-Medium',
-    topBarElevationShadowEnabled: false,
+    navBarTextColor: '#000',
+    navBarBackgroundColor: '#FFFFFF',
+    navBarButtonColor: '#666',
+    navBarTextFontFamily: 'Montserrat-Regular',
+    topBarElevationShadowEnabled: false
   }
 
   componentDidMount() {
@@ -256,6 +264,7 @@ class DiscountOrReward extends React.Component {
 
                    <View style={styles.bill_amount}>
                       <TextInput
+                         autoFocus={true}
                          style={[styles.textInput, styles.textInputCenter]}
                          onChangeText={(text) => this.updateBillAmount(text)}
                          value={this.state.bill_amount}
