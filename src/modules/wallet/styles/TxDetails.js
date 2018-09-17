@@ -7,23 +7,23 @@ const styles = StyleSheet.create({
 		padding: 0,
 		paddingTop: 10,
 	},
-	fullWidthButton: {
-		borderRadius: 0,
-    height:100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-		backgroundColor: '#044967' 
-  },
+	// fullWidthButton: {
+	// 	borderRadius: 0,
+ //    height:100,
+ //    flexDirection: 'row',
+ //    justifyContent: 'center',
+ //    alignItems: 'center',
+	// 	backgroundColor: '#044967' 
+ //  },
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },
-	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 20,
-		color: 'white'
-  },
+	// fullWidthButtonText: {
+ //    fontFamily : 'roboto_light',
+	// 	fontWeight : '100',
+ //    fontSize   : 20,
+	// 	color: 'white'
+ //  },
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
@@ -137,7 +137,46 @@ const styles = StyleSheet.create({
 		paddingRight: 20,
 		backgroundColor: '#ededed',
 		marginBottom: 30,
-	}
+	},
+
+	detailsView2:{
+		flex: 1,
+		paddingLeft: 20,
+		paddingRight: 20,
+		backgroundColor: '#ededed',
+		marginBottom: 0,
+	},
+
+
+
+	subaccountButtonContainer: { 
+    height:75, 
+    bottom: 0,
+    left: 0,
+    padding:20,
+    width: '100%',
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+	fullWidthButton: {
+		borderRadius: 0,
+    padding: 15,
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+		backgroundColor: '#1e3695',
+    width: '100%',
+    position: 'absolute',
+    elevation: 5
+	},
+	fullWidthButtonText: {
+    fontFamily : 'Montserrat-Regular',
+		fontWeight : '100',
+    fontSize   : 15,
+		color: 'white',
+  },
 });
 
 export default styles;

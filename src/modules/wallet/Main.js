@@ -123,7 +123,8 @@ class Main extends Component {
 		
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
-			title: 'Elija usuario'
+			title: 'Elija usuario',
+			passProps:  { search_type: config.SEARCH_TYPE_SEND} //SEARCH_TYPE_CONFIRM
 		});
 
 		// this.props.navigator.push({

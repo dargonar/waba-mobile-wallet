@@ -42,6 +42,8 @@ export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
 export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
 export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
 
+export const SEARCH_TYPE_SEND 			= 'search_type_send'; 
+export const SEARCH_TYPE_CONFIRM 		= 'search_type_confirm';
 
 export const QRSCAN_ACCOUNT_ONLY 			= 'ao'; //'account_only';
 export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'aa'; //'account_n_amount';

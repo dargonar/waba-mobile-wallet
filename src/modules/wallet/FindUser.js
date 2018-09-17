@@ -246,8 +246,9 @@ class FindUser extends Component {
       recipient_selected :  false,
       error:                false,
 
-      search_type:          props.search_type
+      search_type:          props.search_type,
 
+      reward_info:          props.reward_info || {}
     };
 
     this.tid = undefined;
@@ -287,7 +288,12 @@ class FindUser extends Component {
   pedir(search) {
     console.log('Pedimos');
     this.setState({refreshing:true});
-    walletActions.retrieveUsers(search, '0').then( (users) => {
+    let search_type = '0';
+    
+    if(this.state.search_type==config.SEARCH_TYPE_CONFIRM)
+      search_type = '1';
+
+    walletActions.retrieveUsers(search, search_type).then( (users) => {
       console.log('Traemos');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(users['res']),
@@ -312,20 +318,31 @@ class FindUser extends Component {
 
     //data.push(undefined);
 
-    this.setState({recipient_selected:true});
-    this.props.actions.memoSuccess('');
-    this.props.navigator.push({
-      screen: 'wallet.SelectAmount',
-      title: 'Cuánto quieres enviar?',
-      passProps: {recipient: data, pay_or_send:'send'}
-      // ,rightButtons: [
-      //  {
-      //    icon: iconsMap['ios-attach'],
-      //    id: 'attachMemo'
-      //  }
-      // ]
-    });
+    if(this.state.search_type==config.SEARCH_TYPE_SEND)
+    {
+      this.setState({recipient_selected:true});
+      this.props.actions.memoSuccess('');
+      this.props.navigator.push({
+        screen: 'wallet.SelectAmount',
+        title: 'Cuánto quieres enviar?',
+        passProps: {recipient: data, pay_or_send:'send'}
+      });
+    }
 
+    if(this.state.search_type==config.SEARCH_TYPE_CONFIRM)
+    {
+      console.log(' ------------------ FindUSer -> ConfirmReward');
+      console.log(JSON.stringify(this.state.reward_info));
+      this.props.actions.memoSuccess('');
+      this.props.navigator.push({
+        screen: 'wallet.RewardConfirm',
+        title: 'Confirmar recompensa',
+        passProps: {
+            recipient: data,
+            ...this.state.reward_info
+        }
+      });
+    }
   }
 
   _onScanQR(){

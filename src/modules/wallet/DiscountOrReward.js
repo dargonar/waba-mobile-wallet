@@ -116,16 +116,31 @@ class DiscountOrReward extends React.Component {
       return;
     }
 
+    // this.props.navigator.push({
+    //     screen:     'wallet.RewardReceiptSelect',
+    //     title:      'Elegir Cliente',
+    //     passProps:  {
+    //       bill_amount:    this.state.bill_amount,
+    //       bill_id:        this.state.bill_id,
+    //       reward_rate:    this.state.reward_rate,
+    //       reward_dsc:     this.state.reward_dsc,
+    //       reward_ars:     this.state.reward_ars,
+    //     }
+    // });
+
     this.props.navigator.push({
-        screen:     'wallet.RewardReceiptSelect',
-        title:      'Elegir Cliente',
-        passProps:  {
+      screen: 'wallet.FindUser',
+      title: 'Elija cliente',
+      passProps:  { 
+        search_type: config.SEARCH_TYPE_CONFIRM,
+        reward_info:  {
           bill_amount:    this.state.bill_amount,
           bill_id:        this.state.bill_id,
           reward_rate:    this.state.reward_rate,
           reward_dsc:     this.state.reward_dsc,
           reward_ars:     this.state.reward_ars,
         }
+      } 
     });
   }
 
