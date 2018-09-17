@@ -425,11 +425,43 @@ class Drawer extends Component {
 
 	_openRecipient() {
 		this._toggleDrawer();
+		// this.props.navigator.push({
+		// 	screen: 'wallet.SelectRecipient',
+		// 	title: 'Seleccione destinatario'
+		// });
+
 		this.props.navigator.push({
-			screen: 'wallet.SelectRecipient',
-			title: 'Seleccione destinatario'
+      screen: 'wallet.FindUser',
+			title: 'Enviar discoins',
+			passProps:  { search_type: config.SEARCH_TYPE_SEND} //SEARCH_TYPE_CONFIRM
 		});
 	}
+
+	doPay(){
+		this._toggleDrawer();
+		this.props.navigator.push({
+      screen: 'wallet.QRScanner',
+      title: 'Escanear factura',
+      passProps: {mode:config.QRSCAN_INVOICE_DISCOUNT}
+    });
+	}
+
+	requestPayment(){
+		this._toggleDrawer();
+		this.props.navigator.push({
+		  screen: 'wallet.RequestPayment',
+			title: 'Recibir discoins'
+		});
+	}
+	
+	// newTx(){
+		
+	// 	this.props.navigator.push({
+ //      screen: 'wallet.FindUser',
+	// 		title: 'Elija usuario',
+	// 		passProps:  { search_type: config.SEARCH_TYPE_SEND} //SEARCH_TYPE_CONFIRM
+	// 	});
+	// }
 
 	_goToMain() {
 		this._toggleDrawer();
@@ -594,14 +626,34 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
+						
 						<TouchableOpacity onPress={this._openRecipient}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
-								{iconRecipient}
+								<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
+								<Text style={styles.drawerListItemText}>
+									Enviar Discoins
+								</Text>
+							</View>
+						</TouchableOpacity>
+							<TouchableOpacity onPress={this.requestPayment.bind(this)}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+								<Icon name='trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
+								<Text style={styles.drawerListItemText}>
+									Recibir Discoins
+								</Text>
+							</View>
+						</TouchableOpacity>
+						
+						<TouchableOpacity onPress={this.doPay.bind(this)}>
+							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
+								<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
 								<Text style={styles.drawerListItemText}>
 									Pagar con Discoin
 								</Text>
 							</View>
 						</TouchableOpacity>
+						
+						
 					</View>)
 					:
 					(<View style={styles.drawerList}>
