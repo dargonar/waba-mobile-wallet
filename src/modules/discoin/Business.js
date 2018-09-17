@@ -199,7 +199,7 @@ class Business extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource :      ds,
-      refreshing :      false,
+      refreshing :      false,  
       error:            false,
       refreshing:       true,
       business_filter:  props.business_filter

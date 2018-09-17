@@ -109,7 +109,7 @@ class TxDetails extends Component {
 		return (
       
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ flexDirection:'column', paddingBottom:20}}>
+        <ScrollView contentContainerStyle={{ flexDirection:'column', padding:20, paddingTop: 0}}>
       
           <View justifyContent="center" alignItems='center' flexDirection='column'>
             <View style={styles.amountQuantityView}>

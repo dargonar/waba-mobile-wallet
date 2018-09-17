@@ -472,23 +472,23 @@ class Drawer extends Component {
 // 							</View>
 // 						</TouchableOpacity>
 		const iconSearch = (<Icon name="ios-search" style={{ paddingLeft: 2, color:'#cccccc', fontSize: 25, width: 25}} />);
-
+		const iconSubaccount = (<Icon name="md-people" style={{ color:'#fff', fontSize: 25}} />);
 		const iconRecipient = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#cccccc', fontSize: 25, width: 25}} />);
 		const iconPriceTag 	= (<Icon name="md-pricetag"   style={styles.drawerListIcon} />);
 		const iconMap 			= (<Icon name="md-pin"   style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconJob 			= (<Icon name="md-construct"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const info 					= (<Icon name="ios-information-circle"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		const iconSwitch 		= (<Icon name="ios-switch"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
-		const iconCash 		  = (<Icon name="ios-cash"  style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
+		const iconCash 		  = (<Icon name="ios-cash"  style={{color:'#fff', fontSize: 25}} />);
 		
 		// const iconCard 		  = (<Image source={iconsMap['ios-thumbs-up']} style={[styles.row_arrow]}/>);
-		const iconCard 		  = (<Icon name="ios-thumbs-up" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
+		const iconCard 		  = (<Icon name="ios-thumbs-up" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
 		// const iconReceive   = (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 		// const iconSend			= (<Icon name="ios-send" size={20} color="#ffffff" style={[styles.drawerListIcon, { paddingLeft: 2 }]} />);
 
-		const iconReceive   = (<Icon name="ios-remove" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
-		const iconPlus 		  = (<Icon name="ios-add" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
-		const iconSend 		  = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#fff', fontSize: 25, width: 25}} />);
+		const iconReceive   = (<Icon name="ios-remove" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
+		const iconPlus 		  = (<Icon name="ios-add" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
+		const iconSend 		  = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
 
 		// const iconReceive   = (<Image source={iconsMap['ios-remove']} style={[styles.row_arrow]}/>);
 		// const iconPlus   		= (<Image source={iconsMap['ios-add']} style={[styles.row_arrow]}/>);
@@ -525,14 +525,15 @@ class Drawer extends Component {
 					LIMITE DIARIO: D$C {withdrawl_limit}
 				</Text>);
 
-			daily_withdraw = (<TouchableOpacity onPress={this._onInitDailyBox}>
-				<View style={styles.drawerListItem3}>
+			daily_withdraw = (<TouchableOpacity style={styles.drawerSubButton} onPress={this._onInitDailyBox}>
+				<View style={styles.drawerCashInit}>
 					{iconCash}
 					<Text style={styles.drawerListItemText2}>
 						INICIAR CAJA DIARIA
 					</Text>
 				</View>
 			</TouchableOpacity>)
+
 		}
 
 		return (
@@ -586,7 +587,7 @@ class Drawer extends Component {
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconPlus}
 								<Text style={styles.drawerListItemText}>
-									COBRAR
+									Cobrar
 								</Text>
 							</View>
 						</TouchableOpacity>
@@ -594,7 +595,7 @@ class Drawer extends Component {
 							<View style={styles.drawerListItem}>
 								{iconReceive}
 								<Text style={styles.drawerListItemText}>
-									VOLVER SALDO A 0 D$C
+									Volver saldo a 0 D$C
 								</Text>
 							</View>
 						</TouchableOpacity>
@@ -602,7 +603,7 @@ class Drawer extends Component {
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconSend}
 								<Text style={styles.drawerListItemText}>
-									ENVIAR EXCEDENTE
+									Enviar Excedente
 								</Text>
 							</View>
 						</TouchableOpacity>
@@ -610,7 +611,7 @@ class Drawer extends Component {
 							<View style={styles.drawerListItem}>
 								{iconCard}
 								<Text style={styles.drawerListItemText}>
-									REFRESCAR LIMITES DIARIOS
+									Refrescar límites diarios
 								</Text>
 							</View>
 						</TouchableOpacity>
@@ -618,9 +619,9 @@ class Drawer extends Component {
 					}
 					{daily_withdraw}
 
-					<TouchableOpacity onPress={this._onSwitchMode}>
+					<TouchableOpacity style={styles.drawerSubButton} onPress={this._onSwitchMode}>
 						<View style={styles.drawerListItem3}>
-							{iconSwitch}
+							{iconSubaccount}
 							<Text style={styles.drawerListItemText2}>
 								{subaccount_text}
 							</Text>
@@ -641,7 +642,7 @@ class Drawer extends Component {
 
 Drawer.propTypes = {
 	navigator: PropTypes.object
-};
+}; 
 
 function mapStateToProps(state, ownProps) {
 	//console.log('DRAWER->mapStateToProps', state.wallet.fees, state.wallet.asset);

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 	container_subaccount: {
 		flex: 1,
 		justifyContent: 'center',
-		backgroundColor : '#13a9d3'
+		backgroundColor : '#fafafa'
 		//0A566B
 	},
 
@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
 	},
 	drawerListIcon: {
 		width: 27,
+		color: '#ccc'
 	},
 	drawerListItem: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingBottom: 15,
+		paddingBottom: 15, 
 		paddingTop: 15
 	},
 	drawerListItemVersion: {
@@ -46,26 +47,44 @@ const styles = StyleSheet.create({
 	drawerListItem3: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingBottom: 23,
-		paddingTop: 23,
+		paddingBottom: 15,
+		paddingTop: 15,
 		paddingLeft: 25,
 		borderTopColor: 'black',
 		borderTopWidth: 0.25,
 		borderBottomColor: 'black',
 		borderBottomWidth: 0.25,
-		backgroundColor: '#000000'
+		backgroundColor: '#3233aa',
+		borderRadius: 7,
+		marginBottom: 5,
+	},
+	drawerCashInit: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingBottom: 15,
+		paddingTop: 15,
+		paddingLeft: 25,
+		borderTopColor: 'black',
+		borderTopWidth: 0.25,
+		borderBottomColor: 'black',
+		borderBottomWidth: 0.25,
+		backgroundColor: '#3233aa',
+		borderRadius: 7,
 	},
 	drawerListItemBB: {
 		borderBottomColor: '#aaaaaa',
 		borderBottomWidth: 0.25
 	},
+	drawerSubButton:{
+		padding: 10,
+	},
 	drawerListItemText2: {
-		color: 'red',
+		color: '#ccc',
 		paddingLeft: 15,
 		flex: 1,
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-SemiBold',
 		fontWeight: '100',
-		fontSize: 15,
+		fontSize: 12,
 	},
 	drawerListItemText: {
 		color: '#666666',

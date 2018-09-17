@@ -15,7 +15,7 @@ import { ToastAndroid
       , Dimensions
       , Alert
       , Platform
-      , Image
+      , Image 
       , ListView
       , TouchableHighlight
       , TouchableNativeFeedback
