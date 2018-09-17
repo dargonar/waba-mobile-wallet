@@ -1,6 +1,14 @@
 // export const API_URL         = 'https://api.monedapar.com';
 // export const API_URL          = 'http://35.163.59.126:8089';
 
+// HEX 
+
+// PRIMARY-300 USER #ff9e5d
+// PRIMARY-500 USER #ff7232
+// PRIMARY-500 SUBACC #1e3695
+// SECONDARY-700 SUBACC #1c228e
+
+
 import Identicon from 'identicon.js';
 
 export const API_URL          = 'http://35.163.59.126:8088';

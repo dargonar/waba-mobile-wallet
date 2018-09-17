@@ -240,8 +240,6 @@ class RewardConfirm extends Component {
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
-		//HACK lock del spinner
-		return;
 
     this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
       console.log('************************************************', 'ABOUT TO PIUSH:', JSON.stringify(tx))
