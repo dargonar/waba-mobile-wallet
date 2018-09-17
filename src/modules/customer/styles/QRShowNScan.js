@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   container: {
 		flex: 1,
 		backgroundColor: '#ffffff',
-		padding: 30
 	},
   title: {
     fontFamily : 'roboto_light',
@@ -32,17 +31,27 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   amount:{
-    fontSize   : 30,
-    lineHeight : 30,
-    fontFamily : 'roboto_bold',
+    fontSize   : 40,
+    lineHeight : 50,
+    fontFamily : 'Montserrat-Light',
     fontWeight : '100',
-    color      : '#f15d44'
+    color      : '#666',
+    marginLeft: 5,
   },
   amount_title:{
     fontSize   : 30,
     lineHeight : 30,
     fontFamily : 'roboto_bold',
     fontWeight : '100'
+  },
+  userView:{
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#fafafa',
+    padding: 5,
+    maxHeight: 70,
+    margin: 10,
+    borderRadius: 5
   },
   margin_bottom:{marginBottom:10},
 	data_part : {

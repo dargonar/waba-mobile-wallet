@@ -120,14 +120,19 @@ class RequestPayment extends React.Component {
   
   _renderAccountName(userIcon){
     return (
-      <View style={{marginTop:10, backgroundColor:'#ffffff', height:70, flexDirection:'row', justifyContent: 'flex-end', alignItems:'center'}}>
-        <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-        {userIcon}
-        </View>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start'}}>
-          <Text style={{fontSize:20, fontFamily : 'Montserrat-SemiBold'}} >
-            {this.props.account.name}
-          </Text>
+      <View style={{flex:0, flexDirection:'column', justifyContent: 'flex-end', alignItems:'flex-start', paddingLeft:20, paddingRight: 20}}>
+        <Text style={{fontSize:12, color:'#666', marginBottom: 10, fontFamily : 'Montserrat-Medium', textAlign:'left', paddingLeft:54}} >
+          Mostra tu QR para recibir Discoins
+        </Text>
+        <View style={styles.userView}>
+          <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+            {userIcon}
+          </View>
+          <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start'}}>
+            <Text style={{fontSize:18, fontFamily : 'Montserrat-Medium',marginTop: 19}} >
+              {this.props.account.name}
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -138,14 +143,12 @@ class RequestPayment extends React.Component {
     fgColor='white'
     */
     return (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{justifyContent: 'center', alignItems: 'center', marginTop:20, marginBottom: 20}}>
+
           <QRCode
             value={qr_text}
             size={config.QRIMAGE_SIZE}
             />
-          <Text style={{fontSize:18, color:'#ff9e5d', marginTop: 20, fontFamily : 'Montserrat-SemiBold', textAlign:'center'}} >
-            Mostra tu QR {"\n"}para recibir Discoins
-          </Text>
         </View>
       );
   }
@@ -189,24 +192,24 @@ class RequestPayment extends React.Component {
     let imgData = config.getRedDiscoinIcon();
     
     return  (
-        <View style={[{height:460,  backgroundColor:'#ffffff'}, styles.tab_content]}>
-          {qr_code}
+        <View style={[{backgroundColor:'#ffffff'}, styles.tab_content]}>
+
           {account_name}  
-          <TouchableOpacity style={{marginTop:10, width:300, height:40, flexDirection:'row', justifyContent: 'center'}} onPress={() => { this.showSetAmount() }}>
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
-              <Image style={{alignSelf:'flex-end', width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+          {qr_code}
+          <TouchableOpacity style={{width:300, flexDirection:'column', justifyContent: 'center', paddingLeft:10, paddingRight:10}} onPress={() => { this.showSetAmount() }}>
+            <View flexDirection='row' style={{borderBottomWidth: 1, borderColor: '#eee'}}>
+              <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center', flexDirection:'row'}}>
+                <Image style={{width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+                <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
+              </View>
+              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+                <Icon style={{color:'#666', fontSize:23}} name='create'/>
+              </View>        
             </View>
-            <View style={{flex:2, justifyContent: 'center', alignItems:'flex-start' }}>
-              <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
-            </View>
-            <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-              <Icon
-                  name='create'
-                  color='#517fa4'
-                  containerStyle={{backgroundColor:'#f15d44'}}
-                />
-                
-            </View>
+            <Text style={{fontSize:10, color:'#999', marginTop : 10, fontFamily : 'Montserrat-Bold', textAlign:'right', paddingLeft:54}} >
+              ESPECIFICAR CANTIDAD
+            </Text>
+
           </TouchableOpacity>
 
           
@@ -230,28 +233,6 @@ class RequestPayment extends React.Component {
               }
             />);
   }
-
-  render(){
-
-    let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
-    let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
-    
-    let request_content     = this.renderReceiveRequest(userIcon);
-    
-    if (this.state.promptVisible)
-      request_content = (<View style={{flex:1, backgroundColor:'#ffffff'}}>{this._renderPrompt()}</View>);
-
-    return ( <View style={styles.container}>
-        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
-
-          {request_content}
-
-        </ScrollView>
-
-      </View>)
-        ;
-  }
-  
   
   renderX(userIcon) {
 
@@ -282,6 +263,28 @@ class RequestPayment extends React.Component {
     );
     //<KeyboardSpacer />
   }
+  render(){
+
+    let base64Icon = config.getIdenticonForHash(this.props.account.identicon);
+    let userIcon = (<Image style={{width: 60, height: 60, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: base64Icon}}/>)
+    
+    let request_content     = this.renderReceiveRequest(userIcon);
+    
+    if (this.state.promptVisible)
+      request_content = (<View style={{flex:1, backgroundColor:'#ffffff'}}>{this._renderPrompt()}</View>);
+
+    return ( <View style={styles.container}>
+        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
+
+          {request_content}
+
+        </ScrollView>
+
+      </View>)
+        ;
+  }
+  
+
 }
 
 function mapStateToProps(state, ownProps) {
