@@ -25,12 +25,14 @@ import * as helperActions from '../../utils/Helper.js';
 
 class RestoreAccount extends Component {
 
-  static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin'
-  }
+	static navigatorStyle = {
+		navBarTextColor: '#666', 
+		navBarComponentAlignment: 'center',
+		navBarBackgroundColor: '#ffffff',
+		navBarButtonColor: '#000000',
+		navBarTextFontFamily: 'Montserrat-Medium',
+		topBarElevationShadowEnabled: false,
+	}
 
 // 	let keyboardWillShowSub;
 // 	let keyboardWillHideSub;
@@ -217,19 +219,21 @@ constructor(props) {
 		let mensaje = undefined;
 		if(this.state.keyboardOpen==false)
 		{
-			mensaje = (<View style={styles.keywordsBG}>
-						<Text style={styles.keywordsTitle} numberOfLines={4}>
-							Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando
-							orden y minúscula/mayúscula.
-						</Text>
-					</View>);
+			mensaje = (
+				<View style={styles.keywordsBG}>
+					<Text style={styles.keywordsTitle} numberOfLines={4}>
+						Para restaurar su cuenta ingrese las palabras resguardadas en el momento de la creación de su cuenta respetando
+						orden y minúscula/mayúscula.
+					</Text>
+				</View>
+			);
 		}
 		return (
       <View style={styles.container}>
         	{mensaje}
 
         <TextInput
-          style={{flex:4, fontSize:25}}
+          style={styles.textInput}
           editable={true}
           //maxLength={120}
           multiline={true}
@@ -238,13 +242,17 @@ constructor(props) {
 					onChangeText={this._onChangeText}
 
         />
-         	<TouchableHighlight
-							style={styles.fullWidthButton}
-							onPress={this._onRestoreAccount} >
-						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-					</TouchableHighlight>
+
+			<View style={styles.subaccountButtonContainer}>
+				<TouchableHighlight
+					style={[styles.fullWidthButton]}
+					onPress={this._onRestoreAccount}  >
+					<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+				</TouchableHighlight>
+			</View>
 
 			 </View>
+
     );
   }
 }

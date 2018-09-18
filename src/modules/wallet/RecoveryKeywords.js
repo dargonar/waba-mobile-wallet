@@ -32,11 +32,12 @@ class RecoveryKeywords extends Component {
 	}
 
 	static navigatorStyle = {
-    navBarTextColor: '#0A566B',
-    navBarBackgroundColor: '#ffffff',
-    navBarButtonColor: '#0A566B',
-		navBarTextFontFamily: 'roboto_thin',
-		topBarElevationShadowEnabled: false
+		navBarTextColor: '#666', 
+		navBarComponentAlignment: 'center',
+		navBarBackgroundColor: '#ffffff',
+		navBarButtonColor: '#000000',
+		navBarTextFontFamily: 'Montserrat-Medium',
+		topBarElevationShadowEnabled: false,
   }
 
 	_onInitWallet() {
@@ -63,23 +64,23 @@ class RecoveryKeywords extends Component {
 			)
 		}
 		return (
-			<View style={styles.container}>
+<View style={styles.container}>
 
-				<View style={{flex:4, justifyContent:'flex-start', margin:20, padding:15}}>
-					<Text style={styles.keywordsTitle} numberOfLines={4}>
-            Copie y guarde las palabras listadas a continuación.
-            La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas.
-          </Text>
-          <TouchableWithoutFeedback onPress={this._setClipboardContent}>
-						<View style={{ justifyContent:'center', marginTop:20, padding:15, backgroundColor:'#0A566B'}}>
-            		<Text style={styles.keywordsText}>
-								{this.state.mnemonic}
-							</Text>
-          	</View>
-					</TouchableWithoutFeedback>
-				</View>
-				{button}
+	<View style={{flex:4, justifyContent:'flex-start', marginTop:0, padding:20}}>
+		<Text style={styles.keywordsTitle} numberOfLines={4}>
+			Copie y guarde las palabras listadas a continuación.
+			La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas.
+		</Text>
+		<TouchableWithoutFeedback onPress={this._setClipboardContent}>
+			<View style={{ justifyContent:'center', marginTop:30, padding:15, backgroundColor:'#f0f4f7', paddingTop:0, borderRadius:7}}>
+				<Text style={styles.keywordsText}>
+					{this.state.mnemonic}
+				</Text>
 			</View>
+		</TouchableWithoutFeedback>
+	</View>
+	{button}
+</View>
 		);
 	}
 }
