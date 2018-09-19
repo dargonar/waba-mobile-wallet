@@ -30,10 +30,10 @@ class Start extends Component {
 	}
 
 	static navigatorStyle = {
-    navBarTextColor: '#ffffff',
+    navBarTextColor: '#666',
     navBarBackgroundColor: '#ffffff',
-    navBarButtonColor: '#f15d44',
-		navBarTextFontFamily: 'roboto_thin',
+    navBarButtonColor: '#666',
+		navBarTextFontFamily: 'Montserrat-Regular',
 		topBarElevationShadowEnabled: false
   }
 	/*
@@ -231,17 +231,17 @@ class Start extends Component {
 
 			<View style={styles.container}>
 				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('./img/logo.shadow.png')} style={{width: 100, height: 100}} />
+					<Image source={require('./img/logo.png')} style={{width: 150, height: 140}} />
 				</View>
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput
 							autoCorrect={false}
 							autoCapitalize='none'
-							style={[styles.input, {fontFamily:'roboto_light', fontWeight:'100'}]}
-							placeholderStyle={{fontFamily:'roboto_light', fontWeight:'100'}}
+							style={[styles.input, {fontFamily:'Montserrat-Regular', fontWeight:'100', paddingBottom:20}]}
+							placeholderStyle={{fontFamily:'Montserrat-Regular', fontWeight:'100'}}
 							placeholder="Ingrese su nombre"
 							placeholderTextColor="#aaaaaa"
-							underlineColorAndroid ="#f15d44"
+							underlineColorAndroid ="#ff7232"
 							onChangeText={this._onChangeText}
 
 						/>

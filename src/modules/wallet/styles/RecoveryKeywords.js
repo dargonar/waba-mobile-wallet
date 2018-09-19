@@ -10,18 +10,19 @@ const styles = StyleSheet.create({
     height:60,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    margin: 20,
+    borderRadius: 5,
   },
 	fullWidthButton1: {
-    backgroundColor: '#f15d44'
+    backgroundColor: '#ff7232'
   },
 	fullWidthButton2: {
     backgroundColor: '#2c3f50'
   },
 
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
+    fontFamily : 'Montserrat-Medium',
     fontSize   : 15,
 		color: 'white'
   },

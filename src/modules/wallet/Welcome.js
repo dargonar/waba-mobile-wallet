@@ -73,7 +73,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 30,
 																		lineHeight : 35,
@@ -82,7 +82,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 15,
 																		lineHeight : 20}}
@@ -93,7 +93,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 30,
 																		lineHeight : 35,
@@ -102,7 +102,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 15,
 																		lineHeight : 20}}
@@ -113,7 +113,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 30,
 																		lineHeight : 35,
@@ -133,7 +133,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 30,
 																		lineHeight : 35,
@@ -142,7 +142,7 @@ class Welcome extends Component {
 												<Text
 														style={{color:"#ffffff", 
 																		textAlign:'center',
-																		fontFamily : 'roboto_light',
+																		fontFamily : 'Montserrat-Regular',
 																		fontWeight : '100',
 																		fontSize   : 15,
 																		lineHeight : 20}}
@@ -153,7 +153,7 @@ class Welcome extends Component {
 									<TouchableHighlight
 											style={[styles.fullWidthButton, styles.fullWidthButton2]}
 											onPress={this._onCreateAccount} >
-										<Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
+										<Text style={styles.fullWidthButtonText}>CREAR CUENTAS</Text>
 									</TouchableHighlight>
 
 									<TouchableHighlight

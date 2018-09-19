@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   fullWidthButton: {
-    borderRadius: 0,
     padding: 15,
     borderRadius: 5,
     flexDirection: 'row',

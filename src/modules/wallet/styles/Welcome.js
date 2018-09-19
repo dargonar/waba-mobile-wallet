@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
   },
   
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
     fontSize   : 15,
 		color: 'white'
   },
   welcomeTitle:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Light',
 		fontWeight : '100',
     fontSize   : 30,
     lineHeight : 40,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     textAlign  : 'center'
   },
 	welcomeTitle2:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
     fontSize   : 20,
     lineHeight : 30,
