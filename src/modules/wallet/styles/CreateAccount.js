@@ -13,47 +13,50 @@ const styles = StyleSheet.create({
 
 	input:{
 
-		color:"#f15d44",
+		color:"#ff7232",
 		textAlign:'center',
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
-    fontSize   : 25,
-		lineHeight : 25
+    	fontSize   : 20,
+		lineHeight : 25,
+		margin: 20,
 	},
 
 	fullWidthButton: {
 		borderRadius: 0,
-    height:60,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+	    height:50,
+	    flexDirection: 'row',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    margin: 20,
+	    borderRadius: 5
   },
 	fullWidthButton1: {
     backgroundColor: '#415261'
   },
 	fullWidthButton2: {
-    backgroundColor: '#f15d44'
+    backgroundColor: '#ff7232'
   },
   fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },
 	fullWidthButtonText: {
-    fontFamily : 'roboto_light',
+    	fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
-    fontSize   : 15,
+    	fontSize   : 15,
 		color: 'white'
   },
 	fullWidthButtonTextDisabled:{
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
-    fontSize   : 15,
-		color			 : '#cccccc'
+   		fontSize   : 15,
+		color			 : '#cccccc',
 	},
 	textError:{
 		marginTop  : 20,
 		flex			 : 1,
 		color			 : '#f53d3d',
-		fontFamily : 'roboto_light',
+		fontFamily : 'Montserrat-Regular',
 		fontWeight : '300',
     fontSize   : 18,
 		lineHeight : 20,

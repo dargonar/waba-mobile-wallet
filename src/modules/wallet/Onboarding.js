@@ -37,16 +37,17 @@ var Onboarding = React.createClass({
           <IntroPager style={styles.viewpager}/>
         </View>
         <View style={styles.buttons}>
-          <TouchableHighlight
-              style={[styles.fullWidthButton, styles.fullWidthButton2]}
-              onPress={this._onCreateAccount} >
-            <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
-          </TouchableHighlight>
 
           <TouchableHighlight
               style={[styles.fullWidthButton, styles.fullWidthButton1]}
               onPress={this._onRestoreAccount} >
-            <Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+            <Text style={styles.fullWidthButtonText1}>RESTAURAR CUENTA</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+              style={[styles.fullWidthButton, styles.fullWidthButton2]}
+              onPress={this._onCreateAccount} >
+            <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
           </TouchableHighlight>
 
         </View>
@@ -79,27 +80,35 @@ var styles = StyleSheet.create({
   },
   fullWidthButton: {
 		borderRadius: 5,
-    height:60,
+    height:50,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
 	fullWidthButton1: {
-    backgroundColor: '#f15d44' //'#1e759b'
+    backgroundColor: '#f0f4f7',
+    padding: 5,
+    borderRadius: 5,
+    marginBottom:20,
   },
 	fullWidthButton2: {
-    backgroundColor: '#f15d44', //'#6bbd07',
-    marginBottom:20
+    backgroundColor: '#ff7232', //'#6bbd07',
   },
 
 	fullWidthButtonText: {
-    fontFamily : 'roboto_regular',
+    fontFamily : 'Montserrat-Medium',
 		fontWeight : '400',
-    fontSize   : 15,
+    fontSize   : 14,
 		color: 'white'
   },
+  fullWidthButtonText1: {
+    fontFamily : 'Montserrat-Medium',
+    fontWeight : '400',
+    fontSize   : 14,
+    color: '#666'
+  },
   welcomeTitle:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
     fontSize   : 30,
     lineHeight : 40,
@@ -107,7 +116,7 @@ var styles = StyleSheet.create({
     textAlign  : 'center'
   },
 	welcomeTitle2:{
-    fontFamily : 'roboto_light',
+    fontFamily : 'Montserrat-Regular',
 		fontWeight : '100',
     fontSize   : 20,
     lineHeight : 30,

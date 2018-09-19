@@ -85,7 +85,7 @@ var ImagesScreen = React.createClass({
       <View style={styles.page}>
         <Image
           source={data[0]}
-          style={{width: 150, height: 150, marginBottom:20}}
+          style={{width: '100%', height: 180, marginBottom:20}}
         />
         <Text style={styles.titleText}>{data[1]}</Text>
         <Text style={styles.tagLine}>{data[2]}</Text>
@@ -117,25 +117,27 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ffffff', //0B5F83
-    paddingLeft:20,
-    paddingRight:20
+
   },
   titleText: {
-        color:"#f15d44",
+        color:"#ff7232",
         textAlign:'center',
-        fontFamily : 'roboto_light',
+        fontFamily : 'Montserrat-Light',
         fontWeight : '100',
-        fontSize   : 30,
+        fontSize   : 25,
         lineHeight : 35,
         marginBottom:20
   },
 	tagLine:{
-      color:"#f15d44",
+      color:"#999",
       textAlign:'center',
-      fontFamily : 'roboto_light',
+      fontFamily : 'Montserrat-Regular',
       fontWeight : '100',
-      fontSize   : 20,
-      lineHeight : 20
+      fontSize   : 14,
+      lineHeight : 20,
+      paddingRight: 40,
+      paddingLeft: 40,
+
   }
 });
 
