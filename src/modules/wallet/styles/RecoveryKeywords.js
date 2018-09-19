@@ -26,16 +26,16 @@ const styles = StyleSheet.create({
 		color: 'white'
   },
   keywordsText:{
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 25,
-    lineHeight : 40,
-		color: '#ffffff'
+    fontFamily : 'Montserrat-Medium',
+    fontSize   : 15,
+    lineHeight : 30,
+		color: '#666',
+    padding: 5
+
   },
   keywordsTitle:{
-    fontFamily : 'roboto_light',
-		fontWeight : '100',
-    fontSize   : 15,
+    fontFamily : 'Montserrat-Regular',
+    fontSize   : 13,
     lineHeight : 25,
 		color: '#b0b0b0'
   }

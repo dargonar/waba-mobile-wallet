@@ -12,18 +12,26 @@ const styles = StyleSheet.create({
 		fontWeight : '100',
     fontSize   : 15,
     lineHeight : 25,
-		color: 'white',
+		color: '#666',
     marginBottom: 15
   },
-
+  	btn_container:{
+  		justifyContent:'space-between', alignItems:'center' , flexDirection:'row',
+  		padding: 15,
+  		backgroundColor: '#f4f4f4',
+  		elevation: 5,
+  		marginTop: 15,
+  		borderRadius: 50,
+  		paddingLeft: 30, 
+  		paddingRight: 20,
+  	},
 	button:{
-		marginBottom:5,
-		minHeight:100,
-		maxHeight:150,
+		minHeight:90,
+		maxHeight:130,
 		flex: 1
 	},
 	buttonInner: {
-		 flex:1, flexDirection:'row', height:80, padding:10
+		 flex:1, flexDirection:'column', padding:10
 		 // borderTopLeftRadius: 4,
 		 // borderTopRightRadius: 4,
 		 // borderBottomLeftRadius: 4,

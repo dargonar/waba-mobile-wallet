@@ -287,7 +287,7 @@ class Drawer extends Component {
 				else {
 					this.props.navigator.push({
 		        screen: 'discoin.SwitchConfirm',
-		        title: 'CONFIRMAR MODO',
+		        title: 'Confirmar Modo',
 		        passProps: {
 							permission 					: the_perm,
 							business 						: business,
