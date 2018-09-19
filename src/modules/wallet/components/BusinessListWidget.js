@@ -250,7 +250,8 @@ class BusinessListWidget extends Component {
       refreshing :        false,
 			infiniteLoading :   false,
 			bounceValue:        new Animated.Value(0),
-			errors :            0
+			errors :            0,
+      mode:               props.mode
     };
 
     // ToastAndroid.show(props.mode, ToastAndroid.SHORT);
@@ -260,22 +261,41 @@ class BusinessListWidget extends Component {
 	refreshBusinessList(start_offset) {
 		//skip, count, query, filter
 		if(start_offset == undefined) start_offset = 0;
+    my_filter = this.props.business_filter;
+    console.log(' ---- BusinessListWidget::this.state.mode:', this.state.mode)
+    if(this.state.mode!='search')
+      delete my_filter.search_text;
+    if(this.state.mode=='search')
+      my_filter['search_text'] = this.props.search_text;
 		this.props.actions.retrieveBusinesses(
 			start_offset,
 			'',
-			this.props.business_filter //this.props.business_list_filter
+			my_filter,
+      this.state.mode
 		);
 	}
 
   componentWillReceiveProps(nextProps){
-		console.log('BusinessListWidget::componentWillReceiveProps errors=>', nextProps.errors);
+
+    console.log('BusinessListWidget::componentWillReceiveProps errors=>', nextProps.errors);
 
 		let new_state = {};
-		if (nextProps.business_list !== this.props.business_list) {
+	  // if (nextProps.business_list !== this.props.business_list) {
+   //    console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
+   //    let data = nextProps.business_list;
+   //    new_state.dataSource=this.state.dataSource.cloneWithRows(data);
+   //  }
+    if (nextProps.business_list !== this.props.business_list && this.state.mode=='main') {
 			console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
 			let data = nextProps.business_list;
       new_state.dataSource=this.state.dataSource.cloneWithRows(data);
 		}
+
+    if (nextProps.business_searched_list !== this.props.business_searched_list && this.state.mode=='search') {
+      console.log('componentWillReceiveProps: new business_list =>', nextProps.business_searched_list.length);
+      let data = nextProps.business_searched_list;
+      new_state.dataSource=this.state.dataSource.cloneWithRows(data);
+    }
 
 		if(this.state.infiniteLoading) {
 			new_state.infiniteLoading=false;
@@ -288,6 +308,11 @@ class BusinessListWidget extends Component {
 		}
 
     if(nextProps.business_filter!==this.props.business_filter)
+    {
+      this.refreshBusinessList();
+      new_state.refreshing = true;
+    }
+    if(nextProps.search_text!==this.props.search_text && this.state.mode=='search')
     {
       this.refreshBusinessList();
       new_state.refreshing = true;
@@ -566,9 +591,9 @@ class BusinessListWidget extends Component {
 						<Image source={require('./img/pattern.png')} style={styles.bgImage} />
 					</View>
 					<Text style={styles.emptyListText}>NO HAY COMERCIOS QUE MOSTRAR{"\n"}INTENTE CON OTRO FILTRO</Text>
-					{/*<TouchableOpacity style={styles.button} onPress={this._onRefresh.bind(this)}>
-                      <Text style={styles.buttonText}>Actualizar</Text>
-                    </TouchableOpacity>*/}
+					<TouchableOpacity style={styles.button} onPress={this._onRefresh.bind(this)}>
+            <Text style={styles.buttonText}>Actualizar</Text>
+          </TouchableOpacity>
 				</View>
 
 			);
@@ -577,13 +602,12 @@ class BusinessListWidget extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-	//console.log('HISTORY::mapStateToProps');
 	return {
 		business_list 				: state.wallet.business_list,
+    business_searched_list: state.wallet.business_searched_list,
 		account   						: state.wallet.account,
 		business_list_at_end  : state.wallet.business_list_at_end,
-		business_list_filter  : state.wallet.business_list_filter,
-    business_filter       : state.wallet.business_filter
+		business_filter       : state.wallet.business_filter
 	};
 }
 

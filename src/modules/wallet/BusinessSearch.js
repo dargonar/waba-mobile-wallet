@@ -38,12 +38,11 @@ class BusinessSearch extends Component {
 	constructor(props) {
 		super(props);
     	
-  	
-  	// this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-		// this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
-		this.state 								= {account:''};
-		// this.filterBusinesses 		= this.filterBusinesses.bind(this);
+		this._onChangeText        = this._onChangeText.bind(this);  	
+  	this.state = {
+  			search_text:'',
+  			search_text_posta:''
+  		}
 
 	}
 
@@ -72,13 +71,26 @@ class BusinessSearch extends Component {
 
 	}
 
-	
+	_onChangeText(text) {
+    this.setState({search_text:text});
+    
+    clearTimeout(this.tid);
+    let that = this;
+    // this.tid = setTimeout( that.setBizFilter() , 700);
+    // this.tid = setTimeout( that.setState( { search_text_posta:that.state.search_text } ) , 700);
+		this.tid = setTimeout(() => {that.setState( { search_text_posta:that.state.search_text } )}, 700); //this starts the interval
+
+  }
+
+  setBizFilter(){
+  	// this.setState({search_text_posta:text});
+  	this.setState({search_text_posta:this.state.search_text});
+  }
 
 	// FAV Button: https://github.com/mastermoo/react-native-action-button
+	// <Text style={{flex:1}}>{this.state.search_text} - {this.state.search_text_posta}</Text>
 	render() {
-		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#f15d44' ;
-		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
-
+		
 		return (
 		<View style={styles.container}>
       	
@@ -86,16 +98,16 @@ class BusinessSearch extends Component {
           <View style={{width:20, marginRight:10, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
             <Icon name="ios-search" size={18}  style={{color:'#cccccc'}}  />
           </View>
-          <TextInput
-            autoCapitalize="words"
+					<TextInput
+            autoCapitalize="none"
             style={[styles.textInputPlaceholder, {flex:1}]}
-            onChangeText={(text) => this.setState( { searchText:text } ) }
-            value={this.state.searchText}
+            onChangeText={this._onChangeText}
+            value={this.state.search_text}
             underlineColorAndroid ="transparent"
             placeholder="Buscar..."
           />
         </View>
-        <BusinessListWidget {...this.props} mode="search" style={styles.history}/>
+        <BusinessListWidget {...this.props} mode="search" search_text={this.state.search_text_posta} style={styles.history}/>
 				
 				
 
@@ -106,8 +118,7 @@ class BusinessSearch extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		account: state.wallet.account,
-		history: state.wallet.history
+		business_filter       : state.wallet.business_filter
 	}
 }
 

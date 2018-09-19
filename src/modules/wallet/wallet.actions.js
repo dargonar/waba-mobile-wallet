@@ -289,7 +289,15 @@ export function retrieveBusinessesSuccess(data, start) {
 	};
 }
 
-export function retrieveBusinesses(skip, query, filter) {
+export function retrieveSearchBusinessesSuccess(data, start) {
+	return {
+		type          : types.RETRIEVE_BUSINESS_SEARCH_SUCCESS,
+		business_list : data,
+		start         : start
+	};
+}
+
+export function retrieveBusinesses(skip, query, filter, mode) {
     
     return function (dispatch) {
   		let x = 0;
@@ -302,6 +310,17 @@ export function retrieveBusinesses(skip, query, filter) {
 				x = 1;
 			}, 10000);
 
+			console.log(' --*************************************************************:')
+			console.log(' -- filter:')
+      console.log(JSON.stringify(filter));
+
+      if(filter.order.date == '')
+				filter.order.date = config.getToday()
+
+			console.log(' --*************************************************************:')
+			console.log(' -- filter:')
+      console.log(JSON.stringify(filter));
+	      
 			fetch(config.getAPIURL('/dashboard/business/credited/'+skip+'/20'), {
 				method: 'POST',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -311,10 +330,13 @@ export function retrieveBusinesses(skip, query, filter) {
 			})
 			.then((response) => response.json())
 			.then((responseJson) => {
+	      clearTimeout(timer);
 	      console.log(' -- retrieveBusinesses:')
 	      console.log(JSON.stringify(responseJson));
-	      clearTimeout(timer);
-	      dispatch(retrieveBusinessesSuccess(responseJson['businesses'], skip));
+	      if(mode=='search')
+	      	dispatch(retrieveSearchBusinessesSuccess(responseJson['businesses'], skip));
+      	else
+      		dispatch(retrieveBusinessesSuccess(responseJson['businesses'], skip));
 				dispatch(readySuccess(1));
         
 	      return;

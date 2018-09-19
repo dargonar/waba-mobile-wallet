@@ -267,7 +267,7 @@ class FindUser extends Component {
     this.tid = setTimeout( () => {
       that.pedir(text);
     }
-    , 300);
+    , 700);
     //console.log(text);
   }
 

@@ -245,22 +245,22 @@ class Business extends Component {
 
   fetchBusinesses () {
 
-    let filter = this.state.business_filter;
-    console.log('Pedimos -> fetchBusinesses');
-    this.setState({refreshing:true});
-    walletActions.retrieveBusinesses(0, 100, 'query', filter).then( (businesses) => {
-      console.log('Traemos');
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(businesses['businesses']),
-        refreshing: false,
-        error:      false
-      })
-      ToastAndroid.show('fetchBusinesses() OK! ' + businesses['businesses'].length, ToastAndroid.LONG);
-    }, (err) => {
-      this.setState({refreshing:true});
-      console.log('Error');
-      ToastAndroid.show('fetchBusinesses() ERROR! ' + str(err), ToastAndroid.LONG);
-    })
+    // let filter = this.state.business_filter;
+    // console.log('Pedimos -> fetchBusinesses');
+    // this.setState({refreshing:true});
+    // walletActions.retrieveBusinesses(0, 100, 'query', filter).then( (businesses) => {
+    //   console.log('Traemos');
+    //   this.setState({
+    //     dataSource: this.state.dataSource.cloneWithRows(businesses['businesses']),
+    //     refreshing: false,
+    //     error:      false
+    //   })
+    //   ToastAndroid.show('fetchBusinesses() OK! ' + businesses['businesses'].length, ToastAndroid.LONG);
+    // }, (err) => {
+    //   this.setState({refreshing:true});
+    //   console.log('Error');
+    //   ToastAndroid.show('fetchBusinesses() ERROR! ' + str(err), ToastAndroid.LONG);
+    // })
   }
 
   
