@@ -35,6 +35,52 @@ function launchWallet(account) {
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
     screen: {
+      screen        : 'wallet.Wallet',
+      navigatorStyle : {
+       navBarButtonColor : '#fff',
+       drawUnderNavBar   : true,
+       navBarTransparent : true,
+       navBarNoBorder    : true,
+       topBarElevationShadowEnabled: false
+      },
+      rightButtons : [
+        {
+          icon: iconsMap['store'],
+          id: 'listBusinesses' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
+      leftButtons: [
+        {
+          icon: iconsMap['ios-menu'],
+          title: '',
+          id: 'sideMenu'
+        }
+      ]
+    },
+    animationType : 'none',
+    drawer: {
+      left: {
+        screen: 'global.Drawer'
+      },
+      right: {
+        screen: 'discoin.BusinessFilter'
+      },
+    }
+  });
+}
+
+function launchWalletBusinessesFirst(account) {
+
+  if(account && account.subaccount && account.subaccount.wallet_mode=='subaccount')
+  {
+    
+    launchSubaccountWallet(account);
+    return;
+  }
+
+  Navigation.startSingleScreenApp({
+    appStyle : { orientation : 'portrait' },
+    screen: {
       screen         : 'wallet.Main',
       // screen        : 'discoin.Main',
       navigatorStyle : {

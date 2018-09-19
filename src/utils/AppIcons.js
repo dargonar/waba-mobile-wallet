@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   PixelRatio
@@ -44,6 +44,7 @@ const icons = {
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
 
+  
   "md-arrow-up" : [ICON_SIZE_ANDROID, "#fff"],
   "md-arrow-down" : [ICON_SIZE_ANDROID, "#fff"],
   "md-trending-up" : [ICON_SIZE_ANDROID, "#fff"],
@@ -96,7 +97,8 @@ const icons = {
   "qrcode--active": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
 
   "receipt": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome],
-  "store": [ICON_SIZE_ANDROID_25, "#fff", FontAwesome5],
+  "store":   [ICON_SIZE_ANDROID_25, "#fff", MaterialCommunityIcons],
+  "store--active":   [ICON_SIZE_ANDROID_25, "#666", MaterialCommunityIcons],
 //   "ios-swap": [ICON_SIZE_ANDROID, "#ffffff"],
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],

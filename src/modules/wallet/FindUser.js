@@ -248,7 +248,9 @@ class FindUser extends Component {
 
       search_type:          props.search_type,
 
-      reward_info:          props.reward_info || {}
+      reward_info:          props.reward_info || {},
+
+      search_text:''
     };
 
     this.tid = undefined;
@@ -262,13 +264,21 @@ class FindUser extends Component {
   }
 
   _onChangeText(text) {
+    // clearTimeout(this.tid);
+    // let that = this;
+    // this.tid = setTimeout( () => {
+    //   that.pedir(text);
+    // }
+    // , 700);
+    
+    this.setState({search_text:text});
+    
     clearTimeout(this.tid);
     let that = this;
-    this.tid = setTimeout( () => {
-      that.pedir(text);
-    }
-    , 700);
-    //console.log(text);
+    // this.tid = setTimeout( that.setBizFilter() , 700);
+    // this.tid = setTimeout( that.setState( { search_text_posta:that.state.search_text } ) , 700);
+    this.tid = setTimeout(() => {that.pedir( that.state.search_text )}, 700); //this starts the interval
+
   }
 
   _rowHasChanged(oldRow, newRow) {
@@ -363,11 +373,12 @@ class FindUser extends Component {
     // const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
     const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
     // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
-    const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+    const iconBiz    = (<Image source={{uri:iconsMap['store--active'].uri}} style={{height:20,width:20, color:'#666'}} />);
     
     let icon = iconUser;
     if(Math.random()>0.5)
       icon = iconBiz;
+
     return (
       <TouchableHighlight style={styles_x.businessCard}
         onPress={this._onRecipientSelected.bind(this, rowData)}
@@ -392,6 +403,9 @@ class FindUser extends Component {
   }
   // FAV Button: https://github.com/mastermoo/react-native-action-button
   render() {
+    
+    // console.log(' ----- iconsMap[store]:', iconsMap['store']);
+
     const iconQrcode = (<Image source={iconsMap['qrcode--active']} style={{resizeMode:'contain', height:20,width:20}} />);
     let content = undefined;
     if ( this.state.refreshing )
@@ -422,6 +436,7 @@ class FindUser extends Component {
             autoCapitalize="none"
             style={[styles.textInputPlaceholder, {flex:1}]}
             onChangeText={this._onChangeText}
+            value={this.state.search_text}
             underlineColorAndroid ="transparent"
             placeholder="Buscar..."
           />

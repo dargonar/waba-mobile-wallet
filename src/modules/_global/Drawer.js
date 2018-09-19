@@ -479,9 +479,33 @@ class Drawer extends Component {
 	}
 
 	_onGoToBusinesses(){
-		// Linking.openURL(config.MERCADOPAR_URL).catch(err => console.error('An error occurred', err));
-		this._goToMain();
-		return;
+		
+		this._toggleDrawer();
+		this.props.navigator.push({
+      screen: 'wallet.Main',
+      navigatorStyle : {
+       navBarButtonColor : '#000',
+       drawUnderNavBar   : true,
+       navBarTransparent : true,
+			 navBarNoBorder 	 : true,
+			 topBarElevationShadowEnabled: false
+      },
+      rightButtons : [
+        {
+          icon: iconsMap['ios-search'],
+          id: 'searchBusiness' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
+      leftButtons: [
+    		{
+    			icon: iconsMap['md-arrow-back'],
+    			id: 'popToRoot'
+    		}
+    	]
+    });
+
+		// this._goToMain();
+		// return;
 		
 		// this._toggleDrawer();
 		// this.props.navigator.push({

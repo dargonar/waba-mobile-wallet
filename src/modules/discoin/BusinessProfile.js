@@ -380,7 +380,16 @@ class BusinessProfile extends Component {
   
 
 	componentWillMount() {
-		this.getLocationAsync();
+		// this.getLocationAsync();
+    if(this.state.business_data.latitude && this.state.business_data.longitude)
+    {
+      let newState = { region : { latitude: this.state.business_data.latitude,
+                                    longitude: this.state.business_data.longitude,
+                                    ...deltas},
+                         marker:  { latitude: this.state.business_data.latitude,
+                                    longitude: this.state.business_data.longitude} };
+      this.setState(newState);
+    }
 	}
 
 	// getCoffeeShops = async filter => {
@@ -441,11 +450,11 @@ class BusinessProfile extends Component {
             </View>
             <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
               <Icon name="ios-pin" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>{this.state.business_data.address || '14 e/ 59 y 60 n 1229'}</Text>
+              <Text style={styles.infoboxText}>{this.state.business_data.address || 'N/D'}</Text>
             </View>
             <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
               <Icon name="ios-call" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>{this.state.business_data.phone || '423-9645'}</Text>
+              <Text style={styles.infoboxText}>{this.state.business_data.telephone || 'N/D'}</Text>
             </View>
             <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
               <Icon name="md-cash" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>

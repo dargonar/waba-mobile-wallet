@@ -107,6 +107,12 @@ class Main extends Component {
         this.searchBusinessPressed();
         return;
       }
+      if (event.id == 'popToRoot') {
+        this.props.navigator.popToRoot({
+  				animated: true
+  			});
+  			return;
+      }
     }
   }
 

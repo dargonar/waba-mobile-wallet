@@ -70,18 +70,51 @@ class Wallet extends Component {
 
   _onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
+      
       if (event.id == 'scanQRCode') {
         this.qrButtonPressed();
+      	return;
       }
-      else
-      	if (event.id == 'popToRoot') {
+      
+  		if (event.id == 'popToRoot') {
         this.props.navigator.popToRoot({
   				animated: true
   			});
+  			return;
       }
+		      
+    	if (event.id == 'listBusinesses') {
+        this.showBusinesses();
+        return;
+      }	
+	 
     }
   }
 
+  showBusinesses(){
+  	this.props.navigator.push({
+      screen: 'wallet.Main',
+      navigatorStyle : {
+       navBarButtonColor : '#000',
+       drawUnderNavBar   : true,
+       navBarTransparent : true,
+			 navBarNoBorder 	 : true,
+			 topBarElevationShadowEnabled: false
+      },
+      rightButtons : [
+        {
+          icon: iconsMap['ios-search'],
+          id: 'searchBusiness' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        }
+      ],
+      leftButtons: [
+    		{
+    			icon: iconsMap['md-arrow-back'],
+    			id: 'popToRoot'
+    		}
+    	]
+    });
+  }
 
 	_onDiscountOrReward(){
 		this.props.navigator.push({

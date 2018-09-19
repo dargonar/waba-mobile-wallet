@@ -50,6 +50,7 @@ class BalanceDiscoin extends Component {
   }
 
   onPressed(){
+  	return;
   	this.props.navigator.push({
       screen: 'wallet.Wallet',
       navigatorStyle : {
