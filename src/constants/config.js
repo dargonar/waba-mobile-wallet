@@ -57,7 +57,7 @@ export const QRSCAN_ACCOUNT_ONLY 			= 'ao'; //'account_only';
 export const QRSCAN_ACCOUNT_N_AMOUNT 	= 'aa'; //'account_n_amount';
 export const QRSCAN_PAYMENT_REQUEST 	= 'pr'; //'payment_request';
 export const QRSCAN_INVOICE_DISCOUNT 	= 'id'; //'invoice_discount';
-export const QRSCAN_INVOICE_REWARD 		= 'ir'; //'invoice_reward';
+export const QRSCAN_FOR_REWARD 				= 'ir'; //'invoice_reward';
 export const QRIMAGE_SIZE 						= 250;
 
 export const SA_RESET_BALANCE 						= 'reset_balance';

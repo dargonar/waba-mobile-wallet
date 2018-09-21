@@ -114,6 +114,11 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: '#CCC',
 	},
+	labelBig:{
+		fontFamily : 'Montserrat-Bold',
+		fontSize: 12,
+		color: '#CCC',
+	},
 	labelTitle:{
 		fontFamily : 'Montserrat-Medium',
 		fontSize: 21,

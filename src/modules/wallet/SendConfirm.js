@@ -462,19 +462,19 @@ class SendConfirm extends Component {
           </View>
         </View>
 
-        <View style={{marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
-          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
-            <View style={{ alignSelf: 'flex-start', alignItems:'flex-start', justifyContent: 'flex-start'}}>
-              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
-                MENSAJE
-              </Text>
-            </View>  
-            
-            <View style={{ minHeight: 160, borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'flex-start'}}>
-            	<Text style={[styles.memo_style, memo_style]}>{memo}</Text>
-            </View>
-          </View>
-        </View>
+        {/*<View style={{marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+                  <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
+                    <View style={{ alignSelf: 'flex-start', alignItems:'flex-start', justifyContent: 'flex-start'}}>
+                      <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+                        MENSAJE
+                      </Text>
+                    </View>  
+                    
+                    <View style={{ minHeight: 160, borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'flex-start'}}>
+                    	<Text style={[styles.memo_style, memo_style]}>{memo}</Text>
+                    </View>
+                  </View>
+                </View>*/}
 
 				<View style={{flex:1, flexDirection:'column', alignSelf:'stretch', alignItems:'flex-end', paddingRight:20, justifyContent:'flex-end', paddingBottom:20 }}>
 					<TouchableHighlight

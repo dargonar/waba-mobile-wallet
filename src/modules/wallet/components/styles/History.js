@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     width: undefined,
     marginLeft:13,
     marginRight:15,
-    height: 80,
+    minHeight: 80,
     elevation: 10,
     backgroundColor: '#FFF',
     borderColor: 'transparent'
@@ -116,17 +116,16 @@ const styles = StyleSheet.create({
     justifyContent  : 'flex-start',
     flex            : 1,
   },
-    
   row_line3 : {
     flexDirection   : 'row',
     justifyContent  : 'flex-start',
     flex            : 1
   },
   col_amount : {
-    flex: 1,
+    width:          90,
     justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    paddingRight: 15,
+    alignItems:     'flex-end',
+    paddingRight:   15,
   },
   row_simple : {
     fontWeight      : '100', 

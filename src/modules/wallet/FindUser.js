@@ -359,7 +359,10 @@ class FindUser extends Component {
     this.props.navigator.push({
       screen: 'wallet.QRScanner',
       title: 'Escanear QR de discoiner',
-      passProps: {mode:config.QRSCAN_ACCOUNT_ONLY}
+      passProps: {
+        mode:         config.QRSCAN_FOR_REWARD,
+        reward_info : this.state.reward_info
+      }
     });
   }
 

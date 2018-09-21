@@ -30,9 +30,12 @@ import * as qr_helper from '../../utils/QRHelper';
 import Prompt from 'react-native-prompt';
 
 class QRScanner extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
+      mode          : props.mode||'',
+      reward_info   : props.reward_info||null
     };
 
   }
@@ -75,7 +78,23 @@ class QRScanner extends React.Component {
             {
               let jsonData = qr_helper.expandJSONForQR(data);
 
-              if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
+              console.log('--------------- QRScanner:')
+              console.log('---------------------------------------- this.state.mode:', this.state.mode)
+              console.log('---------------------------------------- jsonData.type:', jsonData.type)
+              if(this.state.mode==config.QRSCAN_FOR_REWARD && jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
+              {
+                this.props.navigator.push({
+                  screen: 'wallet.RewardConfirm',
+                  title: 'Confirmar recompensa',
+                  passProps: {
+                      recipient: [jsonData.account_name, jsonData.account_id],
+                      ...this.state.reward_info
+                  }
+
+                });
+                return;
+              }
+              if (jsonData.type==config.QRSCAN_ACCOUNT_ONLY && this.state.mode!=config.QRSCAN_FOR_REWARD)
               {
                 // send_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)
@@ -86,7 +105,7 @@ class QRScanner extends React.Component {
                 });
                 return;
               }
-              if (jsonData.type==config.QRSCAN_ACCOUNT_N_AMOUNT)
+              if (jsonData.type==config.QRSCAN_ACCOUNT_N_AMOUNT && this.state.mode!=config.QRSCAN_FOR_REWARD)
               {
                 // send_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)
@@ -97,7 +116,7 @@ class QRScanner extends React.Component {
                 });
                 return;
               }
-              if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT)
+              if (jsonData.type==config.QRSCAN_INVOICE_DISCOUNT && this.state.mode!=config.QRSCAN_FOR_REWARD)
               {
                 // pay_confirm
                 console.log(' ------------------------------- QRCode' , jsonData)

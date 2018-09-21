@@ -97,6 +97,11 @@ const styles = StyleSheet.create({
     fontFamily : 'Montserrat-Regular',
     fontSize:     13,  
   },
+  descriptionText:{
+    color: '#666',
+    fontFamily : 'Montserrat-Regular',
+    fontSize:     17,  
+  },
   //GRADIENTS
   discountGradient: {
     flex: 1,
@@ -472,8 +477,12 @@ class BusinessProfile extends Component {
 
 		return (
 			<ScrollView style={styles.container}>
+        <View style={{flex:1, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
+          <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+            <Text style={styles.descriptionText}>{this.state.business_data.description}</Text>
+          </View>
+        </View>
         <View style={{flexDirection: 'row', flex: 1, minHeight: 80, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
-
           <LinearGradient start={{x: 0, y: 1}} end={{x: 0.75, y: 0}} colors={['#76eafa', '#6b91f8']} style={styles.discountGradient}>
             <View style={{flexDirection: 'column', flex: 1, justifyContent:'space-between', paddingTop:2, paddingBottom:2}}>
               <Text style={styles.promoTextLabel}>PAGA CON DISCOINS HASTA</Text>
