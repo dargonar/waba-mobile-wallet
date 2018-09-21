@@ -425,11 +425,6 @@ class Drawer extends Component {
 
 	_openRecipient() {
 		this._toggleDrawer();
-		// this.props.navigator.push({
-		// 	screen: 'wallet.SelectRecipient',
-		// 	title: 'Seleccione destinatario'
-		// });
-
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
 			title: 'Enviar discoins',

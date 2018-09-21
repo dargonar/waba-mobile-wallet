@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 	actionButtonText: {
-    color: '#ccc',
+    color: '#666',
     fontSize: 13,
     paddingLeft: 15,
     flex: 1,

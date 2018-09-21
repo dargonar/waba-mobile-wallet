@@ -37,7 +37,6 @@ class DiscountOrReward extends React.Component {
       reward_dsc:       '0',
       reward_ars:       '0',
 
-      mode:             props.mode,
       percentage_error: '',
       promptVisible : false
     };
@@ -231,14 +230,12 @@ class DiscountOrReward extends React.Component {
 				amount: 		  this.state.amount,
         bill_amount:  this.state.bill_amount,
         percentage:   this.state.percentage,
-        recipient:    this.state.recipient,
-        mode:         this.state.mode
+        recipient:    this.state.recipient
 			}
   	});
   }
 
 	render() {
-      const buttonColor = (this.state.mode=='reward')? styles.buttonReward: styles.buttonDiscount;
       const iconMoney = (<Icon name="logo-usd" type='ionicon' size={20} color="#9F9F9F" style={{alignSelf:'center', width:20}} />);
       const iconReceipt = (<Icon name="receipt" size={26} color="#9F9F9F" style={{alignSelf:'center'}} />);
       return (

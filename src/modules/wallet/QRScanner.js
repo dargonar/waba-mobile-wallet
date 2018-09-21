@@ -81,7 +81,7 @@ class QRScanner extends React.Component {
               console.log('--------------- QRScanner:')
               console.log('---------------------------------------- this.state.mode:', this.state.mode)
               console.log('---------------------------------------- jsonData.type:', jsonData.type)
-              if(this.state.mode==config.QRSCAN_FOR_REWARD && jsonData.type==config.QRSCAN_ACCOUNT_ONLY)
+              if(jsonData.type==config.QRSCAN_ACCOUNT_ONLY && this.state.mode==config.QRSCAN_FOR_REWARD)
               {
                 this.props.navigator.push({
                   screen: 'wallet.RewardConfirm',

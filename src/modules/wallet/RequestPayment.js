@@ -203,7 +203,7 @@ class RequestPayment extends React.Component {
       request_content = (<View style={{flex:1, backgroundColor:'#ffffff'}}>{this._renderPrompt()}</View>);
 
     return ( <View style={styles.container}>
-        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column'}}>
+        <ScrollView style={{paddingBottom:90}} contentContainerStyle={{ flexDirection:'column', paddingBottom:30}}>
 
           {request_content}
 
