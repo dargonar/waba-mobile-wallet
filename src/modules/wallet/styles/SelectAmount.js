@@ -3,24 +3,47 @@ import { Platform, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#f0f0f0'
+		backgroundColor: '#fff'
 	},
 	inputText:{
 		textAlign:'right',
 		textAlignVertical:'center',
 		/* backgroundColor: '#ff00ff' */
-		fontFamily : 'Montserrat-Medium',
+		fontFamily : 'Montserrat-Light',
 		flex:1,
-		fontSize: 25
+		fontSize: 35,
+		marginRight: 10,
 	},
-	fullWidthButton: {
-		borderRadius: 4,
-    height:50,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-		backgroundColor: '#ff7233'
-  },
+// LABEL
+label:{
+	fontFamily : 'Montserrat-Bold',
+	fontSize: 12,
+	color: '#CCC',
+	marginBottom: 7
+},
+// END LABEL
+// BUTTONS
+btnGradient: {
+	height: 50,
+	borderRadius: 25,
+	flexDirection:'row', 
+	paddingLeft:35, paddingRight:35,
+	minWidth: 140,
+	alignItems:'center', 
+	justifyContent: 'center',
+},
+btnTouchable: {
+	borderRadius: 25,
+	backgroundColor: 'transparent',
+
+},
+btnTxt: {
+	fontFamily : 'Montserrat-SemiBold',
+	fontSize   : 13,
+	marginBottom: 1,
+	color: '#fff',
+},
+// END BUTTONS
 	fullWidthButtonDisabled: {
     backgroundColor: '#999999'
   },
@@ -30,12 +53,7 @@ const styles = StyleSheet.create({
 	buttonDiscount: {
     backgroundColor: '#3498db'
   },
-	fullWidthButtonText: {
-    fontFamily : 'Montserrat-Medium',
-		fontSize   : 15,
-		color: '#fff',
-		marginRight:50
-  },
+
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'roboto_light',
 		fontWeight : '100',
@@ -46,7 +64,7 @@ const styles = StyleSheet.create({
 		flex			: 1,
 		fontSize  : 35,
 		textAlign: 'right',
-		paddingRight: 5
+		paddingRight: 25
 	},
 	hint:{
 		textAlign:'center',

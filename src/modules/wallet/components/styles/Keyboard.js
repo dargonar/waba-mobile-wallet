@@ -36,26 +36,24 @@ export let keyStyle = StyleSheet.create({
         justifyContent: 'center',
         borderRightWidth: hairlineWidth,
         borderTopWidth: hairlineWidth,
-        borderColor: '#a5a5a5'
+        borderColor: '#f5f9fd'
     },
     mainText: {
         fontFamily : 'Montserrat-Regular',
         fontWeight: '100',
         fontSize: 20,
-        color: '#0B5F83'
+        color: '#666'
     },
     otherText: {
         fontSize: 10,
-        color: '#0B5F83',
+        color: '#666',
     },
     bg_d2d5dc: {
-        backgroundColor: '#f0f0f0',//BG_COLOR,
-        borderBottomWidth: hairlineWidth,
-        borderColor: '#a5a5a5'
+        backgroundColor: '#f5f9fd',//BG_COLOR,
     },
     bottomBordered:{
       borderBottomWidth: hairlineWidth,
-      borderColor: '#a5a5a5'
+      borderColor: '#f0f4f7'
     },
     dot: {
         height: 30,
