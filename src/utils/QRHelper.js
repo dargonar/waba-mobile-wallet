@@ -2,11 +2,13 @@ import * as config from '../constants/config';
 
 export function jsonForAccountOnly(account_id, account_name){
 	// {"account_id":"1.2.97","account_name":"pepe","type":"account_only"} 
+	// {"ai":"1.2.88","an":"derecho","t":"ao"}
 	return {ai:account_id, an:account_name, t:config.QRSCAN_ACCOUNT_ONLY} 
 }
 
 export function jsonForAccountNAmount(account_id, account_name, amount_required){	
 	// {"account_id":"1.2.87","account_name":"izquierdo","type":"account_n_amount","amount_required":250}
+	// {"ar":"99","ai":"1.2.88","an":"derecho","t":"aa"}
 	return {ai:account_id, an:account_name, ar:amount_required, t:config.QRSCAN_ACCOUNT_N_AMOUNT} 
 }
 
@@ -14,9 +16,15 @@ export function jsonForInvoice(bill_amount, bill_id, discount_rate, discount_dsc
 	// {"bill_amount":"250","bill_id":"qwerty","discount_rate":"20","discount_dsc":"50","discount_ars":200,"account_id":"1.2.87","account_name":"izquierdo","business_id":"1.2.56","business_name":"comercio14","type":"invoice_discount"}
 	
 	// return {ba:bill_amount, bi:bill_id, dr:discount_rate, dd:discount_dsc, da:discount_ars,ai:account_id, an:account_name, bi:business_id, bn:business_name , t:config.QRSCAN_INVOICE_DISCOUNT}
-	
-	let obj = {ba:bill_amount, dd:discount_dsc, da:discount_ars, ai:account_id, an:account_name, t:config.QRSCAN_INVOICE_DISCOUNT};
-	//{"ba":350, "dd":50, "da":300, "ai":"1.2.85", "an":"pepe", "t":"id"}
+	if(bill_id)
+	{	
+		bill_id = bill_id.replace( /:/g, '-' )
+		bill_id = bill_id.substring(0,19);
+	}
+	let obj = {ba:bill_amount, bi:bill_id, dd:discount_dsc, da:discount_ars, ai:account_id, an:account_name, t:config.QRSCAN_INVOICE_DISCOUNT};
+	// {"ba":350, "dd":50, "da":300, "ai":"1.2.85", "an":"pepe", "t":"id"}
+	// {"ba":"100","bi":"1114-1115","dd":"35","da":65,"ai":"1.2.87","an":"izquierdo","t":"id"}
+
 	console.log(' ------------------------ jsonForInvoice:', JSON.stringify(obj))
 	return obj;
 
@@ -37,5 +45,5 @@ export function expandJSONForQR(jsonData){
 
 	if(jsonObj.t == config.QRSCAN_INVOICE_DISCOUNT)
 		// return {bill_amount:jsonObj.ba, bill_id:jsonObj.bi, discount_rate:jsonObj.dr, discount_dsc:jsonObj.dd, discount_ars:jsonObj.da, account_id:jsonObj.ai, account_name:jsonObj.an, business_id:jsonObj.bi, business_name:jsonObj.bn, type:jsonObj.t} 
-		return {bill_amount:jsonObj.ba, bill_id:'', discount_rate:0, discount_dsc:jsonObj.dd, discount_ars:jsonObj.da, account_id:jsonObj.ai, account_name:jsonObj.an, business_id:jsonObj.ai, business_name:jsonObj.an, type:jsonObj.t} 
+		return {bill_amount:jsonObj.ba, bill_id:jsonObj.bi, discount_rate:0, discount_dsc:jsonObj.dd, discount_ars:jsonObj.da, account_id:jsonObj.ai, account_name:jsonObj.an, business_id:jsonObj.ai, business_name:jsonObj.an, type:jsonObj.t} 
 }

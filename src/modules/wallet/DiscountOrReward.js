@@ -103,17 +103,19 @@ class DiscountOrReward extends React.Component {
       return;
     }
 
-    this.props.navigator.push({
-        screen:     'wallet.DiscountShowQR',
-        title:      'Cobrar con descuento',
-        passProps:  {
+    let passProps = {
           bill_amount:    this.state.bill_amount,
           bill_id:        this.state.bill_id,
           discount_rate:  this.state.discount_rate,
           discount_dsc:   this.state.discount_dsc,
           discount_ars:   this.state.discount_ars,
           type:           config.QRSCAN_INVOICE_DISCOUNT
-        }
+        };
+    console.log(' ---- ShowDiscount: passProps -> ', JSON.stringify(passProps));
+    this.props.navigator.push({
+        screen:     'wallet.DiscountShowQR',
+        title:      'Cobrar con descuento',
+        passProps:  passProps
     });
     
   }
@@ -157,6 +159,11 @@ class DiscountOrReward extends React.Component {
   }
 
   _onBillSet(value){
+    if(value)
+    {  
+      value = value.replace( /:/g, '-' )
+      value = value.substring(0,19);
+    }
 		this.setState({promptVisible:false, bill_id:value});
   }
 

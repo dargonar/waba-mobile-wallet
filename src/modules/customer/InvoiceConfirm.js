@@ -449,8 +449,8 @@ class InvoiceConfirm extends Component {
 		let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
     // HACK
     let icon = iconUser;
-    if(Math.random()>0.5)
-      icon = iconBiz;
+    // if(Math.random()>0.5)
+    //   icon = iconBiz;
     const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 
     let imgData = config.getRedDiscoinIcon();

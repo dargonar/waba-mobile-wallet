@@ -57,6 +57,11 @@ class BusinessSearch extends Component {
 
 	}
 
+	componentDidMount(){
+	  if(this.searchTextInput)
+	  	this.searchTextInput.focus()
+
+	}
 	componentWillReceiveProps(nextProps) {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
@@ -105,6 +110,7 @@ class BusinessSearch extends Component {
             value={this.state.search_text}
             underlineColorAndroid ="transparent"
             placeholder="Buscar..."
+            ref={(input) => { this.searchTextInput = input; }}
           />
         </View>
         <BusinessListWidget {...this.props} mode="search" search_text={this.state.search_text_posta} style={styles.history}/>

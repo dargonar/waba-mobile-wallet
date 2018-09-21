@@ -566,6 +566,7 @@ class History extends Component {
 			return (
         <View style={styles.container}>
          <ListView
+         		contentContainerStyle={{paddingBottom:30}}
             refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

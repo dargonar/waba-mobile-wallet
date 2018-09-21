@@ -406,8 +406,12 @@ class BusinessListWidget extends Component {
   _onEndReached()  {
 		console.log('ON END REACHED!!!!!', this.props.business_list_at_end);
 
-		if(this.props.business_list_at_end)
+		
+    if(this.props.business_list_at_end && this.state.mode=='main')
 			return;
+
+    if(this.props.business_searched_list && this.state.mode=='search')
+      return;
 
 		this.setState({infiniteLoading:true});
 
@@ -420,7 +424,7 @@ class BusinessListWidget extends Component {
 			}
 		).start();
 
-		let last_id = this.props.business_list.length;
+		let last_id = this.state.mode=='main'?this.props.business_list.length:this.props.business_searched_list.length;
 		// console.log('LAST ID=>', last_id);
 		// parts = last_id.split('.').map( function(v){ return v>>0; });
 		// parts[2]-=1;

@@ -418,7 +418,7 @@ class FindUser extends Component {
       content = (
           <ListView
             style={{backgroundColor:'#f0f0f0'}}
-            contentContainerStyle={{flex:1, backgroundColor:'transparent'}}
+            contentContainerStyle={{backgroundColor:'transparent'}}
             renderRow={this._renderRow.bind(this)}
             dataSource={this.state.dataSource}
             enableEmptySections={true}

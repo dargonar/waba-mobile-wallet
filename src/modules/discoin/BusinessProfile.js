@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Marker } from 'react-native-maps';
+import * as config from '../../constants/config';
 
 const item_h     = (Dimensions.get('window').height/2);
 
@@ -479,7 +480,7 @@ class BusinessProfile extends Component {
               <Icon name="remove" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: 0, fontSize: 50}}/>                  
               <View flexDirection='row'>
                 <Text style={styles.promoLabel}>%</Text>
-                <Text style={styles.discount}>35</Text>
+                <Text style={styles.discount}>{this.state.business_data['discount_ex'][config.getToday()]['discount']}</Text>
               </View>  
             </View>
           </LinearGradient>
@@ -490,7 +491,7 @@ class BusinessProfile extends Component {
               <Icon name="add" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: -5, fontSize: 50}}/>                  
               <View flexDirection='row'>
                 <Text style={styles.promoLabel}>%</Text>
-                <Text style={styles.reward}>25</Text>
+                <Text style={styles.reward}>{this.state.business_data['discount_ex'][config.getToday()]['reward']}</Text>
               </View>  
             </View>
           </LinearGradient>
