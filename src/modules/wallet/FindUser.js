@@ -19,6 +19,7 @@ import * as walletActions from './wallet.actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import styles_x from './styles/FindUser';
 import styles from './styles/Main';
 import * as config from '../../constants/config';
 
@@ -31,203 +32,9 @@ const alignItemsMap = {
   right: "flex-end"
 };
 
-const item_width     = (Dimensions.get('window').width)-30;
-const xx = item_width-40;
-const styles_x = StyleSheet.create({
-  
-  container:{flex:1, paddingTop:3, backgroundColor:'#f0f0f0'},
-  containerEmpty : {
-    flex             : 7,
-    alignItems       : 'center',
-    justifyContent   : 'center'
-  },
-  emptyListText:{
-      color:"#777777", 
-      textAlign:'center',
-      fontFamily : 'Montserrat-Regular',
-      fontWeight : '100',
-      fontSize   : 15,
-      lineHeight : 20
-  },
-  bgImageWrapper: {
-      position: 'absolute',
-      top: 0, bottom: 0, left: 0, right: 0
-  },
-  bgImage: {
-      flex: 1,
-      opacity : 0.2 
-      //resizeMode:'center'
-  },
-  button: {
-    borderColor: '#8E8E8E',
-    borderWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginTop: 20
-  },
-  buttonText: {
-    color: '#8E8E8E',
-  },
-  businessCard: {
-    borderRadius: 7,
-    marginTop: 11,
-    width: undefined,
-    marginLeft:11,
-    marginRight:11,
-    height: 60,
-    elevation: 5,
-    backgroundColor: '#FFF',
-    borderColor: 'transparent'
-  },
+// const item_width     = (Dimensions.get('window').width)-30;
+// const xx = item_width-40;
 
-  businessCardInfo: {
-    color: '#000', 
-    flexDirection: 'column',
-  },
-  businesseCardTitle:{
-    fontSize: 15,
-    fontFamily : 'Montserrat-Medium',
-    color: '#58595b',
-    marginBottom: 3,
-    marginTop: 3,
-  },
-  businessCardInfoContainer:{
-    padding: 10,
-    paddingTop: 5,
-    paddingLeft: 8,
-    flex: 1
-  },
-  businessCategorie:{
-    fontSize: 7,
-    fontFamily : 'Montserrat-Bold',
-    letterSpacing: 10,
-    margin: 1,
-    padding: 0,
-    lineHeight: 6,
-    color: '#000',
-    opacity: 0.25,
-  },
-  row: {
-    margin: 5,
-    width: item_width,
-    height: item_width,
-    backgroundColor: '#F6F6F6',
-  },
-  thumb: {
-    
-    width: 60,
-    height: 60,
-    // flex:1,
-    // resizeMode: 'cover',
-    borderBottomLeftRadius: 7,
-    borderTopLeftRadius: 7,
-  },
-
-  name_container:{
-    backgroundColor:'#000000',
-    opacity: .6,  
-    position: "absolute", top: xx, left: 0, right: 0, bottom: 0,
-    
-    // position: 'absolute',
-    // bottom: 0,
-    // left:0,
-    // right: item_img_width
-  },
-  text: {
-    position: 'absolute',
-    bottom: 0,
-    color: '#fff',
-    backgroundColor:'transparent',
-    alignSelf:'flex-start',
-    textAlign: 'left',
-    padding: 4,
-    fontWeight: 'bold',
-    opacity: 1,
-    fontFamily : 'Montserrat-Medium',
-    fontWeight: '100',
-    fontSize: 15,
-    lineHeight:15
-  },
-  discount: {
-    color: '#fff',
-    backgroundColor:'transparent',
-    fontWeight: '100',
-    borderRadius: 4,
-    fontFamily : 'Montserrat-Regular',
-    fontSize: 26,
-    flex: 0,
-    textAlign: 'right', 
-  },
-  reward: {
-    color: '#fff',
-    backgroundColor:'transparent',
-    fontWeight: '100',
-    borderRadius: 4,
-    fontFamily : 'Montserrat-Regular',
-    fontSize: 26,
-    flex: 0,
-    textAlign: 'right', 
-  },
-  rewardGradient: {
-    flex: 1,
-    borderRadius: 5,
-    padding: 4,
-    marginLeft: 4,
-    marginTop: 6,
-    paddingRight: 10
-  },
-  rewardIcon: {
-    position: 'absolute',  
-    color: '#FFF',
-    opacity: 0.5,
-  },
-  discountGradient: {
-    flex: 1,
-    borderRadius: 5,
-    padding: 4,
-    marginRight: 4,
-    marginTop: 6,
-    paddingRight: 10
-  },
-  promoLabel:{
-    flex: 1,
-    textAlign: 'right',
-    alignSelf: 'center',
-    marginTop: -9,
-    marginRight: 4,
-    fontSize: 14,
-    color: '#FFF',
-    fontFamily : 'Montserrat-Light',
-  },
-  
-  sectionTitle:{
-    fontSize: 18,
-    padding: 8,
-    marginTop: 5,
-    marginBottom: 4,
-    paddingLeft: 0,
-    color: '#a7a8aa',
-    fontFamily : 'Montserrat-SemiBold',
-  }, 
-  discoinCount:{
-    width: item_width,    
-    alignItems: 'center',
-    padding: 0,
-    paddingRight: 20,
-    flexDirection: 'row', 
-    justifyContent: 'flex-end',
-  },
-  discoinCountValue:{
-    fontSize: 45,
-    fontFamily : 'Montserrat-Light', 
-    color: '#FFF',
-  },
-  discoinCountGradient:{
-    borderRadius: 35,
-    height: 60,
-  },
-});
 
 class FindUser extends Component {
 
@@ -258,7 +65,7 @@ class FindUser extends Component {
 
   static navigatorStyle = {
     navBarButtonColor: '#000',
-    navBarBackgroundColor: '#f0f0f0',
+    navBarBackgroundColor: '#fff',
     topBarElevationShadowEnabled: false,
     navBarTextFontFamily: 'Montserrat-Regular'
   }
@@ -374,9 +181,9 @@ class FindUser extends Component {
     
     // const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
     // const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
-    const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+    const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#ccc'}}/>);
     // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
-    const iconBiz    = (<Image source={{uri:iconsMap['store--active'].uri}} style={{height:20,width:20, color:'#666'}} />);
+    const iconBiz    = (<Image source={{uri:iconsMap['store--active'].uri}} style={{height:20,width:20, color:'#ccc', opacity:0.3}} />);
     
     let icon = iconUser;
     if(Math.random()>0.5)
@@ -395,7 +202,7 @@ class FindUser extends Component {
             <View style={{flex:3}}>
               <Text style={styles_x.businesseCardTitle}>{rowData[0]} </Text>
             </View>
-            <View style={{justifyContent: 'flex-end', flex: 1}}>
+            <View style={{justifyContent: 'center', alignItems: 'center', flex: 0, marginRight:5, marginTop:3, width: 30}}>
               {icon}
             </View>
           </View>
@@ -420,7 +227,7 @@ class FindUser extends Component {
     else
       content = (
           <ListView
-            style={{backgroundColor:'#f0f0f0'}}
+            style={{backgroundColor:'#fff'}}
             contentContainerStyle={{backgroundColor:'transparent'}}
             renderRow={this._renderRow.bind(this)}
             dataSource={this.state.dataSource}
@@ -431,7 +238,7 @@ class FindUser extends Component {
     return (
     <View style={styles.container}>
         
-        <View style={{height:60, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{height:60, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
           <View style={{width:20, marginRight:10, alignSelf:'center', flexDirection:'row', justifyContent: 'center'}}>  
             <Icon name="ios-search" size={18}  style={{color:'#cccccc'}}  />
           </View>

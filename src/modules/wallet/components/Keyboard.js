@@ -106,7 +106,7 @@ class Keyboard extends React.Component {
 
     render() {
         let props = this.props;
-        const iconBackspace = (<Icon name="ios-backspace" size={26} color="#0B5F83" />);
+        const iconBackspace = (<Icon name="ios-backspace" size={26} color="#ccc" />);
         return (
             <View style={styles.wrapper}>
 
@@ -118,7 +118,7 @@ class Keyboard extends React.Component {
                         {this._renderDotKey()}
 
                         <TouchableHighlight
-                            underlayColor={BG_COLOR}
+                            underlayColor={'red'}
                             style={[keyStyle.wrapper, keyStyle.bottomBordered]}
                             onPress={this._onPress.bind(this, '0')}>
                             <View style={keyStyle.bd}>
