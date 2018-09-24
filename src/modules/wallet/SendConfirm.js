@@ -5,10 +5,12 @@ import {
   Alert,
 	Text,
 	TouchableHighlight,
-	View
+	View,
+	ScrollView
 
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
@@ -22,12 +24,13 @@ import * as config from '../../constants/config';
 class SendConfirm extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#666',
-    navBarBackgroundColor: '#f0f0f0',
-    navBarButtonColor: '#666',
-		navBarTextFontFamily: 'Montserrat-Medium',
-    navBarTextFontSize: 16,
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#666', 
+    navBarTextFontSize: 14,
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
 
   constructor(props) {
@@ -404,7 +407,7 @@ class SendConfirm extends Component {
 		let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
 		let fee = this.state.fee_txt.toFixed(2);
-
+		let otherIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 		let imgData = config.getRedDiscoinIcon();
 		const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 		// const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
@@ -422,73 +425,70 @@ class SendConfirm extends Component {
 
 		return (
       <View style={styles.container}>
-      	
-      	<View style={{width:'100%', marginTop:20}}>
-      		<View style={styles.discoinCount}>
-						<Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
-						<Text style={styles.discoinCountValue}>{total}</Text>
-					</View>
-      	</View>
+        <ScrollView contentContainerStyle={{ flexDirection:'column', padding:20, paddingTop: 0}}>
 
-      	<View style={{width:'100%', marginTop:20}}>
-      		<View style={[styles.discoinFee, {alignSelf:'center', backgroundColor:'#d0d0d0' }]}>
-						<Image style={{width: 10, height: 10, marginRight:5 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
-						<Text style={styles.discoinFeeValue}>{fee}</Text>
-						<Text style={styles.discoinFeeText}>{"de comisión"}</Text>
-					</View>
-      	</View>
 
-    		<View style={{height:80, marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
-          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
-            <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
-              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
-                DESTINATARIO
-              </Text>
-            </View>  
-            
-            <View style={{ borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'center'}}>
-              <View style={{flex:1, justifyContent:'center', alignItems: 'flex-start'}}>
-                {userIcon}
+          <View justifyContent="center" alignItems='center' flexDirection='column'>
+            <View style={styles.amountQuantityView}>
+              <View style={styles.amountQuantityCard}>
+                <Image style={{width: 13, height: 13, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
+                <Text style={styles.amountQuantity}>{total}</Text>
               </View>
-              <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-                <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
-                  {this.state.recipient.name}
-                </Text>
-              </View>
-              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-                {icon}
+            </View>
+            <View style={styles.feeView}>
+              <View style={styles.feeCard}>
+                <Text style={styles.label}>Comisión</Text>
+                <Text>{fee}</Text>
               </View>
             </View>
           </View>
-        </View>
 
-        <View style={{marginTop:20, paddingTop:0, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#f0f0f0', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
+          <View flexDirection='row' justifyContent='center' alignItems='center'>  
+            <View style={styles.fromToView}>
+              <Text style={styles.label}>DE</Text>
+              <View style={styles.fromToCard}>
+                <View style={styles.fromToThumb}>
+                	{userIcon}
+                </View>
+                <Text style={styles.text}>{this.props.account.name}</Text>
+              </View>
+            </View>
+            <Icon name='md-arrow-round-forward' style={{color:'#CCC'}}/>
+            <View style={styles.fromToView}>
+              <Text style={styles.label}>A</Text>
+              <View style={styles.fromToCard}>
+                <View style={styles.fromToThumb}>
+                	{otherIcon}
+              	</View>
+                <Text style={styles.text}>{this.state.recipient.name}</Text>
+              </View>
+            </View>
+          </View>
+
+
+
+
+
+        <View style={{marginTop:0, paddingTop:0, paddingLeft:10, paddingRight:10}}>
           <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
-            <View style={{ alignSelf: 'flex-start', alignItems:'flex-start', justifyContent: 'flex-start'}}>
-              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
-                MENSAJE
-              </Text>
+            <View>
+              <Text style={styles.label}>MENSAJE</Text>
             </View>  
             
-            <View style={{ minHeight: 160, borderRadius: 4, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#fff', padding:5, justifyContent:'flex-start'}}>
+            <View style={{ minHeight: 160, borderRadius: 4, marginTop: 10, alignSelf: 'stretch', flexDirection:'row', backgroundColor:'#f5f9fd', padding:10, justifyContent:'flex-start'}}>
             	<Text style={[styles.memo_style, memo_style]}>{memo}</Text>
             </View>
           </View>
         </View>
 
-				<View style={{flex:1, flexDirection:'column', alignSelf:'stretch', alignItems:'flex-end', paddingRight:20, justifyContent:'flex-end', paddingBottom:20 }}>
-					<TouchableHighlight
-							style={styles.fullWidthButton}
-							onPress={this._onConfirm.bind(this)} >
-            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
-						<Text style={styles.fullWidthButtonText}>CONTINUAR</Text>
-            {iconNext}
-            </View>
-					</TouchableHighlight>
-				</View>
-				
+		<TouchableHighlight style={styles.btnTouchable} onPress={this._onConfirm.bind(this)} >
+		  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
+		    <Text style={styles.btnTxt}>CONTINUAR</Text>
+		  </LinearGradient>
+		</TouchableHighlight>
 
-        </View>
+		</ScrollView>
+      </View>
     );
   }
 }

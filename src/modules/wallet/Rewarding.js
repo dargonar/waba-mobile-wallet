@@ -20,11 +20,13 @@ import * as config from '../../constants/config';
 class Rewarding extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#0A566B',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#666', 
+    navBarTextFontSize: 14,
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
 
 

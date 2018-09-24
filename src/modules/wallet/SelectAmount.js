@@ -36,7 +36,7 @@ class SelectAmount extends React.Component {
   }
 
   static navigatorStyle = {
-    navBarTextColor: '#ccc', 
+    navBarTextColor: '#666', 
     navBarTextFontSize: 14,
     navBarComponentAlignment: 'center',
     navBarBackgroundColor: '#ffffff',
@@ -232,7 +232,7 @@ class SelectAmount extends React.Component {
                 </View>
               </View>
 
-              <View style={{height:70, flexDirection: 'row', backgroundColor:'#f5f9fd', marginTop:15, paddingRight:20, paddingLeft:20}}>
+              <View style={{height:60, marginBottom: 10, flexDirection: 'row', backgroundColor:'#f5f9fd', marginTop:15, paddingRight:20, paddingLeft:20, borderRadius: 30, marginRight: 20, marginLeft: 20}}>
                 <View style={{flex: 7, flexDirection: 'column'}}>
                   <Text style={styles.inputText}>
                     {this.state.amount}

@@ -5,8 +5,8 @@ import {
 	Text,
 	TouchableHighlight,
 	View,
-  Image,
-  ScrollView
+	Image,
+	ScrollView
 } from 'react-native';
 import { Icon } from 'native-base';
 import { bindActionCreators } from 'redux';
@@ -393,12 +393,12 @@ class RewardConfirm extends Component {
           </View>
 
           <View style={styles.subaccountButtonContainer}>
-						<TouchableHighlight
-								style={styles.fullWidthButton}
-								onPress={this._onConfirm.bind(this)} >
-							<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
-						</TouchableHighlight>
-					</View>
+			<TouchableHighlight
+					style={styles.fullWidthButton}
+					onPress={this._onConfirm.bind(this)} >
+				<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
+			</TouchableHighlight>
+		  </View>
 
         </ScrollView>
       </View>
