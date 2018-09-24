@@ -17,11 +17,13 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 class RewardResult extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: '#f15d44',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#666', 
+    navBarTextFontSize: 14,
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
 
 
