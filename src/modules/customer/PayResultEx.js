@@ -2,7 +2,8 @@ import React, { PropTypes, Component } from 'react';
 
 import {
   View,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
 
@@ -16,11 +17,13 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 class SendResultEx extends Component {
 
   static navigatorStyle = {
-    navBarTextColor: '#ffffff',
-    navBarBackgroundColor: 'indigo',
-    navBarButtonColor: '#ffffff',
-		navBarTextFontFamily: 'roboto_thin',
-    topBarElevationShadowEnabled: false
+    navBarTextColor: '#666', 
+    navBarTextFontSize: 14,
+    navBarComponentAlignment: 'center',
+    navBarBackgroundColor: '#ffffff',
+    navBarButtonColor: '#000000',
+    navBarTextFontFamily: 'Montserrat-Medium',
+    topBarElevationShadowEnabled: false,
   }
 
 
@@ -94,30 +97,36 @@ class SendResultEx extends Component {
     return (
 
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', backgroundColor:'transparent'}}>
-          <Text style={styles.title}>Pago exitoso</Text>
-          <Text style={[styles.amount]}>D$C {this.state.amount}</Text>
-        </View>
-        <View style={{flex:4, backgroundColor:'transparent'}}>
+        <View style={{padding: 20, flex:1, backgroundColor:'transparent', paddingLeft:30, paddingRight:30, alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
+          <View style={{}}>
+            <Text style={styles.title_part}>SE ENVIO A:</Text>
+          </View>
+          <View style={styles.userRecipient}>
+            <View style={{justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 10}}>
+            {userIcon}
+            </View>
+            <View style={{justifyContent: 'flex-start', alignItems:'flex-start' }}>
+              <Text style={styles.data_part} >
+                {this.state.recipient.name}
+              </Text>
+            </View>
+          </View>
 
-          <Text style={styles.title_part}>DESTINATARIO</Text>
-          <Text style={[styles.data_part,styles.margin_bottom]}>{this.state.account_name}</Text>
-          
-          <Text style={styles.title_part}>RESTAN PAGAR EN PESOS</Text>
-          <Text style={[styles.data_part,styles.margin_bottom]}>${debt}</Text>
-
-
-        </View>
-        <View style={{flex:2, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
-          <Icon
-            raised
-            containerStyle={{backgroundColor:'#f15d44', borderWidth: 0.5, borderColor: 'transparent' }}
-            name='md-checkmark'
-            type='ionicon'
-            color='#ffffff'
-            underlayColor='#415261'
-            onPress={this._onOkPress.bind(this)}
-            size={30} />
+          <View style={{flexDirection:'row', alignItems: 'center', marginTop: 40}}>
+            <Image style={{width: 16, height: 16, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 15, marginTop: 10}} source={{uri: imgData}}/>
+            <Text style={styles.money_part}>{this.state.amount} </Text>
+          </View>
+          <View style={{position:'absolute', right:10, bottom: 10, elevation: 10, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
+            <Icon
+              raised
+              containerStyle={{backgroundColor:'#3233aa', borderWidth: 0.5, borderColor: 'transparent' }}
+              name='md-checkmark'
+              type='ionicon'
+              color='#ffffff'
+              underlayColor='#1c228e'
+              onPress={this._onOkPress.bind(this)}
+              size={30} />
+          </View>
         </View>
       </View>
     );
