@@ -239,7 +239,7 @@ class SelectAmount extends React.Component {
                   </Text>
                 </View>
                 <View style={{flex: 1, flexDirection: 'column', alignItems:'center', justifyContent:'center'}}>
-                  <Image style={{width: 20, height: 20, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5, }} source={{uri: imgData}}/>
+                  <Image style={{width: 15, height: 15, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5, }} source={{uri: imgData}}/>
                 </View>
               </View>
               <Keyboard
