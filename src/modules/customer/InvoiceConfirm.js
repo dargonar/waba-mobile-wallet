@@ -295,6 +295,7 @@ class InvoiceConfirm extends Component {
 			return;
 		}
 
+
 		console.log(' ==> this.props.balance', this.props.balance);
 		let final_amount = Number(this.state.to_pay) + Number(this.state.fee_txt);
 		let disp = this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
@@ -352,7 +353,7 @@ class InvoiceConfirm extends Component {
 							screen:     'customer.PayResultEx',
 							title:      'Pago exitoso',
 							passProps:  {
-									recipient : this.state.account_name,
+									recipient : this.state.recipient,
 									amount :    this.state.to_pay,
 									memo :      this.state.memo,
 									data: 			{

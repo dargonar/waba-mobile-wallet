@@ -13,6 +13,7 @@ import * as walletActions from '../wallet/wallet.actions';
 import styles from './styles/SendResultEx';
 import { Icon } from 'react-native-elements';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import * as config from '../../constants/config';
 
 class SendResultEx extends Component {
 
@@ -52,8 +53,9 @@ class SendResultEx extends Component {
       account_id:     props.data.account_id,
       business_id:    props.data.business_id ,
       account_name:   props.data.account_name,
-      business_name:  props.data.business_name
+      business_name:  props.data.business_name,
       
+      identicon   : ''      
     };
 
 		let that = this;
@@ -82,6 +84,9 @@ class SendResultEx extends Component {
   }
 
   componentDidMount() {
+    let identicon = config.getIdenticon(this.state.recipient.name);
+    this.setState({ identicon : identicon });
+    
   }
 
   componentWillUnmount() {
@@ -93,6 +98,8 @@ class SendResultEx extends Component {
   render() {
 
 		let debt    = this.state.bill_amount - this.state.to_pay;
+    const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
+    let imgData = config.getRedDiscoinIcon();
 
     return (
 
