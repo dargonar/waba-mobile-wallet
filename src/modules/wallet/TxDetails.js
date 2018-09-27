@@ -12,7 +12,7 @@ import * as walletActions from './wallet.actions';
 import styles from './styles/TxDetails';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as config from '../../constants/config';
-import * as TxHelper from '../../utils/TxHelper';
+import * as RawTxHelper from '../../utils/RawTxHelper';
 
 class TxDetails extends Component {
   
@@ -51,7 +51,7 @@ class TxDetails extends Component {
     // if(!memo || !memo.message)
     //   return {};
     
-    return TxHelper.getTxData(rowData, account_name)
+    return RawTxHelper.getTxData(rowData, account_name)
     
   }
   componentWillMount() {
@@ -99,7 +99,7 @@ class TxDetails extends Component {
 
           
           <View flexDirection='row' justifyContent='center' alignItems='center'>  
-            <Text style={styles.labelBig}>{TxHelper.action_raw[this.state.processedData._action]}</Text>
+            <Text style={styles.labelBig}>{RawTxHelper.action_raw[this.state.processedData._action]}</Text>
           </View>
           <View flexDirection='row' justifyContent='center' alignItems='center'>  
             <View style={styles.fromToView}>

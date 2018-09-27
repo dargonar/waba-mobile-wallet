@@ -18,6 +18,7 @@ import { Icon} from 'native-base';
 import { iconsMap } from '../../utils/AppIcons';
 import Bts2helper from '../../utils/Bts2helper';
 import * as config from '../../constants/config';
+import * as TxHelper from '../../utils/TxHelper';
 
 class InvoiceConfirm extends Component {
 
@@ -67,195 +68,36 @@ class InvoiceConfirm extends Component {
 		this._buildMemo = this._buildMemo.bind(this);
   }
 
-	_addSignature(tx, privkey) {
-		return new Promise( (resolve, reject) => {
-			Bts2helper.txDigest( JSON.stringify(tx), config.CHAIN_ID).then( digest => {
-				console.log('_addSignature txDigest =>', digest);
-				Bts2helper.signCompact(digest, privkey).then( signature => {
-					console.log('_addSignature signCompact =>', signature);
-					tx.signatures = [signature];
-					resolve(tx);
-				}, err => {
-					reject(err);
-				})
-			}, err => {
-				reject(err);
-			});
-		});
-	}
-
-	_generateUnsignedTx(params) {
-		//console.log('_generateUnsignedTx', params);
-		return new Promise( (resolve, reject) => {
-			tx = {
-				'expiration': 			config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
-				'ref_block_num': 		this.props.blockchain.refBlockNum,
-				'ref_block_prefix': this.props.blockchain.refBlockPrefix,
-				'operations' : [
-					 [
-						0,
-						{
-							from   : params.from,
-							to     : params.to,
-							amount : {
-								amount   : (Number(params.amount)*Math.pow(10,params.asset.precision))>>0,
-								asset_id : params.asset.id
-							},
-							memo   : params.memo
-						}
-					]
-				]
-			}
-    
-			fetch(config.getAPIURL('/get_fees_for_tx'), {
-				method: 'POST',
-				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            tx : tx,
-        })
-			})
-			.then((response) => response.json()
-				, err => {
-          this._onGetTxError('#X -- '+JSON.stringify(err));
-          reject(err);
-				})
-			.then((responseJson) => {
-        	tx.operations[0][1].fee = {
-  					asset_id  : responseJson['fees'][0]['asset_id'], //params.asset.id,
-  					amount    : responseJson['fees'][0]['amount']
-  				}
-  				resolve(tx);
-			}, err => {
-				this._onGetTxError('#Y -- '+JSON.stringify(err));
-        reject(err);
-			});
-
-			// Bts2helper.calcFee(JSON.stringify(this.props.fees), [JSON.stringify(tx.operations[0])], JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
-			// 	tx.operations[0][1].fee = {
-			// 		asset_id  : params.asset.id,
-			// 		amount    : res[0]
-			// 	}
-			// 	resolve(tx);
-			// }, err => {
-      //   console.log(' -- ERROR: Bts2helper.calcFee ERROR: ' + JSON.stringify(err));
-			// 	reject(err);
-			// });
-
-
-		}); //Promise
-	}
-
-	
   
-  _getRecipientInfo(recipient) {
-
-		return new Promise( (resolve, reject) => {
-			if(this.state.memo_key && this.state.discount_rate>0) {
-        console.log(' ******************** _getRecipientInfo::(this.state.memo_key && this.state.discount_rate>0) - LEAVING');
-				resolve();
-				return;
-			}
-
-      fetch(config.getAPIURL('/business/by_name/')+this.state.recipient.name, {
-				method: 'GET',
-				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
-			})
-			.then((response) => response.json()
-				, err => {
-          this._onGetTxError('#1 -- '+JSON.stringify(err));
-				})
-			.then((responseJson) => {
-        console.log('--------------- schedule:', JSON.stringify(responseJson));
-        if(responseJson.error)
-        {
-          this._onGetTxError('#? -- '+responseJson.error);
-          reject(responseJson.error);
-        }
-        let today = config.getToday();
-        console.log('------------Searching discount for:', today);
-        let discount_rate =0;
-        if(responseJson.discount_schedule)
-        {
-          for (var i = 0; i < responseJson.discount_schedule.length; i++){
-            let schedule = responseJson.discount_schedule[i];
-            console.log(' --- Schedules LOOP', JSON.stringify(schedule));
-            if(schedule['date']==today)
-            {
-              console.log(' ---------------------------------- DISCOUNT FOUND:', discount_rate);
-              discount_rate = schedule['discount'];
-              break;
-            }
-          }
-          console.log(' ---------------------------------- DISCOUNT >>>> ', discount_rate);
-        }
-        else {
-          console.log(' ---------------------------------- NO DISCOUNT RECEIVED ');
-        }
-				this.setState({memo_key:responseJson.account.options.memo_key, discount_rate:discount_rate});
-				resolve();
-			}, err => {
-				this._onGetTxError('#2 -- '+JSON.stringify(err));
-        reject(err);
-			});
-		});
-
-	}
-
 	getAvailableBalance(){
 		return Number(this.props.balance[config.ASSET_ID])-1;
 	}
 
 	_getTx() {
+		
+		let available_balance = this.getAvailableBalance();
+		let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
+		this.setState({to_pay:amount});
+		this._buildMemo().then( enc_memo => {
+			TxHelper.getTx(this.props.account.id, this.state.account_id, amount, enc_memo, this.props.asset, this.props.blockchain).then( tx => { 
+				this.setState({
+					tx					:	tx,
+					fee    			: tx.operations[0][1].fee.amount,
+					fee_txt			: tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
+					can_confirm	: true,
+					error				:	''
+				});
+			}, err => {
+				console.error('ERR1: ', err);
+				this._onGetTxError('Error al crear transacción: '+JSON.stringify(err));	
+			});
+		}, err => {
+			console.error('ERR2: ', err);
+			this._onGetTxError('Error al crear transacción: '+JSON.stringify(err));
+		})
+	}
 
-        // this._getRecipientInfo(this.state.recipient).then( () => {
-        //   if(isNaN(this.state.discount_rate) || this.state.discount_rate<0)
-        //   {
-        //     this._onGetTxError('No es posible recuperar la información del comercio.');
-        //     return;
-        //   }
-      		
-      		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
-      			// let amount = Number(this.state.discount_rate*this.state.amount/100).toFixed(2);
-      			let available_balance = this.getAvailableBalance();
-      			let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
-      			console.log('---- discount_dsc:', this.state.discount_dsc, 'available_balance:', available_balance);
-            this.setState({to_pay:amount});
-      			this._generateUnsignedTx({
-      					from   : this.props.account.id,
-      					to     : this.state.account_id,
-      					amount : amount,
-      					memo   : enc_memo,
-      					asset  : this.props.asset
-      			})
-      			.then((tx) => {
-      				console.log('----------TX------------');
-      				console.log(JSON.stringify(tx));
-      				console.log('------------------------');
-      				this.setState({
-      					tx					:	tx,
-      					fee    			: tx.operations[0][1].fee.amount,
-      					fee_txt			: tx.operations[0][1].fee.amount/config.ASSET_DIVIDER,
-      					can_confirm	: true,
-      					error				:	''
-      				});
-      			}
-      			, err => {
-      				console.error('ERR1: ', err);
-      				this._onGetTxError('#3 -- '+JSON.stringify(err));
-      			})
-
-      		}, err => {
-      			console.error('ERR2: ', err);
-      			this._onGetTxError('#4 -- '+JSON.stringify(err));
-      		})
-
-        // } , err => {
-        //   this._onGetTxError('#4 -- '+JSON.stringify(err));
-        // });
-  }
-
-	//'No se pudo calcular la comisión'
-
+	
 	_onGetTxError(error){
 
 		this.setState({
@@ -266,7 +108,7 @@ class InvoiceConfirm extends Component {
 			error:   			error
 		});
 		Alert.alert(
-			'Error al obtener comisión',
+			'Ha ocurrido un error',
 			error,
 			[
 				{text: 'OK', onPress: () => this.props.navigator.pop({ animated: true }) },
@@ -274,7 +116,7 @@ class InvoiceConfirm extends Component {
 		)
 	}
 
-	_buildMemo(message) {
+	_buildMemo() {
 		return new Promise( (resolve, reject) => {
       let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.bill_amount +':'+this.state.bill_id;
       console.log('----------------- MEMO: ', memo);
@@ -286,8 +128,8 @@ class InvoiceConfirm extends Component {
 		if(!this.state.can_confirm)
 		{
 			Alert.alert(
-				'Fondos insuficientes',
-				'No dispone de fondos suficientes para realizar la operación.',
+				this.state.error?'Ha ocurrido un error':'Aguarde',
+				this.state.error?this.state.error:'Aguarde a que se genere la transacción',
 				[
 					{text: 'OK'},
 				]
@@ -324,7 +166,7 @@ class InvoiceConfirm extends Component {
 		});
 
 		
-		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
+		TxHelper.addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 
 			console.log(' ------------- TX:');
 			console.log(JSON.stringify(tx));
@@ -422,14 +264,8 @@ class InvoiceConfirm extends Component {
   render() {
 
 
-  	let btn_style = styles.fullWidthButton2;
-		let txt_style = styles.fullWidthButtonText;
-		if(!this.state.can_confirm)
-		{
-			btn_style = styles.fullWidthButtonDisabled;
-			txt_style = styles.fullWidthButtonTextDisabled;
-		}
-
+  	let disabled_btn_style = (!this.state.can_confirm)?styles.fullWidthButtonDisabled:{};
+		
     let send_disabled = !this.state.can_confirm;
 		
 		let business_name			= this.state.business_name; 
@@ -547,7 +383,7 @@ class InvoiceConfirm extends Component {
 					</View>
 					<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
 						<TouchableHighlight
-								style={styles.fullWidthButton}
+								style={[styles.fullWidthButton, disabled_btn_style]}
 								onPress={this._onConfirm.bind(this)} >
 	            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
 							<Text style={styles.fullWidthButtonText}>PAGAR</Text>

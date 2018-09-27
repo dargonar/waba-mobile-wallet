@@ -161,11 +161,8 @@ const styles = StyleSheet.create({
     marginRight:50
   },
 
-
-
-
 	fullWidthButtonDisabled: {
-    backgroundColor: '#999999'
+    backgroundColor: '#bbb'
   },
 	
 	fullWidthButtonTextDisabled:{

@@ -8,8 +8,6 @@ import {
 	View
 } from 'react-native';
 
-// import * as walletActions from './wallet.actions';
-// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import styles from './styles/Main';
@@ -17,10 +15,9 @@ import Balance from './components/Balance';
 import History from './components/History';
 import ActionButton from 'react-native-action-button';
 import { iconsMap } from '../../utils/AppIcons';
-// import * as subaccount_helper from '../../utils/SubAccountHelper';
-// import Icon from 'react-native-vector-icons/Ionicons';
 
-import {Icon} from 'native-base';
+import {Button, Icon, Fab} from 'native-base';
+
 import * as config from '../../constants/config';
 
 class Wallet extends Component {
@@ -32,7 +29,7 @@ class Wallet extends Component {
   	this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
 		// this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
-		this.state 						= {account:''};
+		this.state 						= {account:'', fab_active:false};
 		this.newTx 						= this.newTx.bind(this);
 		this.requestPayment		= this.requestPayment.bind(this);
 		this.doPay						= this.doPay.bind(this);
@@ -150,12 +147,15 @@ class Wallet extends Component {
 
 
 	// FAV Button: https://github.com/mastermoo/react-native-action-button
+	// style={styles.actionButtonIcon}	
+
+	          
 	render() {
-		let icon = (<Icon name="ios-add" style={styles.actionButtonIcon} />);
+		
 		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#ff7233' ;
 		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 		
-
+		// let icon = (<Icon name="ios-add" />);
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
 			<View style={styles.wallet_container}>
@@ -171,7 +171,7 @@ class Wallet extends Component {
 						</View>) : false }
 				{ (subaccount_mode)?
 				false:
-				(<ActionButton buttonColor={buttonColor} bgColor="rgba(0, 0, 0, 0.5)"  offsetY={20} offsetX={20}>
+				(<ActionButton  shadowStyle={{elevation: 10}} buttonColor={buttonColor} bgColor="rgba(0, 0, 0, 0.5)"  degrees={0} offsetY={20} offsetX={20}>
 					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="ENVIAR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.newTx() }}>
 						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>

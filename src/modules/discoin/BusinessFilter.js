@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
   },
   categoryButton:{
     width: '100%',
-    color: '#f35b42',
+    // color: '#f35b42',
     borderRadius: 20,
     backgroundColor:'transparent',
     padding: 8,
     textAlign: 'center', 
     alignItems: 'center',
-    borderColor: '#dcdcdc',
+    // borderColor: '#dcdcdc',
     borderWidth: 1,
     overflow: 'visible'
   },
