@@ -14,9 +14,6 @@ import Sound from 'react-native-sound';
 import * as config from '../../../constants/config';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsMap } from '../../../utils/AppIcons';
-import { avales }  from '../../endorsement/components/static/endorsements_const';
-import { avales_colors }  from '../../endorsement/components/static/endorsements_const';
-import * as fn_avales  from '../../endorsement/components/static/endorsements_const'
 import LinearGradient from 'react-native-linear-gradient';
 //import Svg, {Path} from 'react-native-svg';
 

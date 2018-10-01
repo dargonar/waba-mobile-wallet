@@ -147,17 +147,7 @@ class SendAmount extends React.Component {
       /* OJO ESTO ES PARA PAGAR! */
       if(this.state.pay_or_send=='pay')
       {
-        // this.props.navigator.push({
-        //   screen: 'wallet.PayConfirm',
-        //   title: 'Confirmar pago',
-        //   passProps: {
-        //     recipient: 	this.state.recipient,
-        //     memo_key:   this.state.memo_key,
-        //     memo: 			this.props.memo,
-        //     amount: 		this.state.amount
-        //   }
-        // });
-
+        
       }
       else 
         if(this.state.pay_or_send=='send'){

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   balance : {
     flexDirection : 'row',
 		justifyContent  : 'center',
-    	alignItems      : 'center',
+  	alignItems      : 'center',
   },
 
 	symbol_part:{
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
 		fontSize   : 75,
 		lineHeight : 75,
 		alignSelf : 'flex-end',
+
   },
 
 	balanceAmountWrapper:{
@@ -138,14 +139,15 @@ const styles = StyleSheet.create({
 	},
 	dec_part : {
 		flex:0,
-		fontFamily  : 'roboto_thin',
+		fontFamily  : 'Montserrat-ExtraLight',
 		// 		fontFamily : 'roboto_regular',
 		//     fontWeight : '100',
-		lineHeight  : 20,
-		fontSize    : 20,
-		marginVertical: 6,
-		// 		alignSelf : 'flex-start',
-		paddingLeft: 0,
+		// lineHeight  : 75,
+		fontSize    : 32,
+		// marginVertical: 6,
+		// backgroundColor:'#ff00ff',
+		alignSelf : 'flex-start',
+		
   },
 
 	par_part:{

@@ -42,9 +42,6 @@ import BarcodeScanner, {
 } from 'react-native-barcode-scanner-google';
 // import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
 
-import FacebookTabBar from './FacebookTabBar';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-
 
 class QRShowNScan extends React.Component {
   constructor(props) {

@@ -263,10 +263,7 @@ class InvoiceConfirm extends Component {
 
   render() {
 
-
   	let disabled_btn_style = (!this.state.can_confirm)?styles.fullWidthButtonDisabled:{};
-		
-    let send_disabled = !this.state.can_confirm;
 		
 		let business_name			= this.state.business_name; 
 		let subaccount_name		= this.state.account_name;

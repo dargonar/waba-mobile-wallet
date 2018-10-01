@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 	// 	backgroundColor: '#044967' 
  //  },
 	fullWidthButtonDisabled: {
-    backgroundColor: '#999999'
+    backgroundColor: '#bbb'
   },
 	// fullWidthButtonText: {
  //    fontFamily : 'roboto_light',

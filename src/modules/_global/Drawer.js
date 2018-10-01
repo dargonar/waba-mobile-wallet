@@ -15,7 +15,6 @@ import IconBadge from 'react-native-icon-badge';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styles from './styles/Drawer';
-import { avales }  from '../endorsement/components/static/endorsements_const'
 import { iconsMap } from '../../utils/AppIcons';
 
 import UWCrypto from '../../utils/Crypto';
@@ -39,7 +38,6 @@ class Drawer extends Component {
 		this._onGoToWABA  						= this._onGoToWABA.bind(this);
 		this._onGoToBusinesses 				= this._onGoToBusinesses.bind(this);
 		this._onSettings 							= this._onSettings.bind(this);
-		this._openEndorsement 				= this._openEndorsement.bind(this);
 		this._onSwitchMode  				  = this._onSwitchMode.bind(this);
 
 		this._onSwitchToUser					= this._onSwitchToUser.bind(this);
@@ -323,93 +321,8 @@ class Drawer extends Component {
 					]
 				);
 		} );
-
-
-		// walletActions.getSubAccountPermissions(this.props.account.id).then( (permissions) => {
-		// 	console.log(' -- Traemos permisos del usuario:',  JSON.stringify(permissions));
-		// 	let the_perm = null;
-		// 	if(permissions && 'subaccounts' in permissions)
-		// 	{
-		// 		for(var i=0; i<permissions.subaccounts.length; i++) {
-		// 			let perm = permissions.subaccounts[i];
-		// 			console.log(' -------- perm.expiration>config.getFullUTCNow()', perm.expiration, config.getFullUTCNow());
-		// 			if (perm.expiration>config.getFullUTCNow())
-		// 			{
-		// 				the_perm = perm;
-		// 				break;
-		// 			}
-		// 		}
-		// 	}
-
-		// 	if(!the_perm)
-		// 	{
-		// 		this.props.navigator.dismissModal({
-		// 				animationType: 'slide-down'
-		// 		});
-		// 		Alert.alert(
-		// 			'Subcuentas',
-		// 			'No tiene configurado ningún permiso o ya ha expirado.',
-		// 			[
-		// 				{text: 'OK', onPress: () => this._onSwitchToUser()  }
-		// 			]
-		// 		);
-
-		// 		//this._onSwitchToUser();
-		// 		return;
-		// 	}
-
-		// 	let business = null;
-		// 	// 2.- Nos traemos al comercio
-		// 	walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
-		// 		business = resp.business;
-		// 		this.props.navigator.dismissModal({
-		// 				animationType: 'slide-down'
-		// 		});
-		// 		this._toggleDrawer();
-		// 		if( config.isSubaccountMode(this.props.account.subaccount))
-		// 		{
-		// 				this.props.navigator.push({
-		// 				screen: 'discoin.SwitchConfirm',
-		// 				title: 'INICIAR CAJA DIARIA',
-		// 				passProps: {
-		// 					permission 					: the_perm,
-		// 					business 						: business,
-		// 					is_daily_request 		: true
-		// 				}
-		// 			});
-		// 		}
-		// 		else {
-		// 			this.props.navigator.push({
-		//         screen: 'discoin.SwitchConfirm',
-		//         title: 'CONFIRMAR MODO',
-		//         passProps: {
-		// 					permission 					: the_perm,
-		// 					business 						: business,
-		// 					is_daily_request 		: false
-		// 				}
-		//     	});
-		// 		}
-
-		// 		return;
-		// 	}, (err) => {
-		// 		console.log('Error', JSON.stringify(err));
-		// 	})
-
-		// }, (err) => {
-		// 	// this.setState({refreshing:true});
-		// 	console.log('Error', JSON.stringify(err));
-		// })
 	}
 
-	_openEndorsement(){
-
-		this._toggleDrawer();
-		this.props.navigator.push({
-			screen: 'endorsement.Endorsement',
-			//screen: 'endorsement.SelectEndorseType',
-			title: 'Avales'
-		});
-	}
 
 	_onSettings(){
 		// config.logNewAccountKeys();

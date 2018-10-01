@@ -7,23 +7,6 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingTop: 10,
   },
-  // fullWidthButton: {
-  //  borderRadius: 0,
- //    height:100,
- //    flexDirection: 'row',
- //    justifyContent: 'center',
- //    alignItems: 'center',
-  //  backgroundColor: '#044967' 
- //  },
-  fullWidthButtonDisabled: {
-    backgroundColor: '#999999'
-  },
-  // fullWidthButtonText: {
- //    fontFamily : 'roboto_light',
-  //  fontWeight : '100',
- //    fontSize   : 20,
-  //  color: 'white'
- //  },
   fullWidthButtonTextDisabled:{
     fontFamily : 'Montserrat-Medium',
     fontWeight : '100',
@@ -163,6 +146,18 @@ btnTouchable: {
   backgroundColor: 'transparent',
   alignSelf: 'flex-end'
 },
+fullWidthButtonDisabled: {
+  backgroundColor: '#bbb',
+
+  height: 50,
+  borderRadius: 25,
+  flexDirection:'row', 
+  paddingLeft:35, paddingRight:35,
+  width: 200,
+  alignItems:'center', 
+  justifyContent: 'center',
+
+  },
 btnTxt: {
   fontFamily : 'Montserrat-SemiBold',
   fontSize   : 13,

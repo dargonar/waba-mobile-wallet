@@ -391,14 +391,10 @@ class SendConfirm extends Component {
   }
 
   render() {
-  	let btn_style = styles.fullWidthButton2;
-		let txt_style = styles.fullWidthButtonText;
-		if(!this.state.can_confirm)
-		{
-			btn_style = styles.fullWidthButtonDisabled;
-			txt_style = styles.fullWidthButtonTextDisabled;
-		}
-    let memo = this.state.memo;
+		
+		let disabled_btn_style = (!this.state.can_confirm)?styles.fullWidthButtonDisabled:{};
+
+  	let memo = this.state.memo;
 		let memo_style = null;
 		if(!memo || memo==''){
 			memo='-sin mensaje-';
@@ -426,7 +422,6 @@ class SendConfirm extends Component {
 		return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={{ flexDirection:'column', padding:20, paddingTop: 0}}>
-
 
           <View justifyContent="center" alignItems='center' flexDirection='column'>
             <View style={styles.amountQuantityView}>
@@ -477,10 +472,17 @@ class SendConfirm extends Component {
           </View>
         </View>*/}
 
-			<TouchableHighlight style={styles.btnTouchable} onPress={this._onConfirm.bind(this)} >
-			  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
-			    <Text style={styles.btnTxt}>CONTINUAR</Text>
-			  </LinearGradient>
+			<TouchableHighlight style={[styles.btnTouchable, disabled_btn_style]} onPress={this._onConfirm.bind(this)} >
+			  
+			  { (this.state.can_confirm)?
+					  (<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
+  					    <Text style={styles.btnTxt}>CONTINUAR</Text>
+  					  </LinearGradient>)
+					  :
+
+			    (<Text style={styles.btnTxt}>CONTINUAR</Text>)
+			  }
+			  
 			</TouchableHighlight>
 
 		</ScrollView>

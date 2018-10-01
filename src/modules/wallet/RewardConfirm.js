@@ -330,6 +330,8 @@ class RewardConfirm extends Component {
     let userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: config.getIdenticonForHash(this.props.account.identicon)}}/>)
     let _bill_id = this.state.bill_id || 'N/D';
 
+    let disabled_btn_style = (!this.state.can_confirm)?styles.fullWidthButtonDisabled:{};
+
 		return (
       
       <View style={styles.container}>
@@ -393,12 +395,12 @@ class RewardConfirm extends Component {
           </View>
 
           <View style={styles.subaccountButtonContainer}>
-			<TouchableHighlight
-					style={styles.fullWidthButton}
-					onPress={this._onConfirm.bind(this)} >
-				<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
-			</TouchableHighlight>
-		  </View>
+						<TouchableHighlight
+							style={[styles.fullWidthButton, disabled_btn_style]}
+							onPress={this._onConfirm.bind(this)} >
+						<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
+					</TouchableHighlight>
+				  </View>
 
         </ScrollView>
       </View>
