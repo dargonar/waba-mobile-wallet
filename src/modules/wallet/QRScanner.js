@@ -29,13 +29,16 @@ import * as qr_helper from '../../utils/QRHelper';
 
 import Prompt from 'react-native-prompt';
 
+import Permissions from 'react-native-permissions'
+
 class QRScanner extends React.Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      mode          : props.mode||'',
-      reward_info   : props.reward_info||null
+      mode              : props.mode||'',
+      reward_info       : props.reward_info||null,
+      camera_permission : ''
     };
 
   }
@@ -58,9 +61,39 @@ class QRScanner extends React.Component {
   }
 
   componentDidMount() {
-    
+    Permissions.check('camera').then(response => {
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      // this.setState({ camera_permission: (response=='authorized'?true:false) })
+      this.setState({ camera_permission: response })
+    })
   }
 
+  // Request permission to access photos
+  _requestPermission (){
+    Permissions.request('camera').then(response => {
+      // Returns once the user has chosen to 'allow' or to 'not allow' access
+      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+      // this.setState({ camera_permission: (response=='authorized'?true:false) })
+      this.setState({ camera_permission: response })
+    })
+  }
+
+  _alertForPermission() {
+    Alert.alert(
+      'Podemos acceder a tu cámara?',
+      'Es para que peudas escanear códigos QR.',
+      [
+        {
+          text: 'No quiero',
+          onPress: () => console.log('Permission denied'),
+          style: 'cancel',
+        },
+        this.state.camera_permission == 'undetermined'
+          ? { text: 'OK', onPress: this._requestPermission }
+          : { text: 'Configurar', onPress: Permissions.openSettings },
+      ],
+    )
+  }
 
   _onBarcodeScanned(data, type){
 

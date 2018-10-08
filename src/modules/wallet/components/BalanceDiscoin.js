@@ -50,29 +50,29 @@ class BalanceDiscoin extends Component {
   	this.props.navigator.popToRoot({
 		  animated: true
 		});
-  	return;
-  	this.props.navigator.push({
-      screen: 'wallet.Wallet',
-      navigatorStyle : {
-       navBarButtonColor : '#fff',
-       drawUnderNavBar   : true,
-       navBarTransparent : true,
-			 navBarNoBorder 	 : true,
-			 topBarElevationShadowEnabled: false
-      },
-      rightButtons : [
-        {
-          icon: iconsMap['qrcode--active'],
-          id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
-        }
-      ]
-      ,leftButtons: [
-    		{
-    			icon: iconsMap['md-arrow-back'],
-    			id: 'popToRoot'
-    		}
-    	]
-    });
+  	
+   // this.props.navigator.push({
+   //    screen: 'wallet.Wallet',
+   //    navigatorStyle : {
+   //     navBarButtonColor : '#fff',
+   //     drawUnderNavBar   : true,
+   //     navBarTransparent : true,
+			//  navBarNoBorder 	 : true,
+			//  topBarElevationShadowEnabled: false
+   //    },
+   //    rightButtons : [
+   //      {
+   //        icon: iconsMap['qrcode--active'],
+   //        id: 'scanQRCode' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+   //      }
+   //    ]
+   //    ,leftButtons: [
+   //  		{
+   //  			icon: iconsMap['md-arrow-back'],
+   //  			id: 'popToRoot'
+   //  		}
+   //  	]
+   //  });
   }
 
 	render() {
@@ -102,7 +102,7 @@ class BalanceDiscoin extends Component {
 		return (
 			<View style={[styles.container_discoin, styles.container_discoin_wrapper]}>
 				<Text style={styles.sectionTitle}>Tus Discoins</Text>
-				<TouchableHighlight style={[styles.container_discoin_wrapper, {backgroundColor:'#fff' }]} onPress={this.onPressed.bind(this)} underlayColor='#FFF'>
+				<TouchableHighlight style={[styles.container_discoin_wrapper, {backgroundColor:'#fff' }]} onPress={() => {this.onPressed.bind(this)}} underlayColor='#FFF'>
 					<LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={['#ff7233', '#ff9e5d']} style={styles.discoinCountGradient}>
 						<View style={styles.discoinCount}>
 							<Image style={{width: 15, height: 15, marginRight:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>

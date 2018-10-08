@@ -495,7 +495,7 @@ class History extends Component {
 						<Image source={require('./img/pattern.png')} style={styles.bgImage} />
 					</View>
 					<Text style={styles.emptyListText}>Aún no tiene ninguna transferencia</Text>
-					<TouchableOpacity style={styles.button} onPress={this._onRefresh.bind(this)}>
+					<TouchableOpacity style={styles.button} onPress={() => {this._onRefresh.bind(this)}}>
 						<Text style={styles.text}>Actualizar</Text>
 					</TouchableOpacity>
 				</View>

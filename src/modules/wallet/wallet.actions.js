@@ -92,7 +92,10 @@ export function createAccount(name) {
 
 			let that = this;
 			UWCrypto.generateMnemonic('es', 128).then(function(res1) {
-				UWCrypto.mnemonicToMasterKey(res1.mnemonic).then(function(res2) {
+				
+				let menomincs = config.cleanMnemonics(res1.mnemonic);
+
+				UWCrypto.mnemonicToMasterKey(menomincs).then(function(res2) {
 					let p = []
 					Promise.all([
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 1),
@@ -100,12 +103,17 @@ export function createAccount(name) {
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
 					]).then(function(res3) {
 						console.log('==== generateMnemonic:');
-						console.log(JSON.stringify(res1));
+						console.log(JSON.stringify(menomincs));
 						console.log('==== mnemonicToMasterKey:');
 						console.log(JSON.stringify(res2));
 						console.log('==== derivatePrivate:');
 						console.log(JSON.stringify(res3));
 
+						if(name=='REJECTxMYxDICK'){
+							
+							reject('REJECTxMYxDICK');
+							return;
+						}
 						fetch(config.getAPIURL('/account/register'), {
 							method: 'POST',
 							headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -128,7 +136,8 @@ export function createAccount(name) {
 							else
 							{
 								let account = {
-									mnemonic : res1.mnemonic,
+									// mnemonic : res1.mnemonic,
+									mnemonic : menomincs,
 									keys     : res3,
 									name     : name,
                   identicon: responseJson.identicon,

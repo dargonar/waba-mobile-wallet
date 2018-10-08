@@ -316,7 +316,7 @@ class SwitchConfirm extends Component {
 					<TouchableHighlight
 							disabled={send_disabled}
 							style={[styles.fullWidthButton]}
-							onPress={this._onConfirm.bind(this)}  >
+							onPress={() => {this._onConfirm.bind(this)}}  >
 						  <Text style={styles.fullWidthButtonText}>{button_text}</Text>
 					</TouchableHighlight>
 				</View>

@@ -28,12 +28,6 @@ import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 import Prompt from 'react-native-prompt';
 
-// import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
-// import { Button } from 'react-native-elements'
-
-// import BarcodeScanner from 'react-native-barcode-scanner-google';
-// import BarcodeType from 'react-native-barcode-scanner-google';
-// import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
 
 class DiscountShowQR extends React.Component {
   constructor(props) {

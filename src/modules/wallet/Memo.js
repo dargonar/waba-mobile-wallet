@@ -92,7 +92,7 @@ class Memo extends Component {
 				<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							style={styles.fullWidthButton}
-							onPress={this._onApplyMemo.bind(this)} >
+							onPress={() => {this._onApplyMemo.bind(this)}} >
 						<Text style={styles.fullWidthButtonText}>AGREGAR MENSAJE</Text>
 					</TouchableHighlight>
 				</View>

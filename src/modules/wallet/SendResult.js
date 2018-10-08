@@ -123,7 +123,7 @@ class SendResult extends Component {
               type='ionicon'
               color='#ffffff'
               underlayColor='#ff9e5d'
-              onPress={this._onOkPress.bind(this)}
+              onPress={() => {this._onOkPress.bind(this)}}
               size={30} />
           </View>
         </View>

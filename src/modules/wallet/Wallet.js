@@ -50,28 +50,21 @@ class Wallet extends Component {
 	/* ******************************************************* */
 	/* QR CODE *********************************************** */
   	
-	qrButtonPressed(){
+	// qrButtonPressed(){
 		
-		this.props.navigator.push({
-        screen:     'customer.QRShowNScan',
-        title:      'QR',
-  	});
+	// 	this.props.navigator.push({
+ //        screen:     'customer.QRShowNScan',
+ //        title:      'QR',
+ //  	});
 
-  	// this.props.navigator.toggleDrawer({
-   //    to: 'open',
-   //    side: 'right',
-   //    animated: true
-   //  });
-
-	}
+ //  }
 
   _onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      
-      if (event.id == 'scanQRCode') {
-        this.qrButtonPressed();
-      	return;
-      }
+      // if (event.id == 'scanQRCode') {
+      //   this.qrButtonPressed();
+      // 	return;
+      // }
       
   		if (event.id == 'popToRoot') {
         this.props.navigator.popToRoot({
@@ -165,7 +158,7 @@ class Wallet extends Component {
 					(<View style={styles.subaccountButtonContainer}>
 						<TouchableHighlight
 								style={styles.fullWidthButton}
-								onPress={this._onDiscountOrReward.bind(this)} >
+								onPress={() => {this._onDiscountOrReward.bind(this)}} >
 							<Text style={styles.fullWidthButtonText}>COBRAR</Text>
 						</TouchableHighlight>
 						</View>) : false }

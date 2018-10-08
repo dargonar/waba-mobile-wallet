@@ -63,13 +63,7 @@ class RequestPayment extends React.Component {
     // this._tabs.goToPage.bind(this._tabs,1)
   }
 
-  onChangeTab(obj, that){
-    console.log(' ------------- onChangeTab(i)', obj.i);
-    if(obj.i==2)
-    {
-      this.doResumeScanner();
-    }
-  }
+  
   _renderPrompt(){
     
     let that = this;

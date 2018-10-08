@@ -381,7 +381,7 @@ class InvoiceConfirm extends Component {
 					<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
 						<TouchableHighlight
 								style={[styles.fullWidthButton, disabled_btn_style]}
-								onPress={this._onConfirm.bind(this)} >
+								onPress={() => {this._onConfirm.bind(this)}} >
 	            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
 							<Text style={styles.fullWidthButtonText}>PAGAR</Text>
 	            {iconNext}
@@ -390,17 +390,6 @@ class InvoiceConfirm extends Component {
 					</View>
 							          
         </ScrollView>
-				{/*<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
-									<TouchableHighlight
-											disabled={send_disabled}
-											style={[styles.fullWidthButton, btn_style]}
-											onPress={this._onConfirm.bind(this)}  >
-										<Text style={txt_style}>ENVIAR</Text>
-									</TouchableHighlight>
-								</View>*/}
-
-				
-
       </View>
     );
   }

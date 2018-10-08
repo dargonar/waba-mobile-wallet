@@ -61,7 +61,7 @@ class Keyboard extends React.Component {
                 key={index}
                 underlayColor={BG_COLOR}
                 style={keyStyle.wrapper}
-                onPress={this._onPress.bind(this, key.mainText)}
+                onPress={() => {this._onPress.bind(this, key.mainText)}}
             >
                 <View style={keyStyle.bd}>
                     <Text style={keyStyle.mainText}>{key.mainText}</Text>
@@ -95,7 +95,7 @@ class Keyboard extends React.Component {
             <TouchableHighlight
                 underlayColor="#ffffff"
                 style={[keyStyle.wrapper, keyStyle.bg_d2d5dc]}
-                onPress={this._onPress.bind(this, dotText)}
+                onPress={() => {this._onPress.bind(this, dotText)}}
             >
                 <View style={keyStyle.bd}>{dotNode}</View>
             </TouchableHighlight>
@@ -120,7 +120,7 @@ class Keyboard extends React.Component {
                         <TouchableHighlight
                             underlayColor={'red'}
                             style={[keyStyle.wrapper, keyStyle.bottomBordered]}
-                            onPress={this._onPress.bind(this, '0')}>
+                            onPress={() => {this._onPress.bind(this, '0')}}>
                             <View style={keyStyle.bd}>
                                 <Text style={keyStyle.mainText}>0</Text>
                             </View>
@@ -129,7 +129,7 @@ class Keyboard extends React.Component {
                         <TouchableHighlight
                             underlayColor="#ffffff"
                             style={[keyStyle.wrapper, keyStyle.bg_d2d5dc]}
-                            onPress={this._onPress.bind(this, 'del')}
+                            onPress={() => {this._onPress.bind(this, 'del')}}
                             onLongPress={this._clearAll.bind(this)}
                         >
                             <View style={keyStyle.bd}>

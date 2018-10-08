@@ -472,7 +472,7 @@ class SendConfirm extends Component {
           </View>
         </View>*/}
 
-			<TouchableHighlight style={[styles.btnTouchable, disabled_btn_style]} onPress={this._onConfirm.bind(this)} >
+			<TouchableHighlight style={[styles.btnTouchable, disabled_btn_style]} onPress={() => {this._onConfirm.bind(this)}} >
 			  
 			  { (this.state.can_confirm)?
 					  (<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>

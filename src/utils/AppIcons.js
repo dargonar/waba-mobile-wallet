@@ -39,12 +39,11 @@ const icons = {
   
   "id-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "address-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
-  "credit-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
+  // "credit-card": [ICON_SIZE_ANDROID, "#fff", FontAwesome],
   "ios-thumbs-up": [ICON_SIZE_ANDROID, "#fda720"],
   "ios-arrow-round-up" : [ICON_SIZE_ANDROID, "#fff"],
   "ios-arrow-down-outline" : [ICON_SIZE_ANDROID, "#fff"],
 
-  
   "md-arrow-up" : [ICON_SIZE_ANDROID, "#fff"],
   "md-arrow-down" : [ICON_SIZE_ANDROID, "#fff"],
   "md-trending-up" : [ICON_SIZE_ANDROID, "#fff"],
@@ -103,6 +102,13 @@ const icons = {
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
 
+  "bank":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
+  "cash":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
+  "credit-card":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
+
+  "bank--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
+  "cash--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
+  "credit-card--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
 
 }
 

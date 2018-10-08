@@ -1,5 +1,5 @@
 // export const API_URL         = 'https://api.monedapar.com';
-// export const API_URL          = 'http://35.163.59.126:8089';
+// export const API_URL          = 'http://34.212.171.239:8089';
 
 // HEX 
 
@@ -11,14 +11,12 @@
 
 import Identicon from 'identicon.js';
 
-export const API_URL          = 'http://35.163.59.126:8088';
+export const API_URL          = 'http://34.212.171.239:8088';
 export const FILES_URL        = API_URL+'/files/';
 export const API_URL_V1       = API_URL+'/api/v3';
-export const MERCADOPAR_URL   = 'http://mercado.monedapar.com?category=productos-y-servicios';
-export const EMPLEOSPAR_URL   = 'http://mercado.monedapar.com?category=empleos-solicitados';
 export const WABA_NETWORK_URL = 'https://waba.network';
 
-export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
+export const API_GRAPHQL_URL = 'http://34.212.171.239:8088';
 export const GRAPHQL_URL     = API_GRAPHQL_URL+'/graphql/v3';
 
 export const ASSET_PRECISION = 2;
@@ -33,18 +31,19 @@ export const REFUND_PREFIX  			= '~re';
 export const PAYDISCOUNTED_PREFIX = '~di';
 
 // SERVER
-export const CHAIN_ID        				= '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
-export const ASSET_ID            		= '1.3.9';
-export const DISCOIN_ID          		= ASSET_ID;
-export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
-export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+export const CHAIN_ID        				= 'bde617520673d18e67db5d7060ca2740f80e28093519c30176044c8d4a227e73';
+// export const CHAIN_ID        				= '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
+// export const ASSET_ID            		= '1.3.9';
+// export const DISCOIN_ID          		= ASSET_ID;
+// export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
 
 // LOCAL
 // export const CHAIN_ID        				= 'f5a42a1c16cf678773313f5f94ef7ebb69257c5f33a147aa8c4ac0fa5e451805';
-// export const ASSET_ID            		= '1.3.2';
-// export const DISCOIN_ID          		= ASSET_ID;
-// export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
-// export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+export const ASSET_ID            		= '1.3.2';
+export const DISCOIN_ID          		= ASSET_ID;
+export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
+export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
 
 export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
 export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'

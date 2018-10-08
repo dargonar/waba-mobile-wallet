@@ -19,7 +19,6 @@ import Settings from './modules/wallet/Settings';
 import Onboarding from './modules/wallet/Onboarding';
 import TxDetails from './modules/wallet/TxDetails';
 
-import Business from './modules/discoin/Business';
 import BusinessProfile from './modules/discoin/BusinessProfile';
 import BusinessFilter from './modules/discoin/BusinessFilter';
 
@@ -72,8 +71,6 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
 
-
-	Navigation.registerComponent('discoin.Business', () => Business	, store, Provider);
 	Navigation.registerComponent('discoin.BusinessProfile', () => BusinessProfile	, store, Provider);
 	Navigation.registerComponent('discoin.BusinessFilter', () => BusinessFilter	, store, Provider);
 	Navigation.registerComponent('wallet.BusinessSearch', () => BusinessSearch	, store, Provider);

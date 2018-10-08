@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Dimensions, View, StyleSheet, Text, ToastAndroid, ScrollView } from 'react-native';
+import { Linking, Image, Dimensions, View, StyleSheet, Text, ToastAndroid, ScrollView } from 'react-native';
 // import { Location, Permissions } from 'expo';
 // import Permissions from 'react-native-permissions'
-import { Button } from 'react-native-elements';
-import { Icon } from 'native-base';
+import { Button, Icon } from 'native-base';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
 import LinearGradient from 'react-native-linear-gradient';
@@ -13,8 +12,11 @@ import { connect } from 'react-redux';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Marker } from 'react-native-maps';
 import * as config from '../../constants/config';
+import { iconsMap } from '../../utils/AppIcons';
 
 const item_h     = (Dimensions.get('window').height/2);
+
+const {height, width} = Dimensions.get('window');
 
 const deltas = {
 	// latitudeDelta: 0.0922,
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     color:'#FFF'
   },
   social:{
-    width: 200,
+    width: 250,
     alignSelf: 'center',
     marginTop: 20,
     marginBottom: 20
@@ -359,12 +361,16 @@ mapStyle = [
 class BusinessProfile extends Component {
 
 	static navigatorStyle = {
-    navBarTextColor: '#666', 
+    navBarTextColor: '#fff', 
     navBarComponentAlignment: 'center',
-    navBarBackgroundColor: '#ffffff',
-    navBarButtonColor: '#000000',
-    navBarTextFontFamily: 'Montserrat-Medium',
-    topBarElevationShadowEnabled: false,
+    navBarBackgroundColor: 'rgba(0, 0, 0, .2);',
+    navBarButtonColor: '#fff',
+    navBarTextFontFamily: 'Montserrat-Bold',
+    
+    drawUnderNavBar   : true,
+    // navBarTransparent : true,
+    navBarNoBorder    : true,
+    topBarElevationShadowEnabled: false
   }
 
 	constructor(props) {
@@ -379,11 +385,17 @@ class BusinessProfile extends Component {
 					errorMessage: 	null,
 					// coffeeShops: 		[]
 		};
-
-	
+    this._onGoToUrl           = this._onGoToUrl.bind(this);
+	  this.renderSocialButtons  = this.renderSocialButtons.bind(this);
+    this.renderSocialButton   = this.renderSocialButton.bind(this);
   }
 
-  
+  _onGoToUrl(field){
+    let url = this.state.business_data[field];
+    if(!url.startsWith("http://") || url.startsWith("https://"))
+      url = "http://" + url;
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+  }
 
 	componentWillMount() {
 		// this.getLocationAsync();
@@ -447,36 +459,83 @@ class BusinessProfile extends Component {
 
  	renderInfobox() {
 
-		return (
-					
-          <View style={{flex:1, padding:20,}}>
-            <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
-              <Icon name="ios-beer" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>{this.state.business_data.category.name} - {this.state.business_data.subcategory.name}</Text>
-            </View>
-            <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
-              <Icon name="ios-pin" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>{this.state.business_data.address || 'N/D'}</Text>
-            </View>
-            <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
-              <Icon name="ios-call" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>{this.state.business_data.telephone || 'N/D'}</Text>
-            </View>
-            <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
-              <Icon name="md-cash" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
-              <Text style={styles.infoboxText}>Efectivo, Crédito, Débito</Text>
-            </View>
-          </View>
-
-				
-			);
+    let cash_icon   =  (this.state.business_data['discount_ex'][config.getToday()]['pm_cash']==1)?(<Image source={{uri:iconsMap['cash--active'].uri}} style={{height:16, width:20, marginTop:2}} />):false;
+    let credit_icon =  (this.state.business_data['discount_ex'][config.getToday()]['pm_credit']==1)?(<Image source={{uri:iconsMap['credit-card--active'].uri}} style={{height:16, width:20, marginTop:2, marginLeft:6}} />):false;
+    let debit_icon  =  (this.state.business_data['discount_ex'][config.getToday()]['pm_debit']==1)?(<Image source={{uri:iconsMap['bank--active'].uri}} style={{height:20, width:20, marginLeft:6}} />):false;
+    // let payment_text = ((this.state.business_data['discount_ex'][config.getToday()]['pm_cash']==1)?'Efectivo':'')+((this.state.business_data['discount_ex'][config.getToday()]['pm_credit']==1)?'Crédito':'')+((this.state.business_data['discount_ex'][config.getToday()]['pm_debit']==1)?'Débito':'');
+		
+    return (
+      <View style={{flex:1, padding:20,}}>
+        <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+          <Icon name="ios-beer" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
+          <Text style={styles.infoboxText}>{this.state.business_data.category.name} - {this.state.business_data.subcategory.name}</Text>
+        </View>
+        <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+          <Icon name="ios-pin" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
+          <Text style={styles.infoboxText}>{this.state.business_data.address || 'N/D'}</Text>
+        </View>
+        <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+          <Icon name="ios-call" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
+          <Text style={styles.infoboxText}>{this.state.business_data.telephone || 'N/D'}</Text>
+        </View>
+        {
+          (cash_icon)?
+          (<View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+              {cash_icon}
+              <Text style={[styles.infoboxText, {marginLeft: 15}]}>{"Efectivo"}</Text>
+            </View>)
+          :false
+        }
+        {(credit_icon)?
+          (<View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+            {credit_icon}
+            <Text style={[styles.infoboxText, {marginLeft: 15}]}>{"Crédito"}</Text>
+          </View>)
+          :false
+        }
+        {(debit_icon)?
+          (<View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
+            {debit_icon}
+            <Text style={[styles.infoboxText, {marginLeft: 15}]}>{"Débito"}</Text>
+          </View>)
+          :false
+        }
+      </View>				
+		);
 	}
+
+  renderSocialButtons(){
+    
+    let buttons = [];
+    const www  = this.state.business_data.website?(<Icon  name="ios-globe" style={{color: '#ddd', fontSize: 25}}/>):false;
+    buttons.push([www, 'website']);
+    const fb   = this.state.business_data.facebook?(<Icon  name="logo-facebook" style={{color: '#ddd', fontSize: 25}}/>):false;
+    buttons.push([fb, 'facebook']);
+    const twi  = this.state.business_data.twiter?(<Icon  name="logo-twitter" style={{color: '#ddd', fontSize: 25}}/>):false;
+    buttons.push([twi, 'twiter']);
+    const inst = this.state.business_data.instagram?(<Icon  name="logo-instagram" style={{color: '#ddd', fontSize: 25}}/>):false;
+    buttons.push([inst, 'instagram']);
+
+    return buttons;
+  }
+
+  renderSocialButton(obj){
+    if(!obj[0])
+      return false;
+    // if(obj[1]=='facebook' || obj[1]=='instagram')
+    //   return (<Button onPress={() => {this._onGoToUrl(obj[1])}}>{obj[0]}</Button>)
+    return (<Button transparent onPress={() => {this._onGoToUrl(obj[1])}}>{obj[0]}</Button>)
+
+  }
 
 	render() {
 		
+    var imgSource = config.FILES_URL + this.state.business_data['image'];
+    let buttons = this.renderSocialButtons();
 
 		return (
 			<ScrollView style={styles.container}>
+        <Image style={{width:width, height:250,resizeMode: 'cover'}} source={{uri:imgSource}} ></Image>
         <View style={{flex:1, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
           <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
             <Text style={styles.descriptionText}>{this.state.business_data.description}</Text>
@@ -519,12 +578,13 @@ class BusinessProfile extends Component {
 		
 				<View style={styles.infobox}>{this.renderInfobox()}</View>
 
-        <View flexDirection='row' justifyContent='space-between' style={styles.social}>
-          <Icon name="logo-facebook" style={{color: '#ddd', fontSize: 25}}/>
-          <Icon name="logo-twitter" style={{color: '#ddd', fontSize: 25}}/>
-          <Icon name="logo-instagram" style={{color: '#ddd', fontSize: 25}}/>
+        <View style={[{ flexDirection:'row',justifyContent:'space-between'}, styles.social]}>
+          {buttons.map(button => this.renderSocialButton(button))}
         </View>
-        <Text alignItems='center' style={styles.businessWeb}>www.benoit.com.ar</Text>
+
+        <Button full transparent onPress={() => {this._onGoToUrl('website')}}>
+          <Text alignItems='center' style={styles.businessWeb}>{this.state.business_data.website}</Text>
+        </Button>
 			</ScrollView>
 		);
 	}

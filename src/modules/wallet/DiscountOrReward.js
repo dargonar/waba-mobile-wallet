@@ -350,13 +350,13 @@ class DiscountOrReward extends React.Component {
         	  <View style={{alignSelf: 'flex-end', flexDirection:'row', alignItems:'stretch', justifyContent:'flex-end', height:70, backgroundColor: 'transparent'}}>
               <TouchableHighlight
                   style={[{flex:1, backgroundColor:'#3498db', elevation:10}, styles.buttonDiscount]}
-                  onPress={this._onShowDiscountQR}>
+                  onPress={() => {this._onShowDiscountQR}}>
                 <Text style={styles.buttonDiscountText}>ACEPTAR DESCUENTO</Text>
               </TouchableHighlight>
 
               <TouchableHighlight
                   style={[{flex:1, backgroundColor:'#ff7233', elevation:10}, styles.buttonDiscount]}
-                  onPress={this._onSendReward} >
+                  onPress={() => {this._onSendReward}} >
                 <Text style={styles.buttonDiscountText}>RECOMPENSAR</Text>
               </TouchableHighlight>
             </View>

@@ -90,7 +90,7 @@ class Onboard extends Component {
 					<Button
 							ref={button => { this.button = button;}}
 							style={{height:80}}
-							onPress={this._onContinue}
+							onPress={() => {this._onContinue}}
 							title="Continuar"
 					/>
 
@@ -114,7 +114,7 @@ class Onboard extends Component {
 					<Button
 							ref={button2 => { this.button2 = button2;}}
 							style={{flex:2}}
-							onPress={this._onSkip2}
+							onPress={() => {this._onSkip2}}
 							title="Continuar"
 							accessibilityLabel="This sounds great!"
 					/>

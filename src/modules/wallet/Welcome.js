@@ -152,13 +152,13 @@ class Welcome extends Component {
 								<View style={{flex:2, paddingLeft:15,paddingRight:15, flexDirection:'column', alignItems: 'stretch', justifyContent:'center' }}>
 									<TouchableHighlight
 											style={[styles.fullWidthButton, styles.fullWidthButton2]}
-											onPress={this._onCreateAccount} >
+											onPress={() => {this._onCreateAccount}} >
 										<Text style={styles.fullWidthButtonText}>CREAR CUENTAS</Text>
 									</TouchableHighlight>
 
 									<TouchableHighlight
 											style={[styles.fullWidthButton, styles.fullWidthButton1]}
-											onPress={this._onRestoreAccount} >
+											onPress={() => {this._onRestoreAccount}} >
 										<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
 									</TouchableHighlight>
 								</View>												

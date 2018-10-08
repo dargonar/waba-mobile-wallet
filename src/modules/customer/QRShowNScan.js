@@ -27,7 +27,6 @@ import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Prompt from 'react-native-prompt';
 
 import {Header, Tab, Tabs, TabHeading, Icon } from 'native-base';
-import { Button } from 'react-native-elements'
 
 // import BarcodeScanner from 'react-native-barcode-scanner-google';
 // import BarcodeType from 'react-native-barcode-scanner-google';
@@ -459,7 +458,7 @@ class QRShowNScan extends React.Component {
               type='ionicon'
               color='#ffffff'
               underlayColor='#415261'
-              onPress={this._onOkPress.bind(this)}
+              onPress={() => {this._onOkPress.bind(this)}}
               size={30} />
           </View>
           */    

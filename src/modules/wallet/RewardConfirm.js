@@ -397,7 +397,7 @@ class RewardConfirm extends Component {
           <View style={styles.subaccountButtonContainer}>
 						<TouchableHighlight
 							style={[styles.fullWidthButton, disabled_btn_style]}
-							onPress={this._onConfirm.bind(this)} >
+							onPress={() => {this._onConfirm.bind(this)}} >
 						<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
 					</TouchableHighlight>
 				  </View>

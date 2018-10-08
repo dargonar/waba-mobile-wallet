@@ -374,7 +374,7 @@ class ResetBalanceConfirm extends Component {
 					<TouchableHighlight
 							disabled={send_disabled}
 							style={[styles.fullWidthButton, styles.fullWidthButton_SubAcc, btn_style]}
-							onPress={this._onConfirm.bind(this)}  >
+							onPress={() => {this._onConfirm.bind(this)}}  >
 						<Text style={txt_style}>ENVIAR</Text>
 					</TouchableHighlight>
 				</View>

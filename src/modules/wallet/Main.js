@@ -69,14 +69,14 @@ class Main extends Component {
 	/* ******************************************************* */
 	/* QR CODE *********************************************** */
   	
-	qrButtonPressed(){
+	// qrButtonPressed(){
 		
-		this.props.navigator.push({
-        screen:     'customer.QRShowNScan',
-        title:      'QR',
-  	});
+	// 	this.props.navigator.push({
+ //        screen:     'customer.QRShowNScan',
+ //        title:      'QR',
+ //  	});
 
-	}
+	// }
 
 	filterBusinesses(){
 		this.props.navigator.toggleDrawer({
@@ -99,10 +99,10 @@ class Main extends Component {
 
   _onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
-      if (event.id == 'scanQRCode') {
-        this.qrButtonPressed();
-        return;
-      }
+      // if (event.id == 'scanQRCode') {
+      //   this.qrButtonPressed();
+      //   return;
+      // }
       if (event.id == 'searchBusiness') {
         this.searchBusinessPressed();
         return;

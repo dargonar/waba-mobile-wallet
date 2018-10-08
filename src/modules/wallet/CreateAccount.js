@@ -14,18 +14,22 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import * as config from '../../constants/config';
 import Bts2helper from '../../utils/Bts2helper';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 class Start extends Component {
 
 	constructor(props) {
 		super(props);
 		this._onNewAccount 			= this._onNewAccount.bind(this);
-		this._onChangeText        = this._onChangeText.bind(this);
+		this._onChangeText      = this._onChangeText.bind(this);
+		this._onFocusText 			= this._onFocusText.bind(this);
+		this._onBlurText 				= this._onBlurText.bind(this);
 		this.state = {
 			account_name: 		'',
 			refreshing: false,
 			disabled:   true,
-			error:			''
+			error:			'',
+			input_focused: false
 		}
 	}
 
@@ -90,6 +94,12 @@ class Start extends Component {
 		return this.isValidAccountName(supername);
 	}
   */
+	_onFocusText(){
+		this.setState({input_focused:true});
+	}
+	_onBlurText(){
+		this.setState({input_focused:false});
+	}
 	_onChangeText(text) {
 
 		clearTimeout(this.tid);
@@ -120,7 +130,7 @@ class Start extends Component {
 				console.log('CreateAccount::_onChangeText::#4', is_valid);
 				if(!is_valid){
 					that.setState({
-						error: 			'Sólo números, minúscula, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
+						error: 			'Sólo letras minúsculas, números, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
 						refreshing: false,
 						disabled: 	true
 					});
@@ -220,6 +230,7 @@ class Start extends Component {
 
 	render() {
 		let _error = this.state.error;
+		let showLogo = !this.state.input_focused;
 		let btn_style = styles.fullWidthButton2;
 		let txt_style = styles.fullWidthButtonText;
 		if(this.state.disabled)
@@ -230,9 +241,15 @@ class Start extends Component {
 		return (
 
 			<View style={styles.container}>
-				<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
-					<Image source={require('./img/logo.png')} style={{width: 150, height: 140}} />
-				</View>
+				{
+					(showLogo)?
+					(
+							<View style={{flex:2, padding:15, flexDirection:'column', alignItems:'center', justifyContent:'flex-end' }}>
+								<Image source={require('./img/logo.png')} style={{width: 150, height: 140}} />
+							</View>
+						):false
+				}
+				
 				<View style={{flex:3, paddingLeft:15, paddingRight:15, flexDirection:'column', alignItems:'stretch', justifyContent:'center' }}>
 						<TextInput
 							autoCorrect={false}
@@ -243,7 +260,8 @@ class Start extends Component {
 							placeholderTextColor="#aaaaaa"
 							underlineColorAndroid ="#ff7232"
 							onChangeText={this._onChangeText}
-
+							onFocus={this._onFocusText}
+							onBlur={this._onBlurText}
 						/>
 						<Text style={styles.textError} numberOfLines={3} >{_error}</Text>
 
@@ -252,7 +270,7 @@ class Start extends Component {
 					<TouchableHighlight
 							disabled={this.state.disabled}
 							style={[styles.fullWidthButton, btn_style]}
-							onPress={this._onNewAccount } >
+							onPress={() => {this._onNewAccount }} >
 						<Text style={txt_style}>CREAR CUENTA</Text>
 					</TouchableHighlight>
 				</View>

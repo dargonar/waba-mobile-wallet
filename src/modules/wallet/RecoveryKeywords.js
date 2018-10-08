@@ -57,7 +57,7 @@ class RecoveryKeywords extends Component {
 				<View style={{flex:1, flexDirection:'column', alignItems: 'stretch', justifyContent:'flex-end' }}>
 					<TouchableHighlight
 							style={[styles.fullWidthButton, styles.fullWidthButton1]}
-							onPress={this._onInitWallet} >
+							onPress={() => {this._onInitWallet}} >
 						<Text style={styles.fullWidthButtonText}>INICIAR BILLETERA</Text>
 					</TouchableHighlight>
 				</View>
@@ -71,7 +71,7 @@ class RecoveryKeywords extends Component {
 			Copie y guarde las palabras listadas a continuación.
 			La única manera de recuperar su cuenta en caso de extravío de su teléfono celular es a través de ellas.
 		</Text>
-		<TouchableWithoutFeedback onPress={this._setClipboardContent}>
+		<TouchableWithoutFeedback onPress={() => {this._setClipboardContent}}>
 			<View style={{ justifyContent:'center', marginTop:30, padding:15, backgroundColor:'#f0f4f7', paddingTop:0, borderRadius:7}}>
 				<Text style={styles.keywordsText}>
 					{this.state.mnemonic}
