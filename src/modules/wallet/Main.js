@@ -43,7 +43,6 @@ class Main extends Component {
 
 		this.state 								= {account:''};
 		this.newTx 								= this.newTx.bind(this);
-		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 		this.filterBusinesses 		= this.filterBusinesses.bind(this);
 
 	}
@@ -65,18 +64,6 @@ class Main extends Component {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
 
-
-	/* ******************************************************* */
-	/* QR CODE *********************************************** */
-  	
-	// qrButtonPressed(){
-		
-	// 	this.props.navigator.push({
- //        screen:     'customer.QRShowNScan',
- //        title:      'QR',
- //  	});
-
-	// }
 
 	filterBusinesses(){
 		this.props.navigator.toggleDrawer({
@@ -115,21 +102,12 @@ class Main extends Component {
       }
     }
   }
-
-
-	_onDiscountOrReward(){
-		this.props.navigator.push({
-			screen: 'wallet.DiscountOrReward',
-			title: 'Cobrar'
-		});
-	}
-
 	
 	newTx(){
 		
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
-			title: 'Elija usuario',
+			title: 'Elija discoiner',
 			passProps:  { search_type: config.SEARCH_TYPE_SEND} //SEARCH_TYPE_CONFIRM
 		});
 

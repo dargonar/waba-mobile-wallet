@@ -102,9 +102,9 @@ const icons = {
   "ios-swap": [ICON_SIZE_ANDROID, "#1f475b"],
   "ios-key" : [ICON_SIZE_ANDROID, "#1f475b"],
 
-  "bank":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
-  "cash":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
-  "credit-card":   [ICON_SIZE_ANDROID_25, "#3233aa", MaterialCommunityIcons],
+  "bank":   [ICON_SIZE_ANDROID_25, "#dcdcdc", MaterialCommunityIcons],
+  "cash":   [ICON_SIZE_ANDROID_25, "#dcdcdc", MaterialCommunityIcons],
+  "credit-card":   [ICON_SIZE_ANDROID_25, "#dcdcdc", MaterialCommunityIcons],
 
   "bank--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
   "cash--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],

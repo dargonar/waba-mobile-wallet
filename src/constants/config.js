@@ -11,12 +11,12 @@
 
 import Identicon from 'identicon.js';
 
-export const API_URL          = 'http://34.212.171.239:8088';
+export const API_URL          = 'http://35.163.59.126:8088';
 export const FILES_URL        = API_URL+'/files/';
 export const API_URL_V1       = API_URL+'/api/v3';
 export const WABA_NETWORK_URL = 'https://waba.network';
 
-export const API_GRAPHQL_URL = 'http://34.212.171.239:8088';
+export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
 export const GRAPHQL_URL     = API_GRAPHQL_URL+'/graphql/v3';
 
 export const ASSET_PRECISION = 2;

@@ -35,7 +35,7 @@ class RequestPayment extends React.Component {
     this.state = {
 
       
-      amount_required:  props.amount_required || 0,
+      amount_required:  props.amount_required || null,
 
     };
 
@@ -69,14 +69,15 @@ class RequestPayment extends React.Component {
     let that = this;
     // let inputProps = {textInputProps :{keyboardType:'default'}};
     let inputProps = {textInputProps :{keyboardType:'numeric'}}; 
-    let value = 0;
-    if(!isNaN(this.state.amount_required))
+    let value = null;
+    let isAN = !isNaN(this.state.amount_required)
+    if(isAN)  
       value = Number(this.state.amount_required);
     return (
       <Prompt
         title="Ingrese monto a solicitar"
         placeholder=""
-        defaultValue={value.toString()}
+        defaultValue={(isAN)?value.toString():''}
         visible={ this.state.promptVisible }
         {...inputProps}
         onCancel={ () => {
@@ -151,8 +152,9 @@ class RequestPayment extends React.Component {
 
   renderReceiveRequest(userIcon){
 
+    let money_set = (!isNaN(this.state.amount_required) && parseInt(this.state.amount_required)>0);
     let obj = qr_helper.jsonForAccountOnly(this.props.account.id, this.props.account.name);
-    if(!isNaN(this.state.amount_required) && parseInt(this.state.amount_required)>0)
+    if(money_set)
       obj = qr_helper.jsonForAccountNAmount(this.props.account.id, this.props.account.name, this.state.amount_required);
 
     let text = JSON.stringify(obj);
@@ -165,21 +167,40 @@ class RequestPayment extends React.Component {
 
           {account_name}  
           {qr_code}
-          <TouchableOpacity style={{width:300, flexDirection:'column', justifyContent: 'center', paddingLeft:10, paddingRight:10}} onPress={() => { this.showSetAmount() }}>
-            <View flexDirection='row' style={{borderBottomWidth: 1, borderColor: '#eee'}}>
-              <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center', flexDirection:'row'}}>
-                <Image style={{width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
-                <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
-              </View>
-              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-                <Icon style={{color:'#666', fontSize:23}} name='create'/>
-              </View>        
-            </View>
-            <Text style={{fontSize:10, color:'#999', marginTop : 10, fontFamily : 'Montserrat-Bold', textAlign:'right', paddingLeft:54}} >
-              ESPECIFICAR CANTIDAD
-            </Text>
+          
+            {
+              (money_set)
+              ?(
+                <TouchableOpacity style={{width:300, flexDirection:'column', justifyContent: 'center', paddingLeft:10, paddingRight:10}} onPress={() => { this.showSetAmount() }}>
+                  <View flexDirection='row' style={{borderBottomWidth: 1, borderColor: '#eee'}}>
+                    <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center', flexDirection:'row'}}>
+                      <Image style={{width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+                      <Text style={[styles.amount, {textAlign:'center'}]}>{this.state.amount_required}</Text>
+                    </View>
+                    <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+                      <Icon style={{color:'#666', fontSize:23}} name='create'/>
+                    </View>        
+                  </View>
+                  <Text style={{fontSize:10, color:'#999', marginTop : 10, fontFamily : 'Montserrat-Bold', textAlign:'right', paddingLeft:54}} >
+                    MODIFICAR MONTO
+                  </Text>
+                </TouchableOpacity>
+              )
+              :
+              (
+                <TouchableOpacity style={[styles.userView, {padding:20, marginTop:10, width:300, flexDirection:'column', justifyContent: 'center', paddingLeft:10, paddingRight:10}]} onPress={() => { this.showSetAmount() }}>
+                  <View flexDirection='row' style={{}}>
+                    <Image style={{width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
+                    <Text style={{alignSelf:'center', fontSize:10, color:'#999', fontFamily : 'Montserrat-Bold', textAlign:'left', paddingLeft:10}} >
+                      REQUERIR UN MONTO ESPECIFICO A UN DISCOINER
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )
+            }
+            
 
-          </TouchableOpacity>
+            
 
           
         </View>

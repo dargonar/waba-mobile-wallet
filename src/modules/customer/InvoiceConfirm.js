@@ -125,6 +125,7 @@ class InvoiceConfirm extends Component {
   }
 
   _onConfirm(){
+		console.log(' ==> _onConfirm()');
 		if(!this.state.can_confirm)
 		{
 			Alert.alert(
@@ -274,7 +275,7 @@ class InvoiceConfirm extends Component {
 		let balance 					= this.props.balance[config.ASSET_ID];
 		if(balance<payable_amount)
 				payable_amount	= balance;
-		let debt					  = total_amount-payable_amount;
+		let debt					  = Number(total_amount-payable_amount).toFixed(2);
 		
 		const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
     // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
@@ -381,7 +382,7 @@ class InvoiceConfirm extends Component {
 					<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
 						<TouchableHighlight
 								style={[styles.fullWidthButton, disabled_btn_style]}
-								onPress={() => {this._onConfirm.bind(this)}} >
+								onPress={ this._onConfirm.bind(this) } >
 	            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
 							<Text style={styles.fullWidthButtonText}>PAGAR</Text>
 	            {iconNext}

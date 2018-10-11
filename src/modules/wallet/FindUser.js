@@ -125,8 +125,7 @@ class FindUser extends Component {
   }
 
   componentDidMount() {
-//     AppState.addEventListener('change', this.handleAppStateChange);
-    this.pedir('');
+    // this.pedir('');
   }
 
   _onRecipientSelected(data){
@@ -196,7 +195,7 @@ class FindUser extends Component {
 
     return (
       <TouchableHighlight style={styles_x.businessCard}
-        onPress={() => {this._onRecipientSelected.bind(this, rowData)}}
+        onPress={ this._onRecipientSelected.bind(this, rowData) }
         underlayColor="#FFF">
         <View style={{flexDirection: 'row', flex:1}}>
           <View style={{width:60}}>
@@ -262,7 +261,7 @@ class FindUser extends Component {
         <Fab
             style={{ backgroundColor: '#ff7233' }}
             position="bottomRight"
-            onPress={ () => {this._onScanQR.bind(this) }}>
+            onPress={ this._onScanQR.bind(this) }>
             {/*
               <Icon name="qrcode-scan" type='MaterialCommunityIcons' style={{fontSize: 20, color: '#fff'}} />
               <Icon name="ios-qr-scanner" style={{fontSize: 20, color: '#fff'}} />

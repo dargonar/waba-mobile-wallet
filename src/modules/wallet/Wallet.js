@@ -46,20 +46,7 @@ class Wallet extends Component {
   	//console.log('Main::componentWillReceiveProps', nextProps);
 	}
 
-
-	/* ******************************************************* */
-	/* QR CODE *********************************************** */
-  	
-	// qrButtonPressed(){
-		
-	// 	this.props.navigator.push({
- //        screen:     'customer.QRShowNScan',
- //        title:      'QR',
- //  	});
-
- //  }
-
-  _onNavigatorEvent(event) {
+ _onNavigatorEvent(event) {
     if (event.type == 'NavBarButtonPress') {
       // if (event.id == 'scanQRCode') {
       //   this.qrButtonPressed();
@@ -132,7 +119,7 @@ class Wallet extends Component {
 		
 		this.props.navigator.push({
       screen: 'wallet.FindUser',
-			title: 'Elija usuario',
+			title: 'Elija discoiner',
 			passProps:  { search_type: config.SEARCH_TYPE_SEND} //SEARCH_TYPE_CONFIRM
 		});
 	}
@@ -158,7 +145,7 @@ class Wallet extends Component {
 					(<View style={styles.subaccountButtonContainer}>
 						<TouchableHighlight
 								style={styles.fullWidthButton}
-								onPress={() => {this._onDiscountOrReward.bind(this)}} >
+								onPress={ this._onDiscountOrReward } >
 							<Text style={styles.fullWidthButtonText}>COBRAR</Text>
 						</TouchableHighlight>
 						</View>) : false }

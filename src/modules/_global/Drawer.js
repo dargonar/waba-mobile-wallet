@@ -268,7 +268,7 @@ class Drawer extends Component {
 		console.log(' --- switchToSubAccountOrInitDaily() :: this.props.account.id')
 		console.log('this.props.account.id:', this.props.account.id)
 
-		subaccount_helper.getAccountWithdrawPermission(account).then( (the_perm) => {
+		subaccount_helper.getAccountWithdrawPermission(this.props.account).then( (the_perm) => {
 			
 			let business = null;
 			
@@ -462,16 +462,6 @@ class Drawer extends Component {
 		const iconPlus 		  = (<Icon name="ios-add" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
 		const iconSend 		  = (<Icon name="ios-send" style={{ paddingLeft: 2, color:'#ccc', fontSize: 25, width: 25}} />);
 
-		// let userIcon = (<Icon
-		// 		raised
-		// 		containerStyle={{backgroundColor:'#0B5F83', borderWidth: 0.5, borderColor: '#B7F072' }}
-		// 		name='md-person'
-		// 		type='ionicon'
-		// 		color='#ffffff'
-		// 		underlayColor='#415261'
-		// 		onPress={this._onPower.bind(this)}
-		// 		size={60} />);
-
 		let base64Icon = '';
 		if(this.state.identicon!=''){
 			base64Icon = this.state.identicon;
@@ -496,12 +486,12 @@ class Drawer extends Component {
 			subaccount_text  		= 'PASAR A MODO USUARIO';
 			withdrawl_limit 		= subaccount_helper.getPermissionWithdrawlLimit(this.props.account.subaccount.permission);
 			is_subaccount_text 	= (<Text style={styles.subaccountText} >
-					MODO SUBCUENTA <Text style={[styles.subaccountText, styles.subaccountTextBold]}>ENCENDIDO</Text> {"\n"}
-					COMERCIO: {this.props.account.subaccount.business.name} {"\n"}
-					LIMITE DIARIO: D$C {withdrawl_limit}
+					<Text style={[styles.subaccountText, styles.subaccountTextBold]}>MODO SUBCUENTA</Text> {"\n"}
+					COMERCIO: <Text style={[styles.subaccountText, styles.subaccountTextBold]}>{this.props.account.subaccount.business.name}</Text> {"\n"}
+					LIMITE DIARIO: <Text style={[styles.subaccountText, styles.subaccountTextBold]}>D$C {withdrawl_limit}</Text>
 				</Text>);
 
-			daily_withdraw = (<TouchableOpacity style={styles.drawerSubButton} onPress={() => {this._onInitDailyBox}}>
+			daily_withdraw = (<TouchableOpacity style={styles.drawerSubButton} onPress={this._onInitDailyBox}>
 				<View style={styles.drawerCashInit}>
 					{iconCash}
 					<Text style={styles.drawerListItemText2}>
@@ -516,20 +506,20 @@ class Drawer extends Component {
 
 				<View style={[container_style]}>
 					
-					<View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
+					<View style={{flex:(subaccount_mode?2:1), flexDirection:'row', justifyContent: 'center'}}>
 						<View style={{flex:5, flexDirection:'row', justifyContent: 'flex-start'}}>
 							<View style={{flex:1, justifyContent: 'center', alignItems: 'center', paddingLeft: 5}}>
-								<Button transparent onPress={() => {this._onGenMnemonics}}>
-									<View style={{borderWidth: 1, borderRadius:7, borderColor: '#FAFAFA', elevation:3}} onPress={() => {this._onGenMnemonics}}>
+								<Button transparent onPress={ this._onGenMnemonics }>
+									<View style={{borderWidth: 1, borderRadius:7, borderColor: '#FAFAFA', elevation:3}} >
 										{userIcon}
 									</View>
 								</Button>
-						  	</View>
+					  	</View>
 							<View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
 								<Text style={styles.usernameText} >
 									{this.props.account.name}
 								</Text>
-								{is_subaccount_text}
+									{is_subaccount_text}
 							</View>
 						</View>
 						<View style={{flex:1, justifyContent: 'center', alignItems: 'flex-end', paddingRight:20, paddingTop:0}}>
@@ -538,13 +528,14 @@ class Drawer extends Component {
 								type='ionicon'
 								style={{ color:'#cccccc', fontSize: 25, width: 22, marginRight:5}} 
 								underlayColor='#415261'
-								onPress={() => {this._onSettings.bind(this)}}
+								onPress={ this._onSettings.bind(this) }
 								/>
 						</View>
 					</View>
+
 					{ !subaccount_mode ?
 					(<View style={styles.drawerList}>
-						<TouchableOpacity onPress={() => {this._onGoToBusinesses}}>
+						<TouchableOpacity onPress={ this._onGoToBusinesses }>
 							<View style={styles.drawerListItem}>
 								{iconSearch}
 								<Text style={styles.drawerListItemText}>
@@ -553,7 +544,7 @@ class Drawer extends Component {
 							</View>
 						</TouchableOpacity>
 						
-						<TouchableOpacity onPress={() => {this._openRecipient}}>
+						<TouchableOpacity onPress={ this._openRecipient}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
 								<Text style={styles.drawerListItemText}>
@@ -561,7 +552,7 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-							<TouchableOpacity onPress={() => {this.requestPayment.bind(this)}}>
+							<TouchableOpacity onPress={ this.requestPayment.bind(this) }>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								<Icon name='trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
 								<Text style={styles.drawerListItemText}>
@@ -570,7 +561,7 @@ class Drawer extends Component {
 							</View>
 						</TouchableOpacity>
 						
-						<TouchableOpacity onPress={() => {this.doPay.bind(this)}}>
+						<TouchableOpacity onPress={ this.doPay.bind(this) }>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#ccc'}}/>
 								<Text style={styles.drawerListItemText}>
@@ -583,7 +574,7 @@ class Drawer extends Component {
 					</View>)
 					:
 					(<View style={styles.drawerList}>
-						<TouchableOpacity onPress={() => {this._onRewardCustomer}}>
+						<TouchableOpacity onPress={ this._onRewardCustomer }>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconPlus}
 								<Text style={styles.drawerListItemText}>
@@ -591,15 +582,15 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => {this.onResetBalance}}>
-							<View style={styles.drawerListItem}>
+						<TouchableOpacity onPress={ this.onResetBalance }>
+							<View style={styles.drawerListItemMini}>
 								{iconReceive}
 								<Text style={styles.drawerListItemText}>
 									Volver saldo a 0 D$C
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => {this.onSendExtraBalance}}>
+						<TouchableOpacity onPress={ this.onSendExtraBalance }>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								{iconSend}
 								<Text style={styles.drawerListItemText}>
@@ -607,7 +598,7 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => {this.onRefreshSubAccountPermissions}}>
+						<TouchableOpacity onPress={ this.onRefreshSubAccountPermissions }>
 							<View style={styles.drawerListItem}>
 								{iconCard}
 								<Text style={styles.drawerListItemText}>
@@ -619,7 +610,7 @@ class Drawer extends Component {
 					}
 					{daily_withdraw}
 
-					<TouchableOpacity style={styles.drawerSubButton} onPress={() => {this._onSwitchMode}}>
+					<TouchableOpacity style={styles.drawerSubButton} onPress={ this._onSwitchMode }>
 						<View style={styles.drawerListItem3}>
 							{iconSubaccount}
 							<Text style={styles.drawerListItemText2}>
@@ -627,12 +618,12 @@ class Drawer extends Component {
 							</Text>
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => {this._onGoToWABA}}>
+					<TouchableOpacity onPress={this._onGoToWABA}>
 						<View flexDirection='row' justifyContent='space-between' style={{padding:15, paddingTop:0}} alignItems='center'>
 							<View flexDirection='row'>
 								<Image style={{width: 18, height: 18, resizeMode: Image.resizeMode.contain, opacity: 0.15, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
 								<Text style={{fontSize: 10, fontFamily: 'Montserrat-Bold', marginTop: 1}}>
-									Beta v1.5
+									RC-4 v1.10
 								</Text>
 							</View>
 							<View flexDirection='row'>

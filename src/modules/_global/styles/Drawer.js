@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
 		paddingBottom: 15, 
 		paddingTop: 15
 	},
+
+	drawerListItemMini: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		paddingBottom: 10, 
+		paddingTop: 15
+	},
 	drawerListItemVersion: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -129,14 +136,15 @@ const styles = StyleSheet.create({
 	color: '#666666',
   },
 	subaccountText:{
+		marginLeft:5,
     fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
     fontSize   : 10,
     lineHeight : 10,
-		color 		 : '#ffffff'
+		color 		 : '#666'
   },
   subaccountTextBold:{
-    fontFamily : 'Montserrat-Medium',
+    fontFamily : 'Montserrat-Bold',
   }
 });
 

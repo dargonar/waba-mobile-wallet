@@ -41,7 +41,6 @@ import Rewarding from './modules/wallet/Rewarding';
 
 import ResetBalanceConfirm from './modules/wallet/ResetBalanceConfirm';
 
-import QRShowNScan from './modules/customer/QRShowNScan';
 import SendAmount from './modules/customer/SendAmount';
 import SendConfirmEx from './modules/customer/SendConfirmEx';
 import SendingEx from './modules/customer/SendingEx';
@@ -88,7 +87,6 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.RequestPayment', () => RequestPayment	, store, Provider);
 	Navigation.registerComponent('wallet.ResetBalanceConfirm', () => ResetBalanceConfirm, store, Provider);
 	
-	Navigation.registerComponent('customer.QRShowNScan', () => QRShowNScan, store, Provider);
 	Navigation.registerComponent('customer.SendAmount', () => SendAmount, store, Provider);
 	Navigation.registerComponent('customer.SendConfirmEx', () => SendConfirmEx	, store, Provider);
 	Navigation.registerComponent('customer.SendingEx', () => SendingEx	, store, Provider);

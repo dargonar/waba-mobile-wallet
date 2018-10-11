@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
 // import styles from './styles/SendConfirm';
 import styles from './styles/TxDetails';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Bts2helper from '../../utils/Bts2helper';
 
@@ -397,7 +396,7 @@ class RewardConfirm extends Component {
           <View style={styles.subaccountButtonContainer}>
 						<TouchableHighlight
 							style={[styles.fullWidthButton, disabled_btn_style]}
-							onPress={() => {this._onConfirm.bind(this)}} >
+							onPress={ this._onConfirm.bind(this) } >
 						<Text style={styles.fullWidthButtonText}>RECOMPENSAR</Text>
 					</TouchableHighlight>
 				  </View>

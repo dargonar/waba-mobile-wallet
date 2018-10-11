@@ -243,13 +243,13 @@ constructor(props) {
 
         />
 
-			<View style={styles.subaccountButtonContainer}>
-				<TouchableHighlight
-					style={[styles.fullWidthButton]}
-					onPress={() => {this._onRestoreAccount}}  >
-					<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
-				</TouchableHighlight>
-			</View>
+				<View style={styles.subaccountButtonContainer}>
+					<TouchableHighlight
+						style={[styles.fullWidthButton]}
+						onPress={ this._onRestoreAccount }  >
+						<Text style={styles.fullWidthButtonText}>RESTAURAR CUENTA</Text>
+					</TouchableHighlight>
+				</View>
 
 			 </View>
 

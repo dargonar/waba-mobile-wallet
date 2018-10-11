@@ -79,7 +79,7 @@ class Settings extends Component {
 		const iconSec  = (<Icon name="ios-key" style={{ width:30}} size={30} color="#ababab" />);
 
     return (<View style={styles.container}>
-				<TouchableOpacity style={styles.button} onPress={() => {this._onShowWords.bind(this)}}>
+				<TouchableOpacity style={styles.button} onPress={ this._onShowWords.bind(this) }>
 					<View style={styles.buttonInner}>
 						<View style={{justifyContent:'center'}}>
 							<Text style={{ color:'#ababab', fontSize:12, fontFamily : 'Montserrat-Medium', textAlign: 'center'}}>Mostrar palabras para recupero de cuenta</Text>
@@ -90,7 +90,7 @@ class Settings extends Component {
 						</View>
 					</View>
 				</TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {this._onRestoreAccount.bind(this)}}>
+        <TouchableOpacity style={styles.button} onPress={ this._onRestoreAccount.bind(this) }>
           <View style={styles.buttonInner}>
             <View style={{justifyContent:'center'}}>
               <Text style={{ color:'#ababab', fontSize:12, fontFamily : 'Montserrat-Medium', textAlign: 'center'}}>Restaurar una cuenta a partir de palabras</Text>

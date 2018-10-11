@@ -209,7 +209,7 @@ class SendAmount extends React.Component {
 							<View style={{flex:1, flexDirection:'column', alignItems:'stretch', justifyContent:'flex-end' }}>
 								<TouchableHighlight
 										style={styles.fullWidthButton}
-										onPress={() => {this._onNext.bind(this)}} >
+										onPress={ this._onNext.bind(this) } >
 									<Text style={styles.fullWidthButtonText}>SIGUIENTE</Text>
 								</TouchableHighlight>
 							</View>

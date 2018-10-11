@@ -460,8 +460,8 @@ class BusinessProfile extends Component {
  	renderInfobox() {
 
     let cash_icon   =  (this.state.business_data['discount_ex'][config.getToday()]['pm_cash']==1)?(<Image source={{uri:iconsMap['cash--active'].uri}} style={{height:16, width:20, marginTop:2}} />):false;
-    let credit_icon =  (this.state.business_data['discount_ex'][config.getToday()]['pm_credit']==1)?(<Image source={{uri:iconsMap['credit-card--active'].uri}} style={{height:16, width:20, marginTop:2, marginLeft:6}} />):false;
-    let debit_icon  =  (this.state.business_data['discount_ex'][config.getToday()]['pm_debit']==1)?(<Image source={{uri:iconsMap['bank--active'].uri}} style={{height:20, width:20, marginLeft:6}} />):false;
+    let credit_icon =  (this.state.business_data['discount_ex'][config.getToday()]['pm_credit']==1)?(<Image source={{uri:iconsMap['credit-card--active'].uri}} style={{height:16, width:20, marginTop:2}} />):false;
+    let debit_icon  =  (this.state.business_data['discount_ex'][config.getToday()]['pm_debit']==1)?(<Image source={{uri:iconsMap['bank--active'].uri}} style={{height:20, width:20}} />):false;
     // let payment_text = ((this.state.business_data['discount_ex'][config.getToday()]['pm_cash']==1)?'Efectivo':'')+((this.state.business_data['discount_ex'][config.getToday()]['pm_credit']==1)?'Crédito':'')+((this.state.business_data['discount_ex'][config.getToday()]['pm_debit']==1)?'Débito':'');
 		
     return (

@@ -5,7 +5,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  row:{flexDirection:'row', alignItems:'flex-end', marginBottom:10},
+  row:{ 
+    flexDirection:'row', 
+    alignItems:'flex-end', 
+    marginBottom:10},
   data_part : {
     fontFamily : 'Montserrat-Medium',
     color      : '#666',

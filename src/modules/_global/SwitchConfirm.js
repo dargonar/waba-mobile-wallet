@@ -157,6 +157,16 @@ class SwitchConfirm extends Component {
 			navigatorStyle: {navBarHidden:true}
 		});
 
+    this.props.navigator.push({
+                screen:     'wallet.SwitchResult',
+                title:      'Solicitud exitosa',
+                passProps:  {
+                  permission: this.state.permission,
+                  business:   this.state.business
+                },
+                navigatorStyle: {navBarHidden:true}
+            });
+    return;
     this._getUnsignedTx(this.state.permission).then((tx) => {
       if('error' in tx)
       {
@@ -316,7 +326,7 @@ class SwitchConfirm extends Component {
 					<TouchableHighlight
 							disabled={send_disabled}
 							style={[styles.fullWidthButton]}
-							onPress={() => {this._onConfirm.bind(this)}}  >
+							onPress={ this._onConfirm.bind(this) }  >
 						  <Text style={styles.fullWidthButtonText}>{button_text}</Text>
 					</TouchableHighlight>
 				</View>

@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 
 import {
+  Image, 
   Alert,
 	AsyncStorage,
 	Text,
@@ -8,6 +9,7 @@ import {
 } from 'react-native';
 
 
+import * as config from '../../constants/config';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from './wallet.actions';
@@ -25,7 +27,6 @@ class NewAccount extends Component {
 		navBarTextFontFamily: 'roboto_thin',
     topBarElevationShadowEnabled: false
   }
-
 
   constructor(props) {
     super(props);
@@ -90,6 +91,7 @@ class NewAccount extends Component {
 			animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
 		});
 	}
+  
   componentWillMount() {
   }
 
@@ -97,7 +99,8 @@ class NewAccount extends Component {
   }
 
   componentDidMount() {
-  	setTimeout(() => {
+  	// HACKED!
+    setTimeout(() => {
 			this._onCreateAccount();
     }, 0)	;
   }
@@ -105,36 +108,57 @@ class NewAccount extends Component {
   componentWillUnmount() {
   }
 
-  focus() {
-  }
-
-  render() {
-  	let type = this.state.types[3];
-    return (
+  
+  render(){
+    let userIcon = (<Image style={{width: 50, height: 50, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: config.getIdenticon(this.state.account_name) }}/>);
+    // let type2 = this.state.types[0];
+    let type2 = this.state.types[3];
+    return  (
       <View style={styles.container}>
-        <View style={{flex:3, justifyContent: 'center', alignItems:'center', backgroundColor:'#f15d44'}}>
-          <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#DEDEDE"/>
+        <View style={{padding: 20, flex:1, backgroundColor:'transparent', paddingLeft:30, paddingRight:30, alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
+          <View style={{}}>
+            <Text style={styles.title_part}>Creando cuenta</Text>
+          </View>
+          <View style={styles.userRecipient}>
+            <View style={{justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 10}}>
+            {userIcon}
+            </View>
+            <View style={{justifyContent: 'flex-start', alignItems:'flex-start' }}>
+              <Text style={styles.data_part} >
+                {this.state.account_name}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{justifyContent: 'center', alignItems:'center', backgroundColor:'transparent', height:250}}>
+            <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type2} color="#ff9e5d"/>
+          </View>
         </View>
-        <View style={{flex:4, backgroundColor:'#f15d44', paddingLeft:30, paddingRight:30}}>
-					<View style={{flexDirection:'row', justifyContent:'center'}}>
-						<Text style={styles.title_part}>Creando cuenta {this.state.account_name}</Text>
-					</View>
-        </View>
-				<View style={{flex:1, backgroundColor:'#f15d44', paddingLeft:30, paddingRight:30}}>
-					<View style={{flexDirection:'row', justifyContent:'center'}}>
-						<Text style={styles.title_part}>Por favor aguarde...</Text>
-					</View>
-        </View>
-      </View>
-    );
+      </View>);
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-// 	return {
-// 		actions: bindActionCreators(walletActions, dispatch)
-// 	};
-// }
+  // renderOLD() {
+  // 	let type = this.state.types[3];
+  //   return (
+  //     <View style={styles.container}>
+  //       <View style={{flex:3, justifyContent: 'center', alignItems:'center'}}>
+  //         <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={type} color="#1e3695"/>
+  //       </View>
+  //       <View style={{flex:4, paddingLeft:30, paddingRight:30}}>
+		// 			<View style={{flexDirection:'row', justifyContent:'center'}}>
+		// 				<Text style={styles.title_part}>Creando cuenta {this.state.account_name}</Text>
+		// 			</View>
+  //       </View>
+		// 		<View style={{flex:1, paddingLeft:30, paddingRight:30}}>
+		// 			<View style={{flexDirection:'row', justifyContent:'center'}}>
+		// 				<Text style={styles.title_part}>Por favor aguarde...</Text>
+		// 			</View>
+  //       </View>
+  //     </View>
+  //   );
+  // }
+
 
 function mapStateToProps(state, ownProps) {
 	return {

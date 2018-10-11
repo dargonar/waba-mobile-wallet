@@ -97,24 +97,30 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount() {
+    let that = this;
     Permissions.check('storage').then(response => {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       // this.setState({ camera_permission: (response=='authorized'?true:false) })
-      this.setState({ storage_permission: response })
+      that.setState({ storage_permission: response })
+      if(response!='authorized')
+      {
+        that._requestPermission();
+      }  
     })
   }
 
   // Request permission to access photos
   _requestPermission () {
+    let that = this;
     Permissions.request('storage').then(response => {
       // Returns once the user has chosen to 'allow' or to 'not allow' access
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       // this.setState({ storage_permission: (response=='authorized'?true:false) })
-      this.setState({ storage_permission: response })
+      that.setState({ storage_permission: response })
     })
   }
 
-  _alertForPermission() {
+  _alertForPermission(do_create) {
     Alert.alert(
       'Podemos acceder a tu almacenamiento?',
       'Necesitamos guardar tu cuenta y credenciales de discoiner',
@@ -131,7 +137,22 @@ class Onboarding extends React.Component {
     )
   }
 
+  storagePermitted(){
+    if(this.state.storage_permission=='authorized')
+      return true;
+
+    setTimeout(() => {
+      this._requestPermission();
+    }, 0)  ;
+   return false;
+  }
+
 	_onCreateAccount() {
+    if(!this.storagePermitted())
+    {
+      return;
+    }
+    console.log('_onCreateAccount()')
 		this.props.navigator.push({
 			screen : 'wallet.CreateAccount',
 			title :  'Crear cuenta'
@@ -139,7 +160,12 @@ class Onboarding extends React.Component {
 	}
 
 	_onRestoreAccount() {
-		this.props.navigator.push({
+		if(!this.storagePermitted())
+    {
+      return;
+    }
+    console.log('_onRestoreAccount()')
+    this.props.navigator.push({
 			screen: 'wallet.RestoreAccount',
 			title: 'Restaurar cuenta'
 		});
@@ -158,13 +184,13 @@ class Onboarding extends React.Component {
 
           <TouchableHighlight
               style={[styles.fullWidthButton, styles.fullWidthButton1]}
-              onPress={() => {this._onRestoreAccount}} >
+              onPress={() => {this._onRestoreAccount()}} >
             <Text style={styles.fullWidthButtonText1}>RESTAURAR CUENTA</Text>
           </TouchableHighlight>
 
           <TouchableHighlight
               style={[styles.fullWidthButton, styles.fullWidthButton2]}
-              onPress={() => {this._onCreateAccount}} >
+              onPress={() => {this._onCreateAccount()}} >
             <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
           </TouchableHighlight>
 

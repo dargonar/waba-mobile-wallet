@@ -156,7 +156,7 @@ class Start extends Component {
 					if(responseJson && !responseJson['error'] ){
 						console.log('CreateAccount::_onChangeText::#5');
 						this.setState({
-							error: 			'Ya existe un usuario con ese nombre',
+							error: 			'Ya existe un discoiner con ese nombre',
 							refreshing: false,
 							disabled: 	true
 						});
@@ -270,7 +270,7 @@ class Start extends Component {
 					<TouchableHighlight
 							disabled={this.state.disabled}
 							style={[styles.fullWidthButton, btn_style]}
-							onPress={() => {this._onNewAccount }} >
+							onPress={ this._onNewAccount } >
 						<Text style={txt_style}>CREAR CUENTA</Text>
 					</TouchableHighlight>
 				</View>

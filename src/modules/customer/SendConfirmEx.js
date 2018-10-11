@@ -468,7 +468,7 @@ _getRecipientInfo(recipient) {
           </View>
         </View>
 
-		<TouchableHighlight style={styles.btnTouchable} onPress={() => {this._onConfirm.bind(this)}} >
+		<TouchableHighlight style={styles.btnTouchable} onPress={ this._onConfirm.bind(this) } >
 		  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
 		    <Text style={styles.btnTxt}>CONTINUAR</Text>
 		  </LinearGradient>

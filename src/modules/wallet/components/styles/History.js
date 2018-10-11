@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     flex            : 1
   },
   col_amount : {
-    width:          90,
+    width:          105,
     justifyContent: 'flex-start',
     alignItems:     'flex-end',
     paddingRight:   15,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },    
   row_amount: {
     fontFamily      : 'Montserrat-Light',
-    fontSize        : 35,
+    fontSize        : 25,
     color           : '#1f475b',
   },  
   row_unknown_op: {

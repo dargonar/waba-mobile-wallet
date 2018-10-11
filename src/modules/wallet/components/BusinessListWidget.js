@@ -309,13 +309,13 @@ class BusinessListWidget extends Component {
     if (nextProps.business_list !== this.props.business_list && this.state.mode=='main') {
 			console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
 			let data = nextProps.business_list;
-      new_state.dataSource=this.state.dataSource.cloneWithRows(data);
+      new_state['dataSource']=this.state.dataSource.cloneWithRows(data);
 		}
 
     if (nextProps.business_searched_list !== this.props.business_searched_list && this.state.mode=='search') {
-      console.log('componentWillReceiveProps: new business_list =>', nextProps.business_searched_list.length);
+      console.log('componentWillReceiveProps: new business_searched_list =>', nextProps.business_searched_list.length);
       let data = nextProps.business_searched_list;
-      new_state.dataSource=this.state.dataSource.cloneWithRows(data);
+      new_state['dataSource']=this.state.dataSource.cloneWithRows(data);
     }
 
 		if(this.state.infiniteLoading) {
@@ -333,79 +333,83 @@ class BusinessListWidget extends Component {
       this.refreshBusinessList();
       new_state.refreshing = true;
     }
+
     if(nextProps.search_text!==this.props.search_text && this.state.mode=='search')
     {
       this.refreshBusinessList();
       new_state.refreshing = true;
     }
-		this.setState(new_state);
+
+    // ToastAndroid.show('about to update state', ToastAndroid.SHORT);
+		console.log(' ----------**********----------- about to update state');
+    this.setState(new_state);
   }
 
   _rowHasChanged(oldRow, newRow) {
-    return (oldRow.id !== newRow.id)
+    return (oldRow.mega_id !== newRow.mega_id)
   }
 
   componentDidMount() {
      
-    AppState.addEventListener('change', this.handleAppStateChange);
-		let that = this;
-		OneSignal.configure({
-			onIdsAvailable: function(device) {
-				console.log('UserId = ', device.userId);
-				console.log('PushToken = ', device.pushToken);
-				//fetch('http://35.161.140.21:8080/api/v1/push_id', {
-				fetch(config.getAPIURL('/push_id'), {
-					method: 'POST',
-					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-					body: JSON.stringify({
-						name:   	that.props.account.name,
-						push_id: 	device.userId,
-					})
-				})
-				.then((response) => response.json())
-				.then((responseJson) => {
-					console.log('PUSH ID =>', responseJson);
-				});
-				//OneSignal.sendTags({"account" :that.props.account.name});
-				//OneSignal.getTags((receivedTags) => {
-				//	console.log('TAAAAGS=>', receivedTags);
-				//});
+  //   AppState.addEventListener('change', this.handleAppStateChange);
+		// let that = this;
+		// OneSignal.configure({
+		// 	onIdsAvailable: function(device) {
+		// 		console.log('UserId = ', device.userId);
+		// 		console.log('PushToken = ', device.pushToken);
+		// 		//fetch('http://35.161.140.21:8080/api/v1/push_id', {
+		// 		fetch(config.getAPIURL('/push_id'), {
+		// 			method: 'POST',
+		// 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+		// 			body: JSON.stringify({
+		// 				name:   	that.props.account.name,
+		// 				push_id: 	device.userId,
+		// 			})
+		// 		})
+		// 		.then((response) => response.json())
+		// 		.then((responseJson) => {
+		// 			console.log('PUSH ID =>', responseJson);
+		// 		});
+		// 		//OneSignal.sendTags({"account" :that.props.account.name});
+		// 		//OneSignal.getTags((receivedTags) => {
+		// 		//	console.log('TAAAAGS=>', receivedTags);
+		// 		//});
 
-			},
-			onNotificationOpened: function(message, data, isActive) {
-				console.log('*************************** ONE SIGNAL ');
-				console.log('MESSAGE: ', 	message);
-				console.log('DATA: ', 		data);
-				console.log('ISACTIVE: ', isActive);
+		// 	},
+		// 	onNotificationOpened: function(message, data, isActive) {
+		// 		console.log('*************************** ONE SIGNAL ');
+		// 		console.log('MESSAGE: ', 	message);
+		// 		console.log('DATA: ', 		data);
+		// 		console.log('ISACTIVE: ', isActive);
 
-				let tx_info = {
-					message 	: message,
-					data 			: data,
-					isActive 	: isActive
-				}
-				that.props.actions.newTxHACK(tx_info);
-				/*
-				'MESSAGE: ', 'vaku te ha enviado 10 DSC'
-				'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }
-				'ISACTIVE: ', true
-				*/
-				that.refreshBusinessList();
-			}
-		});
+		// 		let tx_info = {
+		// 			message 	: message,
+		// 			data 			: data,
+		// 			isActive 	: isActive
+		// 		}
+		// 		that.props.actions.newTxHACK(tx_info);
+		// 		/*
+		// 		'MESSAGE: ', 'vaku te ha enviado 10 DSC'
+		// 		'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }
+		// 		'ISACTIVE: ', true
+		// 		*/
+		// 		that.refreshBusinessList();
+		// 	}
+		// });
 
 	}
 
 
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
+    // AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
-  handleAppStateChange(appState) {
-    if (appState === 'active') {
-      // this.props.dispatch(loadSessions());
-    }
-  }
+  // handleAppStateChange(appState) {
+  //   if (appState === 'active') {
+  //     // this.props.dispatch(loadSessions());
+  //   }
+  // }
 
 //   _onPressButton(rowID, rowData) {
 //     console.log('History::_onPressButton');
@@ -431,7 +435,7 @@ class BusinessListWidget extends Component {
     if(this.props.business_list_at_end && this.state.mode=='main')
 			return;
 
-    if(this.props.business_searched_list && this.state.mode=='search')
+    if(this.props.business_searched_list_at_end && this.state.mode=='search')
       return;
 
 		this.setState({infiniteLoading:true});
@@ -536,8 +540,10 @@ class BusinessListWidget extends Component {
       </TouchableHighlight>
     );
   }
-	render() {
+	
+  render() {
 
+    console.log(' ----------**********----------- rendering biz list');
 		if(this.state.dataSource.getRowCount()>0)
 		{
 			let infiniteLoading=undefined;
@@ -589,7 +595,7 @@ class BusinessListWidget extends Component {
 						<Image source={require('./img/pattern.png')} style={styles.bgImage} />
 					</View>
 					<Text style={styles.emptyListText}>NO HAY COMERCIOS QUE MOSTRAR{"\n"}INTENTE CON OTRO FILTRO</Text>
-					<TouchableOpacity style={styles.button} onPress={() => {this._onRefresh.bind(this)}}>
+					<TouchableOpacity style={styles.button} onPress={ this._onRefresh.bind(this) }>
             <Text style={styles.buttonText}>Actualizar</Text>
           </TouchableOpacity>
 				</View>

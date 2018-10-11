@@ -8,14 +8,12 @@ import {
   ScrollView,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
   TextInput
 } from 'react-native';
 
-// import BarcodeScanner from 'react-native-barcodescanner';
-import { Icon } from 'react-native-elements'
-//import Icon from 'react-native-vector-icons/Ionicons';
-//'react-native-elements'
-// import styles from './styles/QRScanner';
+import { Icon } from 'native-base';
+
 import { connect } from 'react-redux';
 import Keyboard from './components/Keyboard';
 import * as config from '../../constants/config';
@@ -26,6 +24,8 @@ import BarcodeScanner from 'react-native-barcode-scanner-google';
 import BarcodeType from 'react-native-barcode-scanner-google';
 import { resumeScanner, pauseScanner } from 'react-native-barcode-scanner-google';
 import * as qr_helper from '../../utils/QRHelper';
+
+import styles from './styles/NewAccount';
 
 import Prompt from 'react-native-prompt';
 
@@ -41,6 +41,7 @@ class QRScanner extends React.Component {
       camera_permission : ''
     };
 
+    this._requestPermission = this._requestPermission.bind(this);
   }
 
   // static navigatorStyle = {
@@ -61,21 +62,24 @@ class QRScanner extends React.Component {
   }
 
   componentDidMount() {
-    Permissions.check('camera').then(response => {
-      // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-      // this.setState({ camera_permission: (response=='authorized'?true:false) })
-      this.setState({ camera_permission: response })
-    })
+    this._requestPermission ();
   }
 
   // Request permission to access photos
   _requestPermission (){
+    let that = this;
+    
     Permissions.request('camera').then(response => {
       // Returns once the user has chosen to 'allow' or to 'not allow' access
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       // this.setState({ camera_permission: (response=='authorized'?true:false) })
-      this.setState({ camera_permission: response })
-    })
+      // ToastAndroid.show(response, ToastAndroid.LONG);
+      that.setState({ camera_permission: response })
+    }).catch(e => {
+      // Print error if scanner stream could not be resumed.
+      ToastAndroid.show('Ha ocurrido un error: ' + e, ToastAndroid.LONG);
+      console.log(e);
+    });
   }
 
   _alertForPermission() {
@@ -192,6 +196,30 @@ class QRScanner extends React.Component {
 
   render() {
 
+    if(this.state.camera_permission!='authorized')
+    {
+      return  (
+        <View style={styles.container}>
+          <View style={{padding: 20, flex:1, backgroundColor:'transparent', paddingLeft:30, paddingRight:30, alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
+            <View style={{}}>
+              <Text style={[styles.title_part, {textAlign:'center'}]}>Para escanear códigos QR debe dar permiso de cámara a la aplicación.</Text>
+            </View>
+            <TouchableOpacity onPress={this._requestPermission}>
+              <View style={styles.userRecipient} >
+                <View style={{justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 10}}>
+                <Icon name="ios-camera"  style={{color:'#fff', fontSize: 25}} />
+                </View>
+                <View style={{justifyContent: 'flex-start', alignItems:'flex-start' }}>
+                  <Text style={styles.data_part} >
+                    Permitir uso de cámara
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+
+          </View>
+        </View>);
+    }
     return (
 
       <View style={{ flex: 1 }}>

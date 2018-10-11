@@ -273,9 +273,9 @@ class History extends Component {
 							<View style={styles.row_line2}>
 								<Text style={styles.row_hour_item}>{hora}{" - "}{fecha}</Text>
 							</View>
-			            </View>
-			            <View style={styles.col_amount}>
-			            	<View flexDirection="row" alignItems="center">
+            </View>
+            <View style={styles.col_amount}>
+		      		<View flexDirection="row" alignItems="center">
 								<Image style={{width: 10, height: 10, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5}} source={{uri: imgData}}/>
 								<Text style={styles.row_amount}>
 									{rowData.amount.quantity}
