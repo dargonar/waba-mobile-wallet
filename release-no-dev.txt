@@ -25,7 +25,7 @@ adb install -r android/app/build/outputs/apk/app-armeabi-v7a-debug.apk
 scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.apk
 scp -i discoin_alpha.pem ../monedapar_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/app/discoin.v1.1.apk
 
-scp -i ~/aws/discoin_alpha.pem ~/waba_mobile_wallet_upgd_1/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/merged/public/discoin.v1.5.apk
+scp -i ~/aws/discoin_alpha.pem ~/waba_mobile_wallet/android/app/build/outputs/apk/app-armeabi-v7a-release.apk ubuntu@54.245.222.250:~/discoin/merged/public/discoin.v1.11.apk
 
 ssh -i discoin_alpha.pem ubuntu@54.245.222.250
 

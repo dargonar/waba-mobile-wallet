@@ -133,7 +133,8 @@ constructor(props) {
 							mnemonic   : words,
 							keys       : res2,
 							name       : responseJson[0], //.name
-							id         : responseJson[1] //.id
+							id         : responseJson[1], //.id
+							identicon  : responseJson[2]
 						};
 
 						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {

@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 5,
     paddingLeft: 8,
-    flex: 1
+    flex: 1,
+    flexDirection:'column'
   },
   businessCategorie:{
     fontSize: 7,
@@ -482,9 +483,9 @@ class BusinessListWidget extends Component {
 
     let _reward = this.removePercent(rowData['discount_ex'][config.getToday()]['reward']);
 
-    let cash_icon   =  (rowData['discount_ex'][config.getToday()]['pm_cash']==1)?(<Image source={{uri:iconsMap['cash'].uri}} style={{height:16, width:20, marginTop:2}} />):false;
-    let credit_icon =  (rowData['discount_ex'][config.getToday()]['pm_credit']==1)?(<Image source={{uri:iconsMap['credit-card'].uri}} style={{height:16, width:20, marginTop:2, marginLeft:6}} />):false;
-    let debit_icon  =  (rowData['discount_ex'][config.getToday()]['pm_debit']==1)?(<Image source={{uri:iconsMap['bank'].uri}} style={{height:20, width:20, marginLeft:6}} />):false;
+    let cash_icon   =  (rowData['discount_ex'][config.getToday()]['pm_cash']==1)?(<Image source={{uri:iconsMap['cash'].uri}} style={{height:12, width:16, marginTop:2}} />):false;
+    let credit_icon =  (rowData['discount_ex'][config.getToday()]['pm_credit']==1)?(<Image source={{uri:iconsMap['credit-card'].uri}} style={{height:12, width:16, marginTop:2, marginLeft:6}} />):false;
+    let debit_icon  =  (rowData['discount_ex'][config.getToday()]['pm_debit']==1)?(<Image source={{uri:iconsMap['bank'].uri}} style={{height:12, width:12, marginLeft:6}} />):false;
              
 
     return (
@@ -494,24 +495,28 @@ class BusinessListWidget extends Component {
         <View style={{flexDirection: 'row', flex:1}}>
           <View style={{width:110}}>
             <Image style={styles.thumb} source={{uri:imgSource}} ></Image>
-            <View style={{flexDirection: 'row', flex:1, paddingTop:10, paddingLeft:10}}>
-              {cash_icon}
-              {credit_icon}
-              {debit_icon}
-            </View>
           </View> 
           <View style={styles.businessCardInfoContainer}>
-            <View style={styles.businessInfo}>
+            
+            <View style={{flexDirection: 'column', flex: 1}}>
               <Text style={styles.businesseCardTitle}>{rowData['name']} </Text>
               <View style={{flexDirection: 'row'}}>
-                <Icon name='send' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
-                <View>
-                  <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
-                  <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>
-                </View>
-
+                <View style={{flexDirection: 'row', flex: 1}}>
+                  <Icon name='send' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
+                  <View>
+                    <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
+                    <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>
+                  </View>
+                
+                  <View style={{flex: 1, justifyContent:'flex-end', alignItems:'center', flexDirection: 'row', paddingRight:2}}>
+                    {cash_icon}
+                    {credit_icon}
+                    {debit_icon}  
+                  </View>
+                </View>  
               </View>
             </View>
+            
             <View style={{flexDirection: 'row', flex: 1}}>
               
               <LinearGradient start={{x: 0, y: 1}} end={{x: 0.75, y: 0}} colors={['#76eafa', '#6b91f8']} style={styles.discountGradient}>
@@ -529,10 +534,6 @@ class BusinessListWidget extends Component {
                   <Text style={styles.reward}>{_reward}</Text>
                 </View>
               </LinearGradient>
-
-
-
-
             </View>
           </View>
 

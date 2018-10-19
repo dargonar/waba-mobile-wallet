@@ -93,9 +93,9 @@ export function createAccount(name) {
 			let that = this;
 			UWCrypto.generateMnemonic('es', 128).then(function(res1) {
 				
-				let menomincs = config.cleanMnemonics(res1.mnemonic);
+				let mnemonics_touched = config.cleanMnemonics(res1.mnemonic);
 
-				UWCrypto.mnemonicToMasterKey(menomincs).then(function(res2) {
+				UWCrypto.mnemonicToMasterKey(mnemonics_touched).then(function(res2) {
 					let p = []
 					Promise.all([
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 1),
@@ -103,7 +103,7 @@ export function createAccount(name) {
 						UWCrypto.derivePrivate('', '', res2.masterPrivateKey, 3)
 					]).then(function(res3) {
 						console.log('==== generateMnemonic:');
-						console.log(JSON.stringify(menomincs));
+						console.log(JSON.stringify(mnemonics_touched));
 						console.log('==== mnemonicToMasterKey:');
 						console.log(JSON.stringify(res2));
 						console.log('==== derivatePrivate:');
@@ -137,12 +137,13 @@ export function createAccount(name) {
 							{
 								let account = {
 									// mnemonic : res1.mnemonic,
-									mnemonic : menomincs,
+									mnemonic : mnemonics_touched,
 									keys     : res3,
 									name     : name,
                   identicon: responseJson.identicon,
                   id:        responseJson.account_id
 								};
+								
 								createAccountSuccessHACK(account);
 								return resolve(account);
 							}

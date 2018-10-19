@@ -76,7 +76,10 @@ class InvoiceConfirm extends Component {
 	_getTx() {
 		
 		let available_balance = this.getAvailableBalance();
+
 		let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
+
+		console.log(' ---- InvoiceConfirm:: amount:', this.state.discount_dsc, ' -- available_balance:', available_balance)
 		this.setState({to_pay:amount});
 		this._buildMemo().then( enc_memo => {
 			TxHelper.getTx(this.props.account.id, this.state.account_id, amount, enc_memo, this.props.asset, this.props.blockchain).then( tx => { 
@@ -253,7 +256,9 @@ class InvoiceConfirm extends Component {
   componentDidMount() {
   	let identicon = config.getIdenticon(this.state.recipient.name);
     this.setState({ identicon : identicon });
-		this._getTx();
+		let that = this;
+		// setTimeout(that._getTx(), 750);
+		setTimeout(() => {that._getTx() }, 750);
   }
 
   componentWillUnmount() {

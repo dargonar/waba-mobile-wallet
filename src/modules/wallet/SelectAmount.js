@@ -212,7 +212,7 @@ class SelectAmount extends React.Component {
                 <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
                   <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
                     <Text style={styles.label} >
-                      DESTINATARIOS
+                      DISCOINER
                     </Text>
                   </View>  
                   
@@ -250,7 +250,7 @@ class SelectAmount extends React.Component {
               />
               
   							<View style={{height:90, flexDirection:'column', alignItems:'flex-end', paddingRight:20, justifyContent:'center' }}>
-                  <TouchableHighlight style={styles.btnTouchable} onPress={() => {this._onNext.bind(this)}} >
+                  <TouchableHighlight style={styles.btnTouchable} onPress={ this._onNext.bind(this) } >
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
                       <Text style={styles.btnTxt}>CONTINUAR</Text>
                     </LinearGradient>
