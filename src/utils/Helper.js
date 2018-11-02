@@ -23,12 +23,12 @@ function launchTest(){
 
 }
 
-function launchWallet(account) {
+function launchWallet(account, error) {
 
   if(account && account.subaccount && account.subaccount.wallet_mode=='subaccount')
   {
     
-    launchSubaccountWallet(account);
+    launchSubaccountWallet(account, error);
     return;
   }
 
@@ -65,6 +65,9 @@ function launchWallet(account) {
       right: {
         screen: 'discoin.BusinessFilter'
       },
+    },
+    passProps: {
+      with_error: error
     }
   });
 }
@@ -74,7 +77,7 @@ function launchWalletBusinessesFirst(account) {
   if(account && account.subaccount && account.subaccount.wallet_mode=='subaccount')
   {
     
-    launchSubaccountWallet(account);
+    launchSubaccountWallet(account, 0);
     return;
   }
 
@@ -116,7 +119,7 @@ function launchWalletBusinessesFirst(account) {
   });
 }
 
-function launchSubaccountWallet(account) {
+function launchSubaccountWallet(account, error) {
 
   Navigation.startSingleScreenApp({
     appStyle : { orientation : 'portrait' },
@@ -147,6 +150,9 @@ function launchSubaccountWallet(account) {
       right: {
         screen: 'discoin.BusinessFilter'
       },
+    },
+    passProps: {
+      with_error: error
     }
   });
 
@@ -170,6 +176,8 @@ function launchOnboard() {
     animationType : 'none',
   });
 }
+
+
 
 export {
   launchOnboard,

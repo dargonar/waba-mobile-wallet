@@ -365,7 +365,7 @@ class InvoiceConfirm extends Component {
 	              </View>
 	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
 	                <Image style={{alignSelf:'flex-start', width: 15, height: 15, marginRight:4 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
-	                <Text style={styles.total_bill_red}>{payable_amount}</Text>
+	                <Text style={styles.total_bill_red}>{payable_amount.toFixed(2)}</Text>
 	              </View>
 	            </View>
 	          </View>

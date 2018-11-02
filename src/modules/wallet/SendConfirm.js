@@ -337,7 +337,8 @@ class SendConfirm extends Component {
 							passProps:  {
 									recipient : this.state.recipient,
 									amount :    total_amount,
-									memo :      this.state.memo
+									memo :      this.state.memo,
+									result_type : 'result_send'
 							},
 							navigatorStyle: {navBarHidden:true}
 					});

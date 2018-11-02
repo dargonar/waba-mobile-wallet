@@ -42,20 +42,6 @@ class NewAccount extends Component {
 		this._back 						= this._back.bind(this);
 	}
 
-// 	_onCreateAccount(){
-// 		setTimeout(() => {
-//  			this._back();
-// // 			this.props.navigator.dismissModal({
-// // 				animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
-// // 			});
-// // 			this.props.navigator.resetTo({
-// // 				screen:     'wallet.RecoveryKeywords',
-// // 				title:      'Recupero de clave',
-// // 				passProps:  {mnemonic: 'jaja ja ja ja ja ja ja'}
-// // 			});
-//     }, 1500)	;
-// 	}
-
   _onCreateAccount(){
 
 		walletActions.createAccount(this.state.account_name).then( (data) => {

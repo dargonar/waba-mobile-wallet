@@ -470,12 +470,13 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
       first_time        : first_time,
       asset   					: config.DISCOIN_ID,
       type              : start == 0 ? 'relative' : 'normal',
-      start   					: start
+      start   					: start,
+      admin_account     : config.DISCOIN_ADMIN_ACCOUNT
     }));
 
 		let query = apollo.query({
 			query: gql`
-				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!) {
+				query getTodo($account : String!, $asset : String!, $first_time : Boolean!, $start : String!, $type : String!, $admin_account : String!) {
   				asset(id:$asset) @include(if:$first_time)
 					blockchain {
 						refBlockNum
@@ -484,7 +485,7 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 					}
 					account(name:$account) {
 						id
-						blacklistedBy(account:"discoin.admin")
+						blacklistedBy(account:$admin_account)
 						balance {
 							quantity
 							asset {
@@ -571,7 +572,8 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 				first_time        : first_time,
 				asset   					: config.DISCOIN_ID,
 				type              : start == 0 ? 'relative' : 'normal',
-				start   					: start
+				start   					: start,
+				admin_account     : config.DISCOIN_ADMIN_ACCOUNT
 			},
 			forceFetch: true
 		});
@@ -714,6 +716,14 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 					console.log(' *********************** NO HAY data.asset')
 				}
 
+				if(data.account.history){
+					console.log(' *********************** SI HAY data.account.history:',data.account.history)
+					
+				}
+				else
+				{
+					console.log(' *********************** NO HAY data.account.history')
+				}
 
 				let history = data.account.history;
 				let proms = [];

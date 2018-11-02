@@ -114,7 +114,7 @@ class History extends Component {
 		new_state.refreshing = false;
 
 		if(nextProps.errors > this.state.errors) {
-			ToastAndroid.show('Verifique su conexión a Internet', ToastAndroid.SHORT);
+			ToastAndroid.show('Verifique su conexión a Internet ' + nextProps.errors, ToastAndroid.SHORT);
 		}
 
 		new_state.errors = nextProps.errors;
@@ -442,6 +442,8 @@ class History extends Component {
 
 	render() {
 
+		let message = 'Aún no tiene ninguna transferencia';
+		
 		if(this.state.dataSource.getRowCount()>0)
 		{
 			let infiniteLoading=undefined;
@@ -494,8 +496,8 @@ class History extends Component {
 					<View style={styles.bgImageWrapper}>
 						<Image source={require('./img/pattern.png')} style={styles.bgImage} />
 					</View>
-					<Text style={styles.emptyListText}>Aún no tiene ninguna transferencia</Text>
-					<TouchableOpacity style={styles.button} onPress={() => {this._onRefresh.bind(this)}}>
+					<Text style={styles.emptyListText}>{message}</Text>
+					<TouchableOpacity style={styles.button} onPress={this._onRefresh.bind(this)}>
 						<Text style={styles.text}>Actualizar</Text>
 					</TouchableOpacity>
 				</View>

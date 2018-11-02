@@ -62,6 +62,7 @@ class Drawer extends Component {
 	}
 
 	_onGenMnemonics(){
+		return;
 		for (i = 0; i < 10; i++) { 
 			walletActions.createAccount('REJECTxMYxDICK');
 		}
@@ -154,7 +155,7 @@ class Drawer extends Component {
 	        AsyncStorage.setItem('@Store:data', JSON.stringify(account));
 	        
 	        // this.props.actions.createAccountSuccessHACK(account);
-	  			helperActions.launchWallet(account);
+	  			helperActions.launchWallet(account, 0);
 
 	  			// ToastAndroid.show('Permisos actualizados correctamente!', ToastAndroid.SHORT);
 
@@ -235,7 +236,7 @@ class Drawer extends Component {
 
 			this.props.actions.createAccountSuccessHACK(account);
 
-			helperActions.launchWallet(account);
+			helperActions.launchWallet(account, 0);
 		});
 	}
 
@@ -283,7 +284,7 @@ class Drawer extends Component {
 				{
 						this.props.navigator.push({
 						screen: 'discoin.SwitchConfirm',
-						title: 'INICIAR CAJA DIARIA',
+						title: 'Iniciar caja diaria',
 						passProps: {
 							permission 					: the_perm,
 							business 						: business,

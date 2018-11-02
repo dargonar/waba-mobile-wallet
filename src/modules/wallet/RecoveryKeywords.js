@@ -41,7 +41,7 @@ class RecoveryKeywords extends Component {
   }
 
 	_onInitWallet() {
-		helperActions.launchWallet();
+		helperActions.launchWallet(this.props.account, 0);
 	}
 
 	_setClipboardContent = async () => {
@@ -88,7 +88,7 @@ class RecoveryKeywords extends Component {
 
 function mapStateToProps(state, ownProps) {
 	return {
-		//new_keys: state.wallet.new_keys
+		account: state.wallet.account
 	};
 }
 

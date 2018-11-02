@@ -126,11 +126,20 @@ class Start extends Component {
 		let that = this;
 		this.tid = setTimeout( () => {
 			console.log('CreateAccount::_onChangeText::#3');
+			
+			if(text.startsWith('discoin.')){
+					that.setState({
+						error: 			'El nombre de cuenta no puede comenzar con "discoin."',
+						refreshing: false,
+						disabled: 	true
+					});
+					return;
+				}
 			Bts2helper.isValidName(text).then( is_valid => {
 				console.log('CreateAccount::_onChangeText::#4', is_valid);
 				if(!is_valid){
 					that.setState({
-						error: 			'Sólo letras minúsculas, números, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
+						error: 			'El nombre de cuenta debe estar compuesto de letras minúsculas, números, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
 						refreshing: false,
 						disabled: 	true
 					});

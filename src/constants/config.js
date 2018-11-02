@@ -11,17 +11,64 @@
 
 import Identicon from 'identicon.js';
 
-export const API_URL          = 'http://35.163.59.126:8088';
+// MAIN NET
+// export const API_URL          			= 'https://api.discoin.com.ar';
+export const API_URL          			= 'http://54.245.222.250';
+export const CHAIN_ID        				= '4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8'; 
+export const ASSET_ID            		= '1.3.4679'; //'1.3.4621';
+export const DISCOIN_ID          		= ASSET_ID;
+export const DISCOIN_CREDIT_ID   		= '1.3.4622' // DESCUBIERTO | THEDISCOIN.OD
+export const DISCOIN_ACCESS_ID   		= '1.3.4623' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+export const DISCOIN_SYMBOL         = 'DISCOIN.AR'
+export const DISCOIN_CREDIT_SYMBOL  = 'DISCOIN.IBALANCE'
+export const DISCOIN_ACCESS_SYMBOL  = 'DISCOIN.ENDORSE'
+export const DISCOIN_ADMIN_ACCOUNT  = 'discoin-gov'; // 'discoin.admin'
+export const ASSET_PRECISION 			 = 5;
+export const ASSET_DIVIDER   			 = 100000;
+
+
+// PRIVATE TESTNET
+// export const API_URL          			= 'https://devapi.discoin.com.ar';
+// export const CHAIN_ID        				= 'bde617520673d18e67db5d7060ca2740f80e28093519c30176044c8d4a227e73'; 
+// export const ASSET_ID            		= '1.3.2';
+// // export const ASSET_ID            		= '1.3.7';
+// // export const ASSET_ID            		= '1.3.5';
+// export const DISCOIN_ID          		= ASSET_ID;
+// export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+// export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
+// // export const DISCOIN_SYMBOL         = 'DISCOIN3'
+// export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
+// export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
+// export const DISCOIN_ADMIN_ACCOUNT  = 'discoin.admin'
+// export const ASSET_PRECISION 				= 2;
+// export const ASSET_DIVIDER   				= 100;
+
+
+// TUTI TESNET
+// export const API_URL          			= 'http://192.168.0.22:8088';
+// // export const API_URL          			= 'http://192.168.43.28:8088';
+// export const CHAIN_ID        			  = '1d70881f06a5d2ece91313a00f7eda5e1c7a7183957f3a6539deb4aa95237fe5'
+// export const ASSET_ID            	  = '1.3.1'; //'1.3.7';
+// export const DISCOIN_ID          	  = ASSET_ID;
+// export const DISCOIN_CREDIT_ID   	  = '1.3.2' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   	  = '1.3.3' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+// export const DISCOIN_SYMBOL          = 'DISCOIN'; //'DISCOINASSET'
+// export const DISCOIN_CREDIT_SYMBOL   = 'DISCOIN.IBALANCE';
+// export const DISCOIN_ACCESS_SYMBOL   = 'DISCOIN.ENDORSE';
+// export const DISCOIN_ADMIN_ACCOUNT   = 'discoin-gov'
+// export const ASSET_PRECISION 			  = 5;
+// export const ASSET_DIVIDER   			  = 100000;
+;
+
+
 export const FILES_URL        = API_URL+'/files/';
 export const API_URL_V1       = API_URL+'/api/v3';
 export const WABA_NETWORK_URL = 'https://waba.network';
 
-export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
+// export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
+export const API_GRAPHQL_URL = API_URL;
 export const GRAPHQL_URL     = API_GRAPHQL_URL+'/graphql/v3';
-
-export const ASSET_PRECISION = 2;
-export const ASSET_DIVIDER   = 100;
-
 
 export const I_ENDORSE_PREFIX    = '~ie';
 export const ENDORSED_BY_PREFIX  = '~eb';
@@ -29,25 +76,6 @@ export const ENDORSED_TX_PREFIX  = '~et';
 
 export const REFUND_PREFIX  			= '~re';
 export const PAYDISCOUNTED_PREFIX = '~di';
-
-// SERVER
-export const CHAIN_ID        				= 'bde617520673d18e67db5d7060ca2740f80e28093519c30176044c8d4a227e73';
-// export const CHAIN_ID        				= '2cfcf449d44f477bc8415666766d2258aa502240cb29d290c1b0de91e756c559';
-// export const ASSET_ID            		= '1.3.9';
-// export const DISCOIN_ID          		= ASSET_ID;
-// export const DISCOIN_CREDIT_ID   		= '1.3.7' // DESCUBIERTO | THEDISCOIN.OD
-// export const DISCOIN_ACCESS_ID   		= '1.3.8' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
-
-// LOCAL
-// export const CHAIN_ID        				= 'f5a42a1c16cf678773313f5f94ef7ebb69257c5f33a147aa8c4ac0fa5e451805';
-export const ASSET_ID            		= '1.3.2';
-export const DISCOIN_ID          		= ASSET_ID;
-export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
-export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
-
-export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
-export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
-export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
 
 export const SEARCH_TYPE_SEND 			= 'search_type_send'; 
 export const SEARCH_TYPE_CONFIRM 		= 'search_type_confirm';
@@ -202,7 +230,7 @@ export function cleanMnemonics(mnemonics){
 	// let original_words = words;
 	let i;
 	let replace_indexes = [];
-	let vowels = ['á', 'é', 'í', 'ó', 'ú'];
+	let vowels = ['á', 'é', 'í', 'ó', 'ú', 'ñ', 'ñ'];
 	  //['á', 'é', 'í', 'ó', 'ú']
 	  //['á', 'é', 'í', 'ó', 'u']
 	
@@ -212,7 +240,10 @@ export function cleanMnemonics(mnemonics){
 			{
 				// console.log('--------------------')
 				// console.log('-- added word:')
-				// console.log(words[i])
+				if(j==5)
+				{
+					console.log(' **************** cleanMnemonics  ñ !!!', words[i])
+				}
 				// console.log('+++idx: ')
 				// console.log(i)
 				// console.log('+++vowel:')

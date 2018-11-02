@@ -107,9 +107,10 @@ constructor(props) {
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 2),
 				UWCrypto.derivePrivate('', '', res.masterPrivateKey, 3)
 			]).then(function(res2) {
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[0].pubkey);
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[1].pubkey);
-				console.log('RESTORE ACCOUNT::PUBKEY', res2[2].pubkey);
+				console.log('RESTORE ACCOUNT::PUBKEY 0 ', res2[0].pubkey);
+				console.log('RESTORE ACCOUNT::PUBKEY 1 ', res2[1].pubkey);
+				console.log('RESTORE ACCOUNT::PUBKEY 2 ', res2[2].pubkey);
+				console.log('URL: ', config.getAPIURL('/account/find'));
 				fetch( config.getAPIURL('/account/find'), {
 // 				fetch('http://35.161.140.21:8080/api/v1/find_account', {
 					method: 'POST',
@@ -139,7 +140,7 @@ constructor(props) {
 
 						AsyncStorage.setItem('@Store:data', JSON.stringify(account)).then( () => {
 							that.props.actions.createAccountSuccessHACK(account);
-							helperActions.launchWallet();
+							helperActions.launchWallet(account, 0);
 
 							setTimeout( function() {
 								that.props.actions.retrieveHistory(

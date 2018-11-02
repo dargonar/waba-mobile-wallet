@@ -4,6 +4,7 @@ import {
 	Image,
 	Text,
 	TouchableHighlight,
+	TouchableOpacity,
 	ToastAndroid,
 	View
 } from 'react-native';
@@ -35,6 +36,10 @@ class Wallet extends Component {
 		this.doPay						= this.doPay.bind(this);
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 
+		this.state = {
+			with_error : (props.with_error!==undefined && props.with_error==1)
+  
+		}
 
 	}
 
@@ -43,7 +48,10 @@ class Wallet extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-  	//console.log('Main::componentWillReceiveProps', nextProps);
+  	let new_state = {};
+		if (nextProps.history !== this.props.history) {
+			this.setState({with_error:0});
+		}
 	}
 
  _onNavigatorEvent(event) {
@@ -135,12 +143,29 @@ class Wallet extends Component {
 		let buttonColor =	(config.isSubaccountMode(this.props.account.subaccount)) ? '#0A566B':'#ff7233' ;
 		let subaccount_mode 		= config.isSubaccountMode(this.props.account.subaccount);
 		
+		let message = 'Algo esta sucediendo :( /n Podemos tener un problema en nuestros servidores o no tenésconexión a internet';
+		
+
 		// let icon = (<Icon name="ios-add" />);
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
 			<View style={styles.wallet_container}>
-		        <Balance {...this.props} style={styles.balance}/>
-		        <History {...this.props} style={styles.history}/>
+	        <Balance {...this.props} style={styles.balance}/>
+		        {
+		        	(this.state.with_error==1)?
+		        	(<View style={styles.containerEmpty}>
+								<View style={styles.bgImageWrapper}>
+									<Image source={require('./components/img/pattern.png')} style={styles.bgImage} />
+								</View>
+								<Text style={styles.emptyListText}>{message}</Text>
+								<TouchableOpacity style={styles.button} onPress={this._onRefresh.bind(this)}>
+									<Text style={styles.text}>Actualizar</Text>
+								</TouchableOpacity>
+							</View>)
+		        	:(<History {...this.props} style={styles.history}/>)
+		        }
+
+		        
 				{ (subaccount_mode)?
 					(<View style={styles.subaccountButtonContainer}>
 						<TouchableHighlight

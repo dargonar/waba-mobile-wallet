@@ -91,7 +91,7 @@ class TxDetails extends Component {
             </View>
             <View style={styles.feeView}>
               <View style={styles.feeCard}>
-                <Text style={styles.label}>Comisión</Text>
+                <Text style={styles.label}>Costo de red</Text>
                 <Text>{this.state.fee.quantity}</Text>
               </View>
             </View>

@@ -45,11 +45,14 @@ try {
 					console.log('READY =>', s.wallet.ready);
 					if(s.wallet.ready) {
 						unsubscribe();
-						launchWallet(account);
+						launchWallet(account, 0);
 
 					} else if(s.wallet.errors > 0) {
             if(!(s.wallet.errors % 10)) {
-							ToastAndroid.show('Está tomando mucho tiempo iniciar la aplicación, verifique su conexión a Internet', ToastAndroid.SHORT);
+							// unsubscribe();
+							// launchWallet(account, 1);
+							ToastAndroid.show('La app no pudo conectarse. Verifique su conexión a Internet', ToastAndroid.SHORT);
+							// return;
 						}
 						// AHORA TRAEMOS COMERCIOS
 						store.dispatch(walletActions.retrieveHistory(account.name, account.keys, true, 0, account.subaccount) );

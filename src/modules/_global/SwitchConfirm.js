@@ -132,7 +132,7 @@ class SwitchConfirm extends Component {
 
         this.props.actions.createAccountSuccessHACK(account);
 
-  			helperActions.launchWallet(account);
+  			helperActions.launchWallet(account, 0);
       });
     }
 
@@ -166,7 +166,7 @@ class SwitchConfirm extends Component {
                 },
                 navigatorStyle: {navBarHidden:true}
             });
-    return;
+    
     this._getUnsignedTx(this.state.permission).then((tx) => {
       if('error' in tx)
       {
@@ -178,6 +178,8 @@ class SwitchConfirm extends Component {
       let my_tx = tx.tx
 
       /* --- */
+      // this._onSendingError(' -- NAAAA -- ');
+      // return;
       this._addSignature(my_tx, this.props.account.keys[1].privkey).then( signed_tx => {
         console.log('-- CLAIMING DAILY - ADDING SIG', JSON.stringify(signed_tx));
 
@@ -294,7 +296,7 @@ class SwitchConfirm extends Component {
     if(this.state.is_daily_request)
     {
       button_text = 'INICIAR CAJA DIARIA'
-      title_text = 'Solicitar monto diario'
+      title_text = 'SOLICITAR MONTO DIARIO'
     }
     return (
       <View style={styles.container}>
