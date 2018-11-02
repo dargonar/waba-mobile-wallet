@@ -12,8 +12,8 @@
 import Identicon from 'identicon.js';
 
 // MAIN NET
-// export const API_URL          			= 'https://api.discoin.com.ar';
-export const API_URL          			= 'http://54.245.222.250';
+export const API_URL          			= 'https://api.discoin.com.ar';
+// export const API_URL          			= 'http://54.245.222.250';
 export const CHAIN_ID        				= '4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8'; 
 export const ASSET_ID            		= '1.3.4679'; //'1.3.4621';
 export const DISCOIN_ID          		= ASSET_ID;
