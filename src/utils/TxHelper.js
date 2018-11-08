@@ -23,6 +23,11 @@ export function  addSignature(tx, privkey) {
 
 export function generateUnsignedTx(params, _blockchain) {
 		
+		// console.log('#########################################################');
+		// console.log(' ### TxHelper::generateUnsignedTx()');
+		// console.log('-- params.amount: ', params.amount, ' -- params.asset.precision: ', params.asset.precision);
+		// console.log('-- res: ',  (Number(params.amount)*Math.pow(10,params.asset.precision)) )
+
 		return new Promise( (resolve, reject) => {
 			tx = {
 				'expiration': 			config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),

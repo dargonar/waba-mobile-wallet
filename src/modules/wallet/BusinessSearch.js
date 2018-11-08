@@ -77,7 +77,7 @@ class BusinessSearch extends Component {
 	}
 
 	_onChangeText(text) {
-    this.setState({search_text:text});
+    this.setState({search_text:text.trim()});
     
     clearTimeout(this.tid);
     let that = this;

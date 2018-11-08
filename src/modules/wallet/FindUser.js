@@ -188,7 +188,6 @@ class FindUser extends Component {
     // const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#ccc'}}/>);
     // // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
     // const iconBiz    = (<Image source={{uri:iconsMap['store--active'].uri}} style={{height:20,width:20, color:'#ccc', opacity:0.3}} />);
-    
     // let icon = iconUser;
     // if(Math.random()>0.5)
     //   icon = iconBiz;
@@ -253,6 +252,7 @@ class FindUser extends Component {
             value={this.state.search_text}
             underlineColorAndroid ="transparent"
             placeholder="Buscar..."
+            autoFocus={true}
           />
         </View>
         

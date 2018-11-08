@@ -624,7 +624,7 @@ class Drawer extends Component {
 							<View flexDirection='row'>
 								<Image style={{width: 18, height: 18, resizeMode: Image.resizeMode.contain, opacity: 0.15, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
 								<Text style={{fontSize: 10, fontFamily: 'Montserrat-Bold', marginTop: 1}}>
-									RC-4 v1.10
+									BETA v1.12
 								</Text>
 							</View>
 							<View flexDirection='row'>

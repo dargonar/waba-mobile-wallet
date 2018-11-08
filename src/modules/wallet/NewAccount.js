@@ -44,6 +44,7 @@ class NewAccount extends Component {
 
   _onCreateAccount(){
 
+    
 		walletActions.createAccount(this.state.account_name).then( (data) => {
       console.log(' --- _onCreateAccount()', JSON.stringify(data));
       AsyncStorage.setItem('@Store:data', JSON.stringify(data));

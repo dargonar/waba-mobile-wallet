@@ -233,6 +233,9 @@ export function endorseApply(from, endorse_type) {
 */
 export function retrieveUsers(query, search_filter) {
     search_filter = search_filter || '0';
+    
+    query = query?query.trim():query;
+
 		return new Promise((resolve, reject) => {
 			fetch(config.getAPIURL('/account/search2?search='+query+'&search_filter='+search_filter), {
 				method: 'GET',

@@ -13,7 +13,6 @@ import Identicon from 'identicon.js';
 
 // MAIN NET
 export const API_URL          			= 'https://api.discoin.com.ar';
-// export const API_URL          			= 'http://54.245.222.250';
 export const CHAIN_ID        				= '4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8'; 
 export const ASSET_ID            		= '1.3.4679'; //'1.3.4621';
 export const DISCOIN_ID          		= ASSET_ID;
@@ -23,8 +22,8 @@ export const DISCOIN_SYMBOL         = 'DISCOIN.AR'
 export const DISCOIN_CREDIT_SYMBOL  = 'DISCOIN.IBALANCE'
 export const DISCOIN_ACCESS_SYMBOL  = 'DISCOIN.ENDORSE'
 export const DISCOIN_ADMIN_ACCOUNT  = 'discoin-gov'; // 'discoin.admin'
-export const ASSET_PRECISION 			 = 5;
-export const ASSET_DIVIDER   			 = 100000;
+export const ASSET_PRECISION 			  = 5;
+export const ASSET_DIVIDER   			  = 100000;
 
 
 // PRIVATE TESTNET
@@ -103,20 +102,62 @@ export const ALL_AVALS       = [AVAL1000_ID, AVAL10000_ID, AVAL30000_ID];
 export const ALL_AVALS_DESC  = {'1.3.1319': '$1000', '1.3.1322': '$10000', '1.3.1320': '$30000'};
 
 export const ASSET_SYMBOL    = '$';
-// export const ASSET_SYMBOL    = '₱';
+export const ASSET_VISIBLE_DECIMAL = 2;
 
 export const TX_TYPE_UNKNOWN 			= 0;
 export const TX_TYPE_SENT 				= 1;
 export const TX_TYPE_RECEIVED 		= 2;
 export const TX_TYPE_CREDIT_UP 		= 4;
 export const TX_TYPE_CREDIT_DOWN 	= 8;
-
+export const TX_TYPE_UP 					= 16;
+export const TX_TYPE_DOWN 				= 32;
 
 import UWCrypto from '../utils/Crypto';
 
 export function getAPIURL(path) {
 	return API_URL_V1+path;
 }
+
+
+export function forBalance(value, decimals) {
+	
+	if(decimals == ASSET_PRECISION)
+		return Number(value).toFixed(ASSET_PRECISION)
+	return toVisibleNumUp(value, true);
+}
+
+export function toVisibleNumEx(value, tx_type_string, force_decimals) {
+	
+	if(tx_type_string=='sent')
+		return toVisibleNumDown(value, force_decimals);
+	return toVisibleNumUp(value, force_decimals);
+}
+
+export function toVisibleNum(value, tx_type, force_decimals) {
+	if(!value)
+		return 0;
+	let val = (isNaN(value))?Number(value):value;
+	
+	let my_force_decimals = force_decimals || false;
+	if(parseInt(val)==val && !my_force_decimals)
+		return Number(val).toFixed(0);
+
+	let multiplier = Math.pow(10,ASSET_VISIBLE_DECIMAL)
+	
+	if(tx_type == TX_TYPE_UP || tx_type == TX_TYPE_RECEIVED || tx_type == TX_TYPE_CREDIT_UP)
+		return (Math.floor(val*multiplier)/multiplier).toFixed(ASSET_VISIBLE_DECIMAL);
+
+	// if(tx_type == TX_TYPE_DOWN)
+	return (Math.ceil(val*multiplier)/multiplier).toFixed(ASSET_VISIBLE_DECIMAL);
+}
+
+export function toVisibleNumUp(value, force_decimals) {
+	return toVisibleNum(value, TX_TYPE_UP, force_decimals)
+}
+export function toVisibleNumDown(value, force_decimals) {
+	return toVisibleNum(value, TX_TYPE_DOWN, force_decimals)
+}
+
 
 export function toHex(value) {
 	// utf8 to latin1
@@ -132,27 +173,6 @@ export function fromHex(hex) {
     var str = '';
     for (var i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
-}
-
-export function hasOverdraft(balances){
-	if(DESCUBIERTO_ID in balances)
-		return balances[DESCUBIERTO_ID];
-	return false;
-}
-
-export function hasEndorsements(balances){
-	for(var i = 0; i < ALL_AVALS.length; i++) {
-		if(ALL_AVALS[i] in balances)
-			if(Number(balances[ALL_AVALS[i]])>0)
-				return ALL_AVALS[i];
-	}
-	return false;
-}
-
-export function readyToRequestCredit(balances, credit_ready){
-	if(!credit_ready)
-		return false;
-	return hasEndorsements(balances);
 }
 
 export function getToday(){

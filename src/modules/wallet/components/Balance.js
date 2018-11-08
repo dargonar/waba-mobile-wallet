@@ -59,7 +59,9 @@ class Balance extends Component {
 		let balance = '';
 		if(this.props.balance) 
 			balance = this.props.balance[config.ASSET_ID] || 0;
-		let parts = Number(balance).toFixed(this.state.precision).split('.');
+		// let parts = Number(balance).toFixed(this.state.precision).split('.');
+		let parts = config.forBalance(balance, this.state.precision).split('.');
+		
 		let p = undefined;
 		let amountColorStyle = styles.bold_color;
 		if(parseInt(parts[1]) > 0)

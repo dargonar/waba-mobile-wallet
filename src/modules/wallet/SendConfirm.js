@@ -403,7 +403,9 @@ class SendConfirm extends Component {
 		}
 		let send_disabled = !this.state.can_confirm;
 		let total = this.getTotal();
-		let fee = this.state.fee_txt.toFixed(2);
+		//let fee = this.state.fee_txt.toFixed(2);
+		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);
+
 		let otherIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 		let imgData = config.getRedDiscoinIcon();
 		const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)

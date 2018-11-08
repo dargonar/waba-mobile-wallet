@@ -162,14 +162,13 @@ class InvoiceConfirm extends Component {
 			screen : 'customer.SendingEx',
 			title :  'Realizando pago...',
 			passProps: {recipient : this.state.recipient,
-									amount :    this.state.to_pay,
+									amount :    final_amount.toFixed(2), //this.state.to_pay,
 									memo :      this.state.memo,
 								  modal_type: 'paying'},
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 
-		
 		TxHelper.addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
 
 			console.log(' ------------- TX:');

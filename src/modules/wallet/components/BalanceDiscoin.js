@@ -30,6 +30,15 @@ class BalanceDiscoin extends Component {
 						'number of channels: ' + this.whoosh.getNumberOfChannels());
 			}
 		});		
+	
+		this.switchPrecision = this.switchPrecision.bind(this);
+		this.state = {
+			precision : 2		
+		};
+	}
+
+	switchPrecision(){
+		this.setState({precision: (this.state.precision==2?config.ASSET_PRECISION:2)})
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -47,9 +56,10 @@ class BalanceDiscoin extends Component {
   }
 
   onPressed(){
-  	this.props.navigator.popToRoot({
-		  animated: true
-		});
+  	this.switchPrecision();
+  // 	this.props.navigator.popToRoot({
+		//   animated: true
+		// });
   	
    // this.props.navigator.push({
    //    screen: 'wallet.Wallet',
@@ -78,19 +88,17 @@ class BalanceDiscoin extends Component {
 	render() {
 
 		
-		let r = 0;
-		if(this.props.balance) r = this.props.balance[config.ASSET_ID] | 0;
-		let d = 0;
-		if(this.props.balance) d = this.props.balance[config.DESCUBIERTO_ID] | 0;
-
-		b = r - d;
-		
-		if(!b) b = '0';
-		let parts = Number(b).toFixed(2).split('.');
-		let amountColorStyle = styles.bold_color;
+		let balance = '';
+		if(this.props.balance) 
+			balance = this.props.balance[config.ASSET_ID] || 0;
+		// let parts = Number(balance).toFixed(this.state.precision).split('.');
+		let parts = config.forBalance(balance, this.state.precision).split('.');
 		let p = undefined;
-		if(parts[1] != '00')
-			p = (<Text style={[styles.dec_part, amountColorStyle]}>{parts[1]}</Text>)
+		let amountColorStyle = styles.bold_color;
+		if(parseInt(parts[1]) > 0)
+		{
+			p = (<Text style={[styles.dec_part, amountColorStyle]}>{"."}{parts[1]}</Text>)
+		}
 
 		console.log('************* render BalanceDiscoin:')
 		console.log(JSON.stringify(this.props.balance))

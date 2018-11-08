@@ -86,7 +86,9 @@ class TxDetails extends Component {
             <View style={styles.amountQuantityView}>
               <View style={styles.amountQuantityCard}>
                 <Image style={{width: 13, height: 13, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 5}} source={{uri: imgData}}/>
-                <Text style={styles.amountQuantity}>{this.state.amount.quantity}</Text>
+                <Text style={styles.amountQuantity}>
+                  { config.toVisibleNumEx(this.state.amount.quantity, this.state.processedData._type, true) }
+                </Text>
               </View>
             </View>
             <View style={styles.feeView}>

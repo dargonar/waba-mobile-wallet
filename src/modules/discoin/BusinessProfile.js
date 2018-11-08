@@ -535,7 +535,7 @@ class BusinessProfile extends Component {
 
 		return (
 			<ScrollView style={styles.container}>
-        <Image style={{width:width, height:250,resizeMode: 'cover'}} source={{uri:imgSource}} ></Image>
+        <Image style={{width:width, height:null,resizeMode: 'contain'}} source={{uri:imgSource}} ></Image>
         <View style={{flex:1, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
           <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
             <Text style={styles.descriptionText}>{this.state.business_data.description}</Text>
@@ -548,7 +548,7 @@ class BusinessProfile extends Component {
               <Icon name="remove" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: 0, fontSize: 50}}/>                  
               <View flexDirection='row'>
                 <Text style={styles.promoLabel}>%</Text>
-                <Text style={styles.discount}>{this.state.business_data['discount_ex'][config.getToday()]['discount']}</Text>
+                <Text style={styles.discount}>{Number(this.state.business_data['discount_ex'][config.getToday()]['discount']).toFixed(0)}</Text>
               </View>  
             </View>
           </LinearGradient>
@@ -559,7 +559,7 @@ class BusinessProfile extends Component {
               <Icon name="add" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: -5, fontSize: 50}}/>                  
               <View flexDirection='row'>
                 <Text style={styles.promoLabel}>%</Text>
-                <Text style={styles.reward}>{this.state.business_data['discount_ex'][config.getToday()]['reward']}</Text>
+                <Text style={styles.reward}>{Number(this.state.business_data['discount_ex'][config.getToday()]['reward']).toFixed(0)}</Text>
               </View>  
             </View>
           </LinearGradient>
