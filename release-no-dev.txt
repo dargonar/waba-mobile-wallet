@@ -4,7 +4,13 @@ http://stackoverflow.com/questions/35935060/how-can-i-generate-an-apk-that-can-r
 (((13245768)))
 keytool -genkey -v -keystore my-app-key.keystore -alias my-app-alias -keyalg RSA -keysize 2048 -validity 10000
 
+-- release
 keytool -genkey -v -keystore android/app/discoin-release-key.keystore -alias discoin-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+
+-- dev
+keytool -genkey -v -keystore android/app/discoin-dev-key.keystore -alias discoin-dev-alias -keyalg RSA -keysize 2048 -validity 10000
+
 
 https://facebook.github.io/react-native/docs/signed-apk-android.html
 https://medium.com/@abhaytalreja/react-native-android-update-version-6966c21ccf50

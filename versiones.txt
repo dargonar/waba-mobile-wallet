@@ -1,0 +1,5 @@
+/home/tuti/waba_mobile_wallet/app.json
+/home/tuti/waba_mobile_wallet/android/app/src/main/AndroidManifest.xml
+/home/tuti/waba_mobile_wallet/android/app/build.gradle
+/home/tuti/waba_mobile_wallet/android/app/src/main/res/values/strings.xml
+/home/tuti/waba_mobile_wallet/android/gradle.properties

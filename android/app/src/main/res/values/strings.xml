@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DisCoin</string>
+    <!-- <string name="app_name">DisCoin</string> -->
+    <!-- <string name="app_name">DisCoin Test</string> -->
+    <string name="app_name">DisCoin Dev</string>
 </resources>

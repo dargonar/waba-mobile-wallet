@@ -269,10 +269,10 @@ class SendConfirm extends Component {
 			return;
 		}
 
-		console.log(' ==> this.props.balance', this.props.balance);
+		// console.log(' ==> this.props.balance', this.props.balance);
 		let final_amount = this.getTotal();
 		let disp = Number(this.props.balance[config.ASSET_ID]);
-		console.log(disp, final_amount);
+		// console.log(disp, final_amount);
 		if(Number(disp) < final_amount)
 		{
 			Alert.alert(
