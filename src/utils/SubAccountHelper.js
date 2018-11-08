@@ -24,7 +24,7 @@ export function prepareResetBalance(reset_to_zero, account, balance){
 		type: 				reset_to_zero?config.SA_RESET_BALANCE:config.SA_SEND_EXTRA_BALANCE,
   	recipient: 		[biz_account, biz_account_id],
   	biz_name: 		biz_name,
-  	amount: 			reset_to_zero?(balance-1):((balance-1)-withdrawal_limit),
+  	amount: 			reset_to_zero?(balance-0.001):((balance-0.001)-withdrawal_limit),
   	memo: 				reset_to_zero?config.SA_RESET_BALANCE_PREFIX:config.SA_SEND_EXTRA_BALANCE_PREFIX
 	}
 }

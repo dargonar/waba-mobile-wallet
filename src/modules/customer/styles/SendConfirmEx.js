@@ -24,12 +24,19 @@ const styles = StyleSheet.create({
  //    fontSize   : 20,
   //  color: 'white'
  //  },
-  fullWidthButtonTextDisabled:{
-    fontFamily : 'Montserrat-Medium',
-    fontWeight : '100',
-      fontSize   : 15,
-    color      : '#cccccc'
+  fullWidthButtonDisabled: {
+  backgroundColor: '#bbb',
+
+  height: 50,
+  borderRadius: 25,
+  flexDirection:'row', 
+  paddingLeft:35, paddingRight:35,
+  width: 200,
+  alignItems:'center', 
+  justifyContent: 'center',
+
   },
+
   amountQuantityView:{
     justifyContent: 'center',
     flexDirection: 'row',
@@ -169,7 +176,6 @@ btnTxt: {
   marginBottom: 1,
   color: '#fff',
 },
-
 
 });
 

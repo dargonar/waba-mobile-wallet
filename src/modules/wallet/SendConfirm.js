@@ -43,7 +43,7 @@ class SendConfirm extends Component {
       },
       identicon 	: '',
 			memo_key 		: props.memo_key,
-      amount 			: props.amount,
+      amount 			: Number(props.amount||0).toFixed(2),
       memo 				: props.memo,
 			tx 					: null,
 			fee 				: 0,
@@ -100,19 +100,7 @@ class SendConfirm extends Component {
 				]
 			}
       console.log(' -- generateTX:', JSON.stringify(tx));
-      // console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
-      // console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
-      // console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
-
-      // get_fees_for_tx
-      // {
-      //     "fees": [
-      //         {
-      //             "amount": 20,
-      //             "asset_id": "1.3.9"
-      //         }
-      //     ]
-      // }
+      
 			fetch(config.getAPIURL('/get_fees_for_tx'), {
 				method: 'POST',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -154,7 +142,11 @@ class SendConfirm extends Component {
 
 
 	getTotal(){
-		return (Number(this.state.amount) + Number(this.state.fee_txt)).toFixed(2);
+		// return (Number(this.state.amount) + Number(this.state.fee_txt)).toFixed(2);
+		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
+		let final_amount = Number(this.state.amount) + fee;
+		// let disp = Number(this.props.balance[config.ASSET_ID]);
+		return final_amount;
 	}
 
 	_getRecipientInfo(recipient) {
@@ -185,9 +177,6 @@ class SendConfirm extends Component {
 
 	_getTx() {
 
-		// console.log(' ---- SendConfirm._getTx()')
-		// console.log(this.props.account.id, this.state.recipient.account_id, this.state.amount);
-		// return;
 		console.log(' ---- SendConfirm._getTx()')
 		this._buildMemo(this.state.memo, this.state.memo_key).then( enc_memo => {
 			let amount = Number(this.state.amount).toFixed(2);
@@ -281,8 +270,8 @@ class SendConfirm extends Component {
 		}
 
 		console.log(' ==> this.props.balance', this.props.balance);
-		let final_amount = Number(this.state.amount) + Number(this.state.fee_txt);
-		let disp = (Number(this.props.balance[0])); // - Number(this.props.balance[0])).toFixed(2);
+		let final_amount = this.getTotal();
+		let disp = Number(this.props.balance[config.ASSET_ID]);
 		console.log(disp, final_amount);
 		if(Number(disp) < final_amount)
 		{
@@ -295,8 +284,8 @@ class SendConfirm extends Component {
 			)
 			return;
 		}
-
-		let total_amount = this.getTotal();
+		// return;
+		let total_amount = Number(this.state.amount).toFixed(2);
 		this.props.navigator.showModal({
 			screen : 'wallet.Sending',
 			title :  'Enviando...',
@@ -402,24 +391,25 @@ class SendConfirm extends Component {
 			memo_style = styles.memo_empty;
 		}
 		let send_disabled = !this.state.can_confirm;
-		let total = this.getTotal();
-		//let fee = this.state.fee_txt.toFixed(2);
+		// let total = config.toVisibleNumDown(this.getTotal(), true);
+		let total = Number(this.state.amount).toFixed(2);
 		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);
 
-		let otherIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
+		let identicon = config.getIdenticon(this.state.recipient.name);
+    let otherIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: identicon}}/>)
+    let userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: config.getIdenticonForHash(this.props.account.identicon)}}/>)
+
 		let imgData = config.getRedDiscoinIcon();
-		const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
-		// const iconUser   = (<Icon name='user-circle' type='FontAwesome' style={{fontSize: 20, color: '#666'}}/>);
-    // const iconBiz    = (<Icon name='store' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>);
-    const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
-    // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
-    const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+		
+		
+		// const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+  //   const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
 		// let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
 		let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
     // HACK
-    let icon = iconUser;
-    if(Math.random()>0.5)
-      icon = iconBiz;
+    // let icon = iconUser;
+    // if(Math.random()>0.5)
+    //   icon = iconBiz;
     
 
 		return (
@@ -479,11 +469,11 @@ class SendConfirm extends Component {
 			  
 			  { (this.state.can_confirm)?
 					  (<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.btnGradient}>
-  					    <Text style={styles.btnTxt}>CONTINUAR</Text>
+  					    <Text style={styles.btnTxt}>CONFIRMAR</Text>
   					  </LinearGradient>)
 					  :
 
-			    (<Text style={styles.btnTxt}>CONTINUAR</Text>)
+			    (<Text style={styles.btnTxt}>CONFIRMAR</Text>)
 			  }
 			  
 			</TouchableHighlight>

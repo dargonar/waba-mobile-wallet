@@ -16,7 +16,10 @@ import { iconsMap } from '../../utils/AppIcons';
 
 const item_h     = (Dimensions.get('window').height/2);
 
+
 const {height, width} = Dimensions.get('window');
+
+const img_height = width / 4 * 3  ;
 
 const deltas = {
 	// latitudeDelta: 0.0922,
@@ -102,7 +105,8 @@ const styles = StyleSheet.create({
   descriptionText:{
     color: '#666',
     fontFamily : 'Montserrat-Regular',
-    fontSize:     17,  
+    fontSize:     20,  
+    textAlign: 'justify'
   },
   //GRADIENTS
   discountGradient: {
@@ -535,7 +539,7 @@ class BusinessProfile extends Component {
 
 		return (
 			<ScrollView style={styles.container}>
-        <Image style={{width:width, height:null,resizeMode: 'contain'}} source={{uri:imgSource}} ></Image>
+        <Image style={{width:width, height:img_height, resizeMode: 'cover'}} source={{uri:imgSource}} ></Image>
         <View style={{flex:1, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
           <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
             <Text style={styles.descriptionText}>{this.state.business_data.description}</Text>

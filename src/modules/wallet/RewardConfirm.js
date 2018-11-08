@@ -107,10 +107,10 @@ class RewardConfirm extends Component {
 					]
 				]
 			}
-      console.log(' -- generateTX:', JSON.stringify(tx));
-      console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
-      console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
-      console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
+      // console.log(' -- generateTX:', JSON.stringify(tx));
+      // console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
+      // console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
+      // console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
 
 			fetch(config.getAPIURL('/get_fees_for_tx'), {
 				method: 'POST',
@@ -137,9 +137,9 @@ class RewardConfirm extends Component {
 		});
 	}
 
-	getTotal(){
-		return (Number(this.state.amount||0) + Number(this.state.fee_txt)).toFixed(2);
-	}
+	// getTotal(){
+	// 	return (Number(this.state.amount||0) + Number(this.state.fee_txt)).toFixed(2);
+	// }
 
   getFactura(){
 		return Number(this.state.bill_amount).toFixed(2);
@@ -215,10 +215,17 @@ class RewardConfirm extends Component {
 
   _onConfirm(){
 
-    console.log(' ==> this.props.balance', this.props.balance);
-		let final_amount = Number(this.state.reward_dsc) + Number(this.state.fee_txt);
-		let disp = (Number(this.props.balance[0])); // - Number(this.props.balance[0])).toFixed(2);
-		console.log(disp, final_amount);
+  	// console.log(' ==> this.props.balance', this.props.balance);
+		// let final_amount = Number(this.state.reward_dsc) + Number(this.state.fee_txt);
+		// let disp = (Number(this.props.balance[0])); // - Number(this.props.balance[0])).toFixed(2);
+		// console.log(disp, final_amount);
+
+		// console.log(' ==> this.props.balance', this.props.balance);
+		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
+		let final_amount = Number(this.state.reward_dsc) + fee;
+		let disp = Number(this.props.balance[config.ASSET_ID]); 
+		// console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee_txt);
+		// return;
 		if(Number(disp) < final_amount)
 		{
 			Alert.alert(

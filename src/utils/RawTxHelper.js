@@ -1,4 +1,5 @@
 import * as config from '../constants/config';
+import * as moment from 'moment'
 
 export const action   	= {received:'RECIBISTE DE', sent: 'ENVIADOS A', discounted_subacc:'PAGO RECIBIDO DE', refunded_subacc:'RECOMPENSASTE A', refunded:'TE RECOMPENSÓ', discounted:'PAGASTE A'};
 export const action_raw = {received:'ENVIO', sent: 'ENVIO', discounted_subacc:'PAGO', refunded_subacc:'RECOMPENSA', refunded:'RECOMPENSA', discounted:'PAGO'};
@@ -16,20 +17,21 @@ export function getTxData(rowData, account_name){
 export function getTransferData(rowData, account_name){  
 	
 	// let _type  	 	= rowData.from.name.endsWith(this.props.account.name) ? 'sent' : 'received';
-	let _type  	 			= rowData.from.name==account_name ? 'sent' : 'received';
-	let _dea   	 			= _type;
-	let _fecha  	 		= _getFecha(rowData.block.timestamp);
-	let _hora   	 		= _getHora(rowData.block.timestamp);
-	let asset_symbol  = config.ASSET_SYMBOL;
-	let _rotato 			= _type;
-	let _bg 		 			= _type;
-	let _action   		= _type;
-	let _msg 					= '';
+	let _type  	 				= rowData.from.name==account_name ? 'sent' : 'received';
+	let _dea   	 				= _type;
+	let local_timestamp = moment.utc(rowData.block.timestamp).local().format('YYYY-MM-DD HH:mm:ss');
+	let _fecha  	 			= _getFecha(local_timestamp);
+	let _hora   	 			= _getHora(local_timestamp);
+	let asset_symbol  	= config.ASSET_SYMBOL;
+	let _rotato 				= _type;
+	let _bg 		 				= _type;
+	let _action   			= _type;
+	let _msg 						= '';
 
-	let _bill_amount  = 0;
-	let _discount 	  = 0;
-	let _bill_id 			= '';
-	let _message      = (rowData.message)?rowData.message:'N/D';
+	let _bill_amount  	= 0;
+	let _discount 	  	= 0;
+	let _bill_id 				= '';
+	let _message      	= (rowData.message)?rowData.message:'N/D';
 
 	if(rowData.memo)
   {
@@ -124,4 +126,14 @@ export function _getFechaHora(timestamp){
 	let fecha  = _getFecha(timestamp);
   let hora   = _getHora(timestamp);
 	return fecha + ' ' + hora;
+}
+
+export function _getFechaFromUTC(timestamp) {
+	let local_timestamp = moment.utc(timestamp).local().format('YYYY-MM-DD HH:mm:ss');
+	return _getFecha(local_timestamp);
+}
+
+export function _getHoraFromUTC(timestamp){
+	let local_timestamp = moment.utc(timestamp).local().format('YYYY-MM-DD HH:mm:ss');
+	return _getHora(local_timestamp);
 }

@@ -41,7 +41,6 @@ import Rewarding from './modules/wallet/Rewarding';
 
 import ResetBalanceConfirm from './modules/wallet/ResetBalanceConfirm';
 
-import SendAmount from './modules/customer/SendAmount';
 import SendConfirmEx from './modules/customer/SendConfirmEx';
 import SendingEx from './modules/customer/SendingEx';
 import SendResultEx from './modules/customer/SendResultEx';
@@ -87,7 +86,6 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.RequestPayment', () => RequestPayment	, store, Provider);
 	Navigation.registerComponent('wallet.ResetBalanceConfirm', () => ResetBalanceConfirm, store, Provider);
 	
-	Navigation.registerComponent('customer.SendAmount', () => SendAmount, store, Provider);
 	Navigation.registerComponent('customer.SendConfirmEx', () => SendConfirmEx	, store, Provider);
 	Navigation.registerComponent('customer.SendingEx', () => SendingEx	, store, Provider);
 	Navigation.registerComponent('customer.SendResultEx', () => SendResultEx	, store, Provider);

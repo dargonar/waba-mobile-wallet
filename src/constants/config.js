@@ -222,6 +222,8 @@ export function isSubaccountMode(subaccount){
 var sha512 = require('js-sha512').sha512;
 
 export function getIdenticon(data){
+	if(!data.startsWith('discoin.'))
+		data = 'discoin.'+data;
 	var hash = sha512.create();
 	hash.update(data);
 	console.log(' --------------- hash.hex()', hash.hex());

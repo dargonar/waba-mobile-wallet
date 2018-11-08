@@ -70,16 +70,17 @@ class InvoiceConfirm extends Component {
 
   
 	getAvailableBalance(){
-		return Number(this.props.balance[config.ASSET_ID])-1;
+		return Number(this.props.balance[config.ASSET_ID]);
 	}
 
 	_getTx() {
 		
-		let available_balance = this.getAvailableBalance();
+		// let available_balance = this.getAvailableBalance();
 
-		let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
+		// let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
 
-		console.log(' ---- InvoiceConfirm:: amount:', this.state.discount_dsc, ' -- available_balance:', available_balance)
+		let amount = this.state.discount_dsc;
+		// console.log(' ---- InvoiceConfirm:: amount:', this.state.discount_dsc, ' -- available_balance:', available_balance)
 		this.setState({to_pay:amount});
 		this._buildMemo().then( enc_memo => {
 			TxHelper.getTx(this.props.account.id, this.state.account_id, amount, enc_memo, this.props.asset, this.props.blockchain).then( tx => { 
@@ -143,9 +144,11 @@ class InvoiceConfirm extends Component {
 
 
 		console.log(' ==> this.props.balance', this.props.balance);
-		let final_amount = Number(this.state.to_pay) + Number(this.state.fee_txt);
+		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
+		let final_amount = Number(this.state.discount_dsc) + fee;
 		let disp = this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
-		console.log(' --balance: ', disp, ' --amount: ',  final_amount);
+		// console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee);
+		
 		if(Number(disp) < final_amount)
 		{
 			Alert.alert(
