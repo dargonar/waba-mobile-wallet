@@ -4,13 +4,12 @@ import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as walletActions from '../wallet/wallet.actions';
-// import styles from './styles/SendConfirm';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Bts2helper from '../../utils/Bts2helper';
 
 import * as config from '../../constants/config';
-// import Icon from 'react-native-vector-icons/Ionicons';
+
 import { ToastAndroid
       , Dimensions
       , Alert
@@ -30,9 +29,19 @@ import {Button, Icon} from 'native-base';
 
 // f35b42
 const styles = StyleSheet.create({
-  container:{flex:1, backgroundColor:'#ffffff'},
+  container:{
+    flex:1, 
+    backgroundColor:'#ffffff'
+  },
+  categoryButtonRow:{
+    borderRadius: 20, 
+    width: (config.scale>0.8?'45%':'90%'),
+    flexDirection: 'column', 
+    margin: 2, 
+    marginLeft:0, 
+    marginRight: 5
+  },  
   textInputPlaceholder:{
-
     color               : '#ffffff',
     fontFamily          : 'roboto_normal',
     height              : 40, 
@@ -167,7 +176,7 @@ class BusinessFilter extends Component {
       return (false);
     let selected_categories = this.state.selected_categories;
     let buttons = this.state.categories.map((category, i) => (
-      <View style={{borderRadius: 20, width:'45%', flexDirection: 'column', margin: 2, marginLeft:0, marginRight: 5}}> 
+      <View style={styles.categoryButtonRow}> 
         <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#f58b44', true)} onPress={ () => this._categorySelected(category['id'])} >
           <View style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } >
             <Text style={[(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonTextSelected : styles.categoryButtonText ]}>{category['name']}</Text>

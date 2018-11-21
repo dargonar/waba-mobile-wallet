@@ -27,7 +27,6 @@ export function generateUnsignedTx(params, _blockchain) {
 		// console.log(' ### TxHelper::generateUnsignedTx()');
 		// console.log('-- params.amount: ', params.amount, ' -- params.asset.precision: ', params.asset.precision);
 		// console.log('-- res: ',  (Number(params.amount)*Math.pow(10,params.asset.precision)) )
-
 		return new Promise( (resolve, reject) => {
 			tx = {
 				'expiration': 			config.dateAdd(new Date(),'second',120).toISOString().substr(0, 19),
@@ -131,7 +130,12 @@ export function getRecipientInfo(recipient, do_job) {
 		});
 }
 
-	
+export function updateTxAmount(tx, new_amount, asset) {
+
+	tx['operations'][0][1]['amount']['amount'] = (Number(new_amount)*Math.pow(10,asset.precision))>>0;
+	return tx;
+}
+
 export function getTx(from_id, to_id, amount, enc_memo, asset, _blockchain) {
 	return new Promise( (resolve, reject) => {
     		// let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);

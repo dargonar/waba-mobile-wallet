@@ -219,7 +219,7 @@ class FindUser extends Component {
     
     // console.log(' ----- iconsMap[store]:', iconsMap['store']);
 
-    const iconQrcode = (<Image source={iconsMap['qrcode--active']} style={{resizeMode:'contain', height:20,width:20}} />);
+    const iconQrcode = (<Image source={iconsMap['qrcode-scan']} style={{resizeMode:'contain', height:20,width:20}} />);
     let content = undefined;
     if ( this.state.refreshing )
       content = (

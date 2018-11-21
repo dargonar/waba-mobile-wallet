@@ -27,6 +27,26 @@ const styles = StyleSheet.create({
     lineHeight  : 15,
     fontSize    : 13
   },
+
+  title_part_gray : {
+    fontFamily : 'Montserrat-SemiBold',
+    color       : '#666',
+    lineHeight  : 15,
+    fontSize    : 13
+  },
+
+  symbol_mini_part : {
+    fontFamily : 'Montserrat-Light',
+    color      : '#666',
+    fontSize   : 15,
+    lineHeight : 30,
+  },
+  money_mini_part : {
+    fontFamily : 'Montserrat-Light',
+    color      : '#666',
+    fontSize   : 30,
+    lineHeight   : 30,
+  },
   spinner:{
     height: 100,
     width: 400,

@@ -21,6 +21,10 @@ class Balance extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			precision : 2		
+		};
+
 		this.whoosh = new Sound('coins_received.wav', Sound.MAIN_BUNDLE, (error) => {
 			if (error) {
 				console.log('failed to load the sound', error);
@@ -31,9 +35,7 @@ class Balance extends Component {
 		});
 		
 		this.switchPrecision = this.switchPrecision.bind(this);
-		this.state = {
-			precision : 2		
-		};
+		
 	}
 
 	switchPrecision(){
@@ -56,21 +58,21 @@ class Balance extends Component {
 
 	render() {
 		
-		let balance = '';
+		let balance  = 0;
+		let parts 	 = Number('0').toFixed(this.state.precision).split('.');
+		let p 			  = undefined;
+
 		if(this.props.balance) 
-			balance = this.props.balance[config.ASSET_ID] || 0;
-		// let parts = Number(balance).toFixed(this.state.precision).split('.');
-		let parts = config.forBalance(balance, this.state.precision).split('.');
-		
-		let p = undefined;
-		let amountColorStyle = styles.bold_color;
-		if(parseInt(parts[1]) > 0)
 		{
-			p = (<Text style={[styles.dec_part, amountColorStyle]}>{"."}{parts[1]}</Text>)
+			balance = this.props.balance[config.ASSET_ID] || 0;
+			parts = config.forBalance(balance, this.state.precision);
+			parts = parts?parts.split('.'):['0','0'] ;
+			if(parseInt(parts[1]) > 0)
+			{
+				p = (<Text style={[styles.dec_part, styles.bold_color]}>{"."}{parts[1]}</Text>)
+			}
 		}
 
-		let balanceStyle = styles.balance_wrapperNoCredit;
-    
 		let grdcolor1 = '#ff7233'; 
 		let grdcolor2 = '#ffa66b';
 		let container_style = styles.container;
@@ -92,10 +94,10 @@ class Balance extends Component {
 			<View style={[container_style]}>
 				<LinearGradient start={{x: 0, y: 0}} end={{x: 0.75, y: 2}} colors={[grdcolor1, grdcolor2]} style={{flex:1, alignSelf: 'stretch', justifyContent:'center', alignItems:'center', borderBottomLeftRadius: 15, borderBottomRightRadius: 15}}>
 					<TouchableOpacity style={styles.wrapper} onPress={this.switchPrecision}>
-						<View style={balanceStyle}>
+						<View style={styles.balance_wrapperNoCredit}>
 							<View style={styles.balance}>
 								<Image style={{width: 20, height: 20, marginRight:10, marginTop:10 , resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: imgData}}/>
-								<Text style={[amountColorStyle, styles.int_part]}>{parts[0]}{p}</Text>
+								<Text style={[styles.bold_color, styles.int_part]}>{parts[0]}{p}</Text>
 							</View>
 						</View>
 					</TouchableOpacity>
@@ -137,8 +139,7 @@ class Balance extends Component {
 function mapStateToProps(state, ownProps) {
 	return {
 		balance: state.wallet.balance,
-		account: state.wallet.account,
-		credit_ready : state.wallet.credit_ready
+		account: state.wallet.account
 	};
 }
 

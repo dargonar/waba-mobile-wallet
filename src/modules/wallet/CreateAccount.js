@@ -139,13 +139,14 @@ class Start extends Component {
 				console.log('CreateAccount::_onChangeText::#4', is_valid);
 				if(!is_valid){
 					that.setState({
-						error: 			'El nombre de cuenta debe estar compuesto de letras minúsculas, números, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
+						// error: 			'El nombre de cuenta debe estar compuesto de letras minúsculas, números, puntos y guiones, debe comenzar con una letra y finalizar con letra o número. Longitud mayor a 2 caracteres.',
+						error: 			'Sólo letras minúsculas, números, puntos o guiones. Sin espacios. Mínimo 3 caracteres.',
 						refreshing: false,
 						disabled: 	true
 					});
 					return;
 				}
-				// fetch('http://35.161.140.21:8080/api/v1/account/'+text, {
+				
 				fetch(config.getAPIURL('/account/by_name/')+text, {
 					method: 'GET',
 					headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}

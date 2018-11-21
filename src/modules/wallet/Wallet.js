@@ -18,7 +18,6 @@ import ActionButton from 'react-native-action-button';
 import { iconsMap } from '../../utils/AppIcons';
 
 import {Button, Icon, Fab} from 'native-base';
-
 import * as config from '../../constants/config';
 
 class Wallet extends Component {
@@ -28,8 +27,7 @@ class Wallet extends Component {
     	
   	
   	this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
-		// this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
+		
 		this.state 						= {account:'', fab_active:false};
 		this.newTx 						= this.newTx.bind(this);
 		this.requestPayment		= this.requestPayment.bind(this);
@@ -37,15 +35,24 @@ class Wallet extends Component {
 		this._onDiscountOrReward	= this._onDiscountOrReward.bind(this);
 
 		this.state = {
-			with_error : (props.with_error!==undefined && props.with_error==1)
+			with_error : (props.with_error!==undefined && props.with_error==1)?1:0
   
 		}
-
+		
+		this.disableRightDrawer();
 	}
 
-	componentWillMount() {
-
+	disableRightDrawer(){
+		this.props.navigator.setDrawerEnabled({
+      side: 'right',
+      enabled: false
+    });
 	}
+
+ 	componentDidAppear() {
+  	this.disableRightDrawer();
+  }
+
 
 	componentWillReceiveProps(nextProps) {
   	let new_state = {};
@@ -55,6 +62,19 @@ class Wallet extends Component {
 	}
 
  _onNavigatorEvent(event) {
+    /*
+    id: 'didAppear',
+		navigatorEventID: 'screenInstanceID2_events',
+		type: 'ScreenChangedEvent'
+		*/
+		if (event.type == 'ScreenChangedEvent') {
+			if (event.id == 'didAppear') {
+				this.componentDidAppear();
+				return;
+			}
+			return;
+		}
+
     if (event.type == 'NavBarButtonPress') {
       // if (event.id == 'scanQRCode') {
       //   this.qrButtonPressed();
@@ -90,6 +110,10 @@ class Wallet extends Component {
         {
           icon: iconsMap['ios-search'],
           id: 'searchBusiness' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+        },
+        {
+          icon: iconsMap['md-funnel'],
+          id: 'filterBusiness' // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
         }
       ],
       leftButtons: [
@@ -145,7 +169,8 @@ class Wallet extends Component {
 		
 		let message = 'Algo esta sucediendo :( /n Podemos tener un problema en nuestros servidores o no tenésconexión a internet';
 		
-
+    let receiveIcon  =  (<Image source={{uri:iconsMap['qrcode--big'].uri}} style={{height:20, width:20}} />);
+    let walletIcon  	=  (<Image source={{uri:iconsMap['wallet'].uri}} style={{height:20, width:21}} />);
 		// let icon = (<Icon name="ios-add" />);
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (
@@ -176,15 +201,18 @@ class Wallet extends Component {
 						</View>) : false }
 				{ (subaccount_mode)?
 				false:
+
 				(<ActionButton  shadowStyle={{elevation: 10}} buttonColor={buttonColor} bgColor="rgba(0, 0, 0, 0.5)"  degrees={0} offsetY={20} offsetX={20}>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="ENVIAR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.newTx() }}>
-						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="ENVIAR" textStyle={styles.actionButtonText} onPress={() => {  this.newTx() }}>
+						<Icon name='arrow-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="RECIBIR DISCOINS" textStyle={styles.actionButtonText} onPress={() => {  this.requestPayment() }}>
-						<Icon name='trending-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="RECIBIR" textStyle={styles.actionButtonText} onPress={() => {  this.requestPayment() }}>
+						{/*<Icon name='qrcode' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>*/}
+						{receiveIcon}
 					</ActionButton.Item>
-					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="PAGAR CON DISCOINS" textStyle={styles.actionButtonText} titleColor='#FF0000' onPress={() => {  this.doPay() }}>
-						<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
+					<ActionButton.Item hideLabelShadow buttonColor='#FFFFFF' title="PAGAR" textStyle={styles.actionButtonText} titleColor='#FF0000' onPress={() => {  this.doPay() }}>
+						{/*<Icon name='trending-down' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>*/}
+						{walletIcon}
 					</ActionButton.Item>
 				</ActionButton>)}
 			</View>

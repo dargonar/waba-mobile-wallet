@@ -98,9 +98,9 @@ class SendResultEx extends Component {
 
   render() {
 
-		let debt    = this.state.bill_amount - this.state.to_pay;
-    const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
-    let imgData = config.getRedDiscoinIcon();
+		let debt        = Number(this.state.bill_amount) - Number(this.state.to_pay);
+    const userIcon  = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
+    let imgData     = config.getRedDiscoinIcon();
 
     return (
 
@@ -119,10 +119,16 @@ class SendResultEx extends Component {
               </Text>
             </View>
           </View>
-
-          <View style={{flexDirection:'row', alignItems: 'center', marginTop: 40}}>
+          <View style={{flexDirection:'row', alignItems: 'center', marginTop: 20}}>
             <Image style={{width: 16, height: 16, resizeMode: Image.resizeMode.contain, opacity: 0.7, borderWidth: 0, marginRight: 15, marginTop: 10}} source={{uri: imgData}}/>
-            <Text style={styles.money_part}>{this.state.amount} </Text>
+            <Text style={styles.money_part}>{this.state.to_pay} </Text>
+          </View>
+
+          <View style={{marginTop: 30}}>
+            <Text style={styles.title_part_gray}>RESTAN PAGAR EN PESOS:</Text>
+          </View>
+          <View style={{flexDirection:'row', alignItems: 'center'}}>
+            <Text style={styles.money_mini_part}><Text style={styles.symbol_mini_part}>$</Text> {debt.toFixed(2)} </Text>
           </View>
           <View style={{position:'absolute', right:10, bottom: 10, elevation: 10, flexDirection:'row', justifyContent: 'flex-end', backgroundColor:'transparent'}}>
             <Icon

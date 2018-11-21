@@ -33,7 +33,9 @@ function launchWallet(account, error) {
   }
 
   Navigation.startSingleScreenApp({
-    appStyle : { orientation : 'portrait' },
+    appStyle : { 
+      orientation : 'portrait' 
+    },
     screen: {
       screen        : 'wallet.Wallet',
       navigatorStyle : {
@@ -63,7 +65,8 @@ function launchWallet(account, error) {
         screen: 'global.Drawer'
       },
       right: {
-        screen: 'discoin.BusinessFilter'
+        screen: 'discoin.BusinessFilter',
+        enabled: false
       },
     },
     passProps: {

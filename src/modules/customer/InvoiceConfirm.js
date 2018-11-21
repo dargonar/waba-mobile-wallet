@@ -20,6 +20,8 @@ import Bts2helper from '../../utils/Bts2helper';
 import * as config from '../../constants/config';
 import * as TxHelper from '../../utils/TxHelper';
 
+
+
 class InvoiceConfirm extends Component {
 
   static navigatorStyle = {
@@ -32,6 +34,7 @@ class InvoiceConfirm extends Component {
 
   constructor(props) {
     super(props);
+
 
     this.state = {
       recipient : {
@@ -68,7 +71,6 @@ class InvoiceConfirm extends Component {
 		this._buildMemo = this._buildMemo.bind(this);
   }
 
-  
 	getAvailableBalance(){
 		return Number(this.props.balance[config.ASSET_ID]);
 	}
@@ -129,7 +131,7 @@ class InvoiceConfirm extends Component {
   }
 
   _onConfirm(){
-		console.log(' ==> _onConfirm()');
+		
 		if(!this.state.can_confirm)
 		{
 			Alert.alert(
@@ -143,36 +145,57 @@ class InvoiceConfirm extends Component {
 		}
 
 
-		console.log(' ==> this.props.balance', this.props.balance);
-		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
-		let final_amount = Number(this.state.discount_dsc) + fee;
-		let disp = this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
-		// console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee);
-		
-		if(Number(disp) < final_amount)
+		let fee 						= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
+		let payable_amount 	= Number(this.state.discount_dsc) + fee;
+		let disp 						= this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
+		let balance 				= this.props.balance[config.ASSET_ID];
+		let less_than_bill 	= false;
+		if(balance<payable_amount)
 		{
-			Alert.alert(
-				'Fondos insuficientes',
-				'No dispone de fondos suficientes para realizar la operación.',
-				[
-					{text: 'OK'},
-				]
-			)
-			return;
+			less_than_bill 	= true;
+			payable_amount	= Number(balance)-fee;
 		}
+		
+
+		// if(Number(disp) < final_amount)
+		// {
+		// 	Alert.alert(
+		// 		'Fondos insuficientes',
+		// 		'No dispone de fondos suficientes para realizar la operación.',
+		// 		[
+		// 			{text: 'OK'},
+		// 		]
+		// 	)
+		// }
+		// if(less_than_bill)
+		// {
+		// 	Alert.alert(
+		// 	  'Info',
+		// 	  'Vas a pagar menos que el porcentaje de descuento.',
+		// 	  [
+		// 	    {text: 'No pagar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+		// 	    {text: 'OK', onPress: () => console.log('OK Pressed')},
+		// 	  ],
+		// 	  { cancelable: false }
+		// 	)
+		// }
 
 		this.props.navigator.showModal({
 			screen : 'customer.SendingEx',
 			title :  'Realizando pago...',
 			passProps: {recipient : this.state.recipient,
-									amount :    final_amount.toFixed(2), //this.state.to_pay,
+									amount :    payable_amount.toFixed(2),
 									memo :      this.state.memo,
 								  modal_type: 'paying'},
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 
-		TxHelper.addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
+		console.log('------------- InvoiceConfirm:');
+		console.log(JSON.stringify(this.state.tx));
+		let my_tx = TxHelper.updateTxAmount(this.state.tx, payable_amount, this.props.asset);
+
+		TxHelper.addSignature(my_tx, this.props.account.keys[1].privkey).then( tx => {
 
 			console.log(' ------------- TX:');
 			console.log(JSON.stringify(tx));
@@ -202,14 +225,14 @@ class InvoiceConfirm extends Component {
 							title:      'Pago exitoso',
 							passProps:  {
 									recipient : this.state.recipient,
-									amount :    this.state.to_pay,
+									amount :    payable_amount, //this.state.to_pay,
 									memo :      this.state.memo,
 									data: 			{
 										bill_amount: 		this.state.bill_amount,
 										bill_id: 				this.state.bill_id ,
 										discount_rate: 	this.state.discount_rate ,
 										discount_dsc: 	this.state.discount_dsc ,
-										to_pay: 				this.state.to_pay ,
+										to_pay: 				payable_amount, //this.state.to_pay ,
 										discount_ars: 	this.state.discount_ars ,
 										account_id: 		this.state.account_id,
 										business_id: 		this.state.business_id ,
@@ -275,24 +298,26 @@ class InvoiceConfirm extends Component {
 		
 		let business_name			= this.state.business_name; 
 		let subaccount_name		= this.state.account_name;
-		let total_amount			= this.state.bill_amount; 
+		let total_amount			= Number(this.state.bill_amount).toFixed(2); 
 		let discount					= Number((this.state.discount_dsc/this.state.bill_amount)*100).toFixed(2); ;
 		let discount_dsc			= this.state.discount_dsc; //(total_amount * discount / 100);
-		let payable_amount		= discount_dsc;
+		let fee 							= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
+		let payable_amount		= discount_dsc+fee;
 		let balance 					= this.props.balance[config.ASSET_ID];
 		if(balance<payable_amount)
-				payable_amount	= balance;
+				payable_amount	= Number(balance)-fee;
 		let debt					  = Number(total_amount-payable_amount).toFixed(2);
 		
-		const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
-    // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
-    const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
-		// let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
-		let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
-    // HACK
-    let icon = iconUser;
-    // if(Math.random()>0.5)
-    //   icon = iconBiz;
+		// const iconUser   = (<Icon name='md-person' style={{fontSize: 20, color: '#666'}}/>);
+  //   // const iconBiz    = (<Icon name='store' style={{fontSize: 20, color: '#666'}}/>);
+  //   const iconBiz    = (<Image source={iconsMap['store']} style={{resizeMode:'contain', height:20,width:20}} />);
+		// // let iconNext = (<Icon name='keyboard-arrow-right' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+		// // HACK
+  //   let icon = iconUser;
+  //   // if(Math.random()>0.5)
+  //   //   icon = iconBiz;
+    let iconNext = (<Icon name='ios-arrow-forward' type='MaterialIcons' style={{fontSize: 20, color: '#fff'}}/>);
+    
     const userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: this.state.identicon}}/>)
 
     let imgData = config.getRedDiscoinIcon();
@@ -308,7 +333,7 @@ class InvoiceConfirm extends Component {
       		<View style={{height:100, paddingTop:20, paddingBottom:10, paddingLeft:20, paddingRight:20, backgroundColor:'#fff', alignSelf: 'stretch', flexDirection:'column', justifyContent: 'flex-start'}}>
 	          <View style={{ alignSelf: 'stretch', flexDirection:'column'}}>
 	            <View style={{ alignSelf: 'stretch', flexDirection:'row', justifyContent: 'flex-start'}}>
-	              <Text style={{fontSize:12, lineHeight:17, paddingBottom:3, fontFamily : 'Montserrat-Regular'}} >
+	              <Text style={styles.recipient} >
 	                DESTINATARIO
 	              </Text>
 	            </View>  
@@ -318,13 +343,13 @@ class InvoiceConfirm extends Component {
 	                {userIcon}
 	              </View>
 	              <View style={{flex:3, justifyContent: 'center', alignItems:'flex-start' }}>
-	                <Text style={{fontSize:18, lineHeight:30, fontFamily : 'Montserrat-Medium'}} >
+	                <Text style={styles.recipientName} >
 	                  {this.state.recipient.name}
 	                </Text>
 	              </View>
-	              <View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
-	                {icon}
-	              </View>
+	              {/*<View style={{flex:1, justifyContent: 'center', alignItems:'flex-end' }}>
+	              	                {icon}
+	              	              </View>*/}
 	            </View>
 	          </View>
 	        </View>
@@ -337,7 +362,7 @@ class InvoiceConfirm extends Component {
 	        	<View style={{height:60, marginTop:50, paddingLeft:20, paddingRight:20, paddingBottom:25, borderBottomColor: 'black', borderBottomWidth: 0.25,}}>
 	            <View style={{flex:1, flexDirection:'row', justifyContent: 'center'}}>
 	              <View style={{flex:1, justifyContent: 'center', alignItems: 'flex-start'}}>
-	              	<Text style={styles.title_part}>TOTAL A PAGAR</Text>
+	              	<Text style={styles.title_part}>TOTAL {"\n"}A PAGAR</Text>
 	              </View>
 	              <View style={{flexDirection:'row', flex:1, justifyContent: 'flex-end', alignItems:'center' }}>
 	                <Text style={styles.total_bill_sign}>$</Text>
@@ -391,7 +416,7 @@ class InvoiceConfirm extends Component {
 								style={[styles.fullWidthButton, disabled_btn_style]}
 								onPress={ this._onConfirm.bind(this) } >
 	            <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10, paddingRight:10}}>  
-							<Text style={styles.fullWidthButtonText}>PAGAR</Text>
+							<Text style={styles.fullWidthButtonText}>CONFIRMAR PAGO</Text>
 	            {iconNext}
 	            </View>
 						</TouchableHighlight>

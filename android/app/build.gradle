@@ -6,6 +6,21 @@ apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
 
+
+
+// import groovy.json.JsonSlurper
+
+// def getNpmVersion() {
+//     def inputFile = new File("../../package.json")
+//     def packageJson = new JsonSlurper().parseText(inputFile.text)
+//     return packageJson["version"]
+// }
+// /* calculated from git commits to give sequential integers */
+// def getGitVersion() {
+//     def process = "git rev-list discoin --first-parent --count".execute()
+//     return process.text.toInteger()
+// }
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -71,6 +86,10 @@ import com.android.build.OutputFile
 
 apply from: "../../node_modules/react-native/react.gradle"
 
+
+// def userVer = getNpmVersion()
+// def googleVer = getGitVersion()
+
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -92,13 +111,15 @@ android {
 
     defaultConfig {
         // applicationId "com.waba.discoin"
-        applicationId "com.waba.discoin.dev"
-        // applicationId "com.waba.discoin.test"
-        
+        // applicationId "com.waba.discoin.dev"
+        applicationId "com.waba.discoin.demo"
+
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 13
-        versionName "1.13"
+        versionCode 15
+        versionName "1.15"
+        // versionCode googleVer
+        // versionName userVer
         ndk {
             abiFilters "armeabi-v7a", "x86"
             moduleName "bts2helper"

@@ -392,8 +392,30 @@ class BusinessProfile extends Component {
     this._onGoToUrl           = this._onGoToUrl.bind(this);
 	  this.renderSocialButtons  = this.renderSocialButtons.bind(this);
     this.renderSocialButton   = this.renderSocialButton.bind(this);
+    this.disableRightDrawer();
+    this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
 
+  disableRightDrawer(){
+    this.props.navigator.setDrawerEnabled({
+      side: 'right',
+      enabled: false
+    });
+  }
+
+  componentDidAppear() {
+    this.disableRightDrawer();
+  }
+
+  _onNavigatorEvent(event) {
+    if (event.type == 'ScreenChangedEvent') {
+      if (event.id == 'didAppear') {
+        this.componentDidAppear();
+        return;
+      }
+      return;
+    }
+  }
   _onGoToUrl(field){
     let url = this.state.business_data[field];
     if(!url.startsWith("http://") || url.startsWith("https://"))

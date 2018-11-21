@@ -26,9 +26,8 @@ const styles = StyleSheet.create({
 		paddingRight: 25,
 		marginTop: 30,
 	},
-	drawerListIcon: {
-		width: 27,
-		color: '#ccc'
+	drawerListIconContainer: {
+		width: 27
 	},
 	drawerListItem: {
 		flexDirection: 'row',

@@ -22,8 +22,6 @@ import { iconsMap } from '../../utils/AppIcons';
 // import * as subaccount_helper from '../../utils/SubAccountHelper';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import * as config from '../../constants/config';
-
-
 import { Icon, Button } from 'native-base';
 
 const alignItemsMap = {
@@ -45,7 +43,21 @@ class Main extends Component {
 		this.newTx 								= this.newTx.bind(this);
 		this.filterBusinesses 		= this.filterBusinesses.bind(this);
 
-	}
+    // this.props.navigator.events().bindComponent(this);
+    this.enableRightDrawer();
+  }
+
+  enableRightDrawer(){
+    this.props.navigator.setDrawerEnabled({
+      side: 'right',
+      enabled: true,
+      // screen: 'Drawer'
+    });
+  }
+
+  componentDidAppear() {
+    this.enableRightDrawer();
+  }
 
 	componentWillMount() {
 		let that = this;
@@ -85,6 +97,14 @@ class Main extends Component {
 	}
 
   _onNavigatorEvent(event) {
+    if (event.type == 'ScreenChangedEvent') {
+      if (event.id == 'didAppear') {
+        this.componentDidAppear();
+        return;
+      }
+      return;
+    }
+
     if (event.type == 'NavBarButtonPress') {
       // if (event.id == 'scanQRCode') {
       //   this.qrButtonPressed();
@@ -94,6 +114,11 @@ class Main extends Component {
         this.searchBusinessPressed();
         return;
       }
+      if (event.id == 'filterBusiness') {
+        this.filterBusinesses();
+        return;
+      }
+      
       if (event.id == 'popToRoot') {
         this.props.navigator.popToRoot({
   				animated: true
@@ -165,14 +190,12 @@ class Main extends Component {
             this.getOffsetXY(),
             { flexDirection: 'row', padding:10}
           ]}>
-        	{/*<Button iconLeft rounded bordered style={styles.actionsButton}>
-        					  	<Icon name='apps' />
-        					    <Text style={styles.actionsButtonText}>CATEGORIAS</Text>
-        					  </Button>*/}
+        	{/*
 				  <Button iconLeft rounded light onPress={() => {  this.filterBusinesses() }}>
 				  	<Icon style={{opacity:0.3, color:'#000000'}} name='funnel' />
 				    <Text style={styles.actionsButtonText}>FILTROS</Text>
-				  </Button>  
+				  </Button>  */}
+
 				</View>	
 				
 

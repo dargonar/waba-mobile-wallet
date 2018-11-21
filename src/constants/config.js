@@ -11,41 +11,45 @@
 
 import Identicon from 'identicon.js';
 
-// MAIN NET
-export const API_URL          			= 'https://api.discoin.com.ar';
-export const CHAIN_ID        				= '4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8'; 
-export const ASSET_ID            		= '1.3.4679'; //'1.3.4621';
-export const DISCOIN_ID          		= ASSET_ID;
-export const DISCOIN_CREDIT_ID   		= '1.3.4622' // DESCUBIERTO | THEDISCOIN.OD
-export const DISCOIN_ACCESS_ID   		= '1.3.4623' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
-export const DISCOIN_SYMBOL         = 'DISCOIN.AR'
-export const DISCOIN_CREDIT_SYMBOL  = 'DISCOIN.IBALANCE'
-export const DISCOIN_ACCESS_SYMBOL  = 'DISCOIN.ENDORSE'
-export const DISCOIN_ADMIN_ACCOUNT  = 'discoin-gov'; // 'discoin.admin'
-export const ASSET_PRECISION 			  = 5;
-export const ASSET_DIVIDER   			  = 100000;
+import { Platform, Dimensions, PixelRatio } from 'react-native';
 
+
+// // MAIN NET
+// export const API_URL          			= 'https://api.discoin.com.ar';
+// export const CHAIN_ID        				= '4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8'; 
+// export const ASSET_ID            		= '1.3.4679'; //'1.3.4621';
+// export const DISCOIN_ID          		= ASSET_ID;
+// export const DISCOIN_CREDIT_ID   		= '1.3.4622' // DESCUBIERTO | THEDISCOIN.OD
+// export const DISCOIN_ACCESS_ID   		= '1.3.4623' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+// export const DISCOIN_SYMBOL         = 'DISCOIN.AR'
+// export const DISCOIN_CREDIT_SYMBOL  = 'DISCOIN.IBALANCE'
+// export const DISCOIN_ACCESS_SYMBOL  = 'DISCOIN.ENDORSE'
+// export const DISCOIN_ADMIN_ACCOUNT  = 'discoin-gov'; // 'discoin.admin'
+// export const ASSET_PRECISION 			  = 5;
+// export const ASSET_DIVIDER   			  = 100000;
+// // export const VERSION 								= 'BETA  v1.1.12'
+// export const VERSION 								= 'DEV  v1.1.14'
 
 // PRIVATE TESTNET
-// export const API_URL          			= 'https://devapi.discoin.com.ar';
-// export const CHAIN_ID        				= 'bde617520673d18e67db5d7060ca2740f80e28093519c30176044c8d4a227e73'; 
-// export const ASSET_ID            		= '1.3.2';
-// // export const ASSET_ID            		= '1.3.7';
-// // export const ASSET_ID            		= '1.3.5';
-// export const DISCOIN_ID          		= ASSET_ID;
-// export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
-// export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
-// export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
-// // export const DISCOIN_SYMBOL         = 'DISCOIN3'
-// export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
-// export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
-// export const DISCOIN_ADMIN_ACCOUNT  = 'discoin.admin'
-// export const ASSET_PRECISION 				= 2;
-// export const ASSET_DIVIDER   				= 100;
+export const API_URL          			= 'https://devapi.discoin.com.ar';
+export const CHAIN_ID        				= 'bde617520673d18e67db5d7060ca2740f80e28093519c30176044c8d4a227e73'; 
+export const ASSET_ID            		= '1.3.2';
+// export const ASSET_ID            		= '1.3.7';
+// export const ASSET_ID            		= '1.3.5';
+export const DISCOIN_ID          		= ASSET_ID;
+export const DISCOIN_CREDIT_ID   		= '1.3.3' // DESCUBIERTO | THEDISCOIN.OD
+export const DISCOIN_ACCESS_ID   		= '1.3.4' // ENDORSEMENT | DISCOIN.KEY | THEDISCOIN.A
+export const DISCOIN_SYMBOL         = 'THEDISCOIN.M'
+// export const DISCOIN_SYMBOL         = 'DISCOIN3'
+export const DISCOIN_CREDIT_SYMBOL  = 'THEDISCOIN.OD'
+export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
+export const DISCOIN_ADMIN_ACCOUNT  = 'discoin.admin'
+export const ASSET_PRECISION 				= 2;
+export const ASSET_DIVIDER   				= 100;
+export const VERSION 								= 'DEMO v1.1.15'
 
-
-// TUTI TESNET
-// export const API_URL          			= 'http://192.168.0.22:8088';
+// // TUTI TESNET
+// export const API_URL          			= 'http://192.168.0.116:8088';
 // // export const API_URL          			= 'http://192.168.43.28:8088';
 // export const CHAIN_ID        			  = '1d70881f06a5d2ece91313a00f7eda5e1c7a7183957f3a6539deb4aa95237fe5'
 // export const ASSET_ID            	  = '1.3.1'; //'1.3.7';
@@ -58,7 +62,7 @@ export const ASSET_DIVIDER   			  = 100000;
 // export const DISCOIN_ADMIN_ACCOUNT   = 'discoin-gov'
 // export const ASSET_PRECISION 			  = 5;
 // export const ASSET_DIVIDER   			  = 100000;
-;
+// export const VERSION 								= 'TUTI v1.1.13'
 
 
 export const FILES_URL        = API_URL+'/files/';
@@ -121,9 +125,13 @@ export function getAPIURL(path) {
 
 export function forBalance(value, decimals) {
 	
-	if(decimals == ASSET_PRECISION)
-		return Number(value).toFixed(ASSET_PRECISION)
-	return toVisibleNumUp(value, true);
+	let my_value = value;
+	// if(isNaN(my_value))
+	// 	my_value = 0;
+	let my_decimals = decimals || 2;
+	if(my_decimals == ASSET_PRECISION)
+		return Number(my_value).toFixed(ASSET_PRECISION);
+	return toVisibleNumUp(my_value, true);
 }
 
 export function toVisibleNumEx(value, tx_type_string, force_decimals) {
@@ -315,4 +323,18 @@ export function logNewAccountKeys(){
 		}, function(err) {
 			console.log('*********** ERR#3: ' + str(err));
 		});
+}
+
+export const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+export const scale = SCREEN_WIDTH / 400;
+
+export function normalizeFontSize(size) {
+    const newSize = size * scale; 
+    if(scale>1)
+      return size;
+    return Math.round(newSize);
 }

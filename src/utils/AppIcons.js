@@ -2,6 +2,7 @@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import {
   PixelRatio
@@ -18,6 +19,7 @@ const ICON_SIZE_ANDROID_BIG = 50;// : PixelRatio.getPixelSizeForLayoutSize(50);
 // here we use active, big, small, very-big..
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
+  "md-funnel": [ICON_SIZE_ANDROID, "#000"],
   "ios-search": [ICON_SIZE_ANDROID, "#000"],
   "ios-options": [ICON_SIZE_ANDROID, "#fff"],
   "ios-send": [ICON_SIZE_ANDROID, "#fff"],
@@ -25,7 +27,7 @@ const icons = {
   "ios-cash": [ICON_SIZE_ANDROID, "#fff"],
   "ios-cart": [ICON_SIZE_ANDROID, "#fff"],
   "ios-locate-outline": [ICON_SIZE_ANDROID, "#fff"],
-  "ios-card-outline": [ICON_SIZE_ANDROID, "#fff"],
+  "md-card": [ICON_SIZE_ANDROID, "#fff"],
   "ios-help": [ICON_SIZE_ANDROID, "#fff"],
   "ios-card": [ICON_SIZE_ANDROID, "#fff"],
   "ios-remove": [ICON_SIZE_ANDROID, "#fff"],
@@ -109,6 +111,12 @@ const icons = {
   "bank--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
   "cash--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
   "credit-card--active":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
+
+  "arrow-up--big":   [ICON_SIZE_ANDROID_25, "#ddd", MaterialCommunityIcons],
+  "qrcode--big":   [ICON_SIZE_ANDROID_25, "#666", MaterialCommunityIcons],
+  "wallet" : [ICON_SIZE_ANDROID_25, "#666", SimpleLineIcons],
+  "qrcode-scan":   [ICON_SIZE_ANDROID_25, "#fff", MaterialCommunityIcons]
+
 
 }
 

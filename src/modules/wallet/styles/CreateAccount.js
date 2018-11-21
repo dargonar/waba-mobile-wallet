@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
 		color			 : '#f53d3d',
 		fontFamily : 'Montserrat-Regular',
 		fontWeight : '300',
-    fontSize   : 18,
-		lineHeight : 20,
+    fontSize   : 12,
+		lineHeight : 16,
 		textAlign  : 'center'
 	}
 });

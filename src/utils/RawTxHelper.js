@@ -1,11 +1,16 @@
 import * as config from '../constants/config';
 import * as moment from 'moment'
 
-export const action   	= {received:'RECIBISTE DE', sent: 'ENVIADOS A', discounted_subacc:'PAGO RECIBIDO DE', refunded_subacc:'RECOMPENSASTE A', refunded:'TE RECOMPENSÓ', discounted:'PAGASTE A'};
-export const action_raw = {received:'ENVIO', sent: 'ENVIO', discounted_subacc:'PAGO', refunded_subacc:'RECOMPENSA', refunded:'RECOMPENSA', discounted:'PAGO'};
-export const rotato   	= {received:'0 deg', 			sent : '-180 deg',   discounted_subacc:'0 deg',            refunded_subacc:'-180 deg',        refunded:'0 deg'     ,    discounted:'-180 deg'};
-export const bg     	 	= {received:'#76eafa', sent:'#f576ff', refunded_subacc:'#ff73b9', discounted_subacc:'#80fbbf', refunded:'#80fbbf', discounted:'#ff73b9'};
+// export const action   	= {received:'RECIBISTE DE', sent: 'ENVIADOS A', discounted_subacc:'PAGO RECIBIDO DE', refunded_subacc:'RECOMPENSASTE A', refunded:'TE RECOMPENSÓ', discounted:'PAGASTE A'};
+// export const action_raw = {received:'ENVIO', sent: 'ENVIO', discounted_subacc:'PAGO', refunded_subacc:'RECOMPENSA', refunded:'RECOMPENSA', discounted:'PAGO'};
+// export const rotato   	= {received:'0 deg', 			sent : '-180 deg',   discounted_subacc:'0 deg',            refunded_subacc:'-180 deg',        refunded:'0 deg'     ,    discounted:'-180 deg'};
+// export const bg     	 	= {received:'#76eafa', sent:'#f576ff', refunded_subacc:'#ff73b9', discounted_subacc:'#80fbbf', refunded:'#80fbbf', discounted:'#ff73b9'};
 				
+export const action   	= {received:'RECIBISTE DE', sent: 'ENVIADOS A', discounted_subacc:'PAGO RECIBIDO DE', refunded_subacc:'RECOMPENSASTE A', refunded:'TE RECOMPENSÓ', discounted:'PAGASTE A'};
+export const action_raw = {received:'ENVIO', 				sent: 'ENVIO', 			discounted_subacc:'PAGO', 						refunded_subacc:'RECOMPENSA', refunded:'RECOMPENSA', discounted:'PAGO'};
+export const rotato   	= {received:'-180 deg', 		sent : '0 deg',   	discounted_subacc:'-180 deg',         refunded_subacc:'0 deg',        refunded:'-180 deg'     ,    discounted:'0 deg'};
+export const bg     	 	= {received:'#ff9e5d', 			sent:'#3a99d9', 	  refunded_subacc:'#ff73b9', 						discounted_subacc:'#ff9e5d', refunded:'#ff9e5d', discounted:'#ff73b9'};
+
 export function getTxData(rowData, account_name){
 
 	if(rowData.__typename == 'Transfer' && config.ASSET_ID == rowData.amount.asset.id) {

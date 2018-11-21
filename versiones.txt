@@ -3,3 +3,34 @@
 /home/tuti/waba_mobile_wallet/android/app/build.gradle
 /home/tuti/waba_mobile_wallet/android/app/src/main/res/values/strings.xml
 /home/tuti/waba_mobile_wallet/android/gradle.properties
+/home/tuti/waba_mobile_wallet/src/constants/config.js
+
+
+VERSIONES
+
+PUBLICA
+>> Es la app que se descargan los usuarios reales.
+>> Trabaja con la mainanet de bitshares
+APP: 		https://play.google.com/store/apps/details?id=com.waba.discoin
+PANEL:	https://panel.discoin.com.ar/
+
+DEMO / DESARROLLO
+>> Es la version para mostrar a posibles clientes y a inversores, para que utilicen todas las funcionalidades.
+>> Es la version para que probemos nuevas funcionalidades y las pasemos a RELEASE CANDIDATE.
+>> Trabaja con una private testnet de bitshares
+APP:  	https://play.google.com/store/apps/details?id=com.waba.discoin.demo
+PANEL:	https://demo.discoin.com.ar/
+
+
+RELEASE CANDIDATE
+>> Es la version para realizar la ultima prueba antes de lanzar a PUBLICA
+>> Trabaja con la MAIN-NET de bitshares, es decir es como tener la version PUBLICA con nuevos features o fixes.
+>> NOTA: Solo se puede descargar con mail. En este sentido quien quiera utilizarla debe apsarnos un correo a ptutino@gmail.com o a ferbuerotrebino@gmail.com 
+APP: 		<UPLOADING>
+PANEL:	https://panel.discoin.com.ar/
+
+
+https://docs.google.com/document/d/17ddjFK_cbvdFIQve5uJmPSaO9Kv8Z2DHd5MGjD4x1H4/edit?usp=sharing
+Todos deberian leer ese doc, que contiene las versiones.
+Les pido que se descarguen dev en breve (cuando google me avise que esta subida, les aviso) para poder probar todos los cambios que se hicieron, y los arreglos.
+abz
