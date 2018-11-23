@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 	actionButtonText: {
     color: '#666',
     fontSize: 13,
-    paddingLeft: 15,
+    paddingLeft: 0,
     flex: 1,
     fontFamily : 'Montserrat-Regular',
     fontWeight: '100'

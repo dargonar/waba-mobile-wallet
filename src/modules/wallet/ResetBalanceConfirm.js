@@ -18,7 +18,7 @@ import styles from './styles/TxDetails';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import Bts2helper from '../../utils/Bts2helper';
-
+import * as TxHelper from '../../utils/TxHelper';
 import * as config from '../../constants/config';
 
 class ResetBalanceConfirm extends Component {
@@ -95,20 +95,7 @@ class ResetBalanceConfirm extends Component {
 					]
 				]
 			}
-      // console.log(' -- generateTX:', JSON.stringify(tx));
-      // console.log(' -- this.props.asset:', JSON.stringify(this.props.asset));
-      // console.log(' -- this.props.fees:', JSON.stringify(this.props.fees));
-      // console.log(' -- this.props.core_exchange_rate:', JSON.stringify(this.props.asset.options.core_exchange_rate));
-
-      // get_fees_for_tx
-      // {
-      //     "fees": [
-      //         {
-      //             "amount": 20,
-      //             "asset_id": "1.3.9"
-      //         }
-      //     ]
-      // }
+    
 			fetch(config.getAPIURL('/get_fees_for_tx'), {
 				method: 'POST',
 				headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -131,18 +118,6 @@ class ResetBalanceConfirm extends Component {
 				this._onGetTxError('#Y -- '+JSON.stringify(err));
         reject(err);
 			});
-
-			// Bts2helper.calcFee(JSON.stringify(this.props.fees), [JSON.stringify(tx.operations[0])], JSON.stringify(this.props.asset.options.core_exchange_rate)).then( res => {
-			// 	tx.operations[0][1].fee = {
-			// 		asset_id  : params.asset.id,
-			// 		amount    : res[0]
-			// 	}
-			// 	resolve(tx);
-			// }, err => {
-      //   console.log(' -- ERROR: Bts2helper.calcFee ERROR: ' + JSON.stringify(err));
-			// 	reject(err);
-			// });
-
 
 		}); //Promise
 	}
@@ -247,12 +222,17 @@ class ResetBalanceConfirm extends Component {
 		}
 
 		console.log(' ==> this.props.balance', this.props.balance);
-		// let final_amount = Number(this.state.amount) + Number(this.state.fee_txt);
-		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
-		let final_amount = Number(this.state.amount) + fee;
+		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION);
+		let final_amount = Number(this.state.amount);
+
+		// Si es reset to zero, envio todo - fee
+		if(this.state.type==config.SA_RESET_BALANCE)
+		{
+			final_amount = final_amount - fee;
+		}
+
 		let disp = Number(this.props.balance[config.ASSET_ID]);  // - Number(this.props.balance[0])).toFixed(2);
-		// console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee_txt);
-		// return;
+		
 		if(Number(disp) < final_amount)
 		{
 			Alert.alert(
@@ -270,14 +250,17 @@ class ResetBalanceConfirm extends Component {
 			screen : 'wallet.Sending',
 			title :  'Enviando...',
 			passProps: {recipient : this.state.recipient,
-									amount :    this.state.amount,
+									amount :    final_amount,
 									memo :      this.state.memo,
 								  modal_type: 'sending'},
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 
-		this._addSignature(this.state.tx, this.props.account.keys[1].privkey).then( tx => {
+		
+		let my_tx = TxHelper.updateTxAmount(this.state.tx, final_amount, this.props.asset);
+
+		this._addSignature(my_tx, this.props.account.keys[1].privkey).then( tx => {
 
 			fetch(config.getAPIURL('/push_tx'), {
 					method: 'POST',
@@ -366,12 +349,20 @@ class ResetBalanceConfirm extends Component {
 		// let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
 		// let total = config.toVisibleNumDown((Number(this.state.amount) + fee), true);
 
-		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);
-		let _sum = (Number(this.state.amount) + fee);
-		let total = config.toVisibleNumDown(_sum, true);
-		// console.log(' --amount: ',  Number(this.state.amount), ' --fee: ',  fee , ' --total: ',  _sum);
-		// console.log((Math.ceil(_sum*100)/100).toFixed(2))
+		// let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);
+		// let _sum = (Number(this.state.amount) + fee);
+		// let total = config.toVisibleNumDown(_sum, true);
 		
+
+		let fee 					= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION);
+		let final_amount 	= Number(this.state.amount);
+		// Si es reset to zero, envio todo - fee
+		if(this.state.type==config.SA_RESET_BALANCE)
+		{
+			final_amount = final_amount - fee;
+		}
+		let total = config.toVisibleNumDown(final_amount, true);
+
 		let identicon = config.getIdenticon(this.state.recipient.name);
     let otherIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: identicon}}/>)
     let userIcon = (<Image style={{width: 40, height: 40, resizeMode: Image.resizeMode.contain, borderWidth: 0}} source={{uri: config.getIdenticonForHash(this.props.account.identicon)}}/>)

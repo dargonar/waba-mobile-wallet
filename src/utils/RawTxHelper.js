@@ -36,6 +36,7 @@ export function getTransferData(rowData, account_name){
 	let _bill_amount  	= 0;
 	let _discount 	  	= 0;
 	let _bill_id 				= '';
+	let _business_account = '';
 	let _message      	= (rowData.message)?rowData.message:'N/D';
 
 	if(rowData.memo)
@@ -43,52 +44,67 @@ export function getTransferData(rowData, account_name){
     _msg 		  		= config.fromHex(rowData.memo.message);
 		let prefix 	  = _msg.substring(0,3);
 		let post_fix	= '_subacc';
-    if(prefix==config.REFUND_PREFIX && _type=='sent')
-    {
-      _dea  	= 'refunded'+post_fix;
-      _rotato = _dea;
-      _bg 		= _dea;
-      _action = _dea;	
-    }
-    
-    if(prefix==config.REFUND_PREFIX && _type=='received')
-    {
-    	_dea  	= 'refunded';
-      _rotato = _dea;
-      _bg 		= _dea;
-      _action = _dea;	
-    }
-    
-    if(prefix==config.PAYDISCOUNTED_PREFIX && _type=='sent')
-    {
-    	_dea  	= 'discounted';
-      _rotato = _dea;
-      _bg 		= _dea;
-      _action = _dea;
-    }
-    
-    if(prefix==config.PAYDISCOUNTED_PREFIX && _type=='received')
-    {
-    	_dea  	= 'discounted'+post_fix;
-      _rotato = _dea;
-      _bg 		= _dea;
-      _action = _dea;
-    }
 
-    // Bill data
+		// Bill data
     let msg_info = _msg.split(':')
     if(msg_info.length>1)
     {
-    	// [ '~re', '1000', 'NA' ]
-	    _discount    = 0;
-	    _bill_amount = 0;
+    	// [ '~re', '1000', 'NA', 'account_name' ]
+	    _discount    			= 0;
+	    _bill_amount 			= 0;
+	    _business_account = '';
 	    if(!isNaN(msg_info[1]))
 	    { 
 	      _discount      = rowData.amount.quantity/parseFloat(msg_info[1]);
 	      _bill_amount   = parseFloat(msg_info[1]);
 	    }
 	    _bill_id       = msg_info[2] || 'N/D';
-    }	
+	    if(msg_info.length==4)
+	    	_business_account = msg_info[3]
+
+    }
+
+    // Yo Refundee, entonces _business_account soy yo 
+    if(prefix==config.REFUND_PREFIX && _type=='sent')
+    {
+      _dea  						= 'refunded'+post_fix;
+      _rotato 					= _dea;
+      _bg 							= _dea;
+      _action 					= _dea;	
+      _business_account = ''; //account_name;
+    }
+    
+    // Me refundearon, bussiness account es el comercio padre
+    if(prefix==config.REFUND_PREFIX && _type=='received')
+    {
+    	_dea  						= 'refunded';
+      _rotato 					= _dea;
+      _bg 							= _dea;
+      _action 					= _dea;	
+      // _business_account = _business_account;
+
+    }
+    
+    // YO PAGUE, entonces el comercio padre es la cuenta del memo
+    if(prefix==config.PAYDISCOUNTED_PREFIX && _type=='sent')
+    {
+    	_dea  						= 'discounted';
+      _rotato 					= _dea;
+      _bg 							= _dea;
+      _action 					= _dea;
+      // _business_account = account_name;
+    }
+    
+    // Yo recibi el pago. soy subcuenta. no pasa nada.
+    if(prefix==config.PAYDISCOUNTED_PREFIX && _type=='received')
+    {
+    	_dea  						= 'discounted'+post_fix;
+      _rotato 					= _dea;
+      _bg 							= _dea;
+      _action 					= _dea;
+      _business_account = ''; //account_name;
+    }
+
   }
 
 	return {
@@ -106,7 +122,8 @@ export function getTransferData(rowData, account_name){
 		_discount 		: _discount,
 		_bill_id 			: _bill_id,
 		_is_simple    : (_dea==_type),
-		_message 			: _message
+		_message 			: _message,
+		_business_account : _business_account
 	}
 
 }

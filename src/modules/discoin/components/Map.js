@@ -30,7 +30,7 @@ class Map extends Component {
 	}
 
 	render() {
-		console.log(' -------------------- this.props:', this.props);
+		// console.log(' -------------------- this.props:', this.props);
 		const { location } = this.props;
 		let region = {
 			latitude: get(location, 'coords.latitude', null) ,

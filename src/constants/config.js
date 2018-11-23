@@ -46,7 +46,7 @@ export const DISCOIN_ACCESS_SYMBOL  = 'THEDISCOIN.A'
 export const DISCOIN_ADMIN_ACCOUNT  = 'discoin.admin'
 export const ASSET_PRECISION 				= 2;
 export const ASSET_DIVIDER   				= 100;
-export const VERSION 								= 'DEMO v1.1.15'
+export const VERSION 								= 'DEMO v1.1.16'
 
 // // TUTI TESNET
 // export const API_URL          			= 'http://192.168.0.116:8088';
@@ -231,7 +231,10 @@ var sha512 = require('js-sha512').sha512;
 
 export function getIdenticon(data){
 	if(!data.startsWith('discoin.'))
-		data = 'discoin.'+data;
+	{
+		// data = 'discoin.'+data;
+		data = data.replace('discoin.', '');
+	}
 	var hash = sha512.create();
 	hash.update(data);
 	console.log(' --------------- hash.hex()', hash.hex());
@@ -330,7 +333,7 @@ export const {
   height: SCREEN_HEIGHT,
 } = Dimensions.get('window');
 
-export const scale = SCREEN_WIDTH / 400;
+export const scale = SCREEN_WIDTH / 410;
 
 export function normalizeFontSize(size) {
     const newSize = size * scale; 

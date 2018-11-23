@@ -87,33 +87,49 @@ class Drawer extends Component {
 
 	doSendExtraOrResetBalance(reset){
 		
-		let tx_data = {};
-		let balance = this.props.balance[config.ASSET_ID];
-		let account = this.props.account;
-		let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
-		try {
-			tx_data = subaccount_helper.prepareResetBalance(reset, account, balance);
-		} catch (error) {
-			console.log('Error!!!!', error);
+		subaccount_helper.refreshWithdrawPermission(this.props.account).then( (account) => {
+			this.props.actions.createAccountSuccessHACK(account);
+			let tx_data = {};
+			let balance = this.props.balance[config.ASSET_ID];
+			// let account = account;
+			let title = reset?'Volver saldo a 0 D$C' :'Enviar balance excedente';
+			try {
+				tx_data = subaccount_helper.prepareResetBalance(reset, account, balance);
+			} catch (error) {
+				console.log('Error!!!!', error);
+				Alert.alert(
+					title,
+			  	error.toString(),
+					[
+						{text: 'OK'},
+					]
+				);
+				return;
+			
+			}
+
+			this._toggleDrawer();
+			this.props.navigator.push({
+	      screen: 'wallet.ResetBalanceConfirm',
+				title: title,
+				passProps:  {
+	        ...tx_data	
+	    	}
+			});
+
+		}, (err) => { 
+			this.props.navigator.dismissModal({
+					animationType: 'slide-down'
+			});
 			Alert.alert(
-				title,
-		  	error.toString(),
+				'Subcuentas',
+				err,
 				[
-					{text: 'OK'},
+					{text: 'OK'}
 				]
 			);
-			return;
-		
-		}
-
-		this._toggleDrawer();
-		this.props.navigator.push({
-      screen: 'wallet.ResetBalanceConfirm',
-			title: title,
-			passProps:  {
-        ...tx_data	
-    	}
 		});
+
 	}
 
 	onRefreshSubAccountPermissions(){
@@ -123,75 +139,97 @@ class Drawer extends Component {
 			title :  'Refrescar limites',
 			passProps: {
         modal_type: 'claiming',
-        message:    'Obtendiendo información de subcuenta...'
+        message:    'Actualizando información de subcuenta...'
       },
 			animationType: 'slide-up',
 			navigatorStyle: {navBarHidden:true}
 		});
 
-		subaccount_helper.getAccountWithdrawPermission(account).then( (the_perm) => {
-			if(!the_perm)
-			{
-				Alert.alert(
-					'Subcuentas',
-					'No se pudo obtener el permiso del comercio.',
-					[
-						{text: 'OK'}
-					]
-				);	
-			}
-
-			let business = null;
-			
-			// 2.- Nos traemos al comercio
-			walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
-				business = resp.business;
-
-				AsyncStorage.getItem('@Store:data').then((value)=>{
-	        account               							= JSON.parse(value);
-	        account['subaccount']['permission'] = the_perm;
-	        account['subaccount']['business'] 	= business;
-
-	        AsyncStorage.setItem('@Store:data', JSON.stringify(account));
-	        
-	        // this.props.actions.createAccountSuccessHACK(account);
-	  			helperActions.launchWallet(account, 0);
-
-	  			// ToastAndroid.show('Permisos actualizados correctamente!', ToastAndroid.SHORT);
-
-	  			this.props.navigator.dismissModal({
-							animationType: 'slide-down'
-					});	
-	      });
-			}, (err) => {
-				this.props.navigator.dismissModal({
-						animationType: 'slide-down'
-				});
-				Alert.alert(
-					'Subcuentas',
-					JSON.stringify(err),
-					[
-						{text: 'OK', onPress: () => this._onSwitchToUser()  }
-					]
-				);
-				console.log('Error', JSON.stringify(err));
-			})
-
-			
-
-		}, (err) => {
+		
+		subaccount_helper.refreshWithdrawPermission(account).then( (account) => {
+			this.props.actions.createAccountSuccessHACK(account);
+			this.props.navigator.dismissModal({
+					animationType: 'slide-down'
+			});
+			ToastAndroid.show('La información de subcuenta fue actualizada satisfactoriamente.', ToastAndroid.LONG);
+		}, (err) => { 
 			this.props.navigator.dismissModal({
 					animationType: 'slide-down'
 			});
 			Alert.alert(
 				'Subcuentas',
-				JSON.stringify(err),
+				err,
 				[
 					{text: 'OK'}
 				]
 			);
-
 		});
+
+		// subaccount_helper.getAccountWithdrawPermission(account).then( (the_perm) => {
+		// 	if(!the_perm)
+		// 	{
+		// 		Alert.alert(
+		// 			'Subcuentas',
+		// 			'No se pudo obtener el permiso del comercio.',
+		// 			[
+		// 				{text: 'OK'}
+		// 			]
+		// 		);	
+		// 	}
+
+		// 	let business = null;
+			
+		// 	// 2.- Nos traemos al comercio
+		// 	walletActions.getBusiness(the_perm.withdraw_from_account).then( (resp) => {
+		// 		business = resp.business;
+
+		// 		AsyncStorage.getItem('@Store:data').then((value)=>{
+	 //        account               							= JSON.parse(value);
+	 //        account['subaccount']['permission'] = the_perm;
+	 //        account['subaccount']['business'] 	= business;
+
+	 //        AsyncStorage.setItem('@Store:data', JSON.stringify(account));
+	        
+	 //        this.props.actions.createAccountSuccessHACK(account);
+	 //  			// helperActions.launchWallet(account, 0);
+
+	 //  			// ToastAndroid.show('Permisos actualizados correctamente!', ToastAndroid.SHORT);
+
+	 //  			this.props.navigator.dismissModal({
+		// 					animationType: 'slide-down'
+		// 			});	
+	 //      });
+		// 	}, (err) => {
+		// 		this.props.navigator.dismissModal({
+		// 				animationType: 'slide-down'
+		// 		});
+		// 		Alert.alert(
+		// 			'Subcuentas',
+		// 			JSON.stringify(err),
+		// 			[
+		// 				{text: 'OK', onPress: () => this._onSwitchToUser()  }
+		// 			]
+		// 		);
+		// 		console.log('Error', JSON.stringify(err));
+		// 	})
+
+			
+
+		// }, (err) => {
+		// 	this.props.navigator.dismissModal({
+		// 			animationType: 'slide-down'
+		// 	});
+		// 	Alert.alert(
+		// 		'Subcuentas',
+		// 		JSON.stringify(err),
+		// 		[
+		// 			{text: 'OK'}
+		// 		]
+		// 	);
+
+		// });
+
+
 	}
 
 	
@@ -606,14 +644,14 @@ class Drawer extends Component {
 								</Text>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={ this.onRefreshSubAccountPermissions }>
-							<View style={styles.drawerListItem}>
-								{iconCard}
-								<Text style={styles.drawerListItemText}>
-									Refrescar límites diarios
-								</Text>
-							</View>
-						</TouchableOpacity>
+						{/*<TouchableOpacity onPress={ this.onRefreshSubAccountPermissions }>
+													<View style={styles.drawerListItem}>
+														{iconCard}
+														<Text style={styles.drawerListItemText}>
+															Refrescar límites diarios
+														</Text>
+													</View>
+												</TouchableOpacity>*/}
 					</View>)
 					}
 					{daily_withdraw}

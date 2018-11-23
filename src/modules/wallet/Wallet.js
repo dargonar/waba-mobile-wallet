@@ -170,7 +170,7 @@ class Wallet extends Component {
 		let message = 'Algo esta sucediendo :( /n Podemos tener un problema en nuestros servidores o no tenésconexión a internet';
 		
     let receiveIcon  =  (<Image source={{uri:iconsMap['qrcode--big'].uri}} style={{height:20, width:20}} />);
-    let walletIcon  	=  (<Image source={{uri:iconsMap['wallet'].uri}} style={{height:20, width:21}} />);
+    let walletIcon  	=  (<Image source={{uri:iconsMap['wallet'].uri}} style={{height:20, width:22}} />);
 		// let icon = (<Icon name="ios-add" />);
 		// <ActionButton buttonColor={buttonColor} style={styles.actionButton} onPress={() => {  this.newTx() }} icon={ icon } />
 		return (

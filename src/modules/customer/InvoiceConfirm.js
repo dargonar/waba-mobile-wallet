@@ -56,7 +56,6 @@ class InvoiceConfirm extends Component {
 			bill_id: 				props.bill_id ,
 			discount_rate: 	props.discount_rate ,
 			discount_dsc: 	props.discount_dsc ,
-			to_pay: 				0 ,
 			discount_ars: 	props.discount_ars ,
 			account_id: 		props.account_id || props.business_id,
 			business_id: 		props.business_id ,
@@ -83,7 +82,6 @@ class InvoiceConfirm extends Component {
 
 		let amount = this.state.discount_dsc;
 		// console.log(' ---- InvoiceConfirm:: amount:', this.state.discount_dsc, ' -- available_balance:', available_balance)
-		this.setState({to_pay:amount});
 		this._buildMemo().then( enc_memo => {
 			TxHelper.getTx(this.props.account.id, this.state.account_id, amount, enc_memo, this.props.asset, this.props.blockchain).then( tx => { 
 				this.setState({
@@ -124,7 +122,7 @@ class InvoiceConfirm extends Component {
 
 	_buildMemo() {
 		return new Promise( (resolve, reject) => {
-      let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.bill_amount +':'+this.state.bill_id;
+      let memo = config.PAYDISCOUNTED_PREFIX+':'+this.state.bill_amount +':'+this.state.bill_id+':'+this.state.business_name;
       console.log('----------------- MEMO: ', memo);
       resolve({message:config.toHex(memo)});
     });
@@ -146,9 +144,8 @@ class InvoiceConfirm extends Component {
 
 
 		let fee 						= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
-		let payable_amount 	= Number(this.state.discount_dsc) + fee;
-		let disp 						= this.getAvailableBalance(); // - Number(this.props.balance[0])).toFixed(2);
-		let balance 				= this.props.balance[config.ASSET_ID];
+		let payable_amount 	= Number(this.state.discount_dsc); // + fee;
+		let balance 				= Number(this.props.balance[config.ASSET_ID]);
 		let less_than_bill 	= false;
 		if(balance<payable_amount)
 		{
@@ -301,10 +298,12 @@ class InvoiceConfirm extends Component {
 		let total_amount			= Number(this.state.bill_amount).toFixed(2); 
 		let discount					= Number((this.state.discount_dsc/this.state.bill_amount)*100).toFixed(2); ;
 		let discount_dsc			= this.state.discount_dsc; //(total_amount * discount / 100);
-		let fee 							= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
-		let payable_amount		= discount_dsc+fee;
-		let balance 					= this.props.balance[config.ASSET_ID];
-		if(balance<payable_amount)
+		let fee 							= Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION);
+		// let fee_txt   				= fee.toFixed(config.ASSET_PRECISION);
+		let payable_amount		= Number(discount_dsc || 0) ; //+fee;
+
+		let balance 					= Number(this.props.balance[config.ASSET_ID]);
+		if(balance<=payable_amount)
 				payable_amount	= Number(balance)-fee;
 		let debt					  = Number(total_amount-payable_amount).toFixed(2);
 		

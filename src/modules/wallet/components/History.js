@@ -244,6 +244,7 @@ class History extends Component {
       let hora   			    = RawTxHelper._getHoraFromUTC(rowData.block.timestamp);
       let asset_symbol 		= config.ASSET_SYMBOL;
 
+      let amount 					= config.toVisibleNumUp(rowData.amount.quantity, true).split('.');
       // const _icon = (<Icon name={icon} size={18} color={bg['credit_request']} />);
       return(
         <TouchableHighlight style={styles.txRow} underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
@@ -268,9 +269,7 @@ class History extends Component {
             <View style={styles.col_amount}>
 		      		<View flexDirection="row" alignItems="center">
 								<Image style={{width: 10, height: 10, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5}} source={{uri: this.imgData}}/>
-								<Text style={styles.row_amount}>
-									{ config.toVisibleNumUp(rowData.amount.quantity, true) }
-								</Text>
+								<Text style={styles.row_amount}> {amount[0]}{'.'}<Text style={styles.row_amount_decimals}>{amount[1]}</Text></Text>
 							</View>
             </View>
 
@@ -287,6 +286,8 @@ class History extends Component {
       let fecha  			    = RawTxHelper._getFecha(rowData.block.timestamp);
       let hora   			    = RawTxHelper._getHora(rowData.block.timestamp);
       let asset_symbol 		= config.ASSET_SYMBOL;
+
+      let amount 					= config.toVisibleNumUp(rowData.amount.quantity, true).split('.');
 
 			// <Text style={styles.row_amount}>Te han asignado como subcuenta por <Text style={styles.row_dea}>{asset_symbol}{rowData.amount.quantity}</Text> diarios</Text>
       return(
@@ -313,9 +314,7 @@ class History extends Component {
             <View style={styles.col_amount}>
 		      		<View flexDirection="row" alignItems="center">
 								<Image style={{width: 10, height: 10, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5}} source={{uri: this.imgData}}/>
-								<Text style={styles.row_amount}>
-									{ config.toVisibleNumUp(rowData.amount.quantity, true) }
-								</Text>
+								<Text style={styles.row_amount}> {amount[0]}{'.'}<Text style={styles.row_amount_decimals}>{amount[1]}</Text></Text>
 							</View>
             </View>
 
@@ -337,8 +336,8 @@ class History extends Component {
       	if(rowData.memo)
 					message = (<Text style={styles.row_message}>{txData._msg}</Text>);
 			
-			// <Text style={styles.row_message}>{"\n_type: "}{_type}{" || \n_action: "}{_action} {" || \nto.name: "}{rowData.to.name} {" || \nfrom.name: "}{rowData.from.name} {" || \this.props.account.name: "}{this.props.account.name}</Text>
-
+			let amount 					= config.toVisibleNumEx(rowData.amount.quantity, txData._type, true).split('.');
+			
       return (
         <TouchableHighlight style={styles.txRow} underlayColor={'#ccc'} onPress={() => { this._onPressButton(rowID, rowData)}}>
           <View style={styles.row_container}>
@@ -352,7 +351,7 @@ class History extends Component {
 								<Text style={styles.row_action}>{RawTxHelper.action[txData._action]}</Text>
 							</View>
 							<View style={styles.row_line2}>
-								<Text style={styles.row_dea}>{txData._dea}</Text>
+								<Text style={styles.row_dea}>{txData._business_account?txData._business_account:txData._dea}</Text>
 								
 							</View>
 							<View style={styles.row_line2}>
@@ -365,7 +364,7 @@ class History extends Component {
             	<View flexDirection="row" alignItems="center">
 								<Image style={{width: 10, height: 10, resizeMode: Image.resizeMode.contain, borderWidth: 0, opacity: 0.25, marginRight: 5}} source={{uri: this.imgData}}/>
 								<Text style={styles.row_amount}>
-									{ config.toVisibleNumEx(rowData.amount.quantity, txData._type, true) }
+									<Text style={styles.row_amount}> {amount[0]}{'.'}<Text style={styles.row_amount_decimals}>{amount[1]}</Text></Text>
 								</Text>
 							</View>
 							

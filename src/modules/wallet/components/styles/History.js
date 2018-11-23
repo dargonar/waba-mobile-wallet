@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-
+import * as config from '../../../../constants/config';
 const styles = StyleSheet.create({
   
   container : {
@@ -151,7 +151,12 @@ const styles = StyleSheet.create({
   },    
   row_amount: {
     fontFamily      : 'Montserrat-Light',
-    fontSize        : 25,
+    fontSize        : config.normalizeFontSize(25),
+    color           : '#1f475b',
+  },
+  row_amount_decimals: {
+    fontFamily      : 'Montserrat-Light',
+    fontSize        : config.normalizeFontSize(15),
     color           : '#1f475b',
   },  
   row_unknown_op: {

@@ -116,8 +116,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 15
-        versionName "1.15"
+        versionCode 16
+        versionName "1.16"
         // versionCode googleVer
         // versionName userVer
         ndk {
