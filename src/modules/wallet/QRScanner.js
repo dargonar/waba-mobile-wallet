@@ -115,11 +115,12 @@ class QRScanner extends React.Component {
             {
               let jsonData = qr_helper.expandJSONForQR(data);
 
-              console.log('--------------- QRScanner:')
-              console.log('---------------------------------------- this.state.mode:', this.state.mode)
-              console.log('---------------------------------------- jsonData.type:', jsonData.type)
+              // console.log('--------------- QRScanner:')
+              // console.log('---------------------------------------- this.state.mode:', this.state.mode)
+              // console.log('---------------------------------------- jsonData.type:', jsonData.type)
               if(jsonData.type==config.QRSCAN_ACCOUNT_ONLY && this.state.mode==config.QRSCAN_FOR_REWARD)
               {
+                console.log('--------------- QRScanner::reward_info:', this.state.reward_info);
                 this.props.navigator.push({
                   screen: 'wallet.RewardConfirm',
                   title: 'Confirmar recompensa',
@@ -164,19 +165,15 @@ class QRScanner extends React.Component {
                 });
                 return;
               }
-
-              setTimeout(
-                this.doResumeScanner(),
-                100
-              );
+              let that = this;
+              setTimeout(() => {that.doResumeScanner() }, 750);
             }
         })
         .catch(e => {
           ToastAndroid.show('Ha ocurrido un error scaneando el QR: ' + e, ToastAndroid.SHORT);    
-          // setTimeout(
-          //   this.doResumeScanner(),
-          //   1000
-          // );
+          let that = this;
+          setTimeout(() => {that.doResumeScanner() }, 750);
+          
         });
     }
   }

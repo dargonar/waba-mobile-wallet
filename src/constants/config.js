@@ -48,7 +48,7 @@ export const ASSET_PRECISION 				= 2;
 export const ASSET_DIVIDER   				= 100;
 export const VERSION 								= 'DEMO v1.1.16'
 
-// // TUTI TESNET
+// // // TUTI TESNET
 // export const API_URL          			= 'http://192.168.0.116:8088';
 // // export const API_URL          			= 'http://192.168.43.28:8088';
 // export const CHAIN_ID        			  = '1d70881f06a5d2ece91313a00f7eda5e1c7a7183957f3a6539deb4aa95237fe5'
@@ -65,9 +65,11 @@ export const VERSION 								= 'DEMO v1.1.16'
 // export const VERSION 								= 'TUTI v1.1.13'
 
 
-export const FILES_URL        = API_URL+'/files/';
-export const API_URL_V1       = API_URL+'/api/v3';
-export const WABA_NETWORK_URL = 'https://waba.network';
+export const FILES_URL        	= API_URL+'/files/';
+export const API_URL_V1       	= API_URL+'/api/v3';
+export const WABA_NETWORK_URL 	= 'https://waba.network';
+export const DISCOIN_FACEBOOK 	= 'https://www.facebook.com/monedadiscoin/';
+export const DISCOIN_INSTAGRAM 	= 'https://www.instagram.com/monedadiscoin/';
 
 // export const API_GRAPHQL_URL = 'http://35.163.59.126:8088';
 export const API_GRAPHQL_URL = API_URL;

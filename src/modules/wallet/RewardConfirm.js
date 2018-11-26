@@ -225,7 +225,8 @@ class RewardConfirm extends Component {
 		let fee = Number(this.state.fee)/Math.pow(10,config.ASSET_PRECISION).toFixed(config.ASSET_PRECISION);;
 		let final_amount = Number(this.state.reward_dsc) + fee;
 		let disp = Number(this.props.balance[config.ASSET_ID]); 
-		// console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee_txt);
+		console.log(' ------------------- RewardConfirm::_onConfirm');
+		console.log(' --balance: ', disp, ' --amount: ',  final_amount, ' --fee: ',  fee , ' --state.fee: ',  this.state.fee_txt);
 		// return;
 		if(Number(disp) < final_amount)
 		{

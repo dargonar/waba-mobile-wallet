@@ -17,30 +17,20 @@ var ViewPager = require('react-native-viewpager');
 //var ViewPager = require('./ViewPager');
 var deviceWidth = Dimensions.get('window').width;
 
-var PAGES = [
-  'Page 0',
-  'Page 1',
-  'Page 2',
-  'Page 3',
-  'Page 4',
-];
-
-var PAGES = [
-  [require('../img/logo.shadow.png'), 'Bienvenido', 'Una nueva forma de comprar'],
-  [require('../img/bank.png'), 'Desde tu teléfono', 'Recibí los puntos de recompensa directamente en tu smartphone'],
-  [require('../img/shop.png'), 'Miles de comercios', 'Localizá los miles de productos y servicios ofrecidos en la red'],
-  [require('../img/discover.png'), 'Pago móvil', 'Descubre las ofertas del día cerca tuyo y paga desde tu smartphone']
-];
-
-// var IMGS = [
-//   'https://images.unsplash.com/photo-1441742917377-57f78ee0e582?h=1024',
-//   'https://images.unsplash.com/photo-1441716844725-09cedc13a4e7?h=1024',
-//   'https://images.unsplash.com/photo-1441448770220-76743f9e6af6?h=1024',
-//   'https://images.unsplash.com/photo-1441260038675-7329ab4cc264?h=1024',
-//   'https://images.unsplash.com/photo-1441126270775-739547c8680c?h=1024',
-//   'https://images.unsplash.com/photo-1440964829947-ca3277bd37f8?h=1024',
-//   'https://images.unsplash.com/photo-1440847899694-90043f91c7f9?h=1024'
+// var PAGES = [
+//   [require('../img/logo.shadow.png'), 'Bienvenido', 'Una nueva forma de comprar'],
+//   [require('../img/bank.png'), 'Desde tu teléfono', 'Recibí los puntos de recompensa directamente en tu smartphone'],
+//   [require('../img/shop.png'), 'Miles de comercios', 'Localizá los miles de productos y servicios ofrecidos en la red'],
+//   [require('../img/discover.png'), 'Pago móvil', 'Descubre las ofertas del día cerca tuyo y paga desde tu smartphone']
 // ];
+
+var PAGES = [
+  [require('../img/logo.shadow.png'), 'BIENVENIDO', 'Con Discoin ganás dinero comprando: cada D$C acumulado vale un PESO.'],
+  [require('../img/shop.png'), 'ELEGÍ TU BENEFICIO', 'Los comercios te ofrecen dos tipos de %: +recompensa y -descuento. Vos elegís el que más te conviene.'],
+  [require('../img/abajo_naranja.png'), 'GANÁ DINERO COMPRANDO', 'Si elegís la recompensa, recibirás un % de la compra en D$C, que se acreditará en la app.'],
+  [require('../img/arriba_azul.png'), 'PAGÁ CON DISCOINS', 'Si ya tenés D$C y decidís usarlos, podrás pagar una parte en pesos y una parte en D$C!'],
+  [require('../img/discover.png'), 'EMPEZA AHORA!', 'Descubrí en la app tus comercios favoritos y empezá a COMPRAR MAS GASTANDO MENOS!']
+];
 
 function notifyMessage(msg: string) {
   if (Platform.OS === 'android') {
@@ -97,7 +87,12 @@ var ImagesScreen = React.createClass({
   _onChangePage: function(
     page: number | string
   ) {
-//     notifyMessage('Current page: ' + page);
+    // notifyMessage('Current page: ' + page);
+    // ToastAndroid.show(page.toString(), ToastAndroid.SHORT)
+    if((page+1)==PAGES.length && typeof this.props.onEnd === "function") {
+      this.props.onEnd();
+      
+    }
   },
 
 });
@@ -129,11 +124,11 @@ var styles = StyleSheet.create({
         marginBottom:20
   },
 	tagLine:{
-      color:"#999",
+      color:"#777",
       textAlign:'center',
-      fontFamily : 'Montserrat-Regular',
+      fontFamily : 'Montserrat-Medium',
       fontWeight : '100',
-      fontSize   : 14,
+      fontSize   : 16,
       lineHeight : 20,
       paddingRight: 40,
       paddingLeft: 40,

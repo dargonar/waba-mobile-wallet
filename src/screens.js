@@ -17,6 +17,7 @@ import Welcome from './modules/wallet/Welcome';
 import RestoreAccount from './modules/wallet/RestoreAccount';
 import Settings from './modules/wallet/Settings';
 import Onboarding from './modules/wallet/Onboarding';
+import Help from './modules/wallet/Help';
 import TxDetails from './modules/wallet/TxDetails';
 
 import BusinessProfile from './modules/discoin/BusinessProfile';
@@ -67,6 +68,7 @@ export function registerScreens(store, Provider) {
 	Navigation.registerComponent('wallet.RestoreAccount', () => RestoreAccount, store, Provider);
 	Navigation.registerComponent('wallet.Settings', () => Settings, store, Provider);
 	Navigation.registerComponent('wallet.Onboarding', () => Onboarding, store, Provider);
+	Navigation.registerComponent('wallet.Help', () => Help, store, Provider);
   Navigation.registerComponent('wallet.TxDetails', () => TxDetails, store, Provider);
 
 	Navigation.registerComponent('discoin.BusinessProfile', () => BusinessProfile	, store, Provider);

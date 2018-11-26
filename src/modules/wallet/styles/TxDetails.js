@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 	fullWidthButtonTextDisabled:{
 		fontFamily : 'Montserrat-Medium',
 		fontWeight : '100',
-    	fontSize   : 15,
+    fontSize   : 15,
 		color			 : '#cccccc'
 	},
 	amountQuantityView:{
@@ -128,8 +128,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		fontSize: 21,
-		color: '#666',
 		paddingTop: 10,
 		paddingBottom: 10,
 		borderBottomWidth: 0.5,

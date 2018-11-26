@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {
+  ToastAndroid,
   AppRegistry,
   StyleSheet,
   Text,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff' //'#0B5F83'
   },
   subcontainer: {
-    flex: 4
+    flex: 5
   },
   viewpager: {
     flex: 4,
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   fullWidthButton1: {
-    backgroundColor: '#f0f4f7',
+    backgroundColor: '#cdefff', //'#f0f4f7',
     padding: 5,
     borderRadius: 5,
     marginBottom:20,
@@ -53,29 +54,19 @@ const styles = StyleSheet.create({
     fontFamily : 'Montserrat-Medium',
     fontWeight : '400',
     fontSize   : 14,
-    color: 'white'
+    color: '#fff'
   },
   fullWidthButtonText1: {
     fontFamily : 'Montserrat-Medium',
     fontWeight : '400',
     fontSize   : 14,
-    color: '#666'
+    color: '#555'
   },
-  welcomeTitle:{
-    fontFamily : 'Montserrat-Regular',
-    fontWeight : '100',
-    fontSize   : 30,
-    lineHeight : 40,
-    color      : 'white',
-    textAlign  : 'center'
+  fullWidthButtonDisabled: {
+    backgroundColor: '#bbb'
   },
-  welcomeTitle2:{
-    fontFamily : 'Montserrat-Regular',
-    fontWeight : '100',
-    fontSize   : 20,
-    lineHeight : 30,
-    color      : 'white',
-    textAlign  : 'center'
+  fullWidthButtonTextDisabled: {
+    color: '#ddd'
   }
 });
 
@@ -89,11 +80,13 @@ class Onboarding extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      storage_permission : ''
+      storage_permission  : '',
+      can_create          : false
     };
 
     this._onCreateAccount = this._onCreateAccount.bind(this);
     this._onRestoreAccount = this._onRestoreAccount.bind(this);
+    this._onOnboardingEnd = this._onOnboardingEnd.bind(this);
   }
 
   componentDidMount() {
@@ -152,6 +145,10 @@ class Onboarding extends React.Component {
     {
       return;
     }
+    if(!this.state.can_create)
+    {
+      return;
+    }
     console.log('_onCreateAccount()')
 		this.props.navigator.push({
 			screen : 'wallet.CreateAccount',
@@ -171,14 +168,20 @@ class Onboarding extends React.Component {
 		});
 	}
 
-  /*
+  _onOnboardingEnd(){
+    // ToastAndroid.show('Ehhhh', ToastAndroid.SHORT)
+    if(!this.state.can_create)
+      this.setState({can_create:true});
+  }
 
-  */
   render() {
+    let disabled_btn_style = (!this.state.can_create)?styles.fullWidthButtonDisabled:{};
+    let disabled_txt_style = (!this.state.can_create)?styles.fullWidthButtonTextDisabled:{};
+    
     return (
       <View style={styles.container}>
         <View style={styles.subcontainer}>
-          <IntroPager style={styles.viewpager}/>
+          <IntroPager style={styles.viewpager} onEnd={() => {this._onOnboardingEnd()}} />
         </View>
         <View style={styles.buttons}>
 
@@ -189,9 +192,9 @@ class Onboarding extends React.Component {
           </TouchableHighlight>
 
           <TouchableHighlight
-              style={[styles.fullWidthButton, styles.fullWidthButton2]}
+              style={[styles.fullWidthButton, styles.fullWidthButton2, disabled_btn_style]}
               onPress={() => {this._onCreateAccount()}} >
-            <Text style={styles.fullWidthButtonText}>CREAR CUENTA</Text>
+            <Text style={[styles.fullWidthButtonText, disabled_txt_style]}>CREAR CUENTA</Text>
           </TouchableHighlight>
 
         </View>

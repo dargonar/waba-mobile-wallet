@@ -226,10 +226,10 @@ class ResetBalanceConfirm extends Component {
 		let final_amount = Number(this.state.amount);
 
 		// Si es reset to zero, envio todo - fee
-		if(this.state.type==config.SA_RESET_BALANCE)
-		{
-			final_amount = final_amount - fee;
-		}
+		// if(this.state.type==config.SA_RESET_BALANCE)
+		// {
+		final_amount = final_amount - fee;
+		// }
 
 		let disp = Number(this.props.balance[config.ASSET_ID]);  // - Number(this.props.balance[0])).toFixed(2);
 		
@@ -250,7 +250,7 @@ class ResetBalanceConfirm extends Component {
 			screen : 'wallet.Sending',
 			title :  'Enviando...',
 			passProps: {recipient : this.state.recipient,
-									amount :    final_amount,
+									amount :    final_amount.toFixed(2),
 									memo :      this.state.memo,
 								  modal_type: 'sending'},
 			animationType: 'slide-up',
@@ -288,7 +288,7 @@ class ResetBalanceConfirm extends Component {
 							title:      'Envío exitoso',
 							passProps:  {
 									recipient : this.state.recipient,
-									amount :    this.state.amount,
+									amount :    final_amount.toFixed(2), //this.state.amount,
 									memo :      this.state.memo,
 									result_type :   this.state.type
 							},

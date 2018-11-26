@@ -386,15 +386,16 @@ class BusinessProfile extends Component {
 										      },
 		      marker:  				{...initialRegion},
 		      business_data : props.business_data,
-					errorMessage: 	null,
-					// coffeeShops: 		[]
+					errorMessage: 	null
 		};
+
     this._onGoToUrl           = this._onGoToUrl.bind(this);
 	  this.renderSocialButtons  = this.renderSocialButtons.bind(this);
     this.renderSocialButton   = this.renderSocialButton.bind(this);
     this.disableRightDrawer();
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
+
 
   disableRightDrawer(){
     this.props.navigator.setDrawerEnabled({
@@ -464,11 +465,11 @@ class BusinessProfile extends Component {
       	// 	          											longitude: position.coords.longitude} });
       	// await this.promisedSetState({stars: stars});
       	// ToastAndroid.show(' *** getLocationAsync SUCCEDD: ' + JSON.stringify(position), ToastAndroid.SHORT);
-        let newState = { region : {	latitude: position.coords.latitude,
-      															longitude: position.coords.longitude,
+        let newState = { region : {	latitude:   position.coords.latitude,
+      															longitude:  position.coords.longitude,
       															...deltas},
-												 marker:  {	latitude: position.coords.latitude,
-      															longitude: position.coords.longitude} };
+												 marker:  {	latitude:   position.coords.latitude,
+      															longitude:  position.coords.longitude} };
         this.setState(newState);
 
         
@@ -556,12 +557,17 @@ class BusinessProfile extends Component {
 
 	render() {
 		
-    var imgSource = config.FILES_URL + this.state.business_data['image'];
+    let imageUrl = {uri:config.FILES_URL + this.state.business_data['image']}
+    if(!this.state.business_data['image'] || this.state.business_data['image']=='') 
+    {
+      imageUrl = require('../wallet/img/discoin_promotion_2.png');
+    }
+    
     let buttons = this.renderSocialButtons();
 
 		return (
 			<ScrollView style={styles.container}>
-        <Image style={{width:width, height:img_height, resizeMode: 'cover'}} source={{uri:imgSource}} ></Image>
+        <Image style={{width:width, height:img_height, resizeMode: 'cover'}} source={imageUrl} ></Image>
         <View style={{flex:1, marginRight: 20, marginLeft: 20, marginBottom: 0, paddingTop: 5}}>
           <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
             <Text style={styles.descriptionText}>{this.state.business_data.description}</Text>
