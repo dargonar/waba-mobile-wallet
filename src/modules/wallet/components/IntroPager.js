@@ -75,7 +75,7 @@ var ImagesScreen = React.createClass({
       <View style={styles.page}>
         <Image
           source={data[0]}
-          style={{width: '100%', height: 180, marginBottom:20}}
+          style={{width: '100%', height: 180, marginBottom:0}}
         />
         <Text style={styles.titleText}>{data[1]}</Text>
         <Text style={styles.tagLine}>{data[2]}</Text>

@@ -613,7 +613,7 @@ class Drawer extends Component {
 						<TouchableOpacity onPress={ this._openRecipient}>
 							<View style={[styles.drawerListItem, styles.drawerListItemBB]}>
 								<View style={styles.drawerListIconContainer}>
-									<Icon name='arrow-up' type='MaterialCommunityIcons' style={[styles.buttonIcon ,{fontSize: 20, color: '#666'}]}/>
+									<Icon name='arrow-up' type='MaterialCommunityIcons' style={{fontSize: 20, color: '#666'}}/>
 								</View>
 								<Text style={styles.drawerListItemText}>
 									Enviar

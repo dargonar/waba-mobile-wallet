@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor:'transparent',
     padding: 8,
-    textAlign: 'center', 
     alignItems: 'center',
     // borderColor: '#dcdcdc',
     borderWidth: 1,
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
     borderColor: '#f58b44',
     borderWidth: 1,
     padding: 8,
-    textAlign: 'center',
     alignItems: 'center' 
   },
   
@@ -176,7 +174,7 @@ class BusinessFilter extends Component {
       return (false);
     let selected_categories = this.state.selected_categories;
     let buttons = this.state.categories.map((category, i) => (
-      <View style={styles.categoryButtonRow}> 
+      <View style={styles.categoryButtonRow} key={category.id}> 
         <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#f58b44', true)} onPress={ () => this._categorySelected(category['id'])} >
           <View style={ [(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonSelected : styles.categoryButton ] } >
             <Text style={[(selected_categories.indexOf(category.id)>-1)? styles.categoryButtonTextSelected : styles.categoryButtonText ]}>{category['name']}</Text>

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import * as config from '../../../../constants/config';
 
 const styles = StyleSheet.create({
   sectionTitle:{
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
     fontFamily : 'Montserrat-SemiBold',
   }, 
   container_discoin: {
-  	padding: 20,
+  	padding: 15,
   	paddingBottom: 0,
     width           : undefined,
     height          : undefined,
@@ -40,6 +41,13 @@ const styles = StyleSheet.create({
    	elevation: 5, 
    	marginTop: -10,
   },
+  container_discoin_wrapper_outer: {
+    width           : '100%',
+    padding: 10,
+    backgroundColor : '#fff' ,//'transparent',
+    justifyContent  : 'center',
+    alignItems      : 'center'
+	},
   container_discoin_wrapper: {
     width           : '100%',
     padding: 10,
@@ -48,10 +56,12 @@ const styles = StyleSheet.create({
     height          : 90,
     backgroundColor : '#fff' ,//'transparent',
     justifyContent  : 'center',
-    alignItems      : 'center',
+    alignItems      : 'center'
 	},
 	container_discoin: {
-		flex            : 3
+		// flex            : 3
+		height: 150,
+		paddingTop: 30
 	},
 	container: {
 		width           : undefined,
@@ -59,7 +69,8 @@ const styles = StyleSheet.create({
 		backgroundColor : '#f15d44' ,//'transparent',
 		justifyContent  : 'center',
 		alignItems      : 'center',
-		flex            : 3,
+		// flex            : 3,
+		height 					: config.normalizeFontSize(200),
 		borderBottomLeftRadius: 15, 
 		borderBottomRightRadius: 15,
 		marginBottom: 0
@@ -124,8 +135,8 @@ const styles = StyleSheet.create({
 		//  fontFamily : 'roboto_regular',
 		fontFamily  : 'Montserrat-ExtraLight',
 		// 		fontWeight : '400',
-		fontSize   : 75,
-		lineHeight : 75,
+		fontSize   : config.normalizeFontSize(75),
+		lineHeight : config.normalizeFontSize(75),
 		alignSelf : 'flex-end',
 
   },
@@ -137,15 +148,11 @@ const styles = StyleSheet.create({
 		alignItems: 'stretch',
 		//backgroundColor: '#f00'
 	},
+	
 	dec_part : {
 		flex:0,
 		fontFamily  : 'Montserrat-ExtraLight',
-		// 		fontFamily : 'roboto_regular',
-		//     fontWeight : '100',
-		// lineHeight  : 75,
-		fontSize    : 32,
-		// marginVertical: 6,
-		// backgroundColor:'#ff00ff',
+		fontSize    : config.normalizeFontSize(32),
 		alignSelf : 'flex-start',
 		
   },

@@ -41,10 +41,8 @@ class InvoiceConfirm extends Component {
         name:					props.account_name || props.business_name,
         account_id:		props.account_id || props.business_id
       },
-      discount_rate: null,
-			memo_key: props.memo_key,
+      memo_key: props.memo_key,
       amount :  props.amount,
-      discount :  null,
       memo :    props.memo,
 			tx: 		   null,
 			fee:       0,
@@ -66,6 +64,7 @@ class InvoiceConfirm extends Component {
 			identicon 	: ''
 		}
 
+		this.hacked_discount_dsc = props.discount_dsc;
 		this._onSendingError = this._onSendingError.bind(this);
 		this._buildMemo = this._buildMemo.bind(this);
   }
@@ -80,7 +79,7 @@ class InvoiceConfirm extends Component {
 
 		// let amount = Math.min(this.state.discount_dsc, available_balance).toFixed(2);
 
-		let amount = this.state.discount_dsc;
+		let amount = this.state.discount_dsc||hacked_discount_dsc;
 		// console.log(' ---- InvoiceConfirm:: amount:', this.state.discount_dsc, ' -- available_balance:', available_balance)
 		this._buildMemo().then( enc_memo => {
 			TxHelper.getTx(this.props.account.id, this.state.account_id, amount, enc_memo, this.props.asset, this.props.blockchain).then( tx => { 

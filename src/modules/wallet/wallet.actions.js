@@ -711,22 +711,22 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 				}
 
 				if(data.asset) {
-					console.log(' *********************** SI HAY data.asset:',data.asset)
+					// console.log(' *********************** SI HAY data.asset:',data.asset)
 					dispatch(assetSuccess(JSON.parse(data.asset)));
 				}
-				else
-				{
-					console.log(' *********************** NO HAY data.asset')
-				}
+				// else
+				// {
+				// 	console.log(' *********************** NO HAY data.asset')
+				// }
 
-				if(data.account.history){
-					console.log(' *********************** SI HAY data.account.history:',data.account.history)
+				// if(data.account.history){
+				// 	console.log(' *********************** SI HAY data.account.history:',data.account.history)
 					
-				}
-				else
-				{
-					console.log(' *********************** NO HAY data.account.history')
-				}
+				// }
+				// else
+				// {
+				// 	console.log(' *********************** NO HAY data.account.history')
+				// }
 
 				let history = data.account.history;
 				let proms = [];
@@ -777,10 +777,11 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 
 								proms.push(p);
 								inxs.push(i);
-							} else {
-								console.log('no lo puedo DECODESSSSS');
+							} 
+							// else {
+							// 	console.log('no lo puedo DECODESSSSS');
 
-							}
+							// }
 						}
 					}
 
@@ -792,7 +793,7 @@ export function retrieveHistory(account_name, keys, first_time, start, subaccoun
 				if(balance) {
 					for(var i=0; i<balance.length; i++) {
 						balance_map[balance[i].asset.id] = parseFloat(balance[i].quantity);
-						console.log('ENCONTRE ESTO ', balance[i].asset_id, ' => ', balance[i].quantity);
+						// console.log('ENCONTRE ESTO ', balance[i].asset_id, ' => ', balance[i].quantity);
 					}
 					dispatch(retrieveBalanceSuccess(balance_map));
 				}

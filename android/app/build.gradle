@@ -110,16 +110,16 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        // applicationId "com.waba.discoin"
-        // applicationId "com.waba.discoin.dev"
-        applicationId "com.waba.discoin.demo"
-
+        
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 16
-        versionName "1.16"
-        // versionCode googleVer
-        // versionName userVer
+        versionCode 17
+        versionName "1.17"
+        applicationId "com.waba.discoin"
+        // applicationId "com.waba.discoin.dev"
+        // applicationId "com.waba.discoin.demo"
+
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
             moduleName "bts2helper"

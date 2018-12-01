@@ -5,15 +5,15 @@ import {
   View,
   Text,
   TouchableOpacity,
-	ListView,
+  ListView,
   Image,
   TouchableHighlight,
   RefreshControl,
-	ActivityIndicator,
-	Animated,
-	Dimensions,
-	StyleSheet,
-	ToastAndroid
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  StyleSheet,
+  ToastAndroid
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'native-base';
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#8E8E8E',
   },
-	list: {
+  list: {
     justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -181,9 +181,9 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     borderRadius: 4,
     fontFamily : 'Montserrat-Regular',
-    fontSize: 26,
-    flex: 0,
-    textAlign: 'right', 
+    fontSize: config.normalizeFontSize(24),
+    flex: 3,
+    textAlign: 'center', 
   },
   reward: {
     color: '#fff',
@@ -191,9 +191,9 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     borderRadius: 4,
     fontFamily : 'Montserrat-Regular',
-    fontSize: 26,
-    flex: 0,
-    textAlign: 'right', 
+    fontSize: config.normalizeFontSize(24),
+    flex: 2,
+    textAlign: 'center', 
   },
   rewardGradient: {
     flex: 1,
@@ -201,12 +201,7 @@ const styles = StyleSheet.create({
     padding: 4,
     marginLeft: 4,
     marginTop: 6,
-    paddingRight: 10
-  },
-  rewardIcon: {
-    position: 'absolute',  
-    color: '#FFF',
-    opacity: 0.5,
+    paddingRight: 4 
   },
   discountGradient: {
     flex: 1,
@@ -214,15 +209,14 @@ const styles = StyleSheet.create({
     padding: 4,
     marginRight: 4,
     marginTop: 6,
-    paddingRight: 10
+    paddingRight: 4
   },
   promoLabel:{
     flex: 1,
-    textAlign: 'right',
+    textAlign: 'center',
     alignSelf: 'center',
-    marginTop: -9,
-    marginRight: 4,
-    fontSize: 14,
+    marginTop: 0,
+    fontSize: config.normalizeFontSize(14),
     color: '#FFF',
     fontFamily : 'Montserrat-Light',
   },
@@ -257,9 +251,9 @@ const styles = StyleSheet.create({
 
 class BusinessListWidget extends Component {
 
-	
-	constructor(props) {
-		super(props);
+  
+  constructor(props) {
+    super(props);
 
     let dataSource = new ListView.DataSource({
       rowHasChanged           : this._rowHasChanged.bind(this)
@@ -268,48 +262,49 @@ class BusinessListWidget extends Component {
     this.state = {
       dataSource :        dataSource.cloneWithRows(props.business_list || []),
       refreshing :        false,
-			infiniteLoading :   false,
-			bounceValue:        new Animated.Value(0),
-			errors :            0,
+      infiniteLoading :   false,
+      bounceValue:        new Animated.Value(0),
+      errors :            0,
       mode:               props.mode
     };
 
     // ToastAndroid.show(props.mode, ToastAndroid.SHORT);
-		// this._onPressButton   = this._onPressButton.bind(this);
-	}
+    // this._onPressButton   = this._onPressButton.bind(this);
+  }
 
-	refreshBusinessList(start_offset) {
-		//skip, count, query, filter
-		if(start_offset == undefined) start_offset = 0;
+  refreshBusinessList(start_offset) {
+    //skip, count, query, filter
+    if(start_offset == undefined) start_offset = 0;
     my_filter = this.props.business_filter;
     console.log(' ---- BusinessListWidget::this.state.mode:', this.state.mode)
     if(this.state.mode!='search')
       delete my_filter.search_text;
     if(this.state.mode=='search')
       my_filter['search_text'] = this.props.search_text;
-		this.props.actions.retrieveBusinesses(
-			start_offset,
-			'',
-			my_filter,
+    this.props.actions.retrieveBusinesses(
+      start_offset,
+      '',
+      my_filter,
       this.state.mode
-		);
-	}
+    );
+  }
 
   componentWillReceiveProps(nextProps){
 
+    console.log(' ******************************** ');
     console.log('BusinessListWidget::componentWillReceiveProps errors=>', nextProps.errors);
+    console.log('BusinessListWidget [nextProps.business_list !== this.props.business_list]:' , (nextProps.business_list !== this.props.business_list) );
+    console.log('BusinessListWidget [this.state.mode]:', this.state.mode);
+    console.log('BusinessListWidget [nextProps.business_searched_list !== this.props.business_searched_list]:', (nextProps.business_searched_list !== this.props.business_searched_list) );
+    
 
-		let new_state = {};
-	  // if (nextProps.business_list !== this.props.business_list) {
-   //    console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
-   //    let data = nextProps.business_list;
-   //    new_state.dataSource=this.state.dataSource.cloneWithRows(data);
-   //  }
+    let new_state = {};
+    
     if (nextProps.business_list !== this.props.business_list && this.state.mode=='main') {
-			console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
-			let data = nextProps.business_list;
+      console.log('componentWillReceiveProps: new business_list =>', nextProps.business_list.length);
+      let data = nextProps.business_list;
       new_state['dataSource']=this.state.dataSource.cloneWithRows(data);
-		}
+    }
 
     if (nextProps.business_searched_list !== this.props.business_searched_list && this.state.mode=='search') {
       console.log('componentWillReceiveProps: new business_searched_list =>', nextProps.business_searched_list.length);
@@ -317,15 +312,15 @@ class BusinessListWidget extends Component {
       new_state['dataSource']=this.state.dataSource.cloneWithRows(data);
     }
 
-		if(this.state.infiniteLoading) {
-			new_state.infiniteLoading=false;
-		}
+    if(this.state.infiniteLoading) {
+      new_state.infiniteLoading=false;
+    }
 
-		new_state.refreshing = false;
+    new_state.refreshing = false;
 
-		if(nextProps.errors > this.state.errors) {
-			ToastAndroid.show('Verifique su conexión a Internet', ToastAndroid.SHORT);
-		}
+    if(nextProps.errors > this.state.errors) {
+      ToastAndroid.show('Verifique su conexión a Internet', ToastAndroid.SHORT);
+    }
 
     if(nextProps.business_filter!==this.props.business_filter)
     {
@@ -340,7 +335,7 @@ class BusinessListWidget extends Component {
     }
 
     // ToastAndroid.show('about to update state', ToastAndroid.SHORT);
-		console.log(' ----------**********----------- about to update state');
+    console.log(' ----------**********----------- about to update state');
     this.setState(new_state);
   }
 
@@ -351,52 +346,52 @@ class BusinessListWidget extends Component {
   componentDidMount() {
      
   //   AppState.addEventListener('change', this.handleAppStateChange);
-		// let that = this;
-		// OneSignal.configure({
-		// 	onIdsAvailable: function(device) {
-		// 		console.log('UserId = ', device.userId);
-		// 		console.log('PushToken = ', device.pushToken);
-		// 		//fetch('http://35.161.140.21:8080/api/v1/push_id', {
-		// 		fetch(config.getAPIURL('/push_id'), {
-		// 			method: 'POST',
-		// 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-		// 			body: JSON.stringify({
-		// 				name:   	that.props.account.name,
-		// 				push_id: 	device.userId,
-		// 			})
-		// 		})
-		// 		.then((response) => response.json())
-		// 		.then((responseJson) => {
-		// 			console.log('PUSH ID =>', responseJson);
-		// 		});
-		// 		//OneSignal.sendTags({"account" :that.props.account.name});
-		// 		//OneSignal.getTags((receivedTags) => {
-		// 		//	console.log('TAAAAGS=>', receivedTags);
-		// 		//});
+    // let that = this;
+    // OneSignal.configure({
+    //  onIdsAvailable: function(device) {
+    //    console.log('UserId = ', device.userId);
+    //    console.log('PushToken = ', device.pushToken);
+    //    //fetch('http://35.161.140.21:8080/api/v1/push_id', {
+    //    fetch(config.getAPIURL('/push_id'), {
+    //      method: 'POST',
+    //      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    //      body: JSON.stringify({
+    //        name:     that.props.account.name,
+    //        push_id:  device.userId,
+    //      })
+    //    })
+    //    .then((response) => response.json())
+    //    .then((responseJson) => {
+    //      console.log('PUSH ID =>', responseJson);
+    //    });
+    //    //OneSignal.sendTags({"account" :that.props.account.name});
+    //    //OneSignal.getTags((receivedTags) => {
+    //    //  console.log('TAAAAGS=>', receivedTags);
+    //    //});
 
-		// 	},
-		// 	onNotificationOpened: function(message, data, isActive) {
-		// 		console.log('*************************** ONE SIGNAL ');
-		// 		console.log('MESSAGE: ', 	message);
-		// 		console.log('DATA: ', 		data);
-		// 		console.log('ISACTIVE: ', isActive);
+    //  },
+    //  onNotificationOpened: function(message, data, isActive) {
+    //    console.log('*************************** ONE SIGNAL ');
+    //    console.log('MESSAGE: ',  message);
+    //    console.log('DATA: ',     data);
+    //    console.log('ISACTIVE: ', isActive);
 
-		// 		let tx_info = {
-		// 			message 	: message,
-		// 			data 			: data,
-		// 			isActive 	: isActive
-		// 		}
-		// 		that.props.actions.newTxHACK(tx_info);
-		// 		/*
-		// 		'MESSAGE: ', 'vaku te ha enviado 10 DSC'
-		// 		'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }
-		// 		'ISACTIVE: ', true
-		// 		*/
-		// 		that.refreshBusinessList();
-		// 	}
-		// });
+    //    let tx_info = {
+    //      message   : message,
+    //      data      : data,
+    //      isActive  : isActive
+    //    }
+    //    that.props.actions.newTxHACK(tx_info);
+    //    /*
+    //    'MESSAGE: ', 'vaku te ha enviado 10 DSC'
+    //    'DATA: ', { sound: 'coins_received', smallIcon: 'ic_iconoclasa.png' }
+    //    'ISACTIVE: ', true
+    //    */
+    //    that.refreshBusinessList();
+    //  }
+    // });
 
-	}
+  }
 
 
 
@@ -413,52 +408,52 @@ class BusinessListWidget extends Component {
 //   _onPressButton(rowID, rowData) {
 //     console.log('History::_onPressButton');
 
-// // 		let data = this._getRowData(rowData);
-// // 		this.props.navigator.push({
-// // 			screen: 'wallet.TxDetails',
-// // 			title: 'Detalles',
-// // 			passProps: data
-// // 		});
+// //     let data = this._getRowData(rowData);
+// //     this.props.navigator.push({
+// //       screen: 'wallet.TxDetails',
+// //       title: 'Detalles',
+// //       passProps: data
+// //     });
 
 //   }
 
   _onRefresh() {
     this.setState({refreshing: true});
-		this.refreshBusinessList(0);
+    this.refreshBusinessList(0);
   }
 
   _onEndReached()  {
-		console.log('ON END REACHED!!!!!', this.props.business_list_at_end);
+    console.log('ON END REACHED!!!!!', this.props.business_list_at_end);
 
-		
+    
     if(this.props.business_list_at_end && this.state.mode=='main')
-			return;
+      return;
 
     if(this.props.business_searched_list_at_end && this.state.mode=='search')
       return;
 
-		this.setState({infiniteLoading:true});
+    this.setState({infiniteLoading:true});
 
-		this.state.bounceValue.setValue(-20);     // Start large
-		Animated.timing(                          // Base: spring, decay, timing
-			this.state.bounceValue,                 // Animate `bounceValue`
-			{
-				toValue  : 20,                         // Animate to smaller size
-				duration: 300
-			}
-		).start();
+    this.state.bounceValue.setValue(-20);     // Start large
+    Animated.timing(                          // Base: spring, decay, timing
+      this.state.bounceValue,                 // Animate `bounceValue`
+      {
+        toValue  : 20,                         // Animate to smaller size
+        duration: 300
+      }
+    ).start();
 
-		let last_id = this.state.mode=='main'?this.props.business_list.length:this.props.business_searched_list.length;
-		// console.log('LAST ID=>', last_id);
-		// parts = last_id.split('.').map( function(v){ return v>>0; });
-		// parts[2]-=1;
-		// last_id = parts.join('.');
-		// console.log('LAST ID (tocado)=>', last_id);
+    let last_id = this.state.mode=='main'?this.props.business_list.length:this.props.business_searched_list.length;
+    // console.log('LAST ID=>', last_id);
+    // parts = last_id.split('.').map( function(v){ return v>>0; });
+    // parts[2]-=1;
+    // last_id = parts.join('.');
+    // console.log('LAST ID (tocado)=>', last_id);
 
-		this.refreshBusinessList(last_id);
+    this.refreshBusinessList(last_id);
   }
 
-	removePercent(value){
+  removePercent(value){
     return parseInt(value).toString();
   }
 
@@ -471,7 +466,7 @@ class BusinessListWidget extends Component {
     });    
   }
 
-	_renderRow(rowData, sectionID, rowID) {
+  _renderRow(rowData, sectionID, rowID) {
     
     var imgSource = {uri:config.FILES_URL + rowData['logo']} ;
     if(!rowData['logo'] || rowData['logo']=='') 
@@ -503,7 +498,7 @@ class BusinessListWidget extends Component {
               <Text style={styles.businesseCardTitle}>{rowData['name']} </Text>
               <View style={{flexDirection: 'row'}}>
                 <View style={{flexDirection: 'row', flex: 1}}>
-                  <Icon name='send' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/>
+                  { /* <Icon name='send' style={{fontSize: 18, color: '#dcdcdc', marginRight: 4}}/> */ }
                   <View>
                     <Text style={styles.businessCategorie}>{rowData['category']['name'].toUpperCase()}</Text>
                     <Text style={styles.businessCategorie}>{rowData['subcategory']['name'].toUpperCase()}</Text>
@@ -522,17 +517,21 @@ class BusinessListWidget extends Component {
               
               <LinearGradient start={{x: 0, y: 1}} end={{x: 0.75, y: 0}} colors={['#76eafa', '#6b91f8']} style={styles.discountGradient}>
                 <View style={{flexDirection: 'row', flex: 1}}>
-                  <Icon name="remove" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>                  
-                  <Text style={styles.promoLabel}>%</Text>
+                  <View style={{flex:2}}>
+                    <Icon name="remove" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>                  
+                  </View>
                   <Text style={styles.discount}>{_discount}</Text>
+                  <Text style={styles.promoLabel}>%</Text>
                 </View>
               </LinearGradient>
 
               <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.rewardGradient}>
                 <View style={{flexDirection: 'row', flex: 1}}>
-                  <Icon name="add" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>
-                  <Text style={styles.promoLabel}>%</Text>
+                  <View style={{flex:2}}>
+                    <Icon name="add" style={{color: '#FFF', opacity: 0.3, position:'absolute', bottom: 0, top: 0, left: -5, fontSize: 40}}/>
+                  </View>
                   <Text style={styles.reward}>{_reward}</Text>
+                  <Text style={styles.promoLabel}>%</Text>
                 </View>
               </LinearGradient>
             </View>
@@ -542,84 +541,84 @@ class BusinessListWidget extends Component {
       </TouchableHighlight>
     );
   }
-	
+  
   render() {
 
     console.log(' ----------**********----------- rendering biz list');
-		if(this.state.dataSource.getRowCount()>0)
-		{
-			let infiniteLoading=undefined;
-			if(this.state.infiniteLoading) {
-				//console.log(this.state.bounceValue.value);
-				infiniteLoading = (
-					<Animated.View style={{
-							left:0,
-							right:0,
-							zIndex:1,
-							position:'absolute',
-							bottom:this.state.bounceValue,
-							alignItems:'center'
-						}}
-					>
-						<Spinner
-							isVisible={true}
-							size={30}
-							type='Wave'
-							color='#3498db'
-						/>
-					</Animated.View>
-				)
-		  }
+    if(this.state.dataSource.getRowCount()>0)
+    {
+      let infiniteLoading=undefined;
+      if(this.state.infiniteLoading) {
+        //console.log(this.state.bounceValue.value);
+        infiniteLoading = (
+          <Animated.View style={{
+              left:0,
+              right:0,
+              zIndex:1,
+              position:'absolute',
+              bottom:this.state.bounceValue,
+              alignItems:'center'
+            }}
+          >
+            <Spinner
+              isVisible={true}
+              size={30}
+              type='Wave'
+              color='#3498db'
+            />
+          </Animated.View>
+        )
+      }
 
-			return (
+      return (
         <View style={styles.container}>
          <ListView
-         		contentContainerStyle={{paddingBottom:30}}
+            contentContainerStyle={{paddingBottom:30}}
             refreshControl={
-	            <RefreshControl
-	              refreshing={this.state.refreshing}
-	              onRefresh={this._onRefresh.bind(this)}
-	              colors={['#8ec919', '#fcc4cb', '#3498db']}
-	            />}
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind(this)}
+                colors={['#8ec919', '#fcc4cb', '#3498db']}
+              />}
             dataSource={this.state.dataSource}
             renderRow={this._renderRow.bind(this)}
             onEndReached={this._onEndReached.bind(this)}
-						onEndReachedThreshold={10}
+            onEndReachedThreshold={10}
          />
-				 {infiniteLoading}
+         {infiniteLoading}
        </View>
-    	);
-		}
+      );
+    }
     else{
-			return(
-				<View style={styles.containerEmpty}>
-					<View style={styles.bgImageWrapper}>
-						<Image source={require('./img/pattern.png')} style={styles.bgImage} />
-					</View>
-					<Text style={styles.emptyListText}>NO HAY COMERCIOS QUE MOSTRAR{"\n"}INTENTE CON OTRO FILTRO</Text>
-					<TouchableOpacity style={styles.button} onPress={ this._onRefresh.bind(this) }>
+      return(
+        <View style={styles.containerEmpty}>
+          <View style={styles.bgImageWrapper}>
+            <Image source={require('./img/pattern.png')} style={styles.bgImage} />
+          </View>
+          <Text style={styles.emptyListText}>NO HAY COMERCIOS QUE MOSTRAR{"\n"}INTENTE CON OTRO FILTRO</Text>
+          <TouchableOpacity style={styles.button} onPress={ this._onRefresh.bind(this) }>
             <Text style={styles.buttonText}>Actualizar</Text>
           </TouchableOpacity>
-				</View>
+        </View>
 
-			);
-		}
+      );
+    }
   }
 }
 
 function mapStateToProps(state, ownProps) {
-	return {
-		business_list 				: state.wallet.business_list,
+  return {
+    business_list         : state.wallet.business_list,
     business_searched_list: state.wallet.business_searched_list,
-		account   						: state.wallet.account,
-		business_list_at_end  : state.wallet.business_list_at_end,
-		business_filter       : state.wallet.business_filter
-	};
+    account               : state.wallet.account,
+    business_list_at_end  : state.wallet.business_list_at_end,
+    business_filter       : state.wallet.business_filter
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-	return {
-		actions: bindActionCreators(walletActions, dispatch)
-	};
+  return {
+    actions: bindActionCreators(walletActions, dispatch)
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BusinessListWidget);

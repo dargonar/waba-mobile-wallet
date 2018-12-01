@@ -120,11 +120,11 @@ const styles = StyleSheet.create({
   },
   promoLabel:{
     flex: 1,
-    textAlign: 'right',
+    textAlign: 'center',
     alignSelf: 'center',
-    marginTop: -9,
-    marginRight: 4,
-    fontSize: 14,
+    marginTop: 0,
+    marginRight: 0,
+    fontSize: 25,
     color: '#FFF',
     fontFamily : 'Montserrat-Light',
   },
@@ -134,9 +134,9 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     borderRadius: 4,
     fontFamily : 'Montserrat-Regular',
-    fontSize: 34,
-    flex: 0,
-    textAlign: 'right', 
+    fontSize: config.normalizeFontSize(55),
+    flex: 2,
+    textAlign: 'center', 
   },
   reward: {
     color: '#fff',
@@ -144,9 +144,9 @@ const styles = StyleSheet.create({
     fontWeight: '100',
     borderRadius: 4,
     fontFamily : 'Montserrat-Regular',
-    fontSize: 34,
-    flex: 0,
-    textAlign: 'right', 
+    fontSize: config.normalizeFontSize(55),
+    flex: 2,
+    textAlign: 'center', 
   },
   rewardGradient: {
     flex: 1,
@@ -155,11 +155,6 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     marginTop: 6,
     paddingRight: 10,
-  },
-  rewardIcon: {
-    position: 'absolute',  
-    color: '#FFF',
-    opacity: 0.5,
   },
   promoTextLabel:{
     fontFamily : 'Montserrat-Bold',
@@ -494,7 +489,7 @@ class BusinessProfile extends Component {
     return (
       <View style={{flex:1, padding:20,}}>
         <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
-          <Icon name="ios-beer" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
+          <Icon name="bookmark" style={{color: '#ddd', fontSize: 25, marginRight: 15, width: 20}}/>
           <Text style={styles.infoboxText}>{this.state.business_data.category.name} - {this.state.business_data.subcategory.name}</Text>
         </View>
         <View style={{flex:1, marginBottom: 10, alignItems: 'center', flexDirection: 'row'}}>
@@ -534,13 +529,13 @@ class BusinessProfile extends Component {
   renderSocialButtons(){
     
     let buttons = [];
-    const www  = this.state.business_data.website?(<Icon  name="ios-globe" style={{color: '#ddd', fontSize: 25}}/>):false;
+    const www  = this.state.business_data.website?(<Icon  name="ios-globe" style={{color: '#4285f4', fontSize: 25}}/>):false;
     buttons.push([www, 'website']);
-    const fb   = this.state.business_data.facebook?(<Icon  name="logo-facebook" style={{color: '#ddd', fontSize: 25}}/>):false;
+    const fb   = this.state.business_data.facebook?(<Icon  name="logo-facebook" style={{color: '#3b5998', fontSize: 25}}/>):false;
     buttons.push([fb, 'facebook']);
-    const twi  = this.state.business_data.twiter?(<Icon  name="logo-twitter" style={{color: '#ddd', fontSize: 25}}/>):false;
+    const twi  = this.state.business_data.twiter?(<Icon  name="logo-twitter" style={{color: '#1da1f2', fontSize: 25}}/>):false;
     buttons.push([twi, 'twiter']);
-    const inst = this.state.business_data.instagram?(<Icon  name="logo-instagram" style={{color: '#ddd', fontSize: 25}}/>):false;
+    const inst = this.state.business_data.instagram?(<Icon  name="logo-instagram" style={{color: '#c32aa3', fontSize: 25}}/>):false;
     buttons.push([inst, 'instagram']);
 
     return buttons;
@@ -577,10 +572,13 @@ class BusinessProfile extends Component {
           <LinearGradient start={{x: 0, y: 1}} end={{x: 0.75, y: 0}} colors={['#76eafa', '#6b91f8']} style={styles.discountGradient}>
             <View style={{flexDirection: 'column', flex: 1, justifyContent:'space-between', paddingTop:2, paddingBottom:2}}>
               <Text style={styles.promoTextLabel}>PAGA CON DISCOINS HASTA</Text>
-              <Icon name="remove" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: 0, fontSize: 50}}/>                  
-              <View flexDirection='row'>
-                <Text style={styles.promoLabel}>%</Text>
+              <View style={{flexDirection:'row'}}>
+                <View style={{flex:1}}>
+                  <Icon name="remove" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: 0, fontSize: 50}}/>                  
+                </View>
                 <Text style={styles.discount}>{Number(this.state.business_data['discount_ex'][config.getToday()]['discount']).toFixed(0)}</Text>
+                <Text style={styles.promoLabel}>%</Text>
+                
               </View>  
             </View>
           </LinearGradient>
@@ -588,10 +586,12 @@ class BusinessProfile extends Component {
           <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#ff9e5d', '#ff7233']} style={styles.rewardGradient}>
             <View style={{flexDirection: 'column', flex: 1, justifyContent:'space-between', paddingTop:2, paddingBottom:2}}>
               <Text style={styles.promoTextLabel}>CON TU COMPRA RECIBIS</Text>
-              <Icon name="add" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: -5, fontSize: 50}}/>                  
-              <View flexDirection='row'>
-                <Text style={styles.promoLabel}>%</Text>
+              <View style={{flexDirection:'row'}}>
+                <View style={{flex:1}}>
+                  <Icon name="add" style={{color: '#FFF', opacity: 0.35, position:'absolute', bottom: 0, left: -5, fontSize: 50}}/>
+                </View>
                 <Text style={styles.reward}>{Number(this.state.business_data['discount_ex'][config.getToday()]['reward']).toFixed(0)}</Text>
+                <Text style={styles.promoLabel}>%</Text>
               </View>  
             </View>
           </LinearGradient>
